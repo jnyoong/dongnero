@@ -133,7 +133,8 @@
           <th>#</th>
           <th>전화번호</th>
           <th>나이</th>
-          <th>지역</th>
+          <th>일자리 유형</th>
+          <th>선호 지역</th>
           <th>신청일시</th>
         </tr>
       </thead>
@@ -206,11 +207,13 @@
       const dt = new Date(row.created_at);
       const dateStr = dt.toLocaleDateString('ko-KR') + ' ' +
                       dt.toLocaleTimeString('ko-KR', {hour:'2-digit', minute:'2-digit'});
+      const loc = [row.preferred_region, row.preferred_district].filter(Boolean).join(' ') || row.region || '전체';
       return `<tr>
         <td>${data.length - i}</td>
         <td>${row.phone || '-'}</td>
         <td>${row.age || '-'}세</td>
-        <td><span class="region-tag">${row.region || '전체'}</span></td>
+        <td>${row.job_types || '-'}</td>
+        <td><span class="region-tag">${loc}</span></td>
         <td>${dateStr}</td>
       </tr>`;
     }).join('');
@@ -234,14 +237,18 @@
   /* ── CSV 다운로드 ── */
   document.getElementById('btnCsv').addEventListener('click', () => {
     if (!allData.length) { alert('데이터가 없습니다.'); return; }
-    const header = ['번호', '전화번호', '나이', '지역', '신청일시'];
-    const rows = allData.map((r, i) => [
-      allData.length - i,
-      r.phone || '',
-      r.age || '',
-      r.region || '전체',
-      new Date(r.created_at).toLocaleString('ko-KR')
-    ]);
+    const header = ['번호', '전화번호', '나이', '일자리유형', '선호지역', '신청일시'];
+    const rows = allData.map((r, i) => {
+      const loc = [r.preferred_region, r.preferred_district].filter(Boolean).join(' ') || r.region || '전체';
+      return [
+        allData.length - i,
+        r.phone || '',
+        r.age || '',
+        r.job_types || '',
+        loc,
+        new Date(r.created_at).toLocaleString('ko-KR')
+      ];
+    });
     const csv = [header, ...rows].map(r => r.join(',')).join('\n');
     const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
     const a = document.createElement('a');
