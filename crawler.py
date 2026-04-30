@@ -38,7 +38,7 @@ OUTPUT_FILE = Path(__file__).parent / "jobs.json"
 WORK24_AUTH_KEY = "YOUR_AUTH_KEY_HERE"
 
 REQUEST_DELAY   = 1.5
-MAX_PAGES       = 10
+MAX_PAGES       = 50
 ITEMS_PER_PAGE  = 20
 
 BIRTH_YEAR_LIMIT = str(date.today().year - 50)

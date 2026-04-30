@@ -11,7 +11,15 @@ daily_crawl:
     - git config user.name "Dongnero CI"
     - git remote set-url origin "https://oauth2:${GITLAB_TOKEN}@gitlab.com/kahn201130/dongnero.git"
     - git add jobs_data.js jobs.json
-    - git diff --cached --quiet && echo "변경 없음" || git commit -m "daily crawl $(date '+%Y-%m-%d')"
-    - git push origin HEAD:main
+    - |
+      if git diff --cached --quiet; then
+        echo "변경 없음 — 스킵"
+      else
+        git commit -m "daily crawl $(date '+%Y-%m-%d')"
+        git pull --rebase origin $CI_COMMIT_BRANCH
+        git push origin HEAD:$CI_COMMIT_BRANCH
+        echo "✅ push 완료"
+      fi
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "web"
