@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>시니어 취업정보 — 채용공고</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#2563EB" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="시니어취업" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F7F8FA;
+      --surface:   #FFFFFF;
+      --border:    #E2E5EA;
+      --border-h:  #C5CDD9;
+      --text-pri:  #111827;
+      --text-sec:  #6B7280;
+      --text-ter:  #9CA3AF;
+
+      --c-gov:     #2563EB;  /* 고용24  */
+      --c-alb:     #EA580C;  /* 알바몬  */
+      --c-abc:     #16A34A;  /* 알바천국 */
+      --c-rro:     #0891B2;  /* 시니어로 */
+
+      --accent:    #2563EB;
+      --accent-lt: #EFF6FF;
+      --warn:      #D97706;
+      --warn-lt:   #FFFBEB;
+      --ok:        #059669;
+      --ok-lt:     #ECFDF5;
+      --err:       #DC2626;
+      --err-lt:    #FEF2F2;
+
+      --radius-sm: 6px;
+      --radius:    10px;
+      --radius-lg: 14px;
+    }
+
+    body {
+      font-family: 'Malgun Gothic','맑은 고딕',system-ui,sans-serif;
+      background: var(--bg);
+      color: var(--text-pri);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* ── 헤더 ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 20px 18px;
+      text-align: center;
+      position: relative;
+    }
+    .btn-back {
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: .88rem; font-weight: 700; color: var(--accent);
+      text-decoration: none; padding: 7px 12px;
+      border: 1.5px solid var(--accent); border-radius: var(--radius-sm);
+      background: var(--accent-lt); transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+    .btn-back:hover { background: var(--accent); color: #fff; }
+    .header-logo {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 1.5rem; font-weight: 800; color: var(--text-pri);
+      letter-spacing: -.4px;
+    }
+    .header-logo-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+    }
+    .header-region-label {
+      font-size: 1rem; font-weight: 700; color: var(--accent);
+      margin-top: 4px;
+    }
+    .header-stats {
+      display: flex; justify-content: center; gap: 16px;
+      margin-top: 12px; flex-wrap: wrap;
+    }
+    .stat-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .82rem; font-weight: 600; color: var(--text-sec);
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 20px; padding: 4px 11px;
+    }
+    .stat-chip strong { color: var(--accent); }
+    .stat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── 툴바 ── */
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+    }
+    .toolbar-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    .search-row { display: flex; gap: 8px; }
+    .search-wrap { flex: 1; position: relative; }
+    .search-icon {
+      position: absolute; left: 12px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-ter); font-size: .9rem; pointer-events: none;
+    }
+    .search-wrap input {
+      width: 100%; border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 9px 12px 9px 34px;
+      font-size: .95rem; font-family: inherit; color: var(--text-pri);
+      background: var(--bg); outline: none; transition: border-color .15s;
+    }
+    .search-wrap input:focus { border-color: var(--accent); background: var(--surface); }
+    .search-wrap input::placeholder { color: var(--text-ter); }
+    .btn-search {
+      background: var(--accent); color: #fff;
+      border: none; border-radius: var(--radius-sm); padding: 9px 18px;
+      font-size: .95rem; font-weight: 700; cursor: pointer;
+      font-family: inherit; white-space: nowrap; transition: background .15s;
+    }
+    .btn-search:hover { background: #1D4ED8; }
+
+    .filter-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-row select {
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 7px 10px; font-size: .88rem; font-family: inherit;
+      color: var(--text-pri); background: var(--bg); cursor: pointer;
+      outline: none; transition: border-color .15s; flex-shrink: 0;
+    }
+    .filter-row select:focus { border-color: var(--accent); }
+
+    .region-scroll {
+      display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px;
+      scrollbar-width: none; flex: 1; min-width: 0;
+    }
+    .region-scroll::-webkit-scrollbar { display: none; }
+    .rtab {
+      flex-shrink: 0; border: 1px solid var(--border);
+      background: var(--bg); border-radius: 20px;
+      padding: 6px 14px; font-size: .85rem; font-weight: 600;
+      color: var(--text-sec); cursor: pointer; transition: all .15s;
+      white-space: nowrap; font-family: inherit;
+    }
+    .rtab:hover { border-color: var(--accent); color: var(--accent); }
+    .rtab.active {
+      background: var(--accent); border-color: var(--accent); color: #fff;
+    }
+
+    /* ── 결과바 ── */
+    .result-bar {
+      max-width: 1200px; margin: 14px auto 10px;
+      padding: 0 16px;
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .result-count { font-size: .9rem; color: var(--text-sec); }
+    .result-count strong { color: var(--text-pri); font-size: 1rem; }
+    .result-meta { font-size: .8rem; color: var(--text-ter); }
+
+    /* ── 카드 그리드 ── */
+    .grid {
+      max-width: 1200px; margin: 0 auto 60px;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 14px;
+    }
+
+    /* ── 카드 ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex; flex-direction: column;
+      transition: border-color .15s, box-shadow .15s;
+      overflow: hidden;
+    }
+    .card:hover {
+      border-color: var(--border-h);
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+    }
+    .card-line { height: 3px; width: 100%; }
+
+    .card-head {
+      padding: 14px 16px 10px;
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 8px;
+    }
+    .tag-row { display: flex; gap: 5px; flex-wrap: wrap; }
+
+    .tag {
+      font-size: .76rem; font-weight: 700;
+      padding: 3px 9px; border-radius: 20px;
+      border: 1px solid transparent;
+    }
+    .tag-region   { background: var(--accent-lt); color: var(--accent); border-color: #BFDBFE; }
+    .tag-industry { background: var(--bg); color: var(--text-sec); border-color: var(--border); }
+    .tag-정규직   { background: var(--ok-lt); color: var(--ok); border-color: #A7F3D0; }
+    .tag-계약직   { background: var(--warn-lt); color: var(--warn); border-color: #FDE68A; }
+    .tag-시간제   { background: #F5F3FF; color: #6D28D9; border-color: #DDD6FE; }
+    .tag-기타     { background: var(--bg); color: var(--text-ter); border-color: var(--border); }
+
+    .source-badge {
+      font-size: .72rem; font-weight: 700;
+      padding: 3px 8px; border-radius: 4px;
+      flex-shrink: 0; white-space: nowrap;
+    }
+    .src-고용24  { background: #EFF6FF; color: var(--c-gov); }
+    .src-알바몬  { background: #FFF7ED; color: var(--c-alb); }
+    .src-알바천국{ background: #F0FDF4; color: var(--c-abc); }
+    .src-시니어로{ background: #ECFEFF; color: var(--c-rro); }
+
+    .line-고용24  { background: var(--c-gov); }
+    .line-알바몬  { background: var(--c-alb); }
+    .line-알바천국{ background: var(--c-abc); }
+    .line-시니어로{ background: var(--c-rro); }
+
+    .card-body {
+      padding: 0 16px 12px;
+      flex: 1; display: flex; flex-direction: column; gap: 8px;
+    }
+    .card-title {
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--text-pri); line-height: 1.4;
+    }
+    .card-company { font-size: .88rem; color: var(--text-sec); font-weight: 500; }
+
+    .info-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5px 10px; margin-top: 2px;
+    }
+    .info-item { display: flex; align-items: baseline; gap: 5px; }
+    .info-label {
+      font-size: .75rem; color: var(--text-ter); white-space: nowrap;
+      font-weight: 600; text-transform: uppercase; letter-spacing: .02em;
+    }
+    .info-val   { font-size: .85rem; color: var(--text-pri); line-height: 1.35; }
+    .info-val.salary { font-weight: 700; color: var(--warn); }
+    .info-full  { grid-column: 1 / -1; }
+
+    .dl-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: .8rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;
+    }
+    .dl-urgent { background: var(--err-lt);  color: var(--err); }
+    .dl-soon   { background: var(--warn-lt); color: var(--warn); }
+    .dl-ok     { background: var(--ok-lt);   color: var(--ok); }
+    .dl-etc    { background: var(--bg);      color: var(--text-ter); }
+
+    .ai-summary {
+      font-size: .83rem; color: var(--text-sec); line-height: 1.5;
+      padding: 8px 10px;
+      background: var(--bg); border-radius: var(--radius-sm);
+      border-left: 2px solid var(--border-h);
+    }
+
+    .card-foot { padding: 10px 16px 14px; }
+    .btn-view {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      width: 100%; padding: 10px;
+      background: var(--surface); color: var(--accent);
+      border: 1.5px solid var(--accent); border-radius: var(--radius-sm);
+      font-size: .9rem; font-weight: 700; cursor: pointer;
+      text-decoration: none; font-family: inherit;
+      transition: background .15s, color .15s;
+    }
+    .btn-view:hover { background: var(--accent); color: #fff; }
+
+    .empty {
+      grid-column: 1 / -1; text-align: center;
+      padding: 60px 20px; color: var(--text-sec); font-size: 1rem;
+    }
+    .empty-icon { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+
+    footer {
+      text-align: center; padding: 20px 16px;
+      font-size: .82rem; color: var(--text-ter);
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    @media (max-width: 700px) {
+      header { padding: 16px 16px 14px; }
+      .btn-back {
+        position: static; transform: none;
+        display: inline-flex; margin-bottom: 10px;
+        font-size: .82rem; padding: 6px 10px;
+      }
+      header { text-align: center; }
+      .header-logo { font-size: 1.2rem; }
+      .header-stats { gap: 8px; }
+      .toolbar { padding: 10px 12px; }
+      .grid { grid-template-columns: 1fr; padding: 0 12px; gap: 10px; }
+      .info-grid { grid-template-columns: 1fr; }
+      .info-full { grid-column: auto; }
+      .result-bar { padding: 0 12px; }
+    }
+
+    /* ════════════════════════════════════════
+       상단 상시 홈화면 추가 힌트 바
+    ════════════════════════════════════════ */
+    .home-hint-bar {
+      background: #EFF6FF;
+      border-bottom: 1px solid #BFDBFE;
+      padding: 10px 18px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+      font-size: .85rem; color: #1E40AF;
+      flex-wrap: wrap;
+    }
+    .home-hint-bar.hidden { display: none; }
+    .home-hint-text { display: flex; align-items: center; gap: 7px; font-weight: 600; }
+    .home-hint-btn  {
+      background: #2563EB; color: #fff;
+      border: none; border-radius: 6px;
+      padding: 6px 14px; font-size: .82rem; font-weight: 700;
+      cursor: pointer; font-family: inherit; white-space: nowrap;
+      transition: background .15s; flex-shrink: 0;
+    }
+    .home-hint-btn:hover { background: #1D4ED8; }
+    @media (min-width: 769px) { .home-hint-bar { display: none !important; } }
+
+    /* ════════════════════════════════════════
+       PWA 홈화면 추가 배너
+    ════════════════════════════════════════ */
+    .pwa-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 24px rgba(0,0,0,.13);
+      z-index: 200;
+      transform: translateY(110%);
+      transition: transform .38s cubic-bezier(.4,0,.2,1);
+    }
+    .pwa-banner.show { transform: translateY(0); }
+    .pwa-banner-inner {
+      max-width: 500px; margin: 0 auto;
+      padding: 16px 18px 22px;
+    }
+    .pwa-banner-top {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .pwa-banner-icon { font-size: 2rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+    .pwa-banner-info { flex: 1; }
+    .pwa-banner-title { font-size: 1rem; font-weight: 800; color: var(--text-pri); margin-bottom: 3px; }
+    .pwa-banner-desc  { font-size: .87rem; color: var(--text-sec); line-height: 1.5; }
+    .pwa-banner-close {
+      background: none; border: none; color: var(--text-ter);
+      font-size: 1.4rem; cursor: pointer; padding: 2px 4px;
+      line-height: 1; flex-shrink: 0; transition: color .15s;
+    }
+    .pwa-banner-close:hover { color: var(--text-sec); }
+    .pwa-ios-steps {
+      font-size: .84rem; color: var(--text-sec);
+      background: var(--bg); border-radius: 10px;
+      padding: 11px 14px; border: 1px solid var(--border);
+      line-height: 1.85; margin-top: 12px;
+    }
+    .pwa-ios-steps strong { color: var(--text-pri); }
+    .pwa-add-btn {
+      background: var(--accent); color: #fff;
+      border: none; border-radius: var(--radius);
+      padding: 12px; font-size: .95rem; font-weight: 700;
+      cursor: pointer; font-family: inherit; width: 100%;
+      transition: background .15s; margin-top: 12px;
+    }
+    .pwa-add-btn:hover { background: #1D4ED8; }
+
+    /* ════════════════════════════════════════
+       알림 신청 플로팅 버튼
+    ════════════════════════════════════════ */
+    .notify-fab {
+      position: fixed; right: 18px; bottom: 90px;
+      background: var(--accent); color: #fff;
+      border: none; border-radius: 50px;
+      padding: 13px 20px; font-size: .93rem; font-weight: 800;
+      cursor: pointer; font-family: inherit;
+      box-shadow: 0 4px 20px rgba(37,99,235,.42);
+      display: flex; align-items: center; gap: 8px;
+      z-index: 190; white-space: nowrap;
+      opacity: 0; pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity .3s, transform .3s, background .15s, bottom .3s;
+    }
+    .notify-fab.show    { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .notify-fab.low-pos { bottom: 24px; }
+
+    /* ════════════════════════════════════════
+       알림 신청 모달 (바텀 시트)
+    ════════════════════════════════════════ */
+    .notify-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.52);
+      z-index: 300;
+      display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s;
+    }
+    .notify-overlay.show { opacity: 1; pointer-events: auto; }
+    .notify-sheet {
+      background: var(--surface);
+      border-radius: 22px 22px 0 0;
+      padding: 10px 22px 44px;
+      width: 100%; max-width: 520px;
+      transform: translateY(32px);
+      transition: transform .32s cubic-bezier(.4,0,.2,1);
+    }
+    .notify-overlay.show .notify-sheet { transform: translateY(0); }
+    .notify-drag {
+      width: 42px; height: 4px;
+      background: var(--border); border-radius: 2px;
+      margin: 6px auto 18px;
+    }
+    .notify-head-row {
+      display: flex; justify-content: flex-end; margin-bottom: 2px;
+    }
+    .notify-close {
+      background: var(--bg); border: none;
+      border-radius: 50%; width: 32px; height: 32px;
+      font-size: .95rem; cursor: pointer; color: var(--text-sec);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .notify-close:hover { background: var(--border); }
+    .notify-icon  { font-size: 2.4rem; text-align: center; margin-bottom: 8px; }
+    .notify-title { font-size: 1.28rem; font-weight: 800; text-align: center; color: var(--text-pri); margin-bottom: 6px; }
+    .notify-desc  { font-size: .92rem; color: var(--text-sec); text-align: center; line-height: 1.65; margin-bottom: 22px; }
+
+    .nform-group  { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+    .nform-label  { font-size: .9rem; font-weight: 700; color: #374151; }
+    .nform-req    { color: #DC2626; }
+    .nform-input  {
+      border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 14px 16px; font-size: 1.05rem; font-family: inherit;
+      color: var(--text-pri); outline: none; background: var(--surface);
+      transition: border-color .15s;
+    }
+    .nform-input:focus { border-color: var(--accent); }
+    .nform-consent {
+      font-size: .8rem; color: var(--text-sec);
+      background: var(--bg); border-radius: 10px;
+      padding: 13px 14px; border: 1px solid var(--border);
+      line-height: 1.7; margin-bottom: 16px;
+    }
+    .nform-consent-title { font-weight: 700; color: var(--text-pri); margin-bottom: 4px; }
+    .nform-consent-check {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-top: 10px; cursor: pointer;
+    }
+    .nform-consent-check input {
+      margin-top: 2px; flex-shrink: 0;
+      width: 17px; height: 17px; cursor: pointer;
+      accent-color: var(--accent);
+    }
+    .nform-consent-check span { font-size: .84rem; color: var(--text-pri); font-weight: 600; line-height: 1.5; }
+    .notify-submit {
+      background: var(--accent); color: #fff;
+      border: none; border-radius: 12px;
+      padding: 16px; font-size: 1rem; font-weight: 800;
+      cursor: pointer; font-family: inherit; width: 100%;
+      transition: background .15s;
+    }
+    .notify-submit:hover    { background: #1D4ED8; }
+    .notify-submit:disabled { background: var(--border); color: var(--text-ter); cursor: not-allowed; }
+
+    .notify-success { text-align: center; padding: 28px 0 8px; display: none; }
+    .notify-success-icon { font-size: 3.5rem; margin-bottom: 14px; }
+    .notify-success-msg  { font-size: 1.15rem; font-weight: 800; color: var(--text-pri); margin-bottom: 8px; }
+    .notify-success-sub  { font-size: .92rem; color: var(--text-sec); line-height: 1.65; }
+  </style>
+</head>
+<body>
+
+<!-- 상단 상시 힌트 바 -->
+<div class="home-hint-bar hidden" id="homeHintBar" role="complementary">
+  <span class="home-hint-text">📱 홈 화면에 추가하면 앱처럼 바로 접속할 수 있어요</span>
+  <button class="home-hint-btn" id="homeHintBtn">추가하기 →</button>
+</div>
+
+<!-- PWA 홈화면 배너 -->
+<div class="pwa-banner" id="pwaBanner" role="banner" aria-label="홈화면 추가 안내">
+  <div class="pwa-banner-inner">
+    <div class="pwa-banner-top">
+      <span class="pwa-banner-icon">📱</span>
+      <div class="pwa-banner-info">
+        <div class="pwa-banner-title">홈 화면에 추가하면 더 편리해요!</div>
+        <div class="pwa-banner-desc">앱처럼 바로 실행, 새 일자리를 빠르게 확인하세요.</div>
+      </div>
+      <button class="pwa-banner-close" id="pwaBannerClose" aria-label="닫기">×</button>
+    </div>
+    <div id="pwaIosSteps" class="pwa-ios-steps" style="display:none">
+      1️⃣ 하단 <strong>공유 버튼(□↑)</strong>을 탭하세요<br>
+      2️⃣ 아래로 스크롤하여 <strong>'홈 화면에 추가'</strong>를 탭하세요<br>
+      3️⃣ 우측 상단 <strong>'추가'</strong>를 눌러 완료하세요
+    </div>
+    <button class="pwa-add-btn" id="pwaAndroidBtn" style="display:none">📲 홈 화면에 추가하기</button>
+  </div>
+</div>
+
+<!-- 알림 신청 플로팅 버튼 -->
+<button class="notify-fab" id="notifyFab" aria-label="새 일자리 알림 신청">
+  🔔 새 일자리 알림 신청
+</button>
+
+<!-- 알림 신청 모달 (바텀 시트) -->
+<div class="notify-overlay" id="notifyOverlay" role="dialog" aria-modal="true" aria-label="알림 신청">
+  <div class="notify-sheet">
+    <div class="notify-drag"></div>
+    <div class="notify-head-row">
+      <button class="notify-close" id="notifyClose" aria-label="닫기">✕</button>
+    </div>
+    <div id="notifyFormWrap">
+      <div class="notify-icon">🔔</div>
+      <div class="notify-title">새 일자리 나오면 알려드릴게요!</div>
+      <p class="notify-desc">전화번호와 나이를 남겨주시면<br>새 공고가 올라올 때 문자로 알려드려요.</p>
+      <form id="notifyForm" novalidate>
+        <div class="nform-group">
+          <label class="nform-label" for="inputPhone">전화번호 <span class="nform-req">*</span></label>
+          <input class="nform-input" id="inputPhone" type="tel" name="phone"
+                 placeholder="010-0000-0000" autocomplete="tel"
+                 inputmode="tel" maxlength="13" required>
+        </div>
+        <div class="nform-group">
+          <label class="nform-label" for="inputAge">나이 <span class="nform-req">*</span></label>
+          <input class="nform-input" id="inputAge" type="number" name="age"
+                 placeholder="예: 58" min="40" max="90" inputmode="numeric" required>
+        </div>
+        <div class="nform-consent">
+          <div class="nform-consent-title">📋 개인정보 수집·이용 동의</div>
+          · 수집 항목: 전화번호, 나이<br>
+          · 이용 목적: 채용 공고 알림 문자 발송<br>
+          · 보유 기간: 동의 철회 또는 서비스 종료 시까지<br>
+          · 동의를 거부할 권리가 있으며, 거부 시 알림 서비스 이용 불가
+          <label class="nform-consent-check">
+            <input type="checkbox" id="consentCheck" required>
+            <span>개인정보 수집·이용에 동의합니다 (필수)</span>
+          </label>
+        </div>
+        <button class="notify-submit" type="submit" id="notifySubmitBtn">알림 신청 완료</button>
+      </form>
+    </div>
+    <div class="notify-success" id="notifySuccess">
+      <div class="notify-success-icon">✅</div>
+      <div class="notify-success-msg">신청이 완료되었습니다!</div>
+      <p class="notify-success-sub">새로운 일자리 공고가 올라오면<br>문자로 바로 알려드릴게요.</p>
+    </div>
+  </div>
+</div>
+
+<header>
+  <a class="btn-back" href="index.html">← 지역 변경</a>
+  <div class="header-logo">
+    <span class="header-logo-dot"></span>
+    시니어 취업정보
+  </div>
+  <div class="header-region-label" id="regionLabel"></div>
+  <div class="header-stats" id="headerStats">
+    <span class="stat-chip">공고 로딩 중…</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <div class="search-row">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput"
+               placeholder="직종명, 회사명으로 검색…"
+               oninput="render()" />
+      </div>
+      <button class="btn-search" onclick="render()">검색</button>
+    </div>
+    <div class="filter-row">
+      <div class="region-scroll" id="regionTabs"></div>
+    </div>
+    <div class="filter-row">
+      <select id="industryFilter" onchange="render()">
+        <option value="">업종 전체</option>
+      </select>
+      <select id="typeFilter" onchange="render()">
+        <option value="">고용형태 전체</option>
+        <option value="정규직">정규직</option>
+        <option value="계약직">계약직</option>
+        <option value="시간제">시간제·알바</option>
+      </select>
+      <select id="sourceFilter" onchange="render()">
+        <option value="">출처 전체</option>
+        <option value="고용24">고용24</option>
+        <option value="알바몬">알바몬</option>
+        <option value="알바천국">알바천국</option>
+        <option value="시니어로">시니어로</option>
+      </select>
+      <select id="sortSelect" onchange="render()">
+        <option value="deadline">마감 임박순</option>
+        <option value="salary">급여 높은순</option>
+        <option value="title">직종명순</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="result-bar">
+  <div class="result-count" id="resultCount"></div>
+  <div class="result-meta" id="updateInfo"></div>
+</div>
+
+<div class="grid" id="jobGrid"></div>
+
+<footer>
+  고용24 · 알바몬 · 알바천국 · 시니어로 공개 정보를 수집·제공합니다.
+  실제 지원은 원문 공고 사이트에서 진행해 주세요.
+</footer>
+
+<script src="jobs_data.js"></script>
+<script>
+/* ════════════════════════════════════════
+   Service Worker 등록
+════════════════════════════════════════ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () =>
+    navigator.serviceWorker.register('./sw.js').catch(() => {})
+  );
+}
+
+/* ════════════════════════════════════════
+   PWA 홈화면 배너
+════════════════════════════════════════ */
+(function initPwaBanner() {
+  const DISMISS_KEY  = 'pwa_dismissed_v1';
+  const DISMISS_DAYS = 1;
+  const ua = navigator.userAgent;
+  const isIOS        = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  const isAndroid    = /Android/.test(ua);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+                    || window.navigator.standalone === true;
+
+  const hintBar = document.getElementById('homeHintBar');
+  const hintBtn = document.getElementById('homeHintBtn');
+  if (hintBar && !isStandalone && (isIOS || isAndroid)) {
+    hintBar.classList.remove('hidden');
+  }
+
+  if (isStandalone || (!isIOS && !isAndroid)) return;
+  const dismissed = localStorage.getItem(DISMISS_KEY);
+  if (dismissed && Date.now() < +dismissed) return;
+
+  const banner     = document.getElementById('pwaBanner');
+  const closeBtn   = document.getElementById('pwaBannerClose');
+  const fab        = document.getElementById('notifyFab');
+  const androidBtn = document.getElementById('pwaAndroidBtn');
+  const iosSteps   = document.getElementById('pwaIosSteps');
+
+  let deferredPrompt = null;
+
+  function showBanner()    { banner.classList.add('show');    fab && fab.classList.remove('low-pos'); }
+  function dismissBanner() {
+    banner.classList.remove('show');
+    localStorage.setItem(DISMISS_KEY, Date.now() + DISMISS_DAYS * 86400000);
+    fab && fab.classList.add('low-pos');
+  }
+
+  closeBtn.addEventListener('click', dismissBanner);
+  if (hintBtn) hintBtn.addEventListener('click', showBanner);
+
+  function onPwaScroll() {
+    if (window.scrollY >= 2500) { showBanner(); window.removeEventListener('scroll', onPwaScroll); }
+  }
+  window.addEventListener('scroll', onPwaScroll);
+
+  if (isIOS) {
+    iosSteps.style.display = 'block';
+  } else {
+    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
+    androidBtn.style.display = 'block';
+    androidBtn.addEventListener('click', () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(c => {
+          if (c.outcome === 'accepted') dismissBanner();
+          deferredPrompt = null;
+        });
+      } else {
+        androidBtn.style.display = 'none';
+        iosSteps.innerHTML =
+          '1️⃣ 주소창 오른쪽 메뉴 <strong>(⋮)</strong>를 탭하세요<br>' +
+          '2️⃣ <strong>\'홈 화면에 추가\'</strong> 또는 <strong>\'앱 설치\'</strong>를 선택하세요';
+        iosSteps.style.display = 'block';
+      }
+    });
+  }
+})();
+
+/* ════════════════════════════════════════
+   알림 신청 플로팅 버튼 & 모달
+════════════════════════════════════════ */
+(function initNotify() {
+  const DONE_KEY  = 'notify_registered';
+  const fab       = document.getElementById('notifyFab');
+  const overlay   = document.getElementById('notifyOverlay');
+  const closeBtn  = document.getElementById('notifyClose');
+  const form      = document.getElementById('notifyForm');
+  const formWrap  = document.getElementById('notifyFormWrap');
+  const success   = document.getElementById('notifySuccess');
+  const submitBtn = document.getElementById('notifySubmitBtn');
+
+  if (localStorage.getItem(DONE_KEY)) { fab.style.display = 'none'; return; }
+
+  let fabScrollCount = 0;
+  function onFabScroll() {
+    fabScrollCount++;
+    if (fabScrollCount >= 3) {
+      fab.classList.add('show');
+      window.removeEventListener('scroll', onFabScroll);
+    }
+  }
+  window.addEventListener('scroll', onFabScroll);
+
+  function openModal()  { overlay.classList.add('show');    document.body.style.overflow = 'hidden'; }
+  function closeModal() { overlay.classList.remove('show'); document.body.style.overflow = ''; }
+
+  fab.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const phone   = document.getElementById('inputPhone').value.trim();
+    const age     = document.getElementById('inputAge').value.trim();
+    const consent = document.getElementById('consentCheck').checked;
+    const region  = new URLSearchParams(location.search).get('region') || '전체';
+
+    if (!phone || !age) { alert('전화번호와 나이를 모두 입력해 주세요.'); return; }
+    if (!consent)        { alert('개인정보 수집·이용에 동의해 주세요.'); return; }
+
+    submitBtn.disabled    = true;
+    submitBtn.textContent = '신청 중…';
+
+    try {
+      await fetch('https://YOUR_SERVER/api/notify', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone, age, region })
+      });
+    } catch (_) {}
+
+    formWrap.style.display = 'none';
+    success.style.display  = 'block';
+    localStorage.setItem(DONE_KEY, '1');
+    fab.style.display = 'none';
+    setTimeout(closeModal, 3500);
+  });
+})();
+
+/* ════════════════════════════════════════
+   기존 페이지 로직
+════════════════════════════════════════ */
+const REGION_MAP = [
+  ['서울','서울'],['부산','부산'],['대구','대구'],['인천','인천'],
+  ['광주','광주'],['대전','대전'],['울산','울산'],['세종','세종'],
+  ['경기','경기'],['강원','강원'],['충북','충북'],['충남','충남'],
+  ['전북','전북'],['전남','전남'],['경북','경북'],['경남','경남'],['제주','제주'],
+];
+const INDUSTRY_MAP = [
+  { keys:['요양','보호사','돌봄','케어','방문요양','재가'],  label:'요양·돌봄' },
+  { keys:['경비','보안','주차관리'],                        label:'경비·보안' },
+  { keys:['미화','청소','환경미화'],                        label:'청소·미화' },
+  { keys:['조리','급식','주방','요리','조리원'],             label:'조리·급식' },
+  { keys:['복지사','사회복지','상담원','복지관'],            label:'복지·상담' },
+  { keys:['사무','행정','총무','관리직','사무보조'],         label:'사무·행정' },
+  { keys:['농업','농산물','재배','텃밭'],                   label:'농업·생산' },
+  { keys:['강사','교육','지도사','선생'],                   label:'교육·지도' },
+  { keys:['판매','영업','매장'],                            label:'판매·영업' },
+  { keys:['시설','건설','설비','전기','기계'],               label:'시설·건설' },
+  { keys:['간호','의료','약사'],                            label:'의료·보건' },
+];
+const JOB_DESC = {
+  '요양·돌봄': '어르신 일상생활·건강을 돌보는 따뜻한 일자리입니다.',
+  '경비·보안': '건물·시설 안전 관리 및 출입을 통제하는 업무입니다.',
+  '청소·미화': '건물·공공장소를 청결하게 유지하는 환경 관리 업무입니다.',
+  '조리·급식': '학교·기업 등에서 식사를 조리·배식하는 업무입니다.',
+  '복지·상담': '사회복지 서비스 제공 및 이용자 상담 지원 업무입니다.',
+  '사무·행정': '각종 문서 처리·데이터 입력 등 사무 보조 업무입니다.',
+  '농업·생산': '농산물 재배·수확·선별 등 농업 관련 업무입니다.',
+  '교육·지도': '학생·수강생 대상으로 가르치고 지도하는 업무입니다.',
+  '판매·영업': '매장에서 상품을 소개하고 판매하는 업무입니다.',
+  '시설·건설': '건물·설비 점검, 유지보수 관련 기술 업무입니다.',
+  '의료·보건': '환자 건강 관리 및 의료 보조 서비스 업무입니다.',
+  '기타':      '상세 업무 내용은 원문 공고를 확인해 주세요.',
+};
+
+function getRegion(loc) {
+  for (const [k, v] of REGION_MAP) if ((loc||'').includes(k)) return v;
+  return '기타';
+}
+function getIndustry(title, desc) {
+  const t = (title||'') + ' ' + (desc||'');
+  for (const ind of INDUSTRY_MAP) if (ind.keys.some(k => t.includes(k))) return ind.label;
+  return '기타';
+}
+function makeSummary(job) {
+  const ind = getIndustry(job.title, job.description);
+  const base = JOB_DESC[ind] || JOB_DESC['기타'];
+  const loc = (job.location||'').split(' ').slice(0,2).join(' ');
+  const sal = job.salary ? ` 급여 ${job.salary.replace(/\s+/g,' ').trim()}` : '';
+  return base + (loc||sal ? ' /' + (loc ? ' ' + loc : '') + sal : '');
+}
+
+function dlChip(dl) {
+  if (!dl) return `<span class="dl-chip dl-etc">미정</span>`;
+  if (dl === '상시모집') return `<span class="dl-chip dl-ok">상시모집</span>`;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const d = new Date(dl);
+  const days = Math.ceil((d - today) / 86400000);
+  const fmt = dl.replace(/-/g,'.');
+  if (days < 0)   return `<span class="dl-chip dl-etc">마감</span>`;
+  if (days === 0) return `<span class="dl-chip dl-urgent">오늘마감 ${fmt}</span>`;
+  if (days <= 3)  return `<span class="dl-chip dl-urgent">D-${days} ${fmt}</span>`;
+  if (days <= 7)  return `<span class="dl-chip dl-soon">D-${days} ${fmt}</span>`;
+  return `<span class="dl-chip dl-ok">D-${days} ${fmt}</span>`;
+}
+
+function parseSal(s) {
+  const m = (s||'').match(/[\d,]+/); return m ? +m[0].replace(/,/g,'') : 0;
+}
+
+/* URL에서 초기 지역 읽기 */
+const _urlRegion = new URLSearchParams(location.search).get('region') || '전체';
+let allJobs = [], activeRegion = _urlRegion;
+
+function loadData() {
+  if (typeof JOBS_DATA === 'undefined') {
+    document.getElementById('jobGrid').innerHTML =
+      '<div class="empty"><span class="empty-icon">⚠️</span>crawler.py를 먼저 실행해 주세요.</div>';
+    return;
+  }
+  const data = JOBS_DATA;
+  allJobs = Array.isArray(data) ? data : (data.jobs || []);
+
+  allJobs.forEach(j => {
+    j._region   = getRegion(j.location||'');
+    j._industry = getIndustry(j.title, j.description);
+    j._summary  = makeSummary(j);
+  });
+
+  if (data.updated_at) {
+    document.getElementById('updateInfo').textContent = '업데이트: ' + data.updated_at;
+  }
+
+  buildHeaderStats(data);
+  buildRegionTabs();
+  buildIndustryOptions();
+  updateRegionLabel();
+  render();
+}
+
+function buildHeaderStats(data) {
+  const counts = data.source_counts || {};
+  const total  = allJobs.length;
+  const srcList = ['고용24','알바몬','알바천국','시니어로'];
+  const colors  = {
+    '고용24':'#2563EB','알바몬':'#EA580C',
+    '알바천국':'#16A34A','시니어로':'#0891B2'
+  };
+  let html = `<span class="stat-chip"><strong>${total}</strong>건 수집</span>`;
+  srcList.forEach(src => {
+    const cnt = counts[src];
+    if (cnt !== undefined) {
+      html += `<span class="stat-chip">
+        <span class="stat-dot" style="background:${colors[src]}"></span>
+        ${src} <strong>${cnt}</strong>건
+      </span>`;
+    }
+  });
+  document.getElementById('headerStats').innerHTML = html;
+}
+
+function updateRegionLabel() {
+  const el = document.getElementById('regionLabel');
+  if (activeRegion === '전체') {
+    el.textContent = '전국 전체 공고';
+  } else {
+    const cnt = allJobs.filter(j => j._region === activeRegion).length;
+    el.textContent = `${activeRegion} 지역 — ${cnt}건`;
+  }
+}
+
+function buildRegionTabs() {
+  const counts = {};
+  allJobs.forEach(j => { counts[j._region] = (counts[j._region]||0) + 1; });
+  const regions = ['전체', ...Object.keys(counts).sort()];
+  document.getElementById('regionTabs').innerHTML = regions.map(r => {
+    const cnt = r === '전체' ? allJobs.length : (counts[r]||0);
+    return `<button class="rtab${r===activeRegion?' active':''}"
+      onclick="setRegion('${r}',this)">${r} <small style="opacity:.7;font-weight:400">${cnt}</small></button>`;
+  }).join('');
+}
+
+function setRegion(r, el) {
+  activeRegion = r;
+  document.querySelectorAll('.rtab').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  buildIndustryOptions();
+  updateRegionLabel();
+  render();
+}
+
+function buildIndustryOptions() {
+  const base = activeRegion === '전체' ? allJobs : allJobs.filter(j => j._region === activeRegion);
+  const counts = {};
+  base.forEach(j => { counts[j._industry] = (counts[j._industry]||0) + 1; });
+  const sel = document.getElementById('industryFilter');
+  const prev = sel.value;
+  sel.innerHTML = `<option value="">업종 전체 (${base.length})</option>` +
+    Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([k,v]) =>
+      `<option value="${k}"${k===prev?' selected':''}>${k} (${v})</option>`
+    ).join('');
+}
+
+function render() {
+  const kw  = document.getElementById('searchInput').value.trim().toLowerCase();
+  const ind = document.getElementById('industryFilter').value;
+  const typ = document.getElementById('typeFilter').value;
+  const src = document.getElementById('sourceFilter').value;
+  const srt = document.getElementById('sortSelect').value;
+
+  let jobs = allJobs.filter(j => {
+    if (activeRegion !== '전체' && j._region !== activeRegion) return false;
+    if (ind && j._industry !== ind) return false;
+    if (typ && j.type !== typ) return false;
+    if (src && j.source !== src) return false;
+    if (kw && !(j.title+j.company+j.location).toLowerCase().includes(kw)) return false;
+    return true;
+  });
+
+  if (srt === 'deadline') {
+    jobs.sort((a,b) => {
+      const da = /^\d{4}-\d{2}-\d{2}$/.test(a.deadline) ? a.deadline : '9999-12-31';
+      const db = /^\d{4}-\d{2}-\d{2}$/.test(b.deadline) ? b.deadline : '9999-12-31';
+      return da.localeCompare(db);
+    });
+  } else if (srt === 'salary') {
+    jobs.sort((a,b) => parseSal(b.salary) - parseSal(a.salary));
+  } else {
+    jobs.sort((a,b) => a.title.localeCompare(b.title,'ko'));
+  }
+
+  document.getElementById('resultCount').innerHTML = `<strong>${jobs.length}</strong>건의 공고`;
+
+  const grid = document.getElementById('jobGrid');
+  if (!jobs.length) {
+    grid.innerHTML = '<div class="empty"><span class="empty-icon">🔍</span>검색 결과가 없습니다.</div>';
+    return;
+  }
+
+  grid.innerHTML = jobs.map(job => {
+    const typeClass = ['정규직','계약직','시간제'].includes(job.type) ? job.type : '기타';
+    const typeLabel = job.type || '미기재';
+    const salHtml = job.salary
+      ? `<div class="info-item">
+           <span class="info-label">급여</span>
+           <span class="info-val salary">${job.salary.replace(/\s+/g,' ').trim()}</span>
+         </div>` : '';
+    const link   = job.apply_link || '#';
+    const target = job.apply_link ? 'target="_blank" rel="noopener"' : '';
+    const lineClass  = `line-${job.source||'기타'}`;
+    const badgeClass = `src-${job.source||'기타'}`;
+
+    return `
+    <div class="card">
+      <div class="card-line ${lineClass}"></div>
+      <div class="card-head">
+        <div class="tag-row">
+          <span class="tag tag-region">${job._region}</span>
+          <span class="tag tag-industry">${job._industry}</span>
+          <span class="tag tag-${typeClass}">${typeLabel}</span>
+        </div>
+        <span class="source-badge ${badgeClass}">${job.source||''}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${job.title}</div>
+        <div class="card-company">${job.company || '회사명 미공개'}</div>
+        <div class="info-grid">
+          <div class="info-item info-full">
+            <span class="info-label">위치</span>
+            <span class="info-val">${job.location || '미공개'}</span>
+          </div>
+          ${salHtml}
+          <div class="info-item">
+            <span class="info-label">마감</span>
+            <span class="info-val">${dlChip(job.deadline)}</span>
+          </div>
+        </div>
+        <div class="ai-summary">${job._summary}</div>
+      </div>
+      <div class="card-foot">
+        <a class="btn-view" href="${link}" ${target}>공고 보기 →</a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+loadData();
+</script>
+
+</body>
+</html>

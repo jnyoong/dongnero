@@ -1,0 +1,16 @@
+{
+  "name": "시니어 취업정보",
+  "short_name": "시니어취업",
+  "description": "50대 이상을 위한 전국 일자리 정보 — 고용24·알바몬·알바천국·시니어로",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F7F8FA",
+  "theme_color": "#2563EB",
+  "lang": "ko",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
