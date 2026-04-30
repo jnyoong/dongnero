@@ -365,9 +365,13 @@
       border-radius: 28px 28px 0 0;
       padding: 10px 22px 48px;
       width: 100%; max-width: 520px;
+      max-height: 88vh;
+      overflow-y: auto;
+      scrollbar-width: none;
       transform: translateY(40px);
       transition: transform .32s cubic-bezier(.4,0,.2,1);
     }
+    .notify-sheet::-webkit-scrollbar { display: none; }
     .notify-overlay.show .notify-sheet { transform: translateY(0); }
     .notify-drag {
       width: 44px; height: 4px;
