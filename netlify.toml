@@ -1,0 +1,11 @@
+[[redirects]]
+  from = "http://dongnero.kr/*"
+  to   = "https://dongnero.kr/:splat"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from = "http://www.dongnero.kr/*"
+  to   = "https://dongnero.kr/:splat"
+  status = 301
+  force  = true
