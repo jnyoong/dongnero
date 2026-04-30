@@ -528,8 +528,7 @@
       <div class="notify-icon">🔔</div>
       <div class="notify-title">새 일자리 나오면 알려드릴게요!</div>
       <p class="notify-desc">전화번호와 나이를 남겨주시면<br>새 공고가 올라올 때 문자로 알려드려요.</p>
-      <form id="notifyForm" name="알림신청" data-netlify="true" novalidate>
-        <input type="hidden" name="form-name" value="알림신청" />
+      <form id="notifyForm" novalidate>
         <div class="nform-group">
           <label class="nform-label" for="inputPhone">전화번호 <span class="nform-req">*</span></label>
           <input class="nform-input" id="inputPhone" type="tel" name="phone"
@@ -763,13 +762,14 @@ if ('serviceWorker' in navigator) {
     submitBtn.textContent = '신청 중…';
 
     try {
-      await fetch('/', {
+      await fetch('https://riomousxlyvwmembuhvc.supabase.co/rest/v1/notify_signups', {
         method:  'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          'form-name': '알림신청',
-          phone, age, region
-        }).toString()
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey':        'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh',
+          'Authorization': 'Bearer sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh'
+        },
+        body: JSON.stringify({ phone, age: parseInt(age) || 0, region })
       });
     } catch (_) {}
 
