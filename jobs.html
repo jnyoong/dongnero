@@ -496,11 +496,18 @@
       </div>
       <button class="pwa-banner-close" id="pwaBannerClose" aria-label="닫기">×</button>
     </div>
+    <!-- iOS: 공유 버튼으로 바로 열기 -->
+    <button class="pwa-add-btn" id="pwaIosBtn" style="display:none">
+      📤 공유 메뉴 열기 → '홈 화면에 추가' 선택
+    </button>
+    <!-- iOS: navigator.share 미지원 시 텍스트 안내 -->
     <div id="pwaIosSteps" class="pwa-ios-steps" style="display:none">
-      1️⃣ 하단 <strong>공유 버튼(□↑)</strong>을 탭하세요<br>
-      2️⃣ 아래로 스크롤하여 <strong>'홈 화면에 추가'</strong>를 탭하세요<br>
-      3️⃣ 우측 상단 <strong>'추가'</strong>를 눌러 완료하세요
+      1️⃣ 화면 하단을 한 번 탭해 Safari 메뉴바를 띄우세요<br>
+      2️⃣ 가운데 <strong>공유 버튼(□↑)</strong>을 탭하세요<br>
+      3️⃣ 아래로 스크롤해 <strong>'홈 화면에 추가'</strong>를 탭하세요<br>
+      4️⃣ 우측 상단 <strong>'추가'</strong>를 탭하면 완료!
     </div>
+    <!-- Android 버튼 -->
     <button class="pwa-add-btn" id="pwaAndroidBtn" style="display:none">📲 홈 화면에 추가하기</button>
   </div>
 </div>
@@ -676,7 +683,18 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('scroll', onPwaScroll);
 
   if (isIOS) {
-    iosSteps.style.display = 'block';
+    const iosBtn = document.getElementById('pwaIosBtn');
+    if (navigator.share) {
+      iosBtn.style.display = 'block';
+      iosBtn.addEventListener('click', () => {
+        navigator.share({
+          title: '시니어 취업정보',
+          url: window.location.href
+        }).catch(() => {});
+      });
+    } else {
+      iosSteps.style.display = 'block';
+    }
   } else {
     window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
     androidBtn.style.display = 'block';
