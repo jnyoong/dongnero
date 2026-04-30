@@ -1,0 +1,17 @@
+stages:
+  - crawl
+
+daily_crawl:
+  stage: crawl
+  image: python:3.11-slim
+  script:
+    - pip install --quiet requests beautifulsoup4
+    - python crawler.py
+    - git config user.email "ci@dongnero.kr"
+    - git config user.name "Dongnero CI"
+    - git remote set-url origin "https://oauth2:${GITLAB_TOKEN}@gitlab.com/kahn201130/dongnero.git"
+    - git add jobs_data.js jobs.json
+    - git diff --cached --quiet && echo "변경 없음" || git commit -m "daily crawl $(date '+%Y-%m-%d')"
+    - git push origin HEAD:main
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
