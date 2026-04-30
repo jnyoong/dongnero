@@ -5,6 +5,7 @@ daily_crawl:
   stage: crawl
   image: python:3.11-slim
   script:
+    - apt-get update -qq && apt-get install -y -qq git
     - pip install --quiet requests beautifulsoup4
     - python crawler.py
     - git config user.email "ci@dongnero.kr"
