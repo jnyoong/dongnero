@@ -482,7 +482,7 @@
 <!-- 상단 상시 힌트 바 -->
 <div class="home-hint-bar hidden" id="homeHintBar" role="complementary">
   <span class="home-hint-text">📱 홈 화면에 추가하면 앱처럼 바로 접속할 수 있어요</span>
-  <button class="home-hint-btn" id="homeHintBtn">추가하기 →</button>
+  <button class="home-hint-btn" id="homeHintBtn">추가하기</button>
 </div>
 
 <!-- PWA 홈화면 배너 -->
@@ -528,7 +528,8 @@
       <div class="notify-icon">🔔</div>
       <div class="notify-title">새 일자리 나오면 알려드릴게요!</div>
       <p class="notify-desc">전화번호와 나이를 남겨주시면<br>새 공고가 올라올 때 문자로 알려드려요.</p>
-      <form id="notifyForm" novalidate>
+      <form id="notifyForm" name="알림신청" data-netlify="true" novalidate>
+        <input type="hidden" name="form-name" value="알림신청" />
         <div class="nform-group">
           <label class="nform-label" for="inputPhone">전화번호 <span class="nform-req">*</span></label>
           <input class="nform-input" id="inputPhone" type="tel" name="phone"
@@ -762,10 +763,13 @@ if ('serviceWorker' in navigator) {
     submitBtn.textContent = '신청 중…';
 
     try {
-      await fetch('https://YOUR_SERVER/api/notify', {
+      await fetch('/', {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone, age, region })
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          'form-name': '알림신청',
+          phone, age, region
+        }).toString()
       });
     } catch (_) {}
 
