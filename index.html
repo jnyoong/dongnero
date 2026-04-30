@@ -344,7 +344,7 @@
     <div id="notifyFormWrap">
       <div class="notify-icon">🔔</div>
       <div class="notify-title">새 일자리 나오면 알려드릴게요!</div>
-      <p class="notify-desc">아래 정보를 남겨주시면<br>새 공고가 올라올 때 문자로 알려드려요.</p>
+      <p class="notify-desc">아래 정보를 남겨주시면<br>내 동네 공고가 올라올 때 문자로 알려드려요.</p>
       <form id="notifyForm" novalidate>
         <div class="nform-group">
           <label class="nform-label" for="inputPhone">전화번호 <span class="nform-req">*</span></label>
@@ -354,7 +354,7 @@
           <span class="nform-hint" id="phoneHint"></span>
         </div>
         <div class="nform-group">
-          <label class="nform-label" for="inputAge">나이 <span class="nform-req">*</span></label>
+          <label class="nform-label" for="inputAge">나이(만) <span class="nform-req">*</span></label>
           <input class="nform-input" id="inputAge" type="number" name="age"
                  placeholder="예: 58" min="40" max="90" inputmode="numeric" required>
         </div>
@@ -365,7 +365,7 @@
               <input type="checkbox" id="typeRegular"> 정규직
             </label>
             <label class="nform-check">
-              <input type="checkbox" id="typePart"> 시간제·알바
+              <input type="checkbox" id="typePart"> 알바·시간제
             </label>
           </div>
         </div>
@@ -387,7 +387,7 @@
           </div>
         </div>
         <div class="nform-consent">
-          <div class="nform-consent-title">📋 개인정보 수집·이용 동의</div>
+          <div class="nform-consent-title">📋 개인정보 수집·이용 동의 (<a href="privacy.html" target="_blank" style="color:var(--blue);font-weight:400">전문 보기</a>)</div>
           · 수집 항목: 전화번호, 나이, 선호 일자리 유형, 선호 지역<br>
           · 이용 목적: 채용 공고 알림 문자 발송<br>
           · 보유 기간: 동의 철회 또는 서비스 종료 시까지<br>
@@ -424,6 +424,20 @@
 </header>
 
 <main>
+  <!-- 내 동네 일자리 -->
+  <a class="btn-all" href="local.html" style="border-color:var(--orange);box-shadow:0 4px 20px rgba(234,88,12,.15);margin-bottom:10px;">
+    <div class="btn-all-left">
+      <span class="btn-all-emoji">📍</span>
+      <div>
+        <div class="btn-all-title">내 동네 일자리 찾기</div>
+        <div class="btn-all-sub">구·시·군 단위로 가까운 공고만 보기</div>
+      </div>
+    </div>
+    <div class="btn-all-right">
+      <span style="font-size:1.5rem">→</span>
+    </div>
+  </a>
+
   <!-- 전국 전체보기 -->
   <a class="btn-all" href="jobs.html" id="btnAll">
     <div class="btn-all-left">
@@ -453,7 +467,9 @@
 
 <footer>
   고용24 · 알바몬 · 알바천국 · 시니어로 공개 정보를 수집·제공합니다.<br>
-  실제 지원은 원문 공고 사이트에서 진행해 주세요.
+  실제 지원은 원문 공고 사이트에서 진행해 주세요.<br>
+  운영자 문의: <a href="mailto:jun@dolight.co.kr" style="color:inherit">jun@dolight.co.kr</a>
+  &nbsp;·&nbsp; <a href="privacy.html" style="color:inherit">개인정보 처리방침</a>
 </footer>
 
 <script src="jobs_data.js"></script>
