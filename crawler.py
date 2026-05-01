@@ -13,7 +13,9 @@ import time
 import re
 import sys
 import xml.etree.ElementTree as ET
-from datetime import datetime, date
+from datetime import datetime, date, timezone, timedelta
+
+KST = timezone(timedelta(hours=9))
 from pathlib import Path
 
 try:
@@ -410,7 +412,7 @@ def _is_api_key_set() -> bool:
 def run_crawler():
     print("=" * 60)
     print("  시니어 취업정보 크롤러")
-    print(f"  실행 시각: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"  실행 시각: {datetime.now(KST).strftime('%Y-%m-%d %H:%M:%S KST')}")
     print(f"  대상 연령: 50세 이상 ({BIRTH_YEAR_LIMIT}년 이전 출생)")
     print("  출처: 고용24 / 알바몬 / 알바천국 / 시니어로")
     print("=" * 60)
@@ -496,7 +498,7 @@ def run_crawler():
     filtered.sort(key=_sort_key)
 
     # ── 저장 ──────────────────────────────────────────────────
-    updated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    updated_at = datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S KST")
     output = {
         "updated_at"   : updated_at,
         "total"        : len(filtered),
