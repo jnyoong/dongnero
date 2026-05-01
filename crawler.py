@@ -41,20 +41,43 @@ WORK24_AUTH_KEY = "YOUR_AUTH_KEY_HERE"
 
 # ── 시니어 부적합 필터 ────────────────────────────────────────────────────────
 
-# 회사명에 포함 시 제외 (대소문자 무시)
+# 회사명에 포함 시 제외
 EXCLUDE_COMPANIES = {
-    '올리브영', 'cgv', '메가박스', '롯데시네마', '씨네큐',
+    # 뷰티·헬스
+    '올리브영',
+    # 영화관
+    'cgv', '메가박스', '롯데시네마', '씨네큐',
+    # 젊은층 카페 프랜차이즈
     '스타벅스', '이디야', '빽다방', '투썸플레이스', '공차', '컴포즈',
     '할리스', '파스쿠찌', '탐앤탐스', '폴바셋',
 }
 
 # 공고 제목·회사명에 포함 시 제외
 EXCLUDE_KEYWORDS = [
+    # 유흥·주점
     '나이트클럽', '유흥주점', '단란주점', '룸살롱', '룸카페',
-    '호스트바', '바텐더',
-    '호프집', '맥주집', '포장마차', '포차', '이자카야',
+    '호스트바', '바텐더', '호프집', '맥주집', '포장마차', '포차', '이자카야',
+    # 오락시설
     'pc방', '피씨방', '코인노래방',
+    # 명시적 연령 제한
     '10대', '20대 초반', '나이 제한',
+
+    # IT 소프트웨어 개발직 (시니어 채용 가능성 낮음)
+    '백엔드 개발자', '프론트엔드 개발자', '풀스택 개발자',
+    'ios 개발자', 'android 개발자', '앱 개발자',
+    'devops 엔지니어', 'ui/ux 디자이너', 'ux 디자이너',
+    '데이터 사이언티스트', '머신러닝 엔지니어', '딥러닝 엔지니어', 'ai 엔지니어',
+    '소프트웨어 엔지니어', '클라우드 엔지니어',
+
+    # 크리에이터·SNS (젊은층 위주)
+    '유튜브 크리에이터', '틱톡 크리에이터', '인플루언서',
+    'sns 마케터', '콘텐츠 크리에이터',
+
+    # 극한 체력직 (시니어 부적합)
+    '이삿짐', '퀵서비스 라이더', '오토바이 배달',
+
+    # 학생 대상
+    '고등학생 가능', '대학생 전용',
 ]
 
 REQUEST_DELAY   = 2.0
@@ -576,9 +599,18 @@ def run_crawler():
         f.write(js_content)
 
     excluded_js = OUTPUT_FILE.parent / "excluded_data.js"
+    excluded_payload = {
+        'updated_at': updated_at,
+        'total': len(excluded_jobs),
+        'jobs': excluded_jobs,
+        'filter_config': {
+            'companies': sorted(EXCLUDE_COMPANIES),
+            'keywords': EXCLUDE_KEYWORDS,
+        }
+    }
     excluded_content = (
         f"/* 자동 생성 — 필터링 제외 목록 / {updated_at} */\n"
-        f"var EXCLUDED_DATA = {json.dumps({'updated_at': updated_at, 'total': len(excluded_jobs), 'jobs': excluded_jobs}, ensure_ascii=False, indent=2)};\n"
+        f"var EXCLUDED_DATA = {json.dumps(excluded_payload, ensure_ascii=False, indent=2)};\n"
     )
     with open(excluded_js, "w", encoding="utf-8") as f:
         f.write(excluded_content)
