@@ -57,9 +57,10 @@ EXCLUDE_KEYWORDS = [
     '10대', '20대 초반', '나이 제한',
 ]
 
-REQUEST_DELAY   = 1.5
+REQUEST_DELAY   = 2.0
 MAX_PAGES       = 50
 ITEMS_PER_PAGE  = 20
+MAX_RETRIES     = 3
 
 BIRTH_YEAR_LIMIT = str(date.today().year - 50)
 
@@ -150,9 +151,19 @@ def scrape_work24_web(page: int) -> list[dict]:
         "keywordJobCont" : "N",
         "keywordStaAreaNm": "N",
     }
+    for attempt in range(MAX_RETRIES):
+        try:
+            resp = requests.post(POST_URL, data=post_data, headers=HEADERS, timeout=30)
+            resp.raise_for_status()
+            break
+        except Exception as e:
+            if attempt < MAX_RETRIES - 1:
+                print(f"재시도 {attempt+1}/{MAX_RETRIES-1}...", end=" ", flush=True)
+                time.sleep(3)
+            else:
+                print(f"\n  [고용24 스크래핑 오류] {e}")
+                return []
     try:
-        resp = requests.post(POST_URL, data=post_data, headers=HEADERS, timeout=15)
-        resp.raise_for_status()
         resp.encoding = "utf-8"
         soup = BeautifulSoup(resp.text, "html.parser")
 
