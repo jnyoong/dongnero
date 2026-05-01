@@ -540,7 +540,7 @@
           </div>
         </div>
         <div class="nform-consent">
-          <div class="nform-consent-title">📋 개인정보 수집·이용 동의</div>
+          <div class="nform-consent-title">📋 개인정보 수집·이용 동의 (<a href="privacy.html" target="_blank" style="color:var(--blue);font-weight:400">전문 보기</a>)</div>
           · 수집 항목: 전화번호, 나이, 선호 일자리 유형, 선호 지역<br>
           · 이용 목적: 채용 공고 알림 문자 발송<br>
           · 보유 기간: 동의 철회 또는 서비스 종료 시까지<br>
@@ -624,7 +624,9 @@
 
 <footer>
   고용24 · 알바몬 · 알바천국 · 시니어로 공개 정보를 수집·제공합니다.<br>
-  실제 지원은 원문 공고 사이트에서 진행해 주세요.
+  실제 지원은 원문 공고 사이트에서 진행해 주세요.<br>
+  운영자 문의: <a href="mailto:jun@dolight.co.kr" style="color:inherit">jun@dolight.co.kr</a>
+  &nbsp;·&nbsp; <a href="privacy.html" style="color:inherit">개인정보 처리방침</a>
 </footer>
 
 <script src="jobs_data.js"></script>
@@ -901,8 +903,10 @@ function parseSal(s) {
   const m = (s||'').match(/[\d,]+/); return m ? +m[0].replace(/,/g,'') : 0;
 }
 
-const _urlRegion = new URLSearchParams(location.search).get('region') || '전체';
-let allJobs = [], activeRegion = _urlRegion;
+const _urlParams   = new URLSearchParams(location.search);
+const _urlRegion   = _urlParams.get('region')   || '전체';
+const _urlDistrict = _urlParams.get('district')  || '';
+let allJobs = [], activeRegion = _urlRegion, activeDistrict = _urlDistrict;
 
 function loadData() {
   if (typeof JOBS_DATA === 'undefined') {
@@ -949,6 +953,9 @@ function updateRegionLabel() {
   const el = document.getElementById('regionLabel');
   if (activeRegion === '전체') {
     el.textContent = '전국 전체 공고';
+  } else if (activeDistrict) {
+    const cnt = allJobs.filter(j => j._region === activeRegion && (j.location||'').includes(activeDistrict)).length;
+    el.textContent = `${activeRegion} ${activeDistrict} — ${cnt}건`;
   } else {
     const cnt = allJobs.filter(j => j._region === activeRegion).length;
     el.textContent = `${activeRegion} — ${cnt}건`;
@@ -968,6 +975,7 @@ function buildRegionTabs() {
 
 function setRegion(r, el) {
   activeRegion = r;
+  activeDistrict = '';
   document.querySelectorAll('.rtab').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
   buildIndustryOptions();
@@ -976,7 +984,11 @@ function setRegion(r, el) {
 }
 
 function buildIndustryOptions() {
-  const base = activeRegion === '전체' ? allJobs : allJobs.filter(j => j._region === activeRegion);
+  const base = allJobs.filter(j => {
+    if (activeRegion !== '전체' && j._region !== activeRegion) return false;
+    if (activeDistrict && !(j.location||'').includes(activeDistrict)) return false;
+    return true;
+  });
   const counts = {};
   base.forEach(j => { counts[j._industry] = (counts[j._industry]||0) + 1; });
   const sel = document.getElementById('industryFilter');
@@ -996,6 +1008,7 @@ function render() {
 
   let jobs = allJobs.filter(j => {
     if (activeRegion !== '전체' && j._region !== activeRegion) return false;
+    if (activeDistrict && !(j.location||'').includes(activeDistrict)) return false;
     if (ind && j._industry !== ind) return false;
     if (typ && j.type !== typ) return false;
     if (src && j.source !== src) return false;

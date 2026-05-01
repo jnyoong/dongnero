@@ -168,6 +168,7 @@
       box-shadow: var(--shadow);
       transition: all .15s;
       -webkit-tap-highlight-color: transparent;
+      cursor: pointer; font-family: inherit;
     }
     .region-card:active {
       background: var(--blue-lt);
@@ -208,6 +209,154 @@
     @media (max-width: 380px) {
       .region-grid { grid-template-columns: repeat(2, 1fr); }
       .logo-name { font-size: 1.45rem; }
+    }
+
+    /* ── 위치 기반 배너 ── */
+    .loc-banner {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-10px);
+      margin-bottom: 0;
+      transition: max-height .42s cubic-bezier(.4,0,.2,1),
+                  opacity .32s ease,
+                  transform .32s ease,
+                  margin-bottom .42s;
+      pointer-events: none;
+    }
+    .loc-banner.show {
+      max-height: 260px;
+      opacity: 1;
+      transform: translateY(0);
+      margin-bottom: 14px;
+      pointer-events: auto;
+    }
+    .loc-banner-inner {
+      background: linear-gradient(135deg, #EFF6FF 0%, #E0EDFF 100%);
+      border: 1.5px solid #BFDBFE;
+      border-radius: var(--radius-lg);
+      padding: 16px 18px 18px;
+    }
+    .loc-banner-row {
+      display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;
+    }
+    .loc-banner-icon { font-size: 1.8rem; flex-shrink: 0; line-height: 1.2; }
+    .loc-banner-text { flex: 1; }
+    .loc-banner-title {
+      font-size: 1rem; font-weight: 800; color: var(--text-pri);
+      margin-bottom: 3px;
+    }
+    .loc-banner-sub {
+      font-size: .82rem; color: var(--text-sec); line-height: 1.5;
+    }
+    .loc-banner-btns {
+      display: flex; gap: 8px;
+    }
+    .loc-btn-yes {
+      flex: 1; padding: 11px 14px;
+      background: var(--blue); color: #fff;
+      border: none; border-radius: 12px;
+      font-size: .92rem; font-weight: 800;
+      cursor: pointer; font-family: inherit;
+      transition: background .15s, transform .12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .loc-btn-yes:active { transform: scale(.97); }
+    .loc-btn-yes:disabled { background: var(--text-ter); cursor: not-allowed; }
+    .loc-btn-no {
+      padding: 11px 16px;
+      background: transparent; color: var(--text-sec);
+      border: 1.5px solid var(--border); border-radius: 12px;
+      font-size: .88rem; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    .loc-btn-no:active { background: var(--bg); }
+
+    /* ── 구 선택 바텀시트 ── */
+    .gu-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.52);
+      z-index: 280;
+      display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .22s ease;
+    }
+    .gu-overlay.show { opacity: 1; pointer-events: auto; }
+    .gu-sheet {
+      background: var(--surface);
+      border-radius: 28px 28px 0 0;
+      padding: 10px 20px 44px;
+      width: 100%; max-width: 540px;
+      max-height: 82vh;
+      overflow-y: auto;
+      scrollbar-width: none;
+      transform: translateY(100%);
+      transition: transform .34s cubic-bezier(.32,0,.16,1);
+    }
+    .gu-sheet::-webkit-scrollbar { display: none; }
+    .gu-overlay.show .gu-sheet { transform: translateY(0); }
+    .gu-drag {
+      width: 44px; height: 4px;
+      background: var(--border); border-radius: 2px;
+      margin: 8px auto 16px;
+    }
+    .gu-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .gu-title {
+      font-size: 1.25rem; font-weight: 900; color: var(--text-pri);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .gu-title-badge {
+      font-size: .8rem; font-weight: 700; color: var(--blue);
+      background: var(--blue-lt); border-radius: 20px;
+      padding: 3px 10px;
+    }
+    .gu-close {
+      background: var(--bg); border: none;
+      border-radius: 50%; width: 34px; height: 34px;
+      font-size: 1rem; cursor: pointer; color: var(--text-sec);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .gu-desc {
+      font-size: .85rem; color: var(--text-sec);
+      margin-bottom: 16px; line-height: 1.5;
+    }
+    .gu-btn-all {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 14px 18px;
+      background: var(--blue-lt); border: 2px solid var(--blue);
+      border-radius: 14px; margin-bottom: 14px;
+      font-size: 1rem; font-weight: 800; color: var(--blue);
+      cursor: pointer; font-family: inherit;
+      transition: background .15s, transform .12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .gu-btn-all:active { transform: scale(.97); }
+    .gu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .gu-btn {
+      padding: 13px 6px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 12px; font-size: .95rem; font-weight: 700;
+      color: var(--text-pri); cursor: pointer; font-family: inherit;
+      text-align: center; line-height: 1.3;
+      transition: background .12s, border-color .12s, transform .12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .gu-btn:active {
+      background: var(--blue-lt); border-color: var(--blue);
+      color: var(--blue); transform: scale(.95);
+    }
+    @media (max-width: 380px) {
+      .gu-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     /* ── 알림 신청 플로팅 버튼 ── */
@@ -329,6 +478,26 @@
 </head>
 <body>
 
+<!-- 구 선택 바텀시트 -->
+<div class="gu-overlay" id="guOverlay" role="dialog" aria-modal="true">
+  <div class="gu-sheet" id="guSheet">
+    <div class="gu-drag"></div>
+    <div class="gu-head">
+      <div class="gu-title">
+        <span id="guRegionName"></span>
+        <span class="gu-title-badge" id="guDistrictCount"></span>
+      </div>
+      <button class="gu-close" id="guClose" aria-label="닫기">✕</button>
+    </div>
+    <p class="gu-desc">구·군·시를 선택하시면 해당 지역 공고를 바로 볼 수 있어요.</p>
+    <button class="gu-btn-all" id="guBtnAll">
+      <span>🗺️ <span id="guRegionNameAll"></span> 전체 공고 보기</span>
+      <span>→</span>
+    </button>
+    <div class="gu-grid" id="guGrid"></div>
+  </div>
+</div>
+
 <!-- 알림 신청 플로팅 버튼 -->
 <button class="notify-fab" id="notifyFab" aria-label="새 일자리 알림 신청">
   🔔 새 일자리 알림 받기
@@ -424,6 +593,23 @@
 </header>
 
 <main>
+  <!-- 위치 기반 배너 -->
+  <div class="loc-banner" id="locBanner">
+    <div class="loc-banner-inner">
+      <div class="loc-banner-row">
+        <span class="loc-banner-icon">📍</span>
+        <div class="loc-banner-text">
+          <div class="loc-banner-title">현재 위치 기반으로 공고를 보여드릴까요?</div>
+          <div class="loc-banner-sub">내 동네 채용 공고를 바로 찾아드려요.</div>
+        </div>
+      </div>
+      <div class="loc-banner-btns">
+        <button class="loc-btn-yes" id="locBtnYes">📍 현재 위치로 보기</button>
+        <button class="loc-btn-no"  id="locBtnNo">나중에</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 내 동네 일자리 -->
   <a class="btn-all" href="local.html" style="border-color:var(--orange);box-shadow:0 4px 20px rgba(234,88,12,.15);margin-bottom:10px;">
     <div class="btn-all-left">
@@ -649,14 +835,137 @@ function buildRegionCards(counts) {
     const cnt = counts[r] || 0;
     const isEmpty = cnt === 0;
     return `
-      <a class="region-card${isEmpty ? ' empty-region' : ''}"
-         href="jobs.html?region=${encodeURIComponent(r)}">
+      <button class="region-card${isEmpty ? ' empty-region' : ''}"
+         onclick="openGuSheet('${r}')">
         <div class="region-name">${r}</div>
         <div class="region-count${isEmpty ? ' zero' : ''}">${cnt ? cnt.toLocaleString() + '건' : '없음'}</div>
         ${!isEmpty ? '<div class="region-arrow">보기 →</div>' : ''}
-      </a>`;
+      </button>`;
   }).join('');
 }
+
+/* ── 구 선택 바텀시트 ── */
+(function initGuSheet() {
+  const overlay  = document.getElementById('guOverlay');
+  const closeBtn = document.getElementById('guClose');
+  const grid     = document.getElementById('guGrid');
+  const btnAll   = document.getElementById('guBtnAll');
+  let currentRegion = '';
+
+  function open(region) {
+    currentRegion = region;
+    document.getElementById('guRegionName').textContent    = region;
+    document.getElementById('guRegionNameAll').textContent = region;
+
+    const districts = DISTRICTS[region] || [];
+    document.getElementById('guDistrictCount').textContent = districts.length + '개 구·군·시';
+
+    grid.innerHTML = districts.map(d =>
+      `<button class="gu-btn" onclick="navigateDistrict('${d}')">${d}</button>`
+    ).join('');
+
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('guSheet').scrollTop = 0;
+  }
+
+  function close() {
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  window.openGuSheet = open;
+  window.navigateDistrict = function(district) {
+    close();
+    location.href = 'jobs.html?region=' + encodeURIComponent(currentRegion)
+                  + '&district=' + encodeURIComponent(district);
+  };
+
+  btnAll.addEventListener('click', function() {
+    close();
+    location.href = 'jobs.html?region=' + encodeURIComponent(currentRegion);
+  });
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+})();
+
+/* ── 현재 위치 기반 배너 ── */
+(function initLocationBanner() {
+  if (!navigator.geolocation) return;
+  if (sessionStorage.getItem('loc_dismissed')) return;
+
+  const banner  = document.getElementById('locBanner');
+  const btnYes  = document.getElementById('locBtnYes');
+  const btnNo   = document.getElementById('locBtnNo');
+
+  setTimeout(() => banner.classList.add('show'), 600);
+
+  function dismiss() {
+    sessionStorage.setItem('loc_dismissed', '1');
+    banner.classList.remove('show');
+  }
+
+  btnNo.addEventListener('click', dismiss);
+
+  btnYes.addEventListener('click', async () => {
+    btnYes.textContent = '위치 확인 중…';
+    btnYes.disabled = true;
+
+    let pos;
+    try {
+      pos = await new Promise((res, rej) =>
+        navigator.geolocation.getCurrentPosition(res, rej, { timeout: 9000 })
+      );
+    } catch (e) {
+      btnYes.textContent = e.code === 1 ? '위치 권한이 거부됐어요' : '위치 확인 실패';
+      setTimeout(() => { btnYes.textContent = '📍 현재 위치로 보기'; btnYes.disabled = false; }, 2200);
+      return;
+    }
+
+    const { latitude: lat, longitude: lon } = pos.coords;
+    let resp;
+    try {
+      resp = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=ko`,
+        { headers: { 'User-Agent': 'dongnero-senior-jobs/1.0' } }
+      ).then(r => r.json());
+    } catch (_) {
+      btnYes.textContent = '네트워크 오류, 다시 시도해 주세요';
+      setTimeout(() => { btnYes.textContent = '📍 현재 위치로 보기'; btnYes.disabled = false; }, 2200);
+      return;
+    }
+
+    const addr = resp.address || {};
+    // 구/군 감지
+    const rawDistrict = addr.city_district || addr.county || addr.quarter || '';
+    // 시/도 감지 → DISTRICTS 키와 매칭
+    const rawCity = addr.city || addr.town || addr.county || addr.state || '';
+    let region = '';
+    for (const key of Object.keys(DISTRICTS)) {
+      if (rawCity.includes(key)) { region = key; break; }
+    }
+    // 시/도 미감지 시 district 소속으로 역추적
+    if (!region && rawDistrict) {
+      for (const [r, dists] of Object.entries(DISTRICTS)) {
+        if (dists.some(d => rawDistrict.includes(d) || d.includes(rawDistrict))) {
+          region = r; break;
+        }
+      }
+    }
+    // district가 실제 목록에 있는지 확인
+    const knownDists = DISTRICTS[region] || [];
+    const district   = knownDists.find(d => rawDistrict.includes(d) || d.includes(rawDistrict)) || '';
+
+    dismiss();
+    if (region && district) {
+      location.href = `jobs.html?region=${encodeURIComponent(region)}&district=${encodeURIComponent(district)}`;
+    } else if (region) {
+      location.href = `jobs.html?region=${encodeURIComponent(region)}`;
+    } else {
+      alert('현재 위치의 지역 정보를 찾지 못했어요.\n지역을 직접 선택해 주세요.');
+    }
+  });
+})();
 
 init();
 </script>
