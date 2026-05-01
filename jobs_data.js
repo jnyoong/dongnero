@@ -1,7 +1,7 @@
-/* 자동 생성 — crawler.py / 2026-05-01 13:23:35 */
+/* 자동 생성 — crawler.py / 2026-05-01 00:13:44 */
 var JOBS_DATA = {
-  "updated_at": "2026-05-01 13:23:35",
-  "total": 1270,
+  "updated_at": "2026-05-01 00:13:44",
+  "total": 1260,
   "source_counts": {
     "고용24": 1000,
     "알바몬": 60,
@@ -10,25 +10,25 @@ var JOBS_DATA = {
   },
   "jobs": [
     {
-      "title": "우리은행 대출상담사 모집",
-      "company": "에이플러스모기지(주)",
-      "location": "서울 광진구",
-      "deadline": "2026-05-01",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779378&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
+      "title": "역전할머니맥주 서울가산점에서 주방직원및 아르바이트구합니다",
+      "company": "할맥 서울가산점",
+      "location": "서울 금천구",
+      "deadline": "2026-05-02",
+      "type": "시간제",
+      "salary": "시급 13,000원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116201901",
+      "source": "알바몬"
     },
     {
-      "title": "[무환수] ★가산디지털단지★예다함상조TM★ [신입/경력]",
-      "company": "주식회사재이스코 가산센터",
-      "location": "서울 구로구",
-      "deadline": "2026-05-01",
+      "title": "[No-Brand세종조치원점] STAFF 사원모집",
+      "company": "No-Brand세종조치원점",
+      "location": "세종 세종시 조치원읍",
+      "deadline": "2026-05-02",
       "type": "시간제",
-      "salary": "월급 5,000,000원",
+      "salary": "시급 11,500원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116272538",
+      "apply_link": "https://www.albamon.com/jobs/detail/116159810",
       "source": "알바몬"
     },
     {
@@ -131,72 +131,6 @@ var JOBS_DATA = {
       "source": "시니어로"
     },
     {
-      "title": "[콜센터] I/B O/B센터 관리자 채용공고",
-      "company": "(주)리딩아이",
-      "location": "서울 영등포구",
-      "deadline": "2026-05-04",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53774958&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[콜센터] 부가서비스 O/B 센터장 채용공고",
-      "company": "(주)리딩아이",
-      "location": "서울 영등포구",
-      "deadline": "2026-05-04",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53774976&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[경영지원실] 리딩아이 스탭(회계/경리) 채용공고",
-      "company": "(주)리딩아이",
-      "location": "서울 영등포구",
-      "deadline": "2026-05-04",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53774983&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "(주)리딩아이 인사총무 담당자 채용공고",
-      "company": "(주)리딩아이",
-      "location": "서울 영등포구",
-      "deadline": "2026-05-04",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53774990&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "롯데카드 대표번호 인바운드 상담사 채용공고[초보가능]",
-      "company": "(주)리딩아이",
-      "location": "부산",
-      "deadline": "2026-05-04",
-      "type": "",
-      "salary": "월급 250 만원 ~ 250 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53775000&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "춘천카페 소울로스터리 바리스타 구인,포카치아 주방구인",
-      "company": "㈜소울로스터리",
-      "location": "강원 춘천시",
-      "deadline": "2026-05-04",
-      "type": "시간제",
-      "salary": "월급 3,000,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116230731",
-      "source": "알바몬"
-    },
-    {
       "title": "홍천권역 터널통합관리센터 유지관리직원 모집 (통신분야 초급 이상)",
       "company": "모건인프라(주)",
       "location": "강원 홍천군",
@@ -252,17 +186,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "[정선/5일단기] 편의점 광고물 교체 프리랜서 모집",
-      "company": "아데코코리아",
-      "location": "강원 정선군 정선읍",
-      "deadline": "2026-05-05",
-      "type": "시간제",
-      "salary": "건별 5,500원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116282870",
-      "source": "알바몬"
-    },
-    {
       "title": "이수역 사당 우성3단지 아파트 내부 미화원 1명 채용합니다.",
       "company": "엘림에스 유한책임회사",
       "location": "서울 동작구",
@@ -296,9 +219,31 @@ var JOBS_DATA = {
       "source": "시니어로"
     },
     {
-      "title": "인화여자고등학교 뮤지컬동아리(달비슬) 강사 모집 공고",
-      "company": "",
-      "location": "",
+      "title": "영아반 보육교사 채용",
+      "company": "창원시립남문프라디움어린이집",
+      "location": "경상남도 창원시 진해구",
+      "deadline": "2026-05-06",
+      "type": "",
+      "salary": "월급 231 만원 이상",
+      "description": "경력2년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131132604300055&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "모두의경제 사회적협동조합 직원 공개 채용",
+      "company": "모두의경제 사회적협동조합",
+      "location": "경상남도 창원시 성산구",
+      "deadline": "2026-05-06",
+      "type": "",
+      "salary": "월급 250 만원 ~ 300 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131132604300053&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "2026년도 상반기 기간제근로자(통계조사관)  추가 채용(2차) 모...",
+      "company": "대구지방고용노동청안동지청",
+      "location": "경상북도 안동시 경동로",
       "deadline": "2026-05-06",
       "type": "",
       "salary": "회사내규에 따름",
@@ -325,19 +270,8 @@ var JOBS_DATA = {
       "type": "",
       "salary": "월급 250 만원 ~ 300 만원",
       "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131132604300053&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K141412604300005&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
-    },
-    {
-      "title": "[5월8일11시면접] 분당차병원 여성초음파팀 방사선사보조 직원 모집",
-      "company": "[제니엘] 분당차병원",
-      "location": "경기 성남시 분당구",
-      "deadline": "2026-05-06",
-      "type": "시간제",
-      "salary": "월급 2,436,750원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116239371",
-      "source": "알바몬"
     },
     {
       "title": "[안성시 발화동] 안성 가온고등학교 영선사원 채용합니다(복지카드 소지자 우대)",
@@ -417,17 +351,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "AI소프트웨어 마케팅 매니저 (B2B 마케팅 커뮤니케이션)",
-      "company": "뉴로클",
-      "location": "서울 강동구",
-      "deadline": "2026-05-07",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=357796&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "AI소프트웨어 마케팅 매니저 (프로덕트 마케팅)",
       "company": "뉴로클",
       "location": "서울 강동구",
@@ -436,6 +359,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=357802&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "AI소프트웨어 마케팅 매니저 (B2B 마케팅 커뮤니케이션)",
+      "company": "뉴로클",
+      "location": "서울 강동구",
+      "deadline": "2026-05-07",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=357796&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -513,6 +447,17 @@ var JOBS_DATA = {
       "salary": "월급 253 만원 이상",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KEC0842604300002&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "영남대학교 생활관 계약직원(단시간 조리원) 채용",
+      "company": "영남대학교",
+      "location": "경상북도 경산시 계양로",
+      "deadline": "2026-05-07",
+      "type": "",
+      "salary": "월급 141 만원 ~ 141 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140132604300022&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
     },
     {
@@ -615,17 +560,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "화성우체국 주관 제7회 실적급 공무직 상시집배원 채용 공고",
-      "company": "",
-      "location": "",
-      "deadline": "2026-05-08",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=291387&infoTypeCd=GOJ&infoTypeGroup=tb_workinfonara",
-      "source": "고용24"
-    },
-    {
       "title": "요양보호사구인   율전동 4등급 어르신",
       "company": "주식회사행복나눔",
       "location": "경기도 수원시 장안구",
@@ -679,6 +613,50 @@ var JOBS_DATA = {
       "description": "경력무관 대졸(2~3년)\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t ~ 석사",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140112604300014&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
+    },
+    {
+      "title": "구세군남서울하우징 사회복지사(경력 무관) 모집(2차)",
+      "company": "구세군남서울하우징",
+      "location": "서울특별시 송파구 중대로34길",
+      "deadline": "2026-05-08",
+      "type": "",
+      "salary": "월급 251 만원 ~ 263 만원 상여별도 120%",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120232604300033&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "요양보호사 채용의 건",
+      "company": "늘벗터재가노인복지센터",
+      "location": "부산광역시 해운대구 윗반송로51번길",
+      "deadline": "2026-05-08",
+      "type": "",
+      "salary": "시급 14,000 원 ~ 14,500 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130112604300054&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "이마트24 트렌드랩성수점(직영점) 평일오후(13-19시) 구합니다",
+      "company": "트렌드랩성수점",
+      "location": "서울 성동구 성수동2가",
+      "deadline": "2026-05-08",
+      "type": "시간제",
+      "salary": "시급 10,550원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116240938",
+      "source": "알바몬"
+    },
+    {
+      "title": "[현대백화점 본점] 카페 `틸화이트` 바리스타 모집",
+      "company": "동양이엠에스/현대백화점",
+      "location": "서울 강남구",
+      "deadline": "2026-05-08",
+      "type": "시간제",
+      "salary": "월급 2,400,000원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116008432",
+      "source": "알바몬"
     },
     {
       "title": "(주)하나코스 화장품 생산팀(충진·포장) 채용 ♣5월 8일(금) '원주시 구인·구직 해피데이' 참가업체♣",
@@ -846,17 +824,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "보도시사본부 연봉직(행정지원, 한시) 채용 공고",
-      "company": "한국방송공사",
-      "location": "서울 영등포구",
-      "deadline": "2026-05-10",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "신입/경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2604290000995&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "㈜삼양인터내셔날 환경 유지보수팀 경력 모집",
       "company": "㈜삼양인터내셔날",
       "location": "서울 종로구  등",
@@ -901,61 +868,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "중견그룹사 EHS 팀장급 15년이상",
-      "company": "프로페셔날핸즈인핸즈코리아(주)",
-      "location": "충남",
-      "deadline": "2026-05-10",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력15년 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010000991&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[한림병원] 기능검사팀 임상병리사/검안사(육아휴직 대체) 모집",
-      "company": "(의)인성의료재단",
-      "location": "인천 계양구",
-      "deadline": "2026-05-10",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779758&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[한림병원] 종합건강증진센터 간호조무사 모집",
-      "company": "(의)인성의료재단",
-      "location": "인천 계양구",
-      "deadline": "2026-05-10",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779769&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "사내변호사(중견그룹 지주사)",
-      "company": "써치스퀘어",
-      "location": "서울 서대문구",
-      "deadline": "2026-05-10",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력2년 석사",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010001219&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "중견 제약회사 약국 마케팅 총괄 초빙",
-      "company": "반석써치(주)",
-      "location": "서울 강남구",
-      "deadline": "2026-05-10",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력15년 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010001222&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "순천농협파머스마켓분사 직원 채용공고",
       "company": "순천농협파머스마켓분사",
       "location": "전라남도 순천시 백연길",
@@ -989,25 +901,25 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "[크리스피크림] 수서역사점 매장목금 / 매대토일 마감 모집공고",
-      "company": "KKD 수서역사점",
-      "location": "서울 전체",
+      "title": "(주) 그린씨에스 우리카드 대전센터 리볼빙TM 상담원 모집",
+      "company": "주식회사 그린씨에스",
+      "location": "대전광역시 중구 대종로",
       "deadline": "2026-05-10",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116317414",
-      "source": "알바몬"
+      "type": "",
+      "salary": "월급 215 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K170052604300042&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
     },
     {
-      "title": "CJ올리브영 제주한라병원점 토일 마감 CREW 구인(시간협의가능)",
-      "company": "씨제이올리브영 주식회사",
+      "title": "올리브영 제주국제공항점 주말 오픈 08시-15시 CREW 구인(금-일)",
+      "company": "씨제이올리브영 제주국제공항점",
       "location": "제주 제주시",
       "deadline": "2026-05-10",
       "type": "시간제",
       "salary": "시급 10,600원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116237320",
+      "apply_link": "https://www.albamon.com/jobs/detail/116100395",
       "source": "알바몬"
     },
     {
@@ -1063,17 +975,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=20260430050415&infoTypeCd=CLE&infoTypeGroup=tb_workinfocle",
-      "source": "고용24"
-    },
-    {
-      "title": "금융사무업 사무직 모집",
-      "company": "대명신용협동조합",
-      "location": "서울 동대문구",
-      "deadline": "2026-05-11",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "신입 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2604280000281&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -1209,6 +1110,39 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "[범계역] 역전할머니맥주 주말 홀 서빙 알바 모집합니다.",
+      "company": "할맥 안양범계점",
+      "location": "경기 안양시 동안구 호계동",
+      "deadline": "2026-05-11",
+      "type": "시간제",
+      "salary": "시급 12,000원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116268108",
+      "source": "알바몬"
+    },
+    {
+      "title": "노브랜드 양산물금점 STAFF 모집",
+      "company": "No-Brand양산물금점",
+      "location": "경남 양산시",
+      "deadline": "2026-05-11",
+      "type": "시간제",
+      "salary": "시급 11,500원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116258325",
+      "source": "알바몬"
+    },
+    {
+      "title": "올리브영 스타필드안성점 주말 마감  CREW 구인",
+      "company": "씨제이올리브영 주식회사",
+      "location": "경기 안성시 공도읍",
+      "deadline": "2026-05-11",
+      "type": "시간제",
+      "salary": "시급 10,600원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116263847",
+      "source": "알바몬"
+    },
+    {
       "title": "[ 금곡동 ] 경기도지체장애인협회남양주시지회 사회복지사 구인",
       "company": "（사）한국지체장애인협회 남양주시지회",
       "location": "경기 남양주시",
@@ -1253,17 +1187,6 @@ var JOBS_DATA = {
       "source": "시니어로"
     },
     {
-      "title": "2026년도 제1회 전통건축수리기술진흥재단  기간제 근로자 채용 공...",
-      "company": "전통건축수리기술진흥재단",
-      "location": "경북 안동시",
-      "deadline": "2026-05-12",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "신입/경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2604300004436&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "육가공 공장 2차 가공 세절라인 관리 경력자",
       "company": "탑커리어인사이트",
       "location": "경기 남양주시",
@@ -1283,28 +1206,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력3년 대졸(2~3년)",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010000348&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "2026년도 제2회 전통건축수리기술진흥재단  기간제 근로자 채용 공...",
-      "company": "",
-      "location": "",
-      "deadline": "2026-05-12",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=291413&infoTypeCd=GOJ&infoTypeGroup=tb_workinfonara",
-      "source": "고용24"
-    },
-    {
-      "title": "세종특별자치시의회 전입 희망공무원 모집 공고",
-      "company": "",
-      "location": "",
-      "deadline": "2026-05-12",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=291346&infoTypeCd=GOJ&infoTypeGroup=tb_workinfonara",
       "source": "고용24"
     },
     {
@@ -1385,28 +1286,6 @@ var JOBS_DATA = {
       "source": "시니어로"
     },
     {
-      "title": "[F&B 프랜차이즈 우량중견기업] 글로벌마케팅 경력인재 채용",
-      "company": "에스에프인촌 주식회사",
-      "location": "서울",
-      "deadline": "2026-05-13",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력3년 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010001044&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "경희대학교 산학협력단 경영지원팀(인사파트) 부서계약직 채용",
-      "company": "경희대학교산학협력단",
-      "location": "경기 용인시 기흥구 등",
-      "deadline": "2026-05-13",
-      "type": "",
-      "salary": "연봉 3,150 만원 ~ 3,150 만원",
-      "description": "경력무관 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779542&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "자동차정비기술 경력직 엔지니어 구인",
       "company": "주식회사삼호시스텍",
       "location": "광주광역시 광산구 하남산단천변좌로",
@@ -1459,6 +1338,39 @@ var JOBS_DATA = {
       "salary": "연봉 3,100 만원 이상",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130042604300048&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "철근 목공 직영",
+      "company": "주식회사 대련건설",
+      "location": "서울특별시 강남구 역삼로107길",
+      "deadline": "2026-05-13",
+      "type": "",
+      "salary": "일급 180,000 원 ~ 200,000 원",
+      "description": "경력10년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K152122604300024&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "(사)서울시시각장애인연합회  강동구지회 쉼터 사회복지사",
+      "company": "서울시 시각장애인 연합회 강동구 지회",
+      "location": "서울특별시 강동구 올림픽로89길",
+      "deadline": "2026-05-13",
+      "type": "",
+      "salary": "월급 251 만원 이상 상여별도 120%",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120232604300032&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "건설회사 사무직 모집합니다",
+      "company": "동창건설(주)",
+      "location": "경기도 양평군 용문면",
+      "deadline": "2026-05-13",
+      "type": "",
+      "salary": "연봉 3,000 만원 이상",
+      "description": "경력1년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180322604300030&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
     },
     {
@@ -1580,39 +1492,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "신입 대졸(4년)",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53775255&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "해외사업기획 / 글로벌사업기획 경력인재 채용 - F&B 우량중견기업",
-      "company": "에스에프인촌 주식회사",
-      "location": "서울",
-      "deadline": "2026-05-14",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력3년 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010001008&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "케이크/디저트 상품기획/PM 경력인재 채용 - F&B 우량중견기업",
-      "company": "에스에프인촌 주식회사",
-      "location": "서울",
-      "deadline": "2026-05-14",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력3년 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010001042&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[상업용부동산]    TR / LM / LR  경력인재 채용",
-      "company": "에스에프인촌 주식회사",
-      "location": "서울 강남구  등",
-      "deadline": "2026-05-14",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력5년 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010001043&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -2397,6 +2276,17 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "[신정동/2등급 할머니/09:00~13:00] 요양보호사 구인",
+      "company": "좋은아침재가복지센터",
+      "location": "서울특별시 양천구 신정로",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJAT002604300009&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
       "title": "[경기광주 곤지암 열미리] 4등급  어르신 / 요양보호사 구인",
       "company": "참사랑재가복지센터",
       "location": "경기도 광주시 벌열미길",
@@ -2628,6 +2518,182 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "자동차 부품 조립 및 검사원 모집 [울산고용센터 채용대행]",
+      "company": "(주)유원테크",
+      "location": "울산광역시 울주군 소야정길",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131212604300021&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "재가요양보호사 모집",
+      "company": "정우재가노인복지센터",
+      "location": "인천광역시 연수구 선학로",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJDI002604300007&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "서울형 키즈카페 요원 채용 공고",
+      "company": "노원구육아종합지원센터",
+      "location": "서울특별시 노원구 동일로203길",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "월급 249 만원 ~ 263 만원 상여별도 120%",
+      "description": "신입 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120512604300017&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[평리동] 재가요양보호사 구인",
+      "company": "행복한 동행 노인복지센터",
+      "location": "대구광역시 서구 국채보상로52길",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10882604300014&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "강촌마을 5단지 재가요양보호사 채용",
+      "company": "우리노인재가센터",
+      "location": "경기도 고양시 일산동구",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJ20912604300020&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "청라 힘찬장어 숯불장치원 구인",
+      "company": "힘찬장어",
+      "location": "인천광역시 서구 중봉대로",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJDH002604300010&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "4등급 할머니 오후 재가요앙보호사 구인",
+      "company": "온사랑방문요양센터",
+      "location": "서울특별시 중랑구 봉화산로",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 13,000 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF11052604300001&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "효성동 힘찬 장어 숯불장치원 채용",
+      "company": "힘찬장어",
+      "location": "인천광역시 계양구 아나지로",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJDH002604300009&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[물향기마을 7단지] 실내미화반장 1명 모집",
+      "company": "나우에스엠에이치 주식회사",
+      "location": "경기도 파주시 물향기2로",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJ20842604300009&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "방문요양 요양보호사 모집",
+      "company": "천사노인복지센터",
+      "location": "대구광역시 수성구 지산로",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력1년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140022604300024&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "재가요양보호사 구인(동구)",
+      "company": "HYO하모니재가센터",
+      "location": "인천광역시 동구 새천년로38번길",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF11112604300001&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "현장직 분쇄작업 및 (지게차 운전가능자) 채용",
+      "company": "(주)와이제이로지스",
+      "location": "충청북도 충주시 엄정면",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "월급 270 만원 ~ 300 만원",
+      "description": "신입 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K171222604300010&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "어선원모집",
+      "company": "광성호",
+      "location": "경상북도 울릉군 울릉읍",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K141112604300035&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "영업관리 차장 1명 모집",
+      "company": "엠텍솔루션주식회사",
+      "location": "충청남도 천안시 서북구",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "연봉 4,000 만원 이상",
+      "description": "경력10년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K172112604300040&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[안락동] 병원 조리원 모집",
+      "company": "동래봉생병원",
+      "location": "부산광역시 동래구 안연로109번길",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "월급 267 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10922604300006&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "서천천산아파트 관리(시설)주임 구인광고",
+      "company": "유한회사홍익종합관리",
+      "location": "충청남도 서천군 장서로",
+      "deadline": "2026-05-14",
+      "type": "",
+      "salary": "월급 259 만원 이상 상여별도 20%",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K161322604300016&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
       "title": "★★ 서면아이파크  미화원  채용 ★★",
       "company": "(주)듀델코리아",
       "location": "부산 부산진구",
@@ -2670,17 +2736,6 @@ var JOBS_DATA = {
       "description": "",
       "apply_link": "http://www.work.go.kr/empInfo/empInfoSrch/detail/empDetailAuthView.do?callPage=detail&wantedAuthNo=K180022604230048",
       "source": "시니어로"
-    },
-    {
-      "title": "요양보호사 채용합니다(주야 급구)",
-      "company": "봄봄노인요양원",
-      "location": "대구광역시 서구 통학로13길",
-      "deadline": "2026-05-15",
-      "type": "",
-      "salary": "월급 240 만원 ~ 250 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140022605010002&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
     },
     {
       "title": "(재)경북테크노파크 2026년 제3차 직원채용(계약직) 채용 공고(...",
@@ -2779,61 +2834,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=356000&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "병동 간호조무사 같이해요",
-      "company": "본병원",
-      "location": "전북 전주시 완산구 등",
-      "deadline": "2026-05-15",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력1년 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779372&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "생산,품질 관리자 채용",
-      "company": "(주)이레",
-      "location": "경남 창원시",
-      "deadline": "2026-05-15",
-      "type": "",
-      "salary": "연봉 4,000 만원 ~ 4,000 만원",
-      "description": "경력5년 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779439&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "무역사무원 채용(자유출퇴근제 적용)",
-      "company": "파이오니어트레이딩(주)",
-      "location": "서울 동대문구",
-      "deadline": "2026-05-15",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779509&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "영업지원 (견적서작성 및 인바운드관리)",
-      "company": "(주)아이티씨코리아",
-      "location": "경기 수원시 권선구 등",
-      "deadline": "2026-05-15",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779526&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "계측기 기술영업원 모집",
-      "company": "(주)아이티씨코리아",
-      "location": "경기 수원시 권선구 등",
-      "deadline": "2026-05-15",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779532&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -3189,6 +3189,182 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "상가 미화원 구인",
+      "company": "백양산동문굿모닝힐아파트상가운영위원회",
+      "location": "부산광역시 북구 덕천로276번길",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJBI002604300009&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "(유)가나환경 영업사원 채용",
+      "company": "(유）가나환경",
+      "location": "전북특별자치도 익산시 왕궁면",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "월급 280 만원 이상 상여별도 100%",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K161232604300019&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "사회복지법인송암회 송암노인요양원 요양보호사 모집",
+      "company": "사회복지법인 송암회 송암노인요양원",
+      "location": "부산광역시 기장군 기장읍",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "월급 251 만원 ~ 251 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130112604300055&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "하이카 차량 기사 구인합니다.",
+      "company": "(주)진주스틸",
+      "location": "경상남도 함안군 법수면",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "연봉 4,000 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131112604300023&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "보육사 1명",
+      "company": "바른마음 공동생활가정",
+      "location": "울산광역시 남구 두왕로272번길",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "월급 250 만원 ~ 260 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131212604300020&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "부산광역시장애인종합복지관 채용공고(장애아가족양육지원사업)",
+      "company": "부산광역시장애인종합복지관",
+      "location": "부산광역시 연제구 월드컵대로",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "월급 228 만원 이상",
+      "description": "신입 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130042604300042&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[지에스씨넷 구미지점] 국민취업지원제도 상담사 채용",
+      "company": "（주）지에스씨넷",
+      "location": "경상북도 구미시 원평동",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "연봉 2,950 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K170082604300007&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "부산광역시장애인종합복지관 중증장애인직업재활지원사업 장애인재활상담사 ...",
+      "company": "부산광역시장애인종합복지관",
+      "location": "부산광역시 연제구 월드컵대로",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "월급 251 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130042604300040&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "사회복지법인 굿네이버스 전북북부지부 전북군산시아동보호전문기관  기간...",
+      "company": "전북군산시아동보호전문기관(전북군산)",
+      "location": "전북특별자치도 군산시 백토로",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "월급 280 만원 ~ 290 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K161322604300017&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "부산광역시장애인종합복지관 채용공고 <시설운영지원사업 행동전문가...",
+      "company": "부산광역시장애인종합복지관",
+      "location": "부산광역시 연제구 중앙대로1150번길",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "월급 228 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130042604300039&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "간호조무사 구인",
+      "company": "포시즌요양원 산본점",
+      "location": "경기도 군포시 고산로",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "월급 230 만원 이상",
+      "description": "경력3년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJKH002604300008&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "부산상공회의소 공공사업본부 일자리사업팀 「일자리지원사업」 실무직원 ...",
+      "company": "부산상공회의소",
+      "location": "부산광역시 부산진구 황령대로",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "연봉 3,400 만원 ~ 3,600 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130042604300038&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "2026년 제주수눌음지역자활센터 직원채용 공고",
+      "company": "제주수눌음지역자활센터",
+      "location": "제주특별자치도 제주시 서광로",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "월급 217 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K163012604300029&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "희망의전화가정폭력상담소 직원채용(소장)",
+      "company": "사단법인가족상담센터.희망의전화",
+      "location": "부산광역시 남구 황령대로",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "월급 247 만원 이상",
+      "description": "경력3년 대졸(4년)",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130042604300037&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "부산상공회의소 공공사업본부  자격평가팀 기간제 근로자 채용",
+      "company": "부산상공회의소",
+      "location": "부산광역시 부산진구 황령대로",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "연봉 3,400 만원 ~ 3,600 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130042604300036&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "희망의전화가정폭력상담소 직원채용",
+      "company": "사단법인가족상담센터.희망의전화",
+      "location": "부산광역시 남구 황령대로",
+      "deadline": "2026-05-15",
+      "type": "",
+      "salary": "월급 228 만원 이상",
+      "description": "신입 대졸(4년)",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130042604300035&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
       "title": "홍대 캠퍼스(서울 종로구) 기계기사(일근) 모집",
       "company": "(주）순일기업",
       "location": "서울 종로구",
@@ -3255,17 +3431,6 @@ var JOBS_DATA = {
       "source": "시니어로"
     },
     {
-      "title": "2026년 공영홈쇼핑 NCS기반 블라인드 채용 (채용형 청년인턴/무...",
-      "company": "㈜공영홈쇼핑",
-      "location": "서울 마포구  등",
-      "deadline": "2026-05-16",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "신입/경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=50787086&infoTypeCd=CJK&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "프로젝트 매니저 PM",
       "company": "뱅크엑스",
       "location": "지역무관",
@@ -3274,39 +3439,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=357275&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "목동자생한방병원 원무팀 정규직 채용공고",
-      "company": "목동자생한방병원",
-      "location": "서울 양천구",
-      "deadline": "2026-05-16",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779559&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "2026년 공영홈쇼핑 신입직 채용 공고(채용형 청년인턴)",
-      "company": "",
-      "location": "",
-      "deadline": "2026-05-16",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=300088&infoTypeCd=ALI&infoTypeGroup=tb_workinfoalio",
-      "source": "고용24"
-    },
-    {
-      "title": "2026년 공영홈쇼핑 무기계약직 채용 공고",
-      "company": "",
-      "location": "",
-      "deadline": "2026-05-16",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=300089&infoTypeCd=ALI&infoTypeGroup=tb_workinfoalio",
       "source": "고용24"
     },
     {
@@ -3376,6 +3508,39 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "청소용역업체 본사 현장 대청소 업무보조",
+      "company": "주식회사  라포르",
+      "location": "경기도 용인시 처인구",
+      "deadline": "2026-05-16",
+      "type": "",
+      "salary": "월급 230 만원 ~ 230 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180022604300048&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[월성주공 3단지] 4등급 할머니",
+      "company": "신세계통합재가센터",
+      "location": "대구광역시 달서구 월곡로94길",
+      "deadline": "2026-05-16",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJCA002604300002&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "올리브영 테헤란로점(삼성역) 주말 마감 Crew 구인(요일,시간 협의)",
+      "company": "씨제이올리브영 주식회사",
+      "location": "서울 강남구",
+      "deadline": "2026-05-16",
+      "type": "시간제",
+      "salary": "시급 10,600원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116216531",
+      "source": "알바몬"
+    },
+    {
       "title": "아파트청소원(백운밸리 제일풍경채4단지) /",
       "company": "(유)탄천산업",
       "location": "경기 의왕시",
@@ -3394,7 +3559,7 @@ var JOBS_DATA = {
       "type": "",
       "salary": "회사내규에 따름",
       "description": "",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=20260427110401&infoTypeCd=CLE&infoTypeGroup=tb_workinfocle",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=20260427110431&infoTypeCd=CLE&infoTypeGroup=tb_workinfocle",
       "source": "고용24"
     },
     {
@@ -3417,28 +3582,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358996&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "웹 프로덕트 디자이너(계약직/육아휴직대체)",
-      "company": "지나인",
-      "location": "서울 마포구",
-      "deadline": "2026-05-17",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359062&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "Planner(Retail Buyer)-외국계 패션 브랜드",
-      "company": "써치스퀘어",
-      "location": "서울 강남구",
-      "deadline": "2026-05-17",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력5년 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010001185&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -3596,17 +3739,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "2026년도 사립학교교직원연금공단 공무직(요양비 심사) 채용 공고",
-      "company": "",
-      "location": "",
-      "deadline": "2026-05-18",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=291408&infoTypeCd=GOJ&infoTypeGroup=tb_workinfonara",
-      "source": "고용24"
-    },
-    {
       "title": "☆[(주)삼천리 ENG '외식사업본부' ]  정규직 사원 채용☆  ...",
       "company": "（주）삼천리이엔지",
       "location": "서울특별시 구로구 경인로43길",
@@ -3627,6 +3759,61 @@ var JOBS_DATA = {
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130042604300055&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
+    },
+    {
+      "title": "고양여성인력개발센터 신규인원 모집 공고",
+      "company": "고양여성인력개발센터",
+      "location": "경기도 고양시 일산서구",
+      "deadline": "2026-05-18",
+      "type": "",
+      "salary": "월급 241 만원 이상",
+      "description": "경력무관 대졸(2~3년)\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t ~ 석사",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10712604300004&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "요양보호사 (3교대)모집 공고",
+      "company": "성요셉노인요양원",
+      "location": "경상남도 양산시 대운1길",
+      "deadline": "2026-05-18",
+      "type": "",
+      "salary": "월급 260 만원 ~ 270 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10512604300006&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "성동청소년센터 직원채용 공고(업무지원팀_남자탈의실)",
+      "company": "시립성동청소년센터",
+      "location": "서울특별시 성동구 고산자로",
+      "deadline": "2026-05-18",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120252604300009&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "인천공항 롯데면세점 1터미널 인도장 직원 모집[월 262만원 이상]",
+      "company": "㈜유안에이치알",
+      "location": "인천 서구",
+      "deadline": "2026-05-18",
+      "type": "시간제",
+      "salary": "월급 2,590,740원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116248228",
+      "source": "알바몬"
+    },
+    {
+      "title": "[월320만원]인천공항롯데면세점 통합물류센터 야간 직원 모집!",
+      "company": "㈜유안에이치알",
+      "location": "인천 중구",
+      "deadline": "2026-05-18",
+      "type": "시간제",
+      "salary": "월급 2,500,000원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116248229",
+      "source": "알바몬"
     },
     {
       "title": "버스 운전원 모집 (통근,관광)",
@@ -3660,28 +3847,6 @@ var JOBS_DATA = {
       "description": "",
       "apply_link": "http://www.work.go.kr/empInfo/empInfoSrch/detail/empDetailAuthView.do?callPage=detail&wantedAuthNo=KJLJ002603190004",
       "source": "시니어로"
-    },
-    {
-      "title": "2026년도 사립학교교직원연금공단 채용공고",
-      "company": "사립학교교직원연금공단",
-      "location": "전남 나주시  등",
-      "deadline": "2026-05-19",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "신입/경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2604300002532&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "2026년도 사립학교교직원연금공단 정규직(신입 및 경력직) 채용공고",
-      "company": "",
-      "location": "",
-      "deadline": "2026-05-19",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=291406&infoTypeCd=GOJ&infoTypeGroup=tb_workinfonara",
-      "source": "고용24"
     },
     {
       "title": "장애인 거주시설 미리내공동체 생활지도원 모집",
@@ -3827,6 +3992,17 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "[영업팀] 대리/과장급 경력사원 모집",
+      "company": "로드에프에이 주식회사",
+      "location": "경상북도 구미시 산동읍",
+      "deadline": "2026-05-20",
+      "type": "",
+      "salary": "연봉 4,000 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K141212604300024&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
       "title": "나비요양원 요양보호사  추가채용 공고 (2교대)",
       "company": "(주)나비메디컬센타",
       "location": "충청북도 청주시 청원구",
@@ -3868,17 +4044,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=337958&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "엘디스리젠트호텔 라운지 점장 모집",
-      "company": "엘디스리젠트호텔",
-      "location": "대구 중구",
-      "deadline": "2026-05-22",
-      "type": "",
-      "salary": "연봉 3,000 만원 ~ 3,000 만원",
-      "description": "경력1년 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779511&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -3945,6 +4110,17 @@ var JOBS_DATA = {
       "salary": "월급 150 만원 ~ 150 만원",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120412604300016&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "요양보호사 구함",
+      "company": "스마일재가센터",
+      "location": "경기도 용인시 처인구",
+      "deadline": "2026-05-22",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180022604300050&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
     },
     {
@@ -4113,6 +4289,17 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "요양원 사무국장 채용공고",
+      "company": "덕인노인전문요양원",
+      "location": "경상남도 밀양시 하남읍",
+      "deadline": "2026-05-25",
+      "type": "",
+      "salary": "월급 350 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131322604300006&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
       "title": "김해  한방병원 미화원 모집합니다(부원동)",
       "company": "(주)강안시스템",
       "location": "경남 김해시",
@@ -4220,6 +4407,17 @@ var JOBS_DATA = {
       "salary": "월급 215 만원 이상",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K141212604300026&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[아산공장-정규직] 사무 영업 사원 채용",
+      "company": "연산메탈(주)아산공장",
+      "location": "충청남도 아산시 음봉면",
+      "deadline": "2026-05-28",
+      "type": "",
+      "salary": "연봉 2,800 만원 ~ 5,000 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K172122604300012&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
     },
     {
@@ -4553,6 +4751,94 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "재가요양보호사 구인",
+      "company": "으뜸어르신방문요양센터",
+      "location": "경기도 남양주시 진접읍",
+      "deadline": "2026-05-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10242604300010&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "나주 빛가람혁신도시 LH5단지 경비원 채용",
+      "company": "진흥개발주식회사",
+      "location": "전라남도 나주시 월정3길",
+      "deadline": "2026-05-29",
+      "type": "",
+      "salary": "월급 243 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJ21832604300003&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[긴급] 라운딩 사회복지사 채용 (치매교육이수자)",
+      "company": "해바라기재가노인복지센터",
+      "location": "전북특별자치도 전주시 덕진구",
+      "deadline": "2026-05-29",
+      "type": "",
+      "salary": "월급 240 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF11192604300008&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[칠곡군 왜관읍 삼청리] 5등급 할머니케어 재가요양보호사 구인",
+      "company": "나비재가노인요양센터",
+      "location": "경상북도 칠곡군 왜관읍",
+      "deadline": "2026-05-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF11722604300007&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[신곡동] 4등급 할머니 재가 요양보호사 구인",
+      "company": "에이플러스(A+)통합복지센터",
+      "location": "경기도 의정부시 회룡로",
+      "deadline": "2026-05-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10272604300003&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[중장년내일센터 채용대행]재가요양보호사 모집",
+      "company": "한빛복지센타",
+      "location": "대구광역시 북구 학남로",
+      "deadline": "2026-05-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KEC1182604300002&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[신정동] 3등급 할머니 / 13:00~16:00 / 재가 요양보호...",
+      "company": "바라던재가복지센터",
+      "location": "서울특별시 양천구 중앙로29길",
+      "deadline": "2026-05-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJAT002604300007&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "화장품 제조사원 채용합니다.",
+      "company": "(주)아름다운화장품",
+      "location": "충청남도 천안시 서북구",
+      "deadline": "2026-05-29",
+      "type": "",
+      "salary": "월급 220 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K172112604300041&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
       "title": "[네오기프트] 판촉 부문 신입 / 경력 인재 채용",
       "company": "주식회사네오누리콤",
       "location": "서울 금천구",
@@ -4762,6 +5048,17 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "공기압축기 관리 서비스 채용",
+      "company": "에어마스타",
+      "location": "충청남도 천안시 서북구",
+      "deadline": "2026-05-30",
+      "type": "",
+      "salary": "월급 230 만원 ~ 280 만원 상여별도 100%",
+      "description": "신입 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K172112604300039&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
       "title": "[백세재활요양병원] 영양사(후임) 모십니다..",
       "company": "백세요양병원",
       "location": "대전 중구",
@@ -4872,28 +5169,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "뷰티/패션 브랜드 마케터 경력직 채용",
-      "company": "(주)도도레이블",
-      "location": "서울   등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력3년 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53775040&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "패션브랜드 카인다미 기획MD 경력직 채용",
-      "company": "(주)도도레이블",
-      "location": "서울   등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력3년 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53775187&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "뷰티/패션 브랜드 온라인 MD 경력직 채용",
       "company": "(주)도도레이블",
       "location": "서울   등",
@@ -4902,17 +5177,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력3년 고졸",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53775324&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "패션브랜드 카인다미 생산관리(국내/중국) 경력직 채용",
-      "company": "(주)도도레이블",
-      "location": "서울   등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력3년 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53775438&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -4971,72 +5235,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "농심엔지니어링(주) 지능화영업팀 기술영업(물류/스마트팩토리)",
-      "company": "농심엔지니어링(주)",
-      "location": "서울 동작구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력5년 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53778454&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "농심엔지니어링(주) 스마트팩토리팀 경력 모집",
-      "company": "농심엔지니어링(주)",
-      "location": "서울 동작구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력5년 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53778518&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "타이어테크 효자점 마케팅 직원 채용",
-      "company": "타이어테크 효자점",
-      "location": "전북 전주시 완산구 등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,000 만원 ~ 3,000 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53778566&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "출고라인 물류 담당자",
-      "company": "(주)사줘",
-      "location": "경기 의왕시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 2,600 만원 ~ 2,600 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53778672&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[데스크테리어] 굿즈랩스튜디오  온라인 영업 MD(Sales Man...",
-      "company": "굿즈랩스튜디오",
-      "location": "경기 고양시 덕양구 등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779234&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[호텔티티 서면&구포] 예약팀 OTA매니저 채용",
-      "company": "티티호텔(주)",
-      "location": "부산 북구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,200 만원 ~ 3,200 만원",
-      "description": "경력3년 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779241&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "크로스보더 페이먼트 매니저 (Senior)",
       "company": "더즌(dozn)",
       "location": "지역무관",
@@ -5081,17 +5279,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "AS 엔지니어",
-      "company": "왈로우",
-      "location": "경기 하남시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359045&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "HR 리드",
       "company": "왈로우",
       "location": "경기 하남시",
@@ -5100,6 +5287,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359043&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "AS 엔지니어",
+      "company": "왈로우",
+      "location": "경기 하남시",
+      "deadline": "2026-05-31",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359045&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -5158,28 +5356,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "인플루언서 마케팅/커머스 매니저",
-      "company": "왈로우",
-      "location": "경기 하남시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359060&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "고객경험 스페셜리스트",
-      "company": "왈로우",
-      "location": "경기 하남시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359059&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "브랜드 영상 PD",
       "company": "워로브라더스",
       "location": "경기 하남시",
@@ -5199,6 +5375,28 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359058&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "인플루언서 마케팅/커머스 매니저",
+      "company": "왈로우",
+      "location": "경기 하남시",
+      "deadline": "2026-05-31",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359060&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "고객경험 스페셜리스트",
+      "company": "왈로우",
+      "location": "경기 하남시",
+      "deadline": "2026-05-31",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359059&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -5257,6 +5455,17 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "고객경험 스페셜리스트",
+      "company": "워로브라더스",
+      "location": "경기 하남시",
+      "deadline": "2026-05-31",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359076&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
       "title": "인플루언서 마케팅/커머스 매니저",
       "company": "워로브라더스",
       "location": "경기 하남시",
@@ -5287,28 +5496,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358838&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "브랜드 마케팅 경력자 모집 (출산.육아휴가 대체직)",
-      "company": "(주)쓰리디바이오캐드아시아",
-      "location": "경남 김해시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력2년 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779260&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "치과용 CAD 디자인 원격 기술지원 직원 채용",
-      "company": "(주)쓰리디바이오캐드아시아",
-      "location": "서울 송파구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력1년 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779261&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -5345,17 +5532,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "양산컨트리클럽 프론트직원 채용 공고",
-      "company": "양산컨트리클럽",
-      "location": "경남 양산시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,500 만원 ~ 3,500 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779271&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "[인천 컬리폭스] 베이커리 파트 정규직 구인",
       "company": "컬리폭스",
       "location": "인천 미추홀구",
@@ -5364,50 +5540,6 @@ var JOBS_DATA = {
       "salary": "연봉 2,600 만원 ~ 2,600 만원",
       "description": "경력1년 고졸",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=50823100&infoTypeCd=CJK&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[채용] 수질관리 직원 모집 (신입/경력)",
-      "company": "바른환경",
-      "location": "세종",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "신입/경력1년 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779293&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "(주)가곡여객 버스승무원 채용 (정규직)",
-      "company": "(주)가곡여객",
-      "location": "경기 평택시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779321&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[화이트샌즈&블랙샌즈] CS,CX 팀장 채용",
-      "company": "(주)엔에이치그룹",
-      "location": "서울 금천구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력8년 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779347&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "와이키즈 별내센터 수학, 과학 파트 교사(토) 모집",
-      "company": "와이키즈별내학원",
-      "location": "경기 남양주시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "일급 150,000 원 ~ 150,000 원",
-      "description": "경력1년 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779350&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -5430,17 +5562,6 @@ var JOBS_DATA = {
       "salary": "연봉 6,000 만원 ~ 7,000 만원",
       "description": "신입/경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010000914&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "(주)엠에스플레이스와 함께할 경영지원·현장관리자를 모십니다",
-      "company": "(주)엠에스플레이스",
-      "location": "경북 구미시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779355&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -5529,369 +5650,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "신입/경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010000966&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "드라마 영화 예능 소품회사 직원 모집",
-      "company": "(주)초승",
-      "location": "경기 파주시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "월급 260 만원 ~ 260 만원",
-      "description": "경력무관 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779379&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "토목 설계 인재 채용 경력무관 채용 공고(정규직)",
-      "company": "주식회사 성보엔지니어링",
-      "location": "서울 송파구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779394&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "한의원 입원실 당직(주2일or3일) 간호사/간호조무사 RN/AN 채...",
-      "company": "범어W한의원",
-      "location": "대구 수성구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779397&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[CGV대구수성] 슈퍼바이저 모집 (영화관 운영 및 관리)",
-      "company": "주식회사 유진텍코퍼레이션",
-      "location": "대구 수성구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779405&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "시스템에어컨 전문점 캐드(CAD) 직원 모집합니다.",
-      "company": "(주)대림공조",
-      "location": "대구 북구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,182 만원 ~ 3,182 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779413&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[GS그룹] 엘리시안FS 단체급식 영양사 채용(경기도 용인시)",
-      "company": "㈜지씨에스",
-      "location": "경기 용인시 기흥구 등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,400 만원 ~ 3,400 만원",
-      "description": "경력5년 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=50823176&infoTypeCd=CJK&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "(주)원일F&F - 중견식품기업 오퍼레이터 정규직 채용",
-      "company": "(주)원일에프앤에프",
-      "location": "경기 안성시  등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,600 만원 ~ 3,600 만원",
-      "description": "경력무관 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779436&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "간호조무사 선생님 구함.(증원 .)",
-      "company": "여수센텀정형외과의원",
-      "location": "전남 여수시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "월급 271 만원 ~ 271 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779438&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "식음료팀 신입/경력직모집",
-      "company": "타니베이관광호텔(주)",
-      "location": "울산 동구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779461&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "롯데리아 부개역점에서 매니저를 구합니다.",
-      "company": "롯데리아인천부개역점",
-      "location": "경기 부천시  등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "월급 300 만원 ~ 300 만원",
-      "description": "경력1년 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779496&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[이건창호] 충북 대리점 고객지원 / 상담 / 발주 / 공무",
-      "company": "한우창호㈜",
-      "location": "충북 청주시 상당구 등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "월급 220 만원 ~ 250 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=50823220&infoTypeCd=CJK&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "(정읍)내장산CC 경기팀 경력직 채용(골프장)",
-      "company": "(주)대일내장산컨트리클럽",
-      "location": "전북 정읍시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,500 만원 ~ 3,500 만원",
-      "description": "경력1년 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779497&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[안양 범계역] 서울수안과 원무,상담 팀원 충원",
-      "company": "서울수안과",
-      "location": "경기 안양시 동안구 등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779506&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[경력무관] 상하수도시공 준공품질시험 현장기사 모집합니다",
-      "company": "(주)범우건설",
-      "location": "대구 달성군",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,600 만원 ~ 3,600 만원",
-      "description": "경력무관 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779519&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "자재관리 사원 모집",
-      "company": "(주)다원산업",
-      "location": "충남 천안시 서북구 등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력1년 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779529&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "연세탑치과 진료실 채용 (위생사)",
-      "company": "연세탑치과",
-      "location": "강원 원주시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779544&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[아잇] 스포츠 유니폼 및 의류 디자이너 모집합니다.",
-      "company": "일칠오일팔오(175185)",
-      "location": "서울 중구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779578&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[평택점] 유앤아이의원에서 [피부관리]모십니다",
-      "company": "유앤아이의원 평택점",
-      "location": "경기 평택시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,698 만원 ~ 3,698 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779587&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "언더컨트롤과 함께할 컨텐츠 비주얼 마케팅 팀원을 모집합니다",
-      "company": "뮤트컴퍼니",
-      "location": "서울 강남구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779595&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "(주)티에스엠 프로세스 엔지니어 채용 공고",
-      "company": "(주)티에스엠",
-      "location": "충남 천안시 서북구 등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "신입/경력1년 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779599&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[젬마모발이식센터] 코디네이터 선생님 모집합니다.",
-      "company": "젬마의원",
-      "location": "서울 강남구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779606&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[2차전지, Display, 자동차, 자동화장비] 인사관리 팀원 모...",
-      "company": "(주)시스템알앤디",
-      "location": "경기 안성시  등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "신입/경력3년 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779620&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[연봉협상가능] 오이코스산업(주) 안동리버힐CC F&B 직원 채용",
-      "company": "오이코스산업(주)",
-      "location": "경북 안동시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779627&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "단디병원통합 병동 근무 간호조무사 채용",
-      "company": "단디병원",
-      "location": "경남 양산시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력1년 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779632&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "의학전문월간지 D&PS에서 기자를 모집합니다(신입)",
-      "company": "(주)모스트엠",
-      "location": "서울 마포구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 2,700 만원 ~ 2,700 만원",
-      "description": "신입 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779635&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "3PL 물류관리 사무직원 채용(송장출력 WMS관리 거래처응대)",
-      "company": "(주)동백에스제이",
-      "location": "경기 용인시 기흥구 등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력2년 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779655&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "생산 계약직 채용(성형과)",
-      "company": "계림(주)",
-      "location": "경북 구미시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,300 만원 ~ 3,300 만원",
-      "description": "경력무관 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779679&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "수원 오래된 부동산에서 함께할 신입/경력직원 모집",
-      "company": "팔팔부동산공인중개사사무소",
-      "location": "경기 수원시  등",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779687&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "한국로재 열처리 기계 보수 및 제작 전문가 모집",
-      "company": "한국로재",
-      "location": "충남 서산시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력5년 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779691&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[초봉3360+복지최고/성과급]에듀플렉스중계점,하계점 학습매니저",
-      "company": "(주)상상플렉스",
-      "location": "서울 노원구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,360 만원 ~ 3,360 만원",
-      "description": "경력무관 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779727&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[중견기업] 신재생에너지 개발업무 (대리~과장급) 채용",
-      "company": "(주)엔에스컴퍼니",
-      "location": "서울 강남구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력3년 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779752&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "2026년 관리직 신입 사원 채용",
-      "company": "(주)베르메디",
-      "location": "서울 강남구",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "연봉 3,000 만원 ~ 3,500 만원",
-      "description": "신입 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010001216&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[교통 안전 솔루션 전문기업] 자금회계",
-      "company": "(주)백그라운드",
-      "location": "경기 파주시",
-      "deadline": "2026-05-31",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력3년 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010001309&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -6057,6 +5815,83 @@ var JOBS_DATA = {
       "salary": "월급 250 만원 ~ 350 만원",
       "description": "신입 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180032604300059&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "★북구(연암동)_운영 및 관리직 모집[중구청 일자리지원센터 채용대행...",
+      "company": "조일물류(주)",
+      "location": "울산광역시 북구 효자로",
+      "deadline": "2026-05-31",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJGF002604300002&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "단순 생산직 직원 모집",
+      "company": "(주)영오",
+      "location": "경기도 용인시 처인구",
+      "deadline": "2026-05-31",
+      "type": "",
+      "salary": "월급 215 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180022604300049&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "방문요양 요양보호사 구인",
+      "company": "웰빙케어 재가복지센터",
+      "location": "경기도 수원시 장안구",
+      "deadline": "2026-05-31",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180012604300049&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "구조용 금속 판제품 및 공작물 제조 업무에 필요한 능력을 가진 인재...",
+      "company": "주식회사 명성구조",
+      "location": "충청남도 천안시 동남구",
+      "deadline": "2026-05-31",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K172112604300042&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "현수막,실사 출력 및 디자인 하실분 모십니다.",
+      "company": "주식회사페이스",
+      "location": "강원특별자치도 강릉시 주문진읍",
+      "deadline": "2026-05-31",
+      "type": "",
+      "salary": "월급 250 만원 ~ 300 만원",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K152312604300012&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "파주 어울림요양원 야간 근무 요양보호사님 구인합니다",
+      "company": "어울림요양원",
+      "location": "경기도 파주시 조리읍",
+      "deadline": "2026-05-31",
+      "type": "",
+      "salary": "월급 251 만원 ~ 251 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180222604300023&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "(주)성원에어테크 배송(3.5t 스틱) 및 납품 직원 모집",
+      "company": "(주)성원에어테크",
+      "location": "경기도 양주시 백석읍",
+      "deadline": "2026-05-31",
+      "type": "",
+      "salary": "월급 280 만원 이상",
+      "description": "경력1년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180152604300020&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
     },
     {
@@ -6775,6 +6610,17 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "조리사, 조리원 구인",
+      "company": "강릉율곡병원",
+      "location": "강원특별자치도 강릉시 동해대로3304번길",
+      "deadline": "2026-06-27",
+      "type": "",
+      "salary": "월급 310 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10282604300001&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
       "title": "옥정e편한세상(더퍼스트) 아파트  미화원 채용",
       "company": "(주)두원에이앤씨",
       "location": "경기 양주시",
@@ -6830,91 +6676,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "사무/경리직원을 모집합니다.",
-      "company": "주식회사프로테크",
-      "location": "대구광역시 서구 북비산로27길",
-      "deadline": "2026-06-29",
-      "type": "",
-      "salary": "월급 216 만원 ~ 216 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140022605010009&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
-      "title": "수성구 들안길인근 4등급 여자어르신 요양보호사 모집공고",
-      "company": "샬롬노인종합센터",
-      "location": "대구광역시 수성구 들안로13길",
-      "deadline": "2026-06-29",
-      "type": "",
-      "salary": "시급 10,320 원 ~ 10,320 원",
-      "description": "경력1년 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140022605010008&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
-      "title": "금비노인주간보호센터 요양보호사 모집합니다. (스타렉스 운전가능자 우...",
-      "company": "금비노인주간보호센터",
-      "location": "대구광역시 서구 북비산로",
-      "deadline": "2026-06-29",
-      "type": "",
-      "salary": "월급 215 만원 이상",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140022605010007&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
-      "title": "[달서구 월성동] 방문요양보호사 모집  **문의 : 053-352-...",
-      "company": "청솔노인복지센터",
-      "location": "대구광역시 달서구 월성로",
-      "deadline": "2026-06-29",
-      "type": "",
-      "salary": "시급 10,320 원 이상",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140022605010006&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
-      "title": "(서재리) 방문요양 3등급 여자 어르신 요양보호사 구인합니다.",
-      "company": "(주)케어링 주간보호센터 대구 서구점",
-      "location": "대구광역시 달성군 서재로24길",
-      "deadline": "2026-06-29",
+      "title": "양재역 인근) 1등급 어르신 돌봄",
+      "company": "서초 방문간호 재가요양센터",
+      "location": "서울특별시 서초구 바우뫼로23길",
+      "deadline": "2026-06-28",
       "type": "",
       "salary": "시급 10,320 원 ~ 10,320 원",
       "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140022605010005&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
-      "title": "방문 요양보호사선생님  모집합니다.",
-      "company": "온사랑재가센터",
-      "location": "대구광역시 남구 앞산순환로",
-      "deadline": "2026-06-29",
-      "type": "",
-      "salary": "시급 10,320 원 ~ 10,320 원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140022605010004&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
-      "title": "롯데아울렛 이시아폴리스점 미화팀 오전사원 모집",
-      "company": "주식회사 맨투맨써비스",
-      "location": "대구광역시 동구 팔공로49길",
-      "deadline": "2026-06-29",
-      "type": "",
-      "salary": "월급 193 만원 ~ 193 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140022605010003&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
-      "title": "소방시설공사(전기/설비) 신입, 경력직 모집(세종시 나성동)",
-      "company": "가람소방방재주식회사",
-      "location": "세종특별자치시 국세청로 46",
-      "deadline": "2026-06-29",
-      "type": "",
-      "salary": "연봉 2,800 만원 ~ 4,400 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140022605010001&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120142604300035&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
     },
     {
@@ -8172,17 +7941,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "약국보조 간호조무사 구인",
-      "company": "서울스마트요양병원",
-      "location": "서울특별시 양천구 중앙로",
-      "deadline": "2026-06-29",
-      "type": "",
-      "salary": "연봉 2,600 만원 ~ 2,600 만원",
-      "description": "신입 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120422604300048&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
       "title": "애슐리퀸즈 인천검단점 신규오픈매장 장애인 메이트 모집",
       "company": "(주)이랜드이츠",
       "location": "인천광역시 서구 원당대로",
@@ -8191,6 +7949,17 @@ var JOBS_DATA = {
       "salary": "시급 10,320 원 이상",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K150012604300067&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "약국보조 간호조무사 구인",
+      "company": "서울스마트요양병원",
+      "location": "서울특별시 양천구 중앙로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "연봉 2,600 만원 ~ 2,600 만원",
+      "description": "신입 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120422604300048&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
     },
     {
@@ -8656,17 +8425,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "3등급 여자어르신 요양보호사 구인",
-      "company": "늘봄방문요양센터",
-      "location": "서울특별시 성북구 보국문로",
-      "deadline": "2026-06-29",
-      "type": "",
-      "salary": "시급 10,320 원 ~ 10,320 원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF11352604300002&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
       "title": "[화순성심병원] 병동 3교대 간호사 구인합니다.",
       "company": "화순성심병원",
       "location": "전라남도 화순군 화순읍",
@@ -8675,6 +8433,17 @@ var JOBS_DATA = {
       "salary": "월급 289 만원 이상 상여별도 70%",
       "description": "경력무관 대졸(4년)",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K1600z2604300006&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "3등급 여자어르신 요양보호사 구인",
+      "company": "늘봄방문요양센터",
+      "location": "서울특별시 성북구 보국문로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF11352604300002&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
     },
     {
@@ -8788,17 +8557,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "KB금융 덕천PLAZA 시설관리 영업소 경비근무자 구인(2교대)",
-      "company": "주식회사 국민티에스（Kookmin TS，Inc．）",
-      "location": "부산광역시 북구 만덕대로",
-      "deadline": "2026-06-29",
-      "type": "",
-      "salary": "월급 225 만원 ~ 225 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120122604300029&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
       "title": "재가 요양보호사 모집",
       "company": "백세사랑노인복지센터",
       "location": "경기도 안양시 동안구",
@@ -8807,6 +8565,17 @@ var JOBS_DATA = {
       "salary": "시급 13,000 원 ~ 13,000 원",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJ21062604300031&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "KB금융 덕천PLAZA 시설관리 영업소 경비근무자 구인(2교대)",
+      "company": "주식회사 국민티에스（Kookmin TS，Inc．）",
+      "location": "부산광역시 북구 만덕대로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 225 만원 ~ 225 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120122604300029&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
     },
     {
@@ -9426,17 +9195,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "(주)대진엠에스 농업회사법인 한우 육가공 생산직 모집 (청주공장)",
-      "company": "(주)대진엠에스농업회사법인",
-      "location": "충청북도 청주시 청원구",
-      "deadline": "2026-06-29",
-      "type": "",
-      "salary": "연봉 3,000 만원 ~ 3,400 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K171112604300044&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
       "title": "[금촌] 4등급 독거 할머니 케어 요양보호사 모집",
       "company": "쉼,행복재가센터",
       "location": "경기도 파주시 정담길",
@@ -9445,6 +9203,17 @@ var JOBS_DATA = {
       "salary": "시급 10,320 원 ~ 10,320 원",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KEC0252604300005&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "(주)대진엠에스 농업회사법인 한우 육가공 생산직 모집 (청주공장)",
+      "company": "(주)대진엠에스농업회사법인",
+      "location": "충청북도 청주시 청원구",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "연봉 3,000 만원 ~ 3,400 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K171112604300044&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
     },
     {
@@ -9833,6 +9602,589 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "자동차부품제조업 관리자를 모집합니다.",
+      "company": "주식회사대성정밀",
+      "location": "전북특별자치도 군산시 중가도길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "연봉 3,200 만원 ~ 4,000 만원",
+      "description": "경력무관 대졸(2~3년)\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t ~ 대졸(4년)",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K161322604300018&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[도화동] 아파트청소원 채용",
+      "company": "(주)두원에이앤씨",
+      "location": "서울특별시 마포구 새창로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 134 만원 ~ 134 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJAN002604300004&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[서울시 구로구/본푸드/구내식당] 서울교통공사대림별관점 구내식당 조...",
+      "company": "코리아휴먼리스오스시스템(주)",
+      "location": "서울특별시 구로구 도림천로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 190 만원 ~ 190 만원",
+      "description": "경력1년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120612604300021&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "더메이크사회적협동조합 구리지부 발달장애인주간활동 제공인력 선생님 모...",
+      "company": "더메이크 사회적협동조합(구리지부)",
+      "location": "경기도 구리시 벌말로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 230 만원 이상",
+      "description": "경력2년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180122604300008&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "(우동) 재가 요양보호사 구인",
+      "company": "주식회사 모던주간보호센터",
+      "location": "부산광역시 해운대구 우동1로85번길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10092604300004&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[달서여성새로일하기센터 채용대행] 케이블 하네스 납땜 직원 모집",
+      "company": "제이엠텍",
+      "location": "대구광역시 달서구 달서대로95길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10882604300015&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[타니베이호텔] 객실팀 레저,사우나 관리 직원 모집[동구새일 채용대...",
+      "company": "타니베이관광호텔 주식회사",
+      "location": "울산광역시 동구 해수욕장5길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 215 만원 이상",
+      "description": "신입 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF11802604300003&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[신내동] 빌딩 경비원 모집",
+      "company": "주식회사 에스지세콤",
+      "location": "서울특별시 중랑구 신내로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 172 만원 ~ 172 만원",
+      "description": "경력1년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJAZ002604300005&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "(방산업체) HSE 안전관리 담당자 모집",
+      "company": "포스맥 주식회사",
+      "location": "경상남도 창원시 성산구",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "연봉 3,500 만원 ~ 4,000 만원",
+      "description": "경력3년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131132604300050&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "학대피해아동쉼터 직원 채용 공고(보육사)",
+      "company": "사단법인우리아이마당",
+      "location": "경상남도 진주시 도동로183번길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 228 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131412604300049&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "방문요양 가산 사회복지사 모집합니다.",
+      "company": "(주)수로종합복지센터",
+      "location": "부산광역시 중구 남포동4가",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 215 만원 ~ 215 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130042604300044&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "영아반 보육교사 모집합니다.",
+      "company": "리버파크어린이집",
+      "location": "대구광역시 동구 동부로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 250 만원 ~ 250 만원",
+      "description": "경력3년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140162604300016&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "경리사무원 모집[울산동부고용센터 채용대행]",
+      "company": "오프라인울산",
+      "location": "울산광역시 북구 진장20길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "연봉 2,700 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131612604300012&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "재가요양보호사 모집 [동구새일센터 채용대행]",
+      "company": "스마일재가복지센터",
+      "location": "울산광역시 남구 거마로117번길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF11802604300002&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[누구나돌봄/단기]군포당동 대흥아파트/주2회(화,금)/13:30~1...",
+      "company": "새봄재가복지센터",
+      "location": "경기도 군포시 군포역1길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJKH002604300009&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "어린이집 오전보조교사 구인",
+      "company": "꿈이자라는어린이집",
+      "location": "전라남도 광양시 광양읍",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 113 만원 이상",
+      "description": "경력1년 대졸(2~3년)\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t ~ 대졸(4년)",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10452604300004&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "항공,해상 포워딩 수출입 오퍼레이션 업무(10시~16시 근무)",
+      "company": "주식회사 월딩(WORLDING Co.,Ltd.)",
+      "location": "서울특별시 강서구 공항대로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 182 만원 ~ 182 만원",
+      "description": "경력무관 고졸\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t ~ 대졸(4년)",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K120412604300015&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "자동차 부품 도금기 조작원 모집합니다.",
+      "company": "주식회사구봉에스테크",
+      "location": "대구광역시 북구 팔달로13길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140142604300022&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "탄현큰마을아파트 경비원모집",
+      "company": "예주산업(주)",
+      "location": "경기도 고양시 일산서구",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 244 만원 ~ 251 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJ21062604300028&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[한남동/4등급] 재가요양보호사 구인",
+      "company": "건강백세방문요양센터",
+      "location": "서울특별시 용산구 소월로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJAV002604300005&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "담모라호텔 앤 리조트 프런트 담당 직원 채용 공고",
+      "company": "(주) 알비인터내셔널",
+      "location": "제주특별자치도 서귀포시 안덕면",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "연봉 3,000 만원 ~ 3,000 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF11642604300002&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "장애인활동지원사 모집(경남 거제시 옥포동 근무)",
+      "company": "서구 온사랑 장애인 활동지원센터",
+      "location": "경상남도 거제시 옥포로10길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130042604300043&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "CNC선반 기능공 직원모집",
+      "company": "세형정밀",
+      "location": "대전광역시 대덕구 평촌2길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 350 만원 ~ 400 만원",
+      "description": "경력1년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K170052604300041&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "(주) 참좋은미트 구인",
+      "company": "주식회사 참좋은미트",
+      "location": "경기도 광주시 초월읍",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 280 만원 ~ 280 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180322604300031&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "현장 단순직 사원 모집",
+      "company": "신성비철산업",
+      "location": "대구광역시 동구 안심로65길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "연봉 3,720 만원 ~ 3,720 만원",
+      "description": "신입 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140162604300015&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "생산직 포장업무 사원 모집",
+      "company": "더튜브(THE TUBE)",
+      "location": "경기도 양주시 은현면",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 215 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180152604300022&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "26열매어린이집   오전보조교사, (0세반 증반) 영아반담임교사 모...",
+      "company": "열매어린이집",
+      "location": "경기도 양주시 옥정동로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 215 만원 ~ 215 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180152604300021&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[서초동 현대아파트 ] 2등급 할머니 케어 재가 요양보호사 모십니다...",
+      "company": "청담원 재가복지센터",
+      "location": "서울특별시 서초구 효령로68길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KEC0682604300003&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[신림동] 재가요양보호사 모집",
+      "company": "한사랑노인재가복지센터",
+      "location": "서울특별시 관악구 신림로14길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 13,000 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJAH002604300011&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "품질팀(공정 수입검사 등 업무) 기간제 근로자 모집",
+      "company": "주식회사 금강",
+      "location": "경상북도 경주시 서면",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K141122604300016&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "CNC선반 기능공 직원모집",
+      "company": "(주)세형이엔지",
+      "location": "대전광역시 대덕구 평촌2길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 350 만원 이상",
+      "description": "경력1년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K170052604300040&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[(주)신진물산] 25톤 화물차(카고) 기사 모집",
+      "company": "주식회사 신진물산",
+      "location": "경상남도 거제시 동부면",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 300 만원 이상 상여별도 10%",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131522604300006&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "재가 요양보호사(간석동)",
+      "company": "실버홈요양복지센터",
+      "location": "인천광역시 남동구 석산로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJDE002604300005&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "조리장님을 모십니다",
+      "company": "광보캐터링",
+      "location": "경상남도 양산시 유산공단11길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 280 만원 ~ 280 만원",
+      "description": "경력3년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131332604300028&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "좋은인연지역아동센터 생활복지사 채용 공고",
+      "company": "좋은인연지역아동센터",
+      "location": "경상남도 거창군 거창읍",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 236 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJSC002604300005&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "아파트 청소원 모집",
+      "company": "주식회사 금오산맥",
+      "location": "경상북도 칠곡군 구상길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 143 만원 ~ 145 만원",
+      "description": "경력1년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K141212604300025&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "인천석유화학 구내식당 주방보조원 채용",
+      "company": "(주）후니드 ( WHONEED Co . , Ltd . )",
+      "location": "인천광역시 서구 봉수대로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJDH002604300008&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "청궁흑염소탕에서 같이 일할 홀 서빙을 모집합니다.",
+      "company": "청궁염소탕",
+      "location": "경기도 화성시 만세구",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 13,000 원 ~ 13,000 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K180032604300056&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[총신대입구역인근] 5등급할머니/09:00~12:00/주5일근무/재...",
+      "company": "케어링 서초 방문요양센터",
+      "location": "서울특별시 서초구 서초대로1길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJAP002604300007&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "생산 및 품질 검사 사원모집",
+      "company": "구봉정공",
+      "location": "대구광역시 북구 팔달로7길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140142604300021&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "주간보호센터 사회복지사 채용",
+      "company": "더기쁨 데이케어",
+      "location": "전라북도 전주시 완산구",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 230 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF11192604300007&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "금속열처리 생산직 사원모집",
+      "company": "(주)대창금속열처리이엔지",
+      "location": "경상북도 고령군 다산면",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K140062604300021&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[반여동] 재가요양보호사 구인(치매이수필수)",
+      "company": "가빈재가복지센터",
+      "location": "부산광역시 해운대구 재반로196번길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10912604300009&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "가두리 양식장 단순 노무",
+      "company": "정운수산",
+      "location": "전라남도 여수시 돌산읍",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,500 원 ~ 11,000 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K162232604300013&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "재가요양보호사- 하안동,  5등급, 9-12시, 주5일, -치매교육...",
+      "company": "참사랑재가센터",
+      "location": "경기도 광명시 가림일로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJKE002604300013&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "학대피해아동쉼터 직원 채용 공고(임상심리사)",
+      "company": "사단법인우리아이마당",
+      "location": "경상남도 진주시 도동로183번길",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 236 만원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K131412604300048&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "세계산업(주) 선재코일 수출 컨테이너 상차작업 인원 모집",
+      "company": "세계산업주식회사",
+      "location": "경상북도 포항시 남구",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "연봉 3,880 만원 ~ 3,880 만원",
+      "description": "경력무관 고졸",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJ22212604300004&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "거제관광모노레일 운영인력(탑승, 관제 등) 모집",
+      "company": "거제관광 모노레일 (주)",
+      "location": "경상남도 거제시 계룡로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJSB002604300001&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "재가요양보호사 구인",
+      "company": "비산재가복지센터",
+      "location": "충청남도 보령시 웅천읍",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 이상",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJ21062604300027&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[워나성형외과의원] 직원채용 공고(경영지원)",
+      "company": "워나성형외과의원",
+      "location": "서울특별시 서초구 강남대로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 250 만원 ~ 260 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF11062604300003&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "[광주시 역동/4등급/여자/오후] 재가 요양보호사 구인",
+      "company": "광진재가복지센터",
+      "location": "경기도 광주시 광주역5로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "시급 10,320 원 ~ 10,320 원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJAG002604300008&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "여의도성모 장례식장  보안대원 채용",
+      "company": "(주)대건기업",
+      "location": "서울특별시 영등포구 63로",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 283 만원 ~ 283 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KEC0822604300005&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
+      "title": "세종 범지기마을9단지 아파트 미화원 채용",
+      "company": "(주)정상",
+      "location": "세종특별자치시 달빛1로 206",
+      "deadline": "2026-06-29",
+      "type": "",
+      "salary": "월급 189 만원 ~ 189 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K170052604300039&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "고용24"
+    },
+    {
       "title": "청도군 교통약자이동지원센터 사무직원 채용",
       "company": "사)경북장애인권익협회청도군지회",
       "location": "경북 청도군",
@@ -9842,28 +10194,6 @@ var JOBS_DATA = {
       "description": "",
       "apply_link": "http://www.work.go.kr/empInfo/empInfoSrch/detail/empDetailAuthView.do?callPage=detail&wantedAuthNo=KJRU002604300001",
       "source": "시니어로"
-    },
-    {
-      "title": "아파트미화반장모집 - 용인시 기흥구 영덕동 영덕신일아파트",
-      "company": "(주)듀델코리아",
-      "location": "경기도 용인시 기흥구",
-      "deadline": "2026-06-30",
-      "type": "",
-      "salary": "월급 171 만원 이상",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJAU002605010001&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
-      "title": "화장품 생산직(포장)사원 채용합니다.",
-      "company": "(주)아름다운화장품",
-      "location": "충청남도 천안시 서북구",
-      "deadline": "2026-06-30",
-      "type": "",
-      "salary": "월급 215 만원 이상 상여별도 100%",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K172112605010001&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
     },
     {
       "title": "1톤 이마트 온라인몰 / 대기업 소형 화물 배송직",
@@ -9921,17 +10251,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "시그니처 클래스 학원 고등영어 채용(기본급, 비율제)",
-      "company": "시그니처클래스학원",
-      "location": "충남 천안시 동남구 등",
-      "deadline": "2026-06-30",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력1년 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779235&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "사입 및 판매 담당자",
       "company": "룩인사이트",
       "location": "서울 강남구",
@@ -9962,17 +10281,6 @@ var JOBS_DATA = {
       "salary": "연봉 3,000 만원 ~ 4,000 만원",
       "description": "신입/경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010000963&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[유명 병원 그룹] 재무팀원",
-      "company": "(주)백그라운드",
-      "location": "서울 강남구",
-      "deadline": "2026-06-30",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력5년 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010001310&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10028,17 +10336,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359142&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[정규직] 타이어뱅크 광주점에서 직원을 모집합니다",
-      "company": "추용남타이어(광주점)",
-      "location": "광주 북구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53270216&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10130,17 +10427,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "[국내] 글로벌 패션 커머스 PO",
-      "company": "페칭",
-      "location": "서울 성동구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=146438&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "글로벌 패션 시니어 커머스 운영팀 CS/CX",
       "company": "페칭",
       "location": "서울 성동구",
@@ -10149,6 +10435,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=149511&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "[국내] 글로벌 패션 커머스 PO",
+      "company": "페칭",
+      "location": "서울 성동구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=146438&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10218,28 +10515,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "글로벌 패션 커머스 UI/UX 디자이너",
-      "company": "페칭",
-      "location": "서울 성동구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=257235&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "글로벌 패션 커머스 프론트엔드 개발자 (병역특례 가능)",
-      "company": "페칭",
-      "location": "서울 성동구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=248170&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "글로벌 패션 주니어 커머스 운영팀 CS/CX",
       "company": "페칭",
       "location": "서울 성동구",
@@ -10259,6 +10534,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=256652&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "글로벌 패션 커머스 UI/UX 디자이너",
+      "company": "페칭",
+      "location": "서울 성동구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=257235&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10295,17 +10581,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "[일본PO] 글로벌 패션 커머스 일본 Product Owner",
-      "company": "페칭",
-      "location": "서울 성동구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=312443&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "CS 매니저",
       "company": "아이헤이트플라잉버그스",
       "location": "서울 영등포구",
@@ -10317,14 +10592,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "[주니어] IR & Strategy (CEO Office)",
+      "title": "[일본PO] 글로벌 패션 커머스 일본 Product Owner",
       "company": "페칭",
       "location": "서울 성동구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=317263&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=312443&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10358,6 +10633,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=315501&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "[주니어] IR & Strategy (CEO Office)",
+      "company": "페칭",
+      "location": "서울 성동구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=317263&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10416,17 +10702,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "[Operation] 기술지원/서비스운영",
-      "company": "뉴빌리티",
-      "location": "지역무관",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=346405&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "AI Engineer (AI 서비스팀)",
       "company": "뤼튼테크놀로지스",
       "location": "서울 서초구",
@@ -10435,6 +10710,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=346182&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "[Operation] 기술지원/서비스운영",
+      "company": "뉴빌리티",
+      "location": "지역무관",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=346405&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10457,6 +10743,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=347222&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "글로벌 패션 파트너 사업_MD팀 리더",
+      "company": "페칭",
+      "location": "서울 성동구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=349878&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10559,17 +10856,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "경영지원/행정 담당",
-      "company": "사각",
-      "location": "서울 영등포구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=352327&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "[Deepflow] 데이터 엔지니어 (Data Engineer)",
       "company": "임팩티브에이아이",
       "location": "서울 강남구",
@@ -10614,17 +10900,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "세일즈 강사 (1년 이상)",
-      "company": "풀림",
-      "location": "서울 강남구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=354093&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "[onthelook AI] MCN 크리에이터 매니저",
       "company": "온더룩",
       "location": "서울 성동구",
@@ -10633,6 +10908,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=353674&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "세일즈 강사 (1년 이상)",
+      "company": "풀림",
+      "location": "서울 강남구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=354093&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10691,17 +10977,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "B2B 영업 매니저 (5년 이상)",
-      "company": "코드프레소",
-      "location": "서울 강남구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=355807&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "공간 기획자",
       "company": "상화",
       "location": "서울 강남구",
@@ -10710,6 +10985,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=355649&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "B2B 영업 매니저 (5년 이상)",
+      "company": "코드프레소",
+      "location": "서울 강남구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=355807&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10724,14 +11010,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "B2B 영업 매니저 (3년 이상)",
-      "company": "코드프레소",
+      "title": "Finance Manager",
+      "company": "베슬에이아이(VESSL AI)",
       "location": "서울 강남구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=356156&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=356254&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10746,14 +11032,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "Finance Manager",
-      "company": "베슬에이아이(VESSL AI)",
+      "title": "B2B 영업 매니저 (3년 이상)",
+      "company": "코드프레소",
       "location": "서울 강남구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=356254&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=356156&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10834,17 +11120,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "e-HR 시스템(JaDE) 프로젝트 PM/PL (프로젝트 리딩, 분...",
-      "company": "휴먼컨설팅그룹",
-      "location": "지역무관",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358172&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "사업부 지역 담당자 (영업관리) - 부산 근무",
       "company": "바로고(barogo)",
       "location": "서울 강남구",
@@ -10853,6 +11128,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358177&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "e-HR 시스템(JaDE) 프로젝트 PM/PL (프로젝트 리딩, 분...",
+      "company": "휴먼컨설팅그룹",
+      "location": "지역무관",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358172&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10867,17 +11153,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "APAC marketing specialist",
-      "company": "메디트(Medit)",
-      "location": "서울 영등포구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358586&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "광고 수익화 매니저 2년 이상",
       "company": "트리거스",
       "location": "서울 마포구",
@@ -10886,6 +11161,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358692&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "APAC marketing specialist",
+      "company": "메디트(Medit)",
+      "location": "서울 영등포구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358586&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10911,17 +11197,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "[인바이츠생태계] 운영관리 2팀 팀장",
-      "company": "헬스커넥트",
-      "location": "서울 강서구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358776&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "Product Data Analyst",
       "company": "브레이브모바일(숨고,Soomgo)",
       "location": "서울 강남구",
@@ -10933,36 +11208,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "AI개발자 10년 이상",
-      "company": "비큐에이아이",
-      "location": "지역무관",
+      "title": "[인바이츠생태계] 운영관리 2팀 팀장",
+      "company": "헬스커넥트",
+      "location": "서울 강서구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358788&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "Business Development 3년 이상",
-      "company": "비큐에이아이",
-      "location": "지역무관",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358785&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "서비스 기획자 3년 이상",
-      "company": "비큐에이아이",
-      "location": "지역무관",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358783&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358776&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -10988,6 +11241,17 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "서비스 기획자 3년 이상",
+      "company": "비큐에이아이",
+      "location": "지역무관",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358783&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
       "title": "백엔드 엔지니어 3년 이상",
       "company": "에타일렉트로닉스",
       "location": "서울 용산구",
@@ -10999,14 +11263,25 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "프론트엔드 엔지니어 3년 이상",
-      "company": "에타일렉트로닉스",
-      "location": "서울 용산구",
+      "title": "AI개발자 10년 이상",
+      "company": "비큐에이아이",
+      "location": "지역무관",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358802&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358788&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "Business Development 3년 이상",
+      "company": "비큐에이아이",
+      "location": "지역무관",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358785&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11029,6 +11304,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358794&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "프론트엔드 엔지니어 3년 이상",
+      "company": "에타일렉트로닉스",
+      "location": "서울 용산구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358802&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11076,17 +11362,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "웨어러블 로봇 전장 하드웨어 개발자 (펌웨어 가능자 우대)",
-      "company": "리보디스",
-      "location": "서울 관악구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358858&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "[컨텐츠 마케터] 성수동 기반 빠르게 성장하는 브랜드 인큐베이팅(기...",
       "company": "그로빗",
       "location": "서울 성동구",
@@ -11098,14 +11373,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "BX 디자이너",
-      "company": "팀스파르타",
-      "location": "서울 강남구",
+      "title": "웨어러블 로봇 전장 하드웨어 개발자 (펌웨어 가능자 우대)",
+      "company": "리보디스",
+      "location": "서울 관악구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358862&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358858&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11117,6 +11392,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358865&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "BX 디자이너",
+      "company": "팀스파르타",
+      "location": "서울 강남구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358862&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11142,14 +11428,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "백엔드 웹프로그래머 (Spring, MSA) (2~4년)",
+      "title": "백엔드 웹프로그래머 (Spring, MSA) (4~6년)",
       "company": "키트웍스",
       "location": "지역무관",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358874&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358873&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11161,17 +11447,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358870&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "백엔드 웹프로그래머 (Spring, MSA) (4~6년)",
-      "company": "키트웍스",
-      "location": "지역무관",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358873&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11197,17 +11472,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "AI Agent Engineer (M365 & Automation)",
-      "company": "나인닷츠컨설팅",
-      "location": "서울 마포구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358908&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "Security Owner",
       "company": "그래비티랩스",
       "location": "서울 강남구",
@@ -11216,6 +11480,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358907&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "AI Agent Engineer (M365 & Automation)",
+      "company": "나인닷츠컨설팅",
+      "location": "서울 마포구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358908&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11340,17 +11615,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "[헤렌/브랜다즈] Product Manager",
-      "company": "헤렌",
-      "location": "서울 성동구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358990&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "Finance Manager",
       "company": "아임웹",
       "location": "서울 강남구",
@@ -11359,6 +11623,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358991&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "[헤렌/브랜다즈] Product Manager",
+      "company": "헤렌",
+      "location": "서울 성동구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358990&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11373,17 +11648,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "Design Lead",
-      "company": "아임웹",
-      "location": "서울 강남구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358998&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "Data Analyst Lead",
       "company": "아임웹",
       "location": "서울 강남구",
@@ -11392,6 +11656,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359001&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "Design Lead",
+      "company": "아임웹",
+      "location": "서울 강남구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358998&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11439,17 +11714,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "무선 통신 영업 사원(용산 근무)",
-      "company": "엑티브아이티",
-      "location": "서울 용산구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359013&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "Back-end Engineer (Creator Business)",
       "company": "아임웹",
       "location": "서울 강남구",
@@ -11458,6 +11722,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359020&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "무선 통신 영업 사원(용산 근무)",
+      "company": "엑티브아이티",
+      "location": "서울 용산구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359013&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11494,25 +11769,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "프로젝트 매니저 (PM / 스크럼 마스터)",
-      "company": "에이럭스",
-      "location": "서울 도봉구",
+      "title": "기업 모바일 영업·운영 담당자 3년 이상",
+      "company": "엑티브아이티",
+      "location": "경기 수원시",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359021&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "Back-end Engineer (Core)",
-      "company": "아임웹",
-      "location": "서울 강남구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359025&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359028&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11527,25 +11791,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "기업 모바일 영업·운영 담당자 3년 이상",
-      "company": "엑티브아이티",
-      "location": "경기 수원시",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359028&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "Back-end Engineer (Commerce)",
+      "title": "Back-end Engineer (Core)",
       "company": "아임웹",
       "location": "서울 강남구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359030&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359025&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11582,6 +11835,17 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "Back-end Engineer (Commerce)",
+      "company": "아임웹",
+      "location": "서울 강남구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359030&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
       "title": "Data Analytics Engineer",
       "company": "아임웹",
       "location": "서울 강남구",
@@ -11604,17 +11868,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "프로젝트 매니저 / 파트너십",
-      "company": "파지티브호텔",
-      "location": "서울 강남구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359082&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "Business Analyst",
       "company": "토스페이먼츠",
       "location": "서울 강남구",
@@ -11623,6 +11876,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359085&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "프로젝트 매니저 / 파트너십",
+      "company": "파지티브호텔",
+      "location": "서울 강남구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359082&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11648,17 +11912,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "프로덕트 매니저 / 플랫폼",
-      "company": "파지티브호텔",
-      "location": "서울 강남구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359086&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "[유광기] B2B 마케팅 Saas 세일즈 포지션",
       "company": "하이픈",
       "location": "서울 영등포구",
@@ -11670,14 +11923,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "식스샵 서비스운영팀 신입",
-      "company": "셀러허브",
+      "title": "프로덕트 매니저 / 플랫폼",
+      "company": "파지티브호텔",
       "location": "서울 강남구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359096&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359086&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11692,6 +11945,17 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "식스샵 서비스운영팀 신입",
+      "company": "셀러허브",
+      "location": "서울 강남구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359096&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
       "title": "Engineering Software Developer (선박 자동...",
       "company": "제이제이앤컴퍼니스",
       "location": "부산 해운대구",
@@ -11700,17 +11964,6 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359102&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "온/오프 그로스 유닛 (SALES+ MARKETING+CRM)",
-      "company": "우알롱",
-      "location": "서울 성동구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359104&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11725,14 +11978,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "퍼포먼스 마케터(5년 이하)",
-      "company": "고이장례연구소",
-      "location": "서울 관악구",
+      "title": "온/오프 그로스 유닛 (SALES+ MARKETING+CRM)",
+      "company": "우알롱",
+      "location": "서울 성동구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359109&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359104&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11744,6 +11997,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359111&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "퍼포먼스 마케터(5년 이하)",
+      "company": "고이장례연구소",
+      "location": "서울 관악구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359109&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11780,14 +12044,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "고객 상담",
-      "company": "GC메디아이",
-      "location": "서울 성동구",
+      "title": "동남아(틱톡샵, 쇼피) 퍼포먼스 마케팅",
+      "company": "토리든",
+      "location": "서울 송파구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359156&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359159&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11802,25 +12066,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "동남아(틱톡샵, 쇼피) 퍼포먼스 마케팅",
-      "company": "토리든",
-      "location": "서울 송파구",
+      "title": "고객 상담",
+      "company": "GC메디아이",
+      "location": "서울 성동구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359159&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "소프트웨어 엔지니어",
-      "company": "히포크랏 랩스(Hippocrat Labs)",
-      "location": "서울 강남구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359171&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359156&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11835,14 +12088,25 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "시니어 엔지니어 (7년 이상)",
-      "company": "풀림",
+      "title": "소프트웨어 엔지니어",
+      "company": "히포크랏 랩스(Hippocrat Labs)",
       "location": "서울 강남구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359174&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359171&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "이커머스 운영 MD",
+      "company": "파이브스페이스",
+      "location": "서울 성동구",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359201&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11868,14 +12132,14 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "이커머스 운영 MD",
-      "company": "파이브스페이스",
-      "location": "서울 성동구",
+      "title": "시니어 엔지니어 (7년 이상)",
+      "company": "풀림",
+      "location": "서울 강남구",
       "deadline": "",
       "type": "",
       "salary": "회사내규에 따름",
       "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359201&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=359174&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -11912,17 +12176,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "[윈들리] CS Manager",
-      "company": "어베어(윈들리)",
-      "location": "지역무관",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=340672&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "[윈들리] Growth Marketer",
       "company": "어베어(윈들리)",
       "location": "지역무관",
@@ -11956,6 +12209,17 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "[윈들리] CS Manager",
+      "company": "어베어(윈들리)",
+      "location": "지역무관",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=340672&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
       "title": "[윈들리] Product Manager",
       "company": "어베어(윈들리)",
       "location": "지역무관",
@@ -11978,17 +12242,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "26년 인천 AI 디지털 배움터 체험존 디지털 튜터(가이드) 모집",
-      "company": "에이블런",
-      "location": "지역무관",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358630&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "[인턴] AI Product Builder",
       "company": "어베어(윈들리)",
       "location": "지역무관",
@@ -11997,6 +12250,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=356485&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "26년 인천 AI 디지털 배움터 체험존 디지털 튜터(가이드) 모집",
+      "company": "에이블런",
+      "location": "지역무관",
+      "deadline": "",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=358630&infoTypeCd=CWT&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -12132,17 +12396,6 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "소속공인중개사 모집",
-      "company": "지오부동산공인중개사사무소",
-      "location": "대구 수성구",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779375&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
       "title": "병원마케팅 전문 퍼포먼스 마케팅 담당",
       "company": "파워에이치알",
       "location": "서울 성동구",
@@ -12165,1818 +12418,1477 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
-      "title": "(압력용기/이화학장치) 기계설계 3D 신입/경력 채용",
-      "company": "(주)와이텍",
-      "location": "경기 안산시  등",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력무관 대졸(2~3년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779479&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[하이미디어안산점] 영상/디자인 강사 모집(캔바,캡컷,에디츠)",
-      "company": "(주)하이미디어컴퓨터학원",
-      "location": "경기 안산시 단원구 등",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력2년 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53779594&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[주5일/자격증무관] 용인세브란스병원 입원간호팀 간호보조 직원 모집",
-      "company": "㈜인터비즈시스템",
-      "location": "경기 용인시 기흥구 등",
-      "deadline": "",
-      "type": "",
-      "salary": "월급 247 만원 ~ 256 만원",
-      "description": "경력무관 고졸",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=50823303&infoTypeCd=CJK&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "[상근] 용인세브란스병원 병원장실 비서 모집",
-      "company": "㈜인터비즈시스템",
-      "location": "경기 용인시 기흥구 등",
-      "deadline": "",
-      "type": "",
-      "salary": "월급 247 만원 ~ 256 만원",
-      "description": "경력무관 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=50823307&infoTypeCd=CJK&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "차량 테스트 및 평가 엔지니어 (사원~과장, 글로벌 TOP 자동차 ...",
-      "company": "굿커리어",
-      "location": "경기",
-      "deadline": "",
-      "type": "",
-      "salary": "회사내규에 따름",
-      "description": "경력3년 대졸(4년)",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=2605010001212&infoTypeCd=CIN&infoTypeGroup=tb_workinfogubun",
-      "source": "고용24"
-    },
-    {
-      "title": "전자동피킹/포장)) 익일지급/소형제품(젤리,과자류)/동반대환영/인센2만원",
-      "company": "㈜한마음직업상담센터",
-      "location": "대전 대덕구 중리동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "일급 99,072원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116317404",
-      "source": "알바몬"
-    },
-    {
-      "title": "[야간] 여성의류신규센터/피킹 및 포장/당일지급/인원모집",
-      "company": "[엠와이이엔지/의류 피킹 및 검수/동반가능 ]",
-      "location": "경기 이천시",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "일급 155,120원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116317402",
-      "source": "알바몬"
-    },
-    {
-      "title": "[신세계푸드] 신세계백화점 베키아에누보 양식조리사 주5일  근무자 채용.",
-      "company": "베키아에누보 점포 본점",
-      "location": "서울 전체",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "월급 2,403,500원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116212961",
-      "source": "알바몬"
-    },
-    {
-      "title": "토요일 15시~01시",
-      "company": "신호원룸점",
-      "location": "부산 강서구",
+      "title": "이마트24 STAY 개항점 (차이나타운) 14~21시 (토일)",
+      "company": "STAY개항점",
+      "location": "인천 중구 북성동3가",
       "deadline": "상시모집",
       "type": "시간제",
       "salary": "시급 10,320원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116242392",
+      "apply_link": "https://www.albamon.com/jobs/detail/116243844",
       "source": "알바몬"
     },
     {
-      "title": "올리브영 서울역점 주말 마감 CREW 구인",
-      "company": "올리브영 서울역점",
-      "location": "서울 중구 봉래동1가",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,600원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116052084",
-      "source": "알바몬"
-    },
-    {
-      "title": "이마트24성산하나점에서 근무자를 모집합니다. 목-토(07시-09시)",
-      "company": "성산하나점",
-      "location": "서울 마포구 성산동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,500원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116140223",
-      "source": "알바몬"
-    },
-    {
-      "title": "[NBB 고속터미널직영] 출근은 가볍게 지갑은 무겁게! (마감 파트타임)",
-      "company": "노브랜드버거 고속터미널점",
-      "location": "서울 동작구",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 13,884원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116287203",
-      "source": "알바몬"
-    },
-    {
-      "title": "[열정꼬치] 주5일 월330만 / 직원 모집 / 시청역 5분거리",
-      "company": "열정꼬치",
-      "location": "서울 중구 북창동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "월급 3,300,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116218947",
-      "source": "알바몬"
-    },
-    {
-      "title": "[삼성역] 올리브영 파르나스몰점 평일/주말 마감 CREW구인 (요일협의)",
-      "company": "씨제이올리브영 주식회사",
-      "location": "서울 강남구",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,600원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116255164",
-      "source": "알바몬"
-    },
-    {
-      "title": "올리브영 천안신부점 평일 마감 CREW 구인",
-      "company": "씨제이올리브영 주식회사",
-      "location": "충남 천안시 동남구 신부동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,600원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116282871",
-      "source": "알바몬"
-    },
-    {
-      "title": "올리브영 안국역점 마감 CREW 구인(요일 협의)",
-      "company": "씨제이올리브영 주식회사",
-      "location": "서울 종로구",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,600원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116161614",
-      "source": "알바몬"
-    },
-    {
-      "title": "컴포즈커피//목 오픈//배달x",
-      "company": "컴포즈커피 일산풍산점",
-      "location": "경기 고양시 일산동구 중산동",
+      "title": "롯데리아 잠실롯데월드몰 b1점에서 함께 일할 아르바이트 모집합니다!!",
+      "company": "잠실롯데월드몰B1",
+      "location": "경기 구리시",
       "deadline": "상시모집",
       "type": "시간제",
       "salary": "시급 10,320원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116125838",
+      "apply_link": "https://www.albamon.com/jobs/detail/116115209",
       "source": "알바몬"
     },
     {
-      "title": "[급구] 올리브영 압구정로데오점 평일 오픈 CREW 구인",
+      "title": "CJ올리브영 가로수길 타운 마감 CREW 구인 (요일협의)",
       "company": "씨제이올리브영 주식회사",
-      "location": "서울 구로구 신도림동",
+      "location": "서울 종로구 사직동",
       "deadline": "상시모집",
       "type": "시간제",
       "salary": "시급 10,600원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116161612",
+      "apply_link": "https://www.albamon.com/jobs/detail/116091315",
       "source": "알바몬"
     },
     {
-      "title": "도미노피자 당산점에서 직원 구합니다",
-      "company": "도미노피자 당산점",
-      "location": "서울 영등포구",
+      "title": "[연최대5020만] 물류 알바관리자 채용(헬퍼리더)",
+      "company": "#보너스150만원 #초간단즉시지원 #정규직전환가능",
+      "location": "대전 유성구 관평동",
       "deadline": "상시모집",
       "type": "시간제",
-      "salary": "월급 2,900,000원",
+      "salary": "연봉 50,200,000원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116313274",
+      "apply_link": "https://www.albamon.com/jobs/detail/116180491",
       "source": "알바몬"
     },
     {
-      "title": "노브랜드 SF수원점 스태프 모집",
-      "company": "No-BrandSF수원점",
-      "location": "경기 수원시 장안구 정자동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 11,500원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116066959",
-      "source": "알바몬"
-    },
-    {
-      "title": "신동카페거리 카페리핑 2호점 직원 모집",
-      "company": "카페 리핑(Cafe Leaping)",
-      "location": "경기 수원시 영통구 신동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,500원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116317397",
-      "source": "알바몬"
-    },
-    {
-      "title": "[5월 2일부터/시급1.5/단기알바] 바닐라코 명동1호점 물류PT 채용",
-      "company": "㈜제니엘/바닐라코",
-      "location": "서울 중구",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 15,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116294176",
-      "source": "알바몬"
-    },
-    {
-      "title": "[ZARA 자라] 대구 동성로 / 봉무 이시아폴리스 단기 파트타이머 채용",
-      "company": "자라 봉무 이시아폴리스",
-      "location": "대구 동구 봉무동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 13,629원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116242386",
-      "source": "알바몬"
-    },
-    {
-      "title": "[롯데리아안산사동점] 파트타임(주부가능) 아르바이트 모집 합니다!",
-      "company": "안산사동",
-      "location": "경기 안산시 상록구 사동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116246827",
-      "source": "알바몬"
-    },
-    {
-      "title": "현대백화점 판교점 매장 판매인원 모집(월8회근무 즉시채용)",
-      "company": "주식회사 더라이즈",
-      "location": "경기 성남시 분당구 백현동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "월급 900,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116288341",
-      "source": "알바몬"
-    },
-    {
-      "title": "정수기 필터교체  및 고객 관리 사원 모집",
-      "company": "안양동안지국",
-      "location": "경기 안산시 단원구",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "월급 2,700,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116304401",
-      "source": "알바몬"
-    },
-    {
-      "title": "컴포즈커피 평일오전, 주말전타임 알바 모집",
-      "company": "컴포즈커피 양재시민의숲에브리데이점",
-      "location": "서울 서초구 양재동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 12,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116124312",
-      "source": "알바몬"
-    },
-    {
-      "title": "노브랜드버거 휘경점 부점장님 구합니다.",
-      "company": "노브랜드버거 휘경점",
-      "location": "서울 동대문구 휘경동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "월급 2,600,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116272544",
-      "source": "알바몬"
-    },
-    {
-      "title": "롯데리아 롯데월드 잠실점에서 아르바이트 모집합니다!!",
-      "company": "롯데월드잠실",
-      "location": "경기 하남시",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116140216",
-      "source": "알바몬"
-    },
-    {
-      "title": "부천신중동점 역전할머니맥주에서 [금,토,일] 홀 마감 알바 구합니다.",
-      "company": "할맥 부천신중동점",
-      "location": "경기 부천시",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 11,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116098939",
-      "source": "알바몬"
-    },
-    {
-      "title": "[청북] 화장품 충진 생산직 채용(통근버스/자차)",
-      "company": "유엔잡㈜",
-      "location": "경기 평택시 안중읍",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "월급 2,156,880원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/115475690",
-      "source": "알바몬"
-    },
-    {
-      "title": "올리브영 수내역점 금, 토,일 오픈 CREW",
-      "company": "씨제이올리브영 주식회사",
-      "location": "경기 성남시 분당구 서현동",
+      "title": "올리브영 인천인스파이어점 CREW 구인(교통비6,000원지원)",
+      "company": "올리브영 인천인스파이어점",
+      "location": "인천 계양구 계산동",
       "deadline": "상시모집",
       "type": "시간제",
       "salary": "시급 10,600원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116087211",
+      "apply_link": "https://www.albamon.com/jobs/detail/116167026",
       "source": "알바몬"
     },
     {
-      "title": "[OOZYCOFFEE] 우지커피 광진자양뚝섬로점 PT모집[주말마감]",
-      "company": "광진자양뚝섬로점",
-      "location": "서울 광진구",
+      "title": "[종각역] 컴포즈커피 종로YMCA 평일/주말 바리스타 모집",
+      "company": "컴포즈커피 종로YMCA점",
+      "location": "서울 종로구 종로3가",
       "deadline": "상시모집",
       "type": "시간제",
-      "salary": "시급 10,400원",
+      "salary": "시급 12,384원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116272540",
+      "apply_link": "https://www.albamon.com/jobs/detail/116288453",
       "source": "알바몬"
     },
     {
-      "title": "평택 진위 프리미엄 카츠 기린아에서 함께 하실 분 모집합니다",
-      "company": "기린아",
-      "location": "경기 오산시 갈곶동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "월급 3,450,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116311889",
-      "source": "알바몬"
-    },
-    {
-      "title": "익일지급/리치지게차모집/주간파트/피킹/동탄프레시웨이/휴식시간많음/바로출근",
-      "company": "주식회사 모스트피플 / 익일지급 / 프레시웨이",
-      "location": "경기 화성시 장지동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "일급 168,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116310610",
-      "source": "알바몬"
-    },
-    {
-      "title": "익일지급/지게차모집/석간파트/입출고/피킹/평택사조물류센터/바로출근",
-      "company": "주식회사 모스트피플 / 평택사조 / 직접출근가능자 모집",
-      "location": "경기 평택시 칠괴동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "일급 135,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116310605",
-      "source": "알바몬"
-    },
-    {
-      "title": "익일지급/당일알바/바로출근/오산통근/동탄이베이/3층근무/남여사원모집",
-      "company": "모스트피플 / 오산통근운행 / 바로출근가능/지게차모집",
-      "location": "경기 오산시 원동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "일급 100,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116310588",
-      "source": "알바몬"
-    },
-    {
-      "title": "[대전] 롯데칠성/익일지급/일급13만원/단순작업/경력무관/초보가능",
-      "company": "㈜ 알케이에이전트",
-      "location": "대전 유성구",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "일급 130,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116298989",
-      "source": "알바몬"
-    },
-    {
-      "title": "올리브영 왕십리역사점 월,토,일 오픈 CREW 구인",
-      "company": "올리브영 왕십리역사점",
+      "title": "올리브영 성수연방점 주말 마감 CREW 구인",
+      "company": "CJ올리브영 성수연방점",
       "location": "서울 성동구",
       "deadline": "상시모집",
       "type": "시간제",
       "salary": "시급 10,600원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116140210",
+      "apply_link": "https://www.albamon.com/jobs/detail/116133483",
       "source": "알바몬"
     },
     {
-      "title": "컴포즈커피 월평점 파트타임 모집",
-      "company": "컴포즈커피 대전월평점",
-      "location": "대전 서구 월평1동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116224084",
-      "source": "알바몬"
-    },
-    {
-      "title": "(부평) 컴포즈 부평하이마트점 토일 미들",
-      "company": "컴포즈커피 인천부평하이마트점",
-      "location": "인천 부평구",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116315043",
-      "source": "알바몬"
-    },
-    {
-      "title": "CJ 올리브영 대치역점 금토일 마감 CREW 구인",
-      "company": "씨제이올리브영 주식회사",
-      "location": "서울 송파구",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,600원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116242384",
-      "source": "알바몬"
-    },
-    {
-      "title": "[주5일] 카페 정월/ 정직원 모집",
-      "company": "정월",
-      "location": "서울 강남구 역삼동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "월급 2,340,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116309022",
-      "source": "알바몬"
-    },
-    {
-      "title": "카페 정월/ 파트타이머 모집",
-      "company": "정월",
-      "location": "서울 강남구 역삼동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,500원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116308956",
-      "source": "알바몬"
-    },
-    {
-      "title": "[롯데리아 신림역점]에서 오전 오후 시간대 메이트 채용합니다~!",
-      "company": "신림역",
-      "location": "서울 관악구 신림동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116260403",
-      "source": "알바몬"
-    },
-    {
-      "title": "[직영점]  투썸플레이스 2.0 강남 홀 마감/키친 오픈 Staff 채용",
-      "company": "투썸 2.0 강남",
-      "location": "서울 강동구",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,400원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116210621",
-      "source": "알바몬"
-    },
-    {
-      "title": "[산들해송파점] 주방,홀 정직원 모집 (숙식제공)",
-      "company": "산들해(송파점)",
-      "location": "서울 강동구 성내2동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "월급 3,000,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116308123",
-      "source": "알바몬"
-    },
-    {
-      "title": "[산들해양재점] 홀서빙.주방 직원 / 홀서빙 알바 (숙식 제공)",
-      "company": "산들해 양재점",
-      "location": "서울 서초구 양재동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "월급 3,000,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116308040",
-      "source": "알바몬"
-    },
-    {
-      "title": "매머드익스프레스 내수동점 평일알바 구합니다",
-      "company": "매머드 익스프레스 내수동점",
-      "location": "서울 종로구 내수동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116224076",
-      "source": "알바몬"
-    },
-    {
-      "title": "[신규점] CJ올리브영 세로수길점 평일 마감 CREW 구인",
-      "company": "씨제이올리브영 주식회사",
-      "location": "서울 강남구 역삼1동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,600원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116124309",
-      "source": "알바몬"
-    },
-    {
-      "title": "(주말) 매머드 익스프레스 종로5가역점에서 주말 파트타임 모집합니다!",
-      "company": "매머드 익스프레스 종로5가역점",
-      "location": "서울 종로구 효제동",
+      "title": "[직영점] 투썸플레이스 양재매헌역점 월급제 직원(Captain) 채용",
+      "company": "투썸플레이스 양재매헌역점",
+      "location": "서울 강남구 도곡동",
       "deadline": "상시모집",
       "type": "시간제",
       "salary": "시급 11,000원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116054449",
+      "apply_link": "https://www.albamon.com/jobs/detail/116146308",
       "source": "알바몬"
     },
     {
-      "title": "화목금 마감파트 모집합니다",
-      "company": "컴포즈커피 안양삼덕공원점",
-      "location": "경기 안양시 만안구 안양동",
+      "title": "엔제리너스 삼전사옥점 월~금 인타임 모집",
+      "company": "엔젤 삼전사옥",
+      "location": "서울 송파구 삼전동",
       "deadline": "상시모집",
       "type": "시간제",
       "salary": "시급 10,320원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116265125",
+      "apply_link": "https://www.albamon.com/jobs/detail/116314341",
       "source": "알바몬"
     },
     {
-      "title": "SK매직 제품 관리사원 모집",
-      "company": "분당지국",
-      "location": "경기 광주시 신현동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "월급 2,000,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116224060",
-      "source": "알바몬"
-    },
-    {
-      "title": "★시급 15,000원+인센★10시~16시/앉아서 간단한 안내콜/초보환영",
-      "company": "초이스 플러스",
-      "location": "인천 부평구 갈산동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 15,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116306127",
-      "source": "알바몬"
-    },
-    {
-      "title": "[직영] 투썸플레이스 압구정역점 마감 STAFF 채용",
-      "company": "투썸플레이스 압구정역점",
-      "location": "서울 광진구 구의동",
+      "title": "[직영점] 투썸플레이스 경복아파트사거리점 주말마감스탭채용 선정릉역도보5분",
+      "company": "투썸플레이스 경복아파트사거리점",
+      "location": "서울 강남구",
       "deadline": "상시모집",
       "type": "시간제",
       "salary": "시급 10,400원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116169029",
+      "apply_link": "https://www.albamon.com/jobs/detail/116164581",
       "source": "알바몬"
     },
     {
-      "title": "맥도날드 군산조촌DT점에서 함께할 크루를 모집합니다.",
-      "company": "맥도날드 군산조촌DT점",
-      "location": "전북 군산시",
-      "deadline": "",
+      "title": "[강동 고덕센터] 인바운드 정규직 상담사 모집 입사축하금&입사축하선물O",
+      "company": "에스제이앤㈜",
+      "location": "서울 강동구 고덕동",
+      "deadline": "상시모집",
       "type": "시간제",
-      "salary": "시급 10320",
+      "salary": "월급 2,400,000원",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143814794&listmenucd=SENIOR",
-      "source": "알바천국"
+      "apply_link": "https://www.albamon.com/jobs/detail/116281085",
+      "source": "알바몬"
     },
     {
-      "title": "하이디라오 부산역점/서면점 홀,주방 직원 및 파트타임 모집(서면점오픈예정)",
-      "company": "하이디라오 부산역점",
-      "location": "부산 남구",
-      "deadline": "",
+      "title": "★원하는날 일하고 일 최대15만원 챙기자 #쿠팡알바#집근처#친구동반#단기",
+      "company": "#초보가능 #동반근무 #하루알바",
+      "location": "대전 동구 자양동",
+      "deadline": "상시모집",
       "type": "시간제",
-      "salary": "월급 3000000",
+      "salary": "일급 150,620원",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143802195&listmenucd=SENIOR",
-      "source": "알바천국"
+      "apply_link": "https://www.albamon.com/jobs/detail/116120732",
+      "source": "알바몬"
     },
     {
-      "title": "갓덴스시 울산점 정규직 360만원부터",
-      "company": "갓텐코리아 갓텐스시 롯데백화점울산점",
-      "location": "울산 남구",
-      "deadline": "",
+      "title": "[시급 10,820원] 롯데리아 분당서현점 아르바이트, 주부사원 채용",
+      "company": "분당서현",
+      "location": "경기 성남시 중원구",
+      "deadline": "상시모집",
       "type": "시간제",
-      "salary": "월급 4000000",
+      "salary": "시급 10,360원",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143834820&listmenucd=SENIOR",
-      "source": "알바천국"
+      "apply_link": "https://www.albamon.com/jobs/detail/116229070",
+      "source": "알바몬"
     },
     {
-      "title": "[아트박스 구미점] 화목토 진열 파트타이머 모집중",
-      "company": "(주)아트박스 구미점",
-      "location": "경북 구미시",
-      "deadline": "",
+      "title": "[직영점] 투썸플레이스 양재매헌역점 키친 스탭(STAFF) 채용",
+      "company": "투썸플레이스 양재매헌역점",
+      "location": "서울 강남구 신사동",
+      "deadline": "상시모집",
       "type": "시간제",
-      "salary": "시급 10320",
+      "salary": "시급 10,400원",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143722332&listmenucd=SENIOR",
-      "source": "알바천국"
+      "apply_link": "https://www.albamon.com/jobs/detail/116219567",
+      "source": "알바몬"
     },
     {
-      "title": "하이디라오 영등포점 홀, 주방 직원 및 파트타임 모집",
-      "company": "하이디라오 영등포점",
-      "location": "서울 영등포구",
-      "deadline": "",
+      "title": "★기간한정! 3일 일하면 38만원을? #쿠팡알바#셔틀#집근처#친구랑#부업",
+      "company": "#진접읍 #쿠팡 #초보가능",
+      "location": "서울 송파구 잠실동",
+      "deadline": "상시모집",
       "type": "시간제",
-      "salary": "월급 3000000",
+      "salary": "일급 150,620원",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143802180&listmenucd=SENIOR",
-      "source": "알바천국"
+      "apply_link": "https://www.albamon.com/jobs/detail/116000204",
+      "source": "알바몬"
     },
     {
-      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
-      "company": "코웨이 울산성안지국",
-      "location": "울산 중구",
-      "deadline": "",
+      "title": "(직영) 투썸플레이스 수색DMC점 월-목 마감 스탭 채용",
+      "company": "투썸플레이스 수색DMC점",
+      "location": "서울 은평구",
+      "deadline": "상시모집",
       "type": "시간제",
-      "salary": "월급 3270000",
+      "salary": "시급 10,400원",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143656031&listmenucd=SENIOR",
-      "source": "알바천국"
+      "apply_link": "https://www.albamon.com/jobs/detail/116201900",
+      "source": "알바몬"
     },
     {
-      "title": "맥도날드 대구다사 DT점에서 함께 할 크루 모집합니다.",
-      "company": "맥도날드 대구 다사 DT점",
-      "location": "대구 달성군",
-      "deadline": "",
+      "title": "[컬리]  ★프로모션 100만원 지급★ 안산센터 현장사원 채용",
+      "company": "㈜컬리",
+      "location": "경기 안산시 단원구 성곡동",
+      "deadline": "상시모집",
       "type": "시간제",
-      "salary": "시급 10320",
+      "salary": "월급 2,250,000원",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143820563&listmenucd=SENIOR",
-      "source": "알바천국"
+      "apply_link": "https://www.albamon.com/jobs/detail/116242097",
+      "source": "알바몬"
     },
     {
-      "title": "커피빈 도곡점 4H 슈퍼바이저 채용",
-      "company": "커피빈코리아 도곡점",
-      "location": "서울 강남구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 1123600",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143888005&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "투썸플레이스 유성온천점에서 함께일할 스텝을 모집합니다.",
-      "company": "투썸플레이스 유성온천점",
-      "location": "대전 유성구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143872443&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "할리스 세종어진점 파트타이머 모집",
-      "company": "할리스커피 세종어진점",
-      "location": "세종 전체",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143622397&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "CU 동백 호수마을점 수 17시30분~ 23시 스태프구합니다.3월부터",
-      "company": "CU 신규점",
-      "location": "경기 용인시 기흥구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143877717&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "써브웨이 검단사거리점 평일 수목(주2일) 오후 아르바이트 모집합니다.",
-      "company": "써브웨이 인천검단사거리점",
-      "location": "인천 전체",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10400",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143872440&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "울산청량점 롯데리아 /직원 및 알바 급구/경력자 우대",
-      "company": "롯데리아 울산청량점",
-      "location": "울산 전체",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143834798&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "하이디라오 홍대점 홀, 주방 직원 및 파트타임 모집",
-      "company": "하이디라오 홍대점",
-      "location": "서울 마포구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 3000000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143802154&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "세븐일레븐 화성신남대로점 평일 오전 5-7시 단시간 근무자모집합니다",
-      "company": "세븐일레븐 화성신남대로점",
-      "location": "경기 화성시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143864753&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "(오전,오후,야간)맥도날드 평내DT점 Crew 모집합니다",
-      "company": "맥도날드 평내 DT점",
+      "title": "★기간한정! 3일 일하면 38만원을? #쿠팡알바#셔틀#집근처#친구랑#부업",
+      "company": "#초보가능 #동반근무 #하루알바",
       "location": "경기 남양주시",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "일급 150,620원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/115904733",
+      "source": "알바몬"
+    },
+    {
+      "title": "매머드익스프레스 상일동 리엔파크점 마감 모집",
+      "company": "매머드 익스프레스 상일동리엔파크점",
+      "location": "서울 강동구",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,320원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116243835",
+      "source": "알바몬"
+    },
+    {
+      "title": "올리브영 강남논현점 주말 오픈 CREW 구인",
+      "company": "씨제이올리브영 주식회사",
+      "location": "서울 광진구",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,600원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116100396",
+      "source": "알바몬"
+    },
+    {
+      "title": "★쿠팡이쏜다★3일 최대 38만원에 집근처 알바까지! #친구동반#셔틀#초보",
+      "company": "#초보가능 #동반근무 #하루알바",
+      "location": "경기 파주시 운정3동",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "일급 150,620원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/115420980",
+      "source": "알바몬"
+    },
+    {
+      "title": "★원하는날 3일 일하고 38만원 챙기자 #쿠팡알바#집근처#친구동반#단기",
+      "company": "#초보가능 #동반근무 #하루알바",
+      "location": "경기 파주시 문산읍",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "일급 150,620원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/115420978",
+      "source": "알바몬"
+    },
+    {
+      "title": "세종분석 월350만이상/국가조달/회원상담 TM",
+      "company": "#콜타임,콜수제한X #중장년가능",
+      "location": "서울 마포구 망원동",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "월급 3,500,000원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/115870955",
+      "source": "알바몬"
+    },
+    {
+      "title": "[시급 13,000원] 2026 NOPS 천호점 파트타이머 채용공고",
+      "company": "NOPS 천호점",
+      "location": "서울 강동구 길동",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 13,000원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116253846",
+      "source": "알바몬"
+    },
+    {
+      "title": "강남역 [제로환전소] 주말직원 채용( 9 to 6)",
+      "company": "제로환전 강남본점",
+      "location": "서울 동작구 사당동",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 12,000원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116117375",
+      "source": "알바몬"
+    },
+    {
+      "title": "컴포즈 망포플레티넘베이스점 토.일마감/토.일 오픈/일.수(월)/모집",
+      "company": "컴포즈커피 망포플래티넘베이스점",
+      "location": "경기 수원시 영통구 망포동",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,320원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116068335",
+      "source": "알바몬"
+    },
+    {
+      "title": "롯데리아 김포한강신도시점 아르바이트 모집",
+      "company": "롯데마트김포한강신도시",
+      "location": "경기 김포시 장기동",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,320원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116234933",
+      "source": "알바몬"
+    },
+    {
+      "title": "종건비드 월350만이상/국가조달/회원 아웃바운드 TM",
+      "company": "#콜타임.콜수제한X#중장년가능",
+      "location": "서울 마포구 망원동",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "월급 3,500,000원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/115610369",
+      "source": "알바몬"
+    },
+    {
+      "title": "컴포즈커피 세종산울점 미들 아르바이트 모집(카페 경력자)",
+      "company": "컴포즈커피 세종산울점",
+      "location": "세종 세종시",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,320원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116164564",
+      "source": "알바몬"
+    },
+    {
+      "title": "[양양 쏠비치] 오션플레이 발권/부대업장 직원 모집",
+      "company": "㈜유니에스",
+      "location": "서울 노원구 상계동",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "월급 2,200,000원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116313280",
+      "source": "알바몬"
+    },
+    {
+      "title": "보배반점 하단점 주간&야간 (주방정직원),평일오후,주말알바",
+      "company": "보배반점 하단점",
+      "location": "부산 사하구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 3403681",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143880712&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[경남 창원]마산신포DT점에서 함께 근무 크루를 모집합니다",
+      "company": "맥도날드 마산 신포 DT점",
+      "location": "경남 창원시 마산합포구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143625534&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "치킨집 오븐및 주방업무",
-      "company": "지코바 물금2호점",
-      "location": "경남 양산시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 11000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143874151&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143822042&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
       "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
-      "company": "코웨이 부산주례지국",
-      "location": "부산 사상구",
+      "company": "코웨이 부산좌동지국",
+      "location": "부산 해운대구",
       "deadline": "",
       "type": "시간제",
       "salary": "월급 3270000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143802146&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143743744&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "하이디라오 서초점(강남점) 홀, 주방 직원 및 파트타임 모집",
-      "company": "하이디라오 서초점(강남점)",
-      "location": "서울 관악구",
+      "title": "[인천중구] 맥도날드 동인천점에서 같이 일할 크루 모집합니다.",
+      "company": "맥도날드 동인천",
+      "location": "인천 중구",
       "deadline": "",
       "type": "시간제",
-      "salary": "월급 3000000",
+      "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143802144&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143749351&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "롯데리아 양주고읍점 직원,매니저,부점장,점장 모집 [정규직]",
-      "company": "롯데리아 양주고읍점",
-      "location": "경기 양주시",
+      "title": "다이소거창대동점 에서 함께 하실 직원 구합니다.",
+      "company": "다이소 거창대동점",
+      "location": "경남 거창군",
       "deadline": "",
       "type": "시간제",
-      "salary": "월급 2600000",
+      "salary": "월급 2156880",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143829560&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143713972&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
-      "company": "코웨이 양산웅상지국",
-      "location": "경남 양산시",
+      "title": "[천안불당DT점] 주 25시간 함께할 바리스타를 모집합니다.",
+      "company": "스타벅스 천안불당DT",
+      "location": "충남 천안시 서북구",
       "deadline": "",
       "type": "시간제",
-      "salary": "월급 3270000",
+      "salary": "시급 11250",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143877695&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143822041&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "하이디라오 명동점 홀, 주방 직원 및 파트타임 모집",
-      "company": "하이디라오 명동점",
-      "location": "서울 동대문구",
+      "title": "[천안 동남구]맥도날드 천안원성DT점에서 함께 근무할 직원을 모집합니다",
+      "company": "맥도날드 천안 원성 DT점",
+      "location": "충남 천안시 동남구",
       "deadline": "",
       "type": "시간제",
-      "salary": "월급 3100000",
+      "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143802131&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143856877&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "하이디라오 명동점 홀, 주방 직원 및 파트타임 모집.",
-      "company": "하이디라오 명동점",
-      "location": "서울 종로구",
+      "title": "평일(월, 화) 미들타임 함께 할 지원자 찾습니다.",
+      "company": "파리바게뜨 죽전현대점",
+      "location": "경기 용인시 수지구",
       "deadline": "",
       "type": "시간제",
-      "salary": "월급 3100000",
+      "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143802128&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143809843&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "[롯데리아 하남신장점] 오후 관리자 모집 (롯데리아 경력자만 모집)",
-      "company": "롯데리아 하남신장점",
+      "title": "[부산영도DT점] 버거킹에서 함께 할 크루를 모집합니다.",
+      "company": "버거킹 부산영도DT점",
+      "location": "부산 영도구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143800270&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[서울 양재동]맥도날드 양재점에서 평일/주말 함께 일 할 크루를 모집합니다.",
+      "company": "맥도날드 양재점",
+      "location": "서울 서초구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143792775&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "써브웨이 하남미사역점 파트타이머 채용 공고(상세내용참고)",
+      "company": "써브웨이 하남미사역점",
       "location": "경기 하남시",
       "deadline": "",
       "type": "시간제",
-      "salary": "월급 3000000",
+      "salary": "시급 10820",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143782820&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143806019&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "리빙파워센터CU 미스터마카롱 cafe",
-      "company": "CU 리빙파워센터기흥점",
-      "location": "경기 용인시 기흥구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10500",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143854144&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "전포 고원에서 멋진 정직원 구합니다",
-      "company": "고원",
-      "location": "부산 부산진구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 2800000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143801984&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "역전우동회기점 - 주말알바구합니다.",
-      "company": "역전우동0410 회기역점",
-      "location": "서울 동대문구",
+      "title": "롯데리아 평일 알바생 모집합니다",
+      "company": "롯데리아 강진",
+      "location": "전남 강진군",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143689815&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143839907&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "갓텐코리아 갓덴스시 파주 운정점 정규직 360만원부터",
-      "company": "주식회사 갓텐코리아 갓텐스시 스타필드",
-      "location": "경기 파주시",
+      "title": "[컬리 창원센터] 주5일 / 현장 물류 - 지게차 사원 모집",
+      "company": "주식회사 컬리",
+      "location": "부산 강서구",
       "deadline": "",
       "type": "시간제",
-      "salary": "월급 4000000",
+      "salary": "월급 2710000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143834766&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143862525&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "(중문 제주 서귀포)맥도날드 제주중문DT점에서 함께 일할 크루 모집 합니다",
-      "company": "맥도날드 제주중문 DT점",
-      "location": "제주 서귀포시",
+      "title": "KT & SK & LG 통신 3사 인터넷 가입상담",
+      "company": "아이엠지네트웍스",
+      "location": "부산 동래구",
       "deadline": "",
       "type": "시간제",
-      "salary": "시급 10320",
+      "salary": "월급 3500000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143678275&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143678713&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "롯데리아 번동점 아르바이트 모집 (오전/오후 타임/롯데리아근무경력자에 한함)",
-      "company": "롯데리아 번동점",
-      "location": "서울 강북구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143610373&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "다이소 홈플러스송도점 오전 파트사원 모집",
-      "company": "다이소 홈플러스송도점",
-      "location": "인천 연수구",
+      "title": "월,화,수,목 아침근무자 구해요",
+      "company": "CU 광안그린점",
+      "location": "부산 수영구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143708956&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143676549&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "오리역삼거리에서 함께 근무하실 파트너를 모집합니다",
-      "company": "스타벅스 오리역삼거리",
+      "title": "서판교점 스타벅스 바리스타 모집합니다.(주차지원 가능)",
+      "company": "스타벅스 서판교",
       "location": "경기 성남시 분당구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 11250",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143869288&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143820236&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "[롯데리아 성남태평역점] 마감 청소 아르바이트 모집 (주부,경력단절자환영)",
-      "company": "롯데리아 성남태평",
+      "title": "성남 수정구 중원구 방문선생님 & 공부방 개설 선생님을 모집합니다.",
+      "company": "재능교육 성남지국",
       "location": "경기 성남시 수정구",
       "deadline": "",
       "type": "시간제",
-      "salary": "시급 15000",
+      "salary": "월급 1500000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143848899&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143687105&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "[버거킹 군자능동점] 함께 오래 일할 크루 모집합니다. +시간,요일 협의가능",
-      "company": "군자능동점 군자능동점",
-      "location": "서울 광진구",
+      "title": "[고양DT점] 전 시간대 지원가능 고양DT점과 함께 할 크루를 모집합니다.",
+      "company": "맥도날드 고양점",
+      "location": "경기 고양시 덕양구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143815988&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143792769&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "[스탠브루 위례점] 주말 미들 아르바이트생 모집",
-      "company": "엔제리너스 스탠브루 위례점",
-      "location": "경기 성남시 수정구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143859240&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[초보근무가능] 써브웨이 양재역점 평일 주2일 저녁 근무자 구인합니다",
-      "company": "써브웨이 양재역점",
-      "location": "서울 서초구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10500",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143660933&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "롯데리아 일산 마두점에서직원,아르바이트 채용합니다",
-      "company": "롯데리아 일산마두점",
-      "location": "경기 고양시 일산서구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143683872&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "홍콩반점0410 원주단구점 주방직원구합니다",
-      "company": "더본코리아 홍콩반점0410 원주단구점",
-      "location": "강원 원주시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 2750000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143779798&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "직영점 롯데슈퍼 내손점 직원 모집(AR 근무 평가 후 계약직 전환 채용)",
-      "company": "롯데슈퍼 내손점",
-      "location": "경기 의왕시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143808535&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[다이소 이마트광주점 오전2시간 주6일] 다이소 입고도우미 모집합니다.",
-      "company": "다이소 이마트광주",
-      "location": "광주 서구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143877704&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "다이소 안국역2호점에서 직원모집합니다 임시 오전9시~오후6시(2교대근무)",
-      "company": "다이소 안국역2호점",
-      "location": "서울 종로구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 2156880",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143877702&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "주말(토,일) 마감 파트타이머 모집",
-      "company": "써브웨이 진주중안점",
-      "location": "경남 진주시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143773305&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "평일오후(목,금요일)알바 구합니다.",
-      "company": "CU 아산트라팰리스2호점",
-      "location": "충남 아산시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143791213&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "교촌치킨 안행점 금토일 정직원 채용합니다",
-      "company": "교촌치킨 전북 안행점",
-      "location": "전북 전주시 완산구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143787404&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "써브웨이옥동점 평일주말 스텝구해요(6개월이상가능한분)",
-      "company": "써브웨이 울산 옥동점",
-      "location": "울산 남구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10500",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143893577&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "용인수지DT점 크루모집 -협의가능/평일 오후/주말 오전오후야간 모집합니다급구",
-      "company": "맥도날드 용인 수지 DT점",
-      "location": "경기 용인시 수지구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143824534&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "CU송파가락점 (토) 15~21시, (일) 15~20시 근무자 모집",
-      "company": "CU 송파가락점",
-      "location": "서울 송파구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143750918&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "다이소 쌍문세라믹사거리점에서 함께할 파트사원을 모집합니다",
-      "company": "다이소 쌍문세라믹사거리점",
-      "location": "서울 도봉구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143683857&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[써브웨이 양천향교역점] 평일 오후 아르바이트 모집",
-      "company": "써브웨이 양천향교역점",
-      "location": "서울 강서구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143840516&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "롯데슈퍼 공릉점 AR 사원 (아르바이트) 계산대모집",
-      "company": "롯데슈퍼 공릉점",
-      "location": "서울 노원구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143773302&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "버거킹 평택비전점(S)에서 저녁 설거지 파트 모집합니다.",
-      "company": "평택비전점(S)",
-      "location": "경기 평택시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143709010&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "인천만수5동점에서 근무할 오후 파트 직원모집 합니다",
-      "company": "다이소 인천만수5동점",
-      "location": "인천 전체",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143643199&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "CU송파가락점 (토) 21~24시, (일) 20~23시 근무자 모집",
-      "company": "CU 송파가락점",
-      "location": "서울 송파구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143709006&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "써브웨이 왕십리점 화수목 오픈 모집",
-      "company": "써브웨이 왕십리역점",
-      "location": "서울 성동구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143732355&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "다이소 본사 매장그래픽팀 계약직 사원 채용",
-      "company": "아성다이소",
-      "location": "서울 강남구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 2156880",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143882685&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "맥도날드 광주운암DT점에서 4월 함께 일할 크루를 모집 합니다",
-      "company": "맥도날드 광주 운암 DT점",
-      "location": "광주 북구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143712917&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "(주)이낙에산다 서면직영점 평일 오후 파트타임 구인",
-      "company": "(주)이낙에산다 서면직영점",
-      "location": "부산 부산진구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 13000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143892702&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[다이소 광주충장로점/주6일] 다이소 입고도우미 모집",
-      "company": "다이소 광주충장로점",
-      "location": "광주 동구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143877689&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "투썸플레이스 부산온천sk점 월,화,수 마감 스텝 모집합니다.",
-      "company": "투썸플레이스 부산온천sk점",
-      "location": "부산 동래구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10500",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143756564&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "배곧 한신더휴 공부방 창업 가맹비.창업비 0원 물품지원 1천만원 제공",
-      "company": "웅진씽크빅 시화",
-      "location": "경기 시흥시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 2000000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143672846&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "아워홈 여의도 LG 트윈타워점 조리원 구인합니다.",
-      "company": "아워홈 LG트윈타워점",
+      "title": "평일 수금 오픈 (7시 ~ 12시) 타임 같이 하실 분 구합니다",
+      "company": "파리바게뜨 황학롯데점",
       "location": "서울 전체",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143643190&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143888967&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "버거킹 동대문중학교사거리점 근무자 모집[평일오전근무자 모집]",
-      "company": "버거킹 동대문중학교사거리점",
-      "location": "서울 동대문구",
+      "title": "롯데마트 영종도점 무인계산(셀프계산대)파트 AR사원채용",
+      "company": "롯데쇼핑 (주) 롯데마트영종도점",
+      "location": "인천 중구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143882683&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143670289&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "써브웨이 오전 알바 구합니다.",
-      "company": "서브웨이 성대점",
-      "location": "서울 종로구",
+      "title": "내 집에서 하루 4시간일하고 월100만원(가명비교육비없음)",
+      "company": "웅진씽크빅 금천지국",
+      "location": "서울 구로구",
       "deadline": "",
       "type": "시간제",
-      "salary": "시급 10350",
+      "salary": "월급 1800000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143886683&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143811857&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "씨유청도역점 평일 오후 함께 근무하실분을 찾습니다",
-      "company": "CU 청도역점",
-      "location": "경북 청도군",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143802114&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[스타벅스 대전판암DT] 함께 즐겁게 일할 바리스타 모집해요",
-      "company": "스타벅스 대전판암DT",
-      "location": "대전 동구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 11250",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143845315&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[부산 동구] 맥도날드 범일SKDT점에서 함께 할 크루를 모집합니다.",
-      "company": "맥도날드 범일 SK DT점",
-      "location": "부산 동구",
+      "title": "[인천 부평구] 맥도날드 인천간석DT점 평일,주말 오전/마감크루 채용합니다.",
+      "company": "맥도날드 인천간석DT점",
+      "location": "인천 부평구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143795903&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143718420&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "도미노피자 하남미사점 매장 피자메이커 (CSR) 구합니다.",
-      "company": "도미노피자 하남점",
-      "location": "경기 하남시",
+      "title": "유가네 닭갈비 구로 고척점 홀직원 구인(D2비자X)",
+      "company": "유가네닭갈비 구로고척점",
+      "location": "서울 구로구",
       "deadline": "",
       "type": "시간제",
-      "salary": "주급 550000",
+      "salary": "월급 3400000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143854134&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "하남돼지집 수서역점 주5일[월-금] 직원 구인합니다.",
-      "company": "하남F&B 수서역점",
-      "location": "서울 강남구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 3100000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143859219&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "롯데마트송파점 롯데리아에서 즐겁게 같이 일할 관리자분을 모십니다",
-      "company": "롯데리아 롯데마트송파",
-      "location": "서울 송파구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 2700000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143610375&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "인천모래내시장점에서 근무할 직원 모집합니다",
-      "company": "다이소 인천모래내시장점",
-      "location": "인천 전체",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 2156880",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143643169&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "아워홈 여의도 LG 트윈타워점 세정원 구인합니다.",
-      "company": "아워홈 LG트윈타워점",
-      "location": "서울 전체",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143643168&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "주말 아침 07시-12시 공고",
-      "company": "CU 군산해망로점",
-      "location": "전북 군산시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143766404&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "아르바이트 모집 (평일)",
-      "company": "버거킹 충북진천점(S)",
-      "location": "충북 진천군",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143795878&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "광주농성점 메이트 (아르바이트) 모집합니다.",
-      "company": "롯데리아 광주농성D/T점",
-      "location": "광주 전체",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143841641&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "대빵오락실 민락점 목토 STAFF 모집합니다",
-      "company": "CU 옥정로제비앙점",
-      "location": "경기 의정부시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143623682&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[울산 남구]맥도날드 울산옥동DT점 크루/메인터넌스 모집합니다.",
-      "company": "맥도날드 울산 옥동 DT점",
-      "location": "울산 남구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143808440&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143687102&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
       "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
-      "company": "코웨이 교하지국",
+      "company": "코웨이 여주지국",
+      "location": "경기 여주시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 3270000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143880526&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "올리브영 제주협재점 금토일 오픈 CREW 구인 (시간협의가능)",
+      "company": "씨제이올리브영주식회사",
+      "location": "제주 제주시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10600",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143854958&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "김천지역 공부방 개설 선생님 모집(가맹비 없음,자택 가능)",
+      "company": "대교 눈높이 김천 교육국",
+      "location": "경북 김천시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 3000000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143854953&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[맥도날드 청주 분평 DT점] 신나게 빅맥만드실 크루/씽씽라이더채용",
+      "company": "맥도날드 청주 분평 DT점",
+      "location": "충북 청주시 서원구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143619241&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "롯데리아 대구이시아폴리스점에서 함께할 부점장님을 모집합니다.",
+      "company": "롯데리아 대구이시아폴리스점",
+      "location": "대구 북구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2500000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143602204&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
+      "company": "코웨이 법인파주지국",
       "location": "경기 파주시",
       "deadline": "",
       "type": "시간제",
       "salary": "월급 3270000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143802092&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143846587&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "주부/휴학생 가능/맥도날드 광주진월DT점에서 일 할 모닝 크루를 모집합니다",
-      "company": "맥도날드 광주 진월 GS DT점",
-      "location": "광주 남구",
+      "title": "월, 화, 수, 목 18시 - 21시30분",
+      "company": "교촌치킨 서울중부 신사1동점",
+      "location": "서울 은평구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143708950&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143689182&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "평일 오후 홀서빙 월화수 아르바이트모집합니다.",
-      "company": "더본코리아 홍콩반점0410 죽전단대점",
-      "location": "경기 용인시 수지구",
+      "title": "교촌치킨 환호장량점 알바채용공고!!!!",
+      "company": "교촌치킨 포항 환호장량",
+      "location": "경북 포항시 북구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 11000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143678243&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143811853&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "주방직원 모집합니다 주5일",
-      "company": "더본코리아 홍콩반점0410 죽전단대점",
-      "location": "경기 용인시 수지구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "일급 125000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143678242&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "평일 오전 월화수목금 주방직원 모집합니다",
-      "company": "더본코리아 홍콩반점0410 죽전단대점",
-      "location": "경기 용인시 수지구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 12500",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143678241&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "크리스피크림도넛 평일 마감",
-      "company": "크리스피 크림 도넛 대구공항점",
-      "location": "대구 동구",
+      "title": "CU 오금마천로점에서 동료를 찾아요~",
+      "company": "CU 오금마천로점",
+      "location": "서울 송파구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143678229&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143832235&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "크리스피크림 대구공항점 주말오픈",
-      "company": "크리스피 크림 도넛 대구공항점",
-      "location": "대구 동구",
+      "title": "롯데마트송파점 롯데리아에서 함께 근무하실 메이트 구인합니다",
+      "company": "롯데리아 롯데마트송파",
+      "location": "서울 송파구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143678228&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143628912&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "CU(화ㆍ수요일)저녁 근무자 모집",
-      "company": "CU 구월뉴인천점",
-      "location": "인천 남동구",
+      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
+      "company": "코웨이 마곡지국",
+      "location": "서울 강서구",
       "deadline": "",
       "type": "시간제",
-      "salary": "시급 10320",
+      "salary": "월급 3270000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143660903&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143870455&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "롯데리아 부산역점에서 아르바이트 모집합니다~",
-      "company": "롯데리아 부산역",
-      "location": "부산 전체",
+      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
+      "company": "코웨이 울산서부지국",
+      "location": "울산 남구",
       "deadline": "",
       "type": "시간제",
-      "salary": "시급 10320",
+      "salary": "월급 3270000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143896444&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143806004&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "다이소 직원 모집합니다",
-      "company": "다이소 하남시청점",
+      "title": "하남돼지집 스타필드점에서 평일 파트 타이머 모집합니다",
+      "company": "하남F&B 하남스타필드점",
       "location": "경기 하남시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 13000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143862171&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "다이소 길동점 직원 모집",
+      "company": "다이소 길동점",
+      "location": "서울 강동구",
       "deadline": "",
       "type": "시간제",
       "salary": "월급 2156880",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143896442&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[은평구 녹번동] 유아/초등 학습관리 재능스스로선생님 방문교사 모집",
-      "company": "재능교육(주) 은평지국",
-      "location": "서울 은평구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 2100000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143892127&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[은평구 수색동] 유아/초등 학습관리 재능스스로선생님 방문교사 모집",
-      "company": "재능교육(주) 은평지국",
-      "location": "서울 은평구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 2100000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143892126&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[은평구 응암동] 유아/초등 학습관리 재능스스로선생님 방문교사 모집",
-      "company": "재능교육(주) 은평지국",
-      "location": "서울 은평구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 2100000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143892125&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "(주) 아워홈 아워홈빌딩 구내식당 아르바이트 구인",
-      "company": "아워홈 아워홈빌딩점",
-      "location": "서울 강남구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143882656&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143730192&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
       "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
-      "company": "코웨이 청주율량지국",
-      "location": "충북 청주시 청원구",
+      "company": "코웨이 인천가좌지국",
+      "location": "인천 서구",
       "deadline": "",
       "type": "시간제",
       "salary": "월급 3270000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143882655&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143676528&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
-      "company": "코웨이 마산월영지국",
-      "location": "경남 창원시 마산합포구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 3270000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143882650&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[부산/물류센터/통근버스] 다이소 물류 현장사원(야간조) 모집",
-      "company": "다이소 부산허브센터1",
-      "location": "부산 전체",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 4000000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143882649&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[경북 김천시] 맥도날드 김천평화DT점에서 함께 근무할 직원을 모집합니다.",
-      "company": "맥도날드 김천 평화 DT점",
-      "location": "경북 김천시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143882646&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[롯데GRS]아시안쿡 제주공항 국제선점에서 주방직원 모집합니다.",
-      "company": "플레이팅 아시안쿡 제주공항 국제선점",
-      "location": "제주 제주시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143882642&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "4월30일 18시~23시당일알바를구합니다(당일지급)",
-      "company": "세븐일레븐 성신여대중앙점",
-      "location": "서울 성북구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143882633&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
-      "company": "코웨이 분당지국",
-      "location": "경기 성남시 수정구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "월급 3270000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143872401&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "세류동 씨유 편의점 수.목.금 스태프 모집합니다(세류동) 세류일등점",
-      "company": "CU 세류일등점",
-      "location": "경기 수원시 권선구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143868860&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "[인천 서구] 맥도날드 연희DT점에서 함께할 크루를 모집합니다.",
-      "company": "맥도날드 연희 DT점",
+      "title": "다이소 인천검단사거리역점에서 함께 할 파트사원을 모집합니다.",
+      "company": "다이소 인천검단사거리역점",
       "location": "인천 서구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143864719&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143828107&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "롯데리아 언양점 주말 알바 구합니다",
-      "company": "롯데리아 언양",
-      "location": "울산 울주군",
+      "title": "[인천]아이들을 좋아하는 재능교육 선생님을 모십니다",
+      "company": "재능교육 인천사업국",
+      "location": "인천 전체",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2000000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143725694&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "세븐일레븐 금촌메디인병원점 주말 오전 근무자 구인합니다",
+      "company": "세븐일레븐 금촌메디인병원점",
+      "location": "경기 파주시",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143863180&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143828105&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "투썸플레이스 평택세교점 목금 오픈 아르바이트생 모집",
-      "company": "투썸플레이스평택세교점",
+      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
+      "company": "코웨이 법인서울중구지국",
+      "location": "서울 마포구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 3270000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143822020&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[스타벅스 대전신흥역DT] 스타벅스 대전 신흥역DT점 바리스타 모집",
+      "company": "스타벅스 대전신흥역DT",
+      "location": "대전 동구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 11250",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143887536&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "대구이시아폴리스점에서 아르바이트생(주부가능)을 모집합니다(평일,주말 가능)",
+      "company": "롯데리아 대구이시아폴리스점",
+      "location": "대구 동구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143602195&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[장기근무우대] 써브웨이 양재역점 주말 오픈 근무자 모집합니다",
+      "company": "써브웨이 양재역점",
+      "location": "서울 서초구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 12300",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143811833&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[주말/평일]즐거운 분위기 맥도날드 포항남부DT점에서 함께 할 분을 찾습니다",
+      "company": "맥도날드 포항 남부 DT점",
+      "location": "경북 포항시 남구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143759655&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
+      "company": "코웨이 인천용현지국",
+      "location": "인천 미추홀구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 3270000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143738627&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "파트타이머 및 메니져 구합니다",
+      "company": "써브웨이 공주신관점",
+      "location": "충남 공주시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 11000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143753766&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[직영점] 엔제리너스 명동점 주4~5일 마감 모집합니다.",
+      "company": "엔제리너스 명동점",
+      "location": "서울 전체",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143631404&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "커피 음료 제조,청소,계산업무",
+      "company": "몬스터커피 경상공고점",
+      "location": "대구 남구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143892745&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[일최대16만원]단기알바/익일지급/초보/하루알바/주말/야간/원하는날출근",
+      "company": "쿠팡CFS/인천15센터",
+      "location": "경기 부천시 원미구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "일급 161785",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143804535&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[일최대19만원]단기알바/익일지급/초보/하루알바/주말/야간/원하는날출근",
+      "company": "쿠팡CFS / 인천14센터",
+      "location": "인천 계양구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "일급 195720",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143804530&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "#급여인상확정!일최대18만원/익일지급/지금이기회/단기/하루/초보/원하는날",
+      "company": "쿠팡CFS인천32,41,42,43센터",
+      "location": "인천 부평구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "일급 185280",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143804525&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[일최대18만원]단기알바/익일지급/초보/하루알바/주말/야간/원하는날출근",
+      "company": "쿠팡CFS / 인천26,28,36센터",
+      "location": "인천 부평구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "일급 185280",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143804520&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "홍콩반점수원망포역점에서 주방직원을 모집합니다(외국인가능)",
+      "company": "더본코리아 홍콩반점0410 수원망포역",
+      "location": "경기 수원시 권선구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 12000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143880603&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[주말환영] 맥도날드 제주 탑동점에서 함께 할 크루 모집합니다.",
+      "company": "맥도날드 탑동점",
+      "location": "제주 제주시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143737336&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "롤링파스타 구미역점 주말 오후 파트 타임 직원 모집합니다.",
+      "company": "더본코리아 롤링파스타 구미역점",
+      "location": "경북 구미시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143628978&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "에이비씨마트코리아 ST 대전대정점 5D8H 채용공고",
+      "company": "에이비씨마트코리아 ST 대전대정점",
+      "location": "대전 서구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2156880",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143885780&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "화성봉담DT점 10-19크루 채용합니다(유동적 스케줄 완전 가능)",
+      "company": "맥도날드 화성 봉담DT점",
+      "location": "경기 화성시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143784145&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "서브웨이 경산영남대점 주말 마감 PT구합니다",
+      "company": "써브웨이 경산영남대점",
+      "location": "경북 경산시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143839948&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "다사 금호어울림.다사.죽곡삼정 공부방교사모집(집기.회원.홍보지원.가맹비X)",
+      "company": "웅진씽크빅 대구다사",
+      "location": "대구 전체",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 1800000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143837967&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "편의점 토-일 주말오전, 금-일 주말야간 근무자 구합니다",
+      "company": "CU 관악동아타운점",
+      "location": "서울 관악구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143777260&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "맥도날드 하남시청DT점 평일주말 오후, 마감 크루 채용합니다.",
+      "company": "맥도날드 하남시청DT",
+      "location": "경기 하남시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143689209&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "세븐일레븐 광주일등점 토 17시부터 ~오후 20시까지 3시간",
+      "company": "세븐일레븐 광주일등점",
+      "location": "광주 동구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143885778&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
+      "company": "코웨이 의정부지국",
+      "location": "경기 의정부시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 3270000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143607225&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[주말전시간대] 맥도날드 수원망포DT점에서 함께 근무할 크루 모집합니다.",
+      "company": "맥도날드 수원 망포 DT점",
+      "location": "경기 수원시 영통구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143737333&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "CU동탄북광장점에서 월화중간 근무자를 구합니다",
+      "company": "CU 동탄북광장점",
+      "location": "경기 화성시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143862256&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[버거킹 평촌학원가점] 리모델링 후 함께 즐겁게 일할 분",
+      "company": "버거킹 평촌학원가점",
+      "location": "경기 안양시 동안구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143725763&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[종로구] 맥도날드 종로3가점 크루를 모집합니다",
+      "company": "맥도날드 종로3가점",
+      "location": "서울 종로구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143822096&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "씨유송도호수점 편의점 14~17시(3시간) (토,월)",
+      "company": "CU 송도호수점",
+      "location": "인천 연수구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143822095&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "맥도날드 군산나운점에서 함께 일할 크루를 모집합니다.",
+      "company": "맥도날드 군산 나운 DT점",
+      "location": "전북 군산시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143822092&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "CU유성일등점 평일주간(월,화 2일) 알바 모집건",
+      "company": "CU 유성일등점",
+      "location": "대전 유성구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143759730&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "써브웨이 창원유니시티점에서 함께하실 분 환영합니다.",
+      "company": "써브웨이 창원유니시티점",
+      "location": "경남 창원시 의창구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2400000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143687162&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "(구로고척동)홍콩반점0410고척 주방직원 구인(경력자구인)",
+      "company": "홍콩반점0410 고척동양대점",
+      "location": "서울 구로구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 3800000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143687159&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[파주동패점] 버거킹 파주동패점에서 함께 일할 가족을 모집합니다.",
+      "company": "버거킹 파주동패점",
+      "location": "경기 파주시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143687156&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[직영]여주하동점 임시 사원 채용 모집(주휴,추가수당,연차-식대 별도지급)",
+      "company": "다이소 여주하동점",
+      "location": "경기 여주시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2156880",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143687154&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "버거킹 김해진영점 주말 오전 채용",
+      "company": "버거킹 김해진영FS점",
+      "location": "경남 김해시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143681553&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "평일 저녁 카운터 모집",
+      "company": "롯데리아 진해자은",
+      "location": "경남 창원시 진해구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143681541&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "씨유 의왕백운푸르지오1호점 주간 스태프구합니다.",
+      "company": "CU 의왕백운푸르지오1호점",
+      "location": "경기 의왕시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143887557&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "세븐일레븐 대구서호타운점 근무자 모집합니다.",
+      "company": "세븐일레븐 대구서호타운점",
+      "location": "대구 동구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143887553&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "버거킹 구리수택정 신규매장 마감 크루를 채용합니다",
+      "company": "버거킹 구리수택점",
+      "location": "경기 구리시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143887552&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "둔산더샵엘리프 유초등공부방교사모집 창업비용 제로 집기부터 교재까지 완벽지원",
+      "company": "웅진씽크빅 서대전지국",
+      "location": "대전 전체",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2200000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143885766&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[스타벅스 대전목동DT점]스타벅스에서 즐겁게 함께할 바리스타를 모집합니다.",
+      "company": "스타벅스 대전목동DT",
+      "location": "대전 중구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 11250",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143885763&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[경기 평택시] 맥도날드 평택서정DT점에서 함께 일할 크루 모집합니다.",
+      "company": "맥도날드 평택서정DT",
       "location": "경기 평택시",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143859207&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143875963&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "삼성동 버거킹 - 주말 / 평일 모든 시간대",
-      "company": "버거킹 삼성중앙역점",
+      "title": "[미사역파라곤스퀘어] 점에서 함께 일 할 파트너를 찾습니다. [주차가능]",
+      "company": "스타벅스 미사역파라곤스퀘어",
+      "location": "경기 하남시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 11250",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143875961&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
+      "company": "코웨이(주) 서교지국",
+      "location": "서울 마포구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 3270000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143870515&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "제천 유아,초등공부방 창업주 모십니다(창업비용1000만원 상당지원)",
+      "company": "웅진씽크빅 제천",
+      "location": "충북 제천시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2000000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143870507&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
+      "company": "코웨이 부산기장지국",
+      "location": "부산 기장군",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 3270000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143862244&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "스타벅스 서귀포올레점 바리스타 모집",
+      "company": "스타벅스 서귀포올레",
+      "location": "제주 서귀포시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 11250",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143862237&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
+      "company": "코웨이 마포지국",
+      "location": "서울 마포구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 3270000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143856943&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "국민은행신관 아워홈 사내까페 아르바이트 구인합니다.",
+      "company": "아워홈 KB국민은행통합사옥점",
+      "location": "서울 영등포구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143856940&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[주3회 이상 근무/6개월 이상 근무] 맥도날드 오리역점 마감 크루 모집",
+      "company": "맥도날드 오리역점",
+      "location": "경기 용인시 수지구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143852665&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "일.월.화 오후 스태프 채용",
+      "company": "CU 봉담이편한점",
+      "location": "경기 화성시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143846643&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "세븐일레븐 영천도남공단점 알바",
+      "company": "세븐일레븐 영천도남공단점",
+      "location": "경북 영천시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "건별 9000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143845023&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "롯데슈퍼 P일원점 ,AR사원 캐셔",
+      "company": "롯데슈퍼 프리미엄일원점",
       "location": "서울 강남구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143859204&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143837939&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "주중 목.금 저녁 알바구합니다",
-      "company": "CU 뉴예산역전점",
-      "location": "충남 예산군",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143859200&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "월~토요일 오전8~10시30분 근무하실분",
-      "company": "세븐일레븐 청주개신점",
-      "location": "세종 전체",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143854111&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "토 야간 22시~ 10시까지(저녁10시부터 아침10시까지) 알바구합니다.",
-      "company": "세븐일레븐 예산고덕중앙점",
-      "location": "충남 전체",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 11000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143854110&listmenucd=SENIOR",
-      "source": "알바천국"
-    },
-    {
-      "title": "다이소 본사 총무관리팀 계약직 사원 채용",
-      "company": "주식회사 아성다이소",
-      "location": "서울 강남구",
+      "title": "다이소 고덕점에서 함께일할 직원을 모집합니다",
+      "company": "다이소 고덕점",
+      "location": "서울 전체",
       "deadline": "",
       "type": "시간제",
       "salary": "월급 2156880",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143848858&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143837937&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "파리바게뜨 창원대원점 금토일 미들 파트타이머를 찾습니다.",
-      "company": "파리바게뜨 창원대원점",
-      "location": "경남 창원시 성산구",
+      "title": "파리바게뜨전주포스코점평일오픈직원구합니다",
+      "company": "파리바게뜨 전주포스코점",
+      "location": "전북 전주시 완산구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143840025&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143836398&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "써브웨이 대구 평리 DT 평일 오전 파트타이머 모집합니다.",
-      "company": "써브웨이 대구평리DT점",
-      "location": "대구 전체",
+      "title": "교촌치킨 신영통1호점에서 오후 주방알바 모집합니다 17시 ~22시",
+      "company": "교촌치킨 경기남부 신영통1호점",
+      "location": "경기 수원시 영통구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143834758&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143814166&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "갓덴스시 일산점 정규직 360만원부터",
-      "company": "갓텐스시 스타필드마켓 일산점",
-      "location": "경기 고양시 일산서구",
+      "title": "공부방 선생님 1인 CEO(가명비교육비없음)",
+      "company": "웅진씽크빅 금천지국",
+      "location": "서울 구로구",
       "deadline": "",
       "type": "시간제",
-      "salary": "월급 4000000",
+      "salary": "월급 1800000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143834756&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143811936&listmenucd=SENIOR",
       "source": "알바천국"
     },
     {
-      "title": "갓덴스시 익스프레스 성남점 정규직 360만원부터",
-      "company": "갓텐코리아 갓텐익스프레스 이마트성남점",
-      "location": "경기 성남시 수정구",
+      "title": "[동작구] 재능교육 선생님 모집(방문/센터/공부방)",
+      "company": "재능교육 사업지원팀",
+      "location": "서울 동작구",
       "deadline": "",
       "type": "시간제",
-      "salary": "월급 4000000",
+      "salary": "월급 2500000",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143834751&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143811924&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "[진해구] 재능교육 선생님 모집(방문/센터/공부방)",
+      "company": "재능교육 사업지원팀",
+      "location": "경남 창원시 진해구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2500000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143811917&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "평일 오전 주2일 스텝 모집합니다(6개월이상 근무가능한분)",
+      "company": "서브웨이울산삼산점",
+      "location": "울산 남구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10500",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143806106&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "투썸플레이스 대구화원점 정직원(메니져) 모집공고",
+      "company": "투썸대구화원점",
+      "location": "대구 달성군",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2500000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143806104&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "다이소 서울양평동점",
+      "company": "다이소 서울양평동점",
+      "location": "서울 영등포구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2156880",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143806097&listmenucd=SENIOR",
       "source": "알바천국"
     }
   ]
