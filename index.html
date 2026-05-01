@@ -936,25 +936,33 @@ function buildRegionCards(counts) {
     }
 
     const addr = resp.address || {};
-    // 구/군 감지
-    const rawDistrict = addr.city_district || addr.county || addr.quarter || '';
-    // 시/도 감지 → DISTRICTS 키와 매칭
-    const rawCity = addr.city || addr.town || addr.county || addr.state || '';
+    // Nominatim 한국 주소는 필드명이 일정하지 않으므로 모든 문자열 값을 검사
+    const addrVals = Object.values(addr).filter(v => typeof v === 'string');
+
+    // 시/도: addrVals 중 DISTRICTS 키를 포함하는 값 탐색
     let region = '';
-    for (const key of Object.keys(DISTRICTS)) {
-      if (rawCity.includes(key)) { region = key; break; }
+    for (const val of addrVals) {
+      const found = Object.keys(DISTRICTS).find(k => val.includes(k));
+      if (found) { region = found; break; }
     }
-    // 시/도 미감지 시 district 소속으로 역추적
-    if (!region && rawDistrict) {
-      for (const [r, dists] of Object.entries(DISTRICTS)) {
-        if (dists.some(d => rawDistrict.includes(d) || d.includes(rawDistrict))) {
-          region = r; break;
+
+    // 구/군: 해당 지역 목록과 addrVals 교차 탐색
+    const knownDists = DISTRICTS[region] || [];
+    let district = '';
+    for (const val of addrVals) {
+      const found = knownDists.find(d => val.includes(d));
+      if (found) { district = found; break; }
+    }
+
+    // region 못 찾은 경우 district로 역추적
+    if (!region) {
+      outer: for (const val of addrVals) {
+        for (const [r, dists] of Object.entries(DISTRICTS)) {
+          const found = dists.find(d => val.includes(d));
+          if (found) { region = r; district = found; break outer; }
         }
       }
     }
-    // district가 실제 목록에 있는지 확인
-    const knownDists = DISTRICTS[region] || [];
-    const district   = knownDists.find(d => rawDistrict.includes(d) || d.includes(rawDistrict)) || '';
 
     dismiss();
     if (region && district) {
