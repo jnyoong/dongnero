@@ -39,6 +39,24 @@ OUTPUT_FILE = Path(__file__).parent / "jobs.json"
 
 WORK24_AUTH_KEY = "YOUR_AUTH_KEY_HERE"
 
+# ── 시니어 부적합 필터 ────────────────────────────────────────────────────────
+
+# 회사명에 포함 시 제외 (대소문자 무시)
+EXCLUDE_COMPANIES = {
+    '올리브영', 'cgv', '메가박스', '롯데시네마', '씨네큐',
+    '스타벅스', '이디야', '빽다방', '투썸플레이스', '공차', '컴포즈',
+    '할리스', '파스쿠찌', '탐앤탐스', '폴바셋',
+}
+
+# 공고 제목·회사명에 포함 시 제외
+EXCLUDE_KEYWORDS = [
+    '나이트클럽', '유흥주점', '단란주점', '룸살롱', '룸카페',
+    '호스트바', '바텐더',
+    '호프집', '맥주집', '포장마차', '포차', '이자카야',
+    'pc방', '피씨방', '코인노래방',
+    '10대', '20대 초반', '나이 제한',
+]
+
 REQUEST_DELAY   = 1.5
 MAX_PAGES       = 50
 ITEMS_PER_PAGE  = 20
@@ -392,6 +410,19 @@ def _normalize_date(raw: str) -> str:
     return raw
 
 
+def _is_excluded(job: dict) -> bool:
+    title   = (job.get('title')   or '').lower()
+    company = (job.get('company') or '').lower()
+    combined = title + ' ' + company
+    for exc in EXCLUDE_COMPANIES:
+        if exc in company:
+            return True
+    for kw in EXCLUDE_KEYWORDS:
+        if kw in combined:
+            return True
+    return False
+
+
 def _deduplicate(jobs: list[dict]) -> list[dict]:
     seen: set[tuple] = set()
     unique = []
@@ -481,6 +512,10 @@ def run_crawler():
 
     # ── 후처리 ────────────────────────────────────────────────
     all_jobs = _deduplicate(all_jobs)
+
+    before_filter = len(all_jobs)
+    all_jobs = [j for j in all_jobs if not _is_excluded(j)]
+    print(f"\n  부적합 업체 필터링: {before_filter - len(all_jobs)}건 제외")
 
     today_str = date.today().isoformat()
     filtered, expired = [], 0
