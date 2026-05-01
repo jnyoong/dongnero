@@ -279,12 +279,16 @@ function loadJobData() {
     document.getElementById('tabJobCount').textContent = `(${allJobs.length.toLocaleString()})`;
     renderJobs();
   }
-  if (typeof EXCLUDED_DATA !== 'undefined') {
+  if (typeof EXCLUDED_DATA !== 'undefined' && EXCLUDED_DATA.updated_at) {
     allExcluded = EXCLUDED_DATA.jobs || [];
     document.getElementById('exTotal').textContent = allExcluded.length;
     document.getElementById('exUpdated').textContent = EXCLUDED_DATA.updated_at || '-';
     document.getElementById('tabExCount').textContent = `(${allExcluded.length})`;
     renderExcluded();
+  } else {
+    document.getElementById('exBody').innerHTML =
+      '<tr><td colspan="6" class="empty-msg">⚙️ Actions에서 크롤러를 한 번 실행하면 데이터가 생성됩니다.</td></tr>';
+    document.getElementById('exTotal').textContent = '미생성';
   }
 }
 
