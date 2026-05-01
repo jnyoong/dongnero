@@ -410,17 +410,21 @@ def _normalize_date(raw: str) -> str:
     return raw
 
 
-def _is_excluded(job: dict) -> bool:
+def _exclude_reason(job: dict) -> str:
     title   = (job.get('title')   or '').lower()
     company = (job.get('company') or '').lower()
     combined = title + ' ' + company
     for exc in EXCLUDE_COMPANIES:
         if exc in company:
-            return True
+            return f'업체명: {exc}'
     for kw in EXCLUDE_KEYWORDS:
         if kw in combined:
-            return True
-    return False
+            return f'키워드: {kw}'
+    return ''
+
+
+def _is_excluded(job: dict) -> bool:
+    return bool(_exclude_reason(job))
 
 
 def _deduplicate(jobs: list[dict]) -> list[dict]:
@@ -513,9 +517,17 @@ def run_crawler():
     # ── 후처리 ────────────────────────────────────────────────
     all_jobs = _deduplicate(all_jobs)
 
-    before_filter = len(all_jobs)
-    all_jobs = [j for j in all_jobs if not _is_excluded(j)]
-    print(f"\n  부적합 업체 필터링: {before_filter - len(all_jobs)}건 제외")
+    excluded_jobs = []
+    filtered_jobs = []
+    for j in all_jobs:
+        reason = _exclude_reason(j)
+        if reason:
+            j['_exclude_reason'] = reason
+            excluded_jobs.append(j)
+        else:
+            filtered_jobs.append(j)
+    all_jobs = filtered_jobs
+    print(f"\n  부적합 업체 필터링: {len(excluded_jobs)}건 제외")
 
     today_str = date.today().isoformat()
     filtered, expired = [], 0
@@ -551,6 +563,14 @@ def run_crawler():
     )
     with open(js_file, "w", encoding="utf-8") as f:
         f.write(js_content)
+
+    excluded_js = OUTPUT_FILE.parent / "excluded_data.js"
+    excluded_content = (
+        f"/* 자동 생성 — 필터링 제외 목록 / {updated_at} */\n"
+        f"var EXCLUDED_DATA = {json.dumps({'updated_at': updated_at, 'total': len(excluded_jobs), 'jobs': excluded_jobs}, ensure_ascii=False, indent=2)};\n"
+    )
+    with open(excluded_js, "w", encoding="utf-8") as f:
+        f.write(excluded_content)
 
     print("\n" + "=" * 60)
     print(f"  수집 완료: {len(filtered)}건  (만료 제외: {expired}건)")
