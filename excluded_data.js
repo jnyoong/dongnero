@@ -1283,7 +1283,7 @@ var EXCLUDED_DATA = {
       "type": "시간제",
       "salary": "시급 11250",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143883264&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143862574&listmenucd=SENIOR",
       "source": "알바천국",
       "_exclude_reason": "업체명: 스타벅스"
     },
