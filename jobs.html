@@ -163,6 +163,18 @@
     }
     .rtab.active { background: var(--blue); border-color: var(--blue); color: #fff; }
 
+    /* ── 구 그룹 헤더 ── */
+    .district-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 4px 4px;
+      font-size: .88rem; font-weight: 800; color: var(--text-sec);
+      border-bottom: 1.5px solid var(--border);
+      margin-top: 6px;
+    }
+    .district-header span {
+      font-size: .8rem; font-weight: 700; color: var(--blue);
+    }
+
     /* ── 결과바 ── */
     .result-bar {
       padding: 12px 16px 6px;
@@ -1010,19 +1022,47 @@ function updateRegionLabel() {
 }
 
 function buildRegionTabs() {
-  const counts = {};
-  allJobs.forEach(j => { counts[j._region] = (counts[j._region]||0) + 1; });
-  const regions = ['전체', ...Object.keys(counts).sort((a,b) => (counts[b]||0) - (counts[a]||0))];
-  document.getElementById('regionTabs').innerHTML = regions.map(r => {
-    const cnt = r === '전체' ? allJobs.length : (counts[r]||0);
-    return `<button class="rtab${r===activeRegion?' active':''}"
-      onclick="setRegion('${r}',this)">${r} <small style="opacity:.7;font-weight:400">${cnt}</small></button>`;
-  }).join('');
+  const tabsEl = document.getElementById('regionTabs');
+  if (_urlRegion !== '전체') {
+    // 특정 지역 진입 → 해당 지역의 구/군 탭 표시
+    const dists = DISTRICTS[_urlRegion] || [];
+    const regionJobs = allJobs.filter(j => j._region === _urlRegion);
+    const dc = {};
+    regionJobs.forEach(j => {
+      const d = dists.find(d => (j.location||'').includes(d));
+      if (d) dc[d] = (dc[d]||0) + 1;
+    });
+    const sorted = dists.filter(d => dc[d]).sort((a,b) => dc[b] - dc[a]);
+    tabsEl.innerHTML = [
+      `<button class="rtab${!activeDistrict?' active':''}" onclick="setDistrict('',this)">전체 <small style="opacity:.7;font-weight:400">${regionJobs.length}</small></button>`,
+      ...sorted.map(d =>
+        `<button class="rtab${d===activeDistrict?' active':''}" onclick="setDistrict('${d}',this)">${d} <small style="opacity:.7;font-weight:400">${dc[d]}</small></button>`)
+    ].join('');
+  } else {
+    // 전국 전체 → 기존 시/도 탭
+    const counts = {};
+    allJobs.forEach(j => { counts[j._region] = (counts[j._region]||0) + 1; });
+    const regions = ['전체', ...Object.keys(counts).sort((a,b) => (counts[b]||0) - (counts[a]||0))];
+    tabsEl.innerHTML = regions.map(r => {
+      const cnt = r === '전체' ? allJobs.length : (counts[r]||0);
+      return `<button class="rtab${r===activeRegion?' active':''}"
+        onclick="setRegion('${r}',this)">${r} <small style="opacity:.7;font-weight:400">${cnt}</small></button>`;
+    }).join('');
+  }
 }
 
 function setRegion(r, el) {
   activeRegion = r;
   activeDistrict = '';
+  document.querySelectorAll('.rtab').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  buildIndustryOptions();
+  updateRegionLabel();
+  render();
+}
+
+function setDistrict(d, el) {
+  activeDistrict = d;
   document.querySelectorAll('.rtab').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
   buildIndustryOptions();
@@ -1046,6 +1086,49 @@ function buildIndustryOptions() {
     ).join('');
 }
 
+function renderCard(job) {
+  const typeClass  = ['정규직','계약직','시간제'].includes(job.type) ? job.type : '기타';
+  const typeLabel  = job.type || '미기재';
+  const salRow     = job.salary
+    ? `<div class="info-row"><span class="info-icon">💰</span>
+         <span class="info-text salary">${job.salary.replace(/\s+/g,' ').trim()}</span></div>` : '';
+  const link       = job.apply_link || '#';
+  const target     = job.apply_link ? 'target="_blank" rel="noopener"' : '';
+  const lineClass  = `line-${job.source||'기타'}`;
+  const badgeClass = `src-${job.source||'기타'}`;
+  return `
+  <div class="card">
+    <div class="card-top-bar ${lineClass}"></div>
+    <div class="card-inner">
+      <div class="card-meta">
+        <div class="tag-row">
+          <span class="tag tag-region">${job._region}</span>
+          <span class="tag tag-industry">${job._industry}</span>
+          <span class="tag tag-${typeClass}">${typeLabel}</span>
+        </div>
+        <span class="source-badge ${badgeClass}">${job.source||''}</span>
+      </div>
+      <div class="card-title">${job.title}</div>
+      <div class="card-company">🏢 ${job.company || '회사명 미공개'}</div>
+      <div class="info-rows">
+        <div class="info-row">
+          <span class="info-icon">📍</span>
+          <span class="info-text">${job.location || '위치 미공개'}</span>
+        </div>
+        ${salRow}
+        <div class="info-row">
+          <span class="info-icon">📅</span>
+          <span class="info-text">${dlChip(job.deadline)}</span>
+        </div>
+      </div>
+      <div class="ai-summary">${job._summary}</div>
+    </div>
+    <div class="card-foot">
+      <a class="btn-view" href="${link}" ${target}>공고 보기 →</a>
+    </div>
+  </div>`;
+}
+
 function render() {
   const kw  = document.getElementById('searchInput').value.trim().toLowerCase();
   const ind = document.getElementById('industryFilter').value;
@@ -1063,16 +1146,19 @@ function render() {
     return true;
   });
 
-  if (srt === 'deadline') {
-    jobs.sort((a,b) => {
-      const da = /^\d{4}-\d{2}-\d{2}$/.test(a.deadline) ? a.deadline : '9999-12-31';
-      const db = /^\d{4}-\d{2}-\d{2}$/.test(b.deadline) ? b.deadline : '9999-12-31';
-      return da.localeCompare(db);
-    });
-  } else if (srt === 'salary') {
-    jobs.sort((a,b) => parseSal(b.salary) - parseSal(a.salary));
-  } else {
-    jobs.sort((a,b) => a.title.localeCompare(b.title,'ko'));
+  function sortArr(arr) {
+    if (srt === 'deadline') {
+      arr.sort((a,b) => {
+        const da = /^\d{4}-\d{2}-\d{2}$/.test(a.deadline) ? a.deadline : '9999-12-31';
+        const db = /^\d{4}-\d{2}-\d{2}$/.test(b.deadline) ? b.deadline : '9999-12-31';
+        return da.localeCompare(db);
+      });
+    } else if (srt === 'salary') {
+      arr.sort((a,b) => parseSal(b.salary) - parseSal(a.salary));
+    } else {
+      arr.sort((a,b) => a.title.localeCompare(b.title,'ko'));
+    }
+    return arr;
   }
 
   document.getElementById('resultCount').innerHTML = `<strong>${jobs.length}</strong>건의 공고`;
@@ -1083,51 +1169,33 @@ function render() {
     return;
   }
 
-  grid.innerHTML = jobs.map(job => {
-    const typeClass = ['정규직','계약직','시간제'].includes(job.type) ? job.type : '기타';
-    const typeLabel = job.type || '미기재';
-    const salRow = job.salary
-      ? `<div class="info-row">
-           <span class="info-icon">💰</span>
-           <span class="info-text salary">${job.salary.replace(/\s+/g,' ').trim()}</span>
-         </div>` : '';
-    const link   = job.apply_link || '#';
-    const target = job.apply_link ? 'target="_blank" rel="noopener"' : '';
-    const lineClass  = `line-${job.source||'기타'}`;
-    const badgeClass = `src-${job.source||'기타'}`;
-
-    return `
-    <div class="card">
-      <div class="card-top-bar ${lineClass}"></div>
-      <div class="card-inner">
-        <div class="card-meta">
-          <div class="tag-row">
-            <span class="tag tag-region">${job._region}</span>
-            <span class="tag tag-industry">${job._industry}</span>
-            <span class="tag tag-${typeClass}">${typeLabel}</span>
-          </div>
-          <span class="source-badge ${badgeClass}">${job.source||''}</span>
-        </div>
-        <div class="card-title">${job.title}</div>
-        <div class="card-company">🏢 ${job.company || '회사명 미공개'}</div>
-        <div class="info-rows">
-          <div class="info-row">
-            <span class="info-icon">📍</span>
-            <span class="info-text">${job.location || '위치 미공개'}</span>
-          </div>
-          ${salRow}
-          <div class="info-row">
-            <span class="info-icon">📅</span>
-            <span class="info-text">${dlChip(job.deadline)}</span>
-          </div>
-        </div>
-        <div class="ai-summary">${job._summary}</div>
-      </div>
-      <div class="card-foot">
-        <a class="btn-view" href="${link}" ${target}>공고 보기 →</a>
-      </div>
-    </div>`;
-  }).join('');
+  // 특정 지역이고 구 필터 없으면 → 구별 그룹핑
+  if (_urlRegion !== '전체' && !activeDistrict) {
+    const dists = DISTRICTS[_urlRegion] || [];
+    const groups = {}, noDistrict = [];
+    jobs.forEach(j => {
+      const d = dists.find(d => (j.location||'').includes(d));
+      if (d) { if (!groups[d]) groups[d] = []; groups[d].push(j); }
+      else noDistrict.push(j);
+    });
+    // 구 순서: 공고 수 많은 순
+    const sortedDists = Object.keys(groups).sort((a,b) => groups[b].length - groups[a].length);
+    sortedDists.forEach(d => sortArr(groups[d]));
+    sortArr(noDistrict);
+    let html = '';
+    sortedDists.forEach(d => {
+      html += `<div class="district-header">${d} <span>${groups[d].length}건</span></div>`;
+      html += groups[d].map(renderCard).join('');
+    });
+    if (noDistrict.length) {
+      html += `<div class="district-header">기타 <span>${noDistrict.length}건</span></div>`;
+      html += noDistrict.map(renderCard).join('');
+    }
+    grid.innerHTML = html;
+  } else {
+    sortArr(jobs);
+    grid.innerHTML = jobs.map(renderCard).join('');
+  }
 }
 
 loadData();
