@@ -116,7 +116,34 @@
     }
     .toolbar-inner { display: flex; flex-direction: column; gap: 8px; }
 
-    .search-row { display: flex; gap: 8px; }
+    /* ── 지역 버튼 ── */
+    .region-btn {
+      flex-shrink: 0; display: flex; align-items: center; gap: 5px;
+      border: 1.5px solid var(--border); background: var(--bg);
+      border-radius: 50px; padding: 7px 14px;
+      font-size: .88rem; font-weight: 700; color: var(--text-pri);
+      cursor: pointer; white-space: nowrap; font-family: inherit;
+      transition: all .15s; -webkit-tap-highlight-color: transparent;
+    }
+    .region-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .rbn-arrow { font-size: .65rem; opacity: .7; }
+
+    /* ── 검색 토글 ── */
+    .btn-search-icon {
+      flex-shrink: 0; border: 1.5px solid var(--border);
+      background: var(--bg); border-radius: 50%;
+      width: 34px; height: 34px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .15s; -webkit-tap-highlight-color: transparent;
+    }
+    .btn-search-icon.active { background: var(--blue); border-color: var(--blue); }
+    .search-row-expand {
+      display: flex; gap: 8px;
+      overflow: hidden; max-height: 0; opacity: 0;
+      transition: max-height .25s ease, opacity .2s ease, margin-top .25s;
+      margin-top: 0;
+    }
+    .search-row-expand.show { max-height: 60px; opacity: 1; margin-top: 0; }
     .search-wrap { flex: 1; position: relative; }
     .search-icon {
       position: absolute; left: 12px; top: 50%;
@@ -131,14 +158,14 @@
     }
     .search-wrap input:focus { border-color: var(--blue); background: var(--surface); }
     .search-wrap input::placeholder { color: var(--text-ter); }
-    .btn-search {
-      background: var(--blue); color: #fff;
-      border: none; border-radius: 50px; padding: 10px 18px;
-      font-size: .92rem; font-weight: 700; cursor: pointer;
-      font-family: inherit; white-space: nowrap;
+    .btn-search-close {
+      background: var(--bg); color: var(--text-sec);
+      border: 1.5px solid var(--border); border-radius: 50px;
+      padding: 10px 14px; font-size: .88rem; font-weight: 700;
+      cursor: pointer; font-family: inherit; white-space: nowrap;
     }
 
-    .filter-row { display: flex; gap: 7px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 1px; }
+    .filter-row { display: flex; gap: 7px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 1px; align-items: center; }
     .filter-row::-webkit-scrollbar { display: none; }
     .filter-row select {
       border: 1.5px solid var(--border); border-radius: 50px;
@@ -148,20 +175,51 @@
     }
     .filter-row select:focus { border-color: var(--blue); }
 
-    .region-scroll {
-      display: flex; gap: 6px; overflow-x: auto;
-      scrollbar-width: none; padding-bottom: 1px;
+    /* ── 지역 선택 바텀시트 ── */
+    .rsheet-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.52);
+      z-index: 280; display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity .22s ease;
     }
-    .region-scroll::-webkit-scrollbar { display: none; }
-    .rtab {
-      flex-shrink: 0; border: 1.5px solid var(--border);
-      background: var(--bg); border-radius: 50px;
-      padding: 7px 16px; font-size: .84rem; font-weight: 600;
-      color: var(--text-sec); cursor: pointer; transition: all .15s;
-      white-space: nowrap; font-family: inherit;
+    .rsheet-overlay.show { opacity: 1; pointer-events: auto; }
+    .rsheet {
+      background: var(--surface); border-radius: 28px 28px 0 0;
+      padding: 10px 20px 44px; width: 100%; max-width: 540px;
+      max-height: 72vh; overflow-y: auto; scrollbar-width: none;
+      transform: translateY(100%);
+      transition: transform .34s cubic-bezier(.32,0,.16,1);
+    }
+    .rsheet::-webkit-scrollbar { display: none; }
+    .rsheet-overlay.show .rsheet { transform: translateY(0); }
+    .rsheet-drag { width: 44px; height: 4px; background: var(--border); border-radius: 2px; margin: 8px auto 16px; }
+    .rsheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .rsheet-title { font-size: 1.1rem; font-weight: 900; }
+    .rsheet-close {
+      background: var(--bg); border: none; border-radius: 50%;
+      width: 34px; height: 34px; font-size: 1rem; cursor: pointer; color: var(--text-sec);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .rsheet-btn-all {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 13px 16px;
+      background: var(--blue-lt); border: 2px solid var(--blue);
+      border-radius: 12px; margin-bottom: 12px;
+      font-size: .95rem; font-weight: 800; color: var(--blue);
+      cursor: pointer; font-family: inherit;
       -webkit-tap-highlight-color: transparent;
     }
-    .rtab.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .rsheet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .rsheet-item {
+      padding: 12px 6px; background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 12px; font-size: .88rem; font-weight: 700;
+      color: var(--text-pri); cursor: pointer; font-family: inherit;
+      text-align: center; line-height: 1.4;
+      transition: background .12s, border-color .12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .rsheet-item:active, .rsheet-item.active { background: var(--blue-lt); border-color: var(--blue); color: var(--blue); }
+    .rsheet-count { display: block; font-size: .75rem; font-weight: 500; opacity: .6; margin-top: 2px; }
+    @media (max-width: 380px) { .rsheet-grid { grid-template-columns: repeat(2, 1fr); } }
 
     /* ── 구 그룹 헤더 ── */
     .district-header {
@@ -606,41 +664,43 @@
 
 <div class="toolbar">
   <div class="toolbar-inner">
-    <div class="search-row">
-      <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput"
-               placeholder="직종명, 회사명으로 검색…"
-               oninput="render()" />
-      </div>
-      <button class="btn-search" onclick="render()">검색</button>
-    </div>
-    <div class="region-scroll" id="regionTabs"></div>
     <div class="filter-row">
+      <button class="region-btn" id="regionBtn" onclick="openRegionSheet()">
+        <span class="rbn-label">전체 지역</span>
+        <span class="rbn-arrow">▾</span>
+      </button>
       <select id="industryFilter" onchange="render()">
         <option value="">업종 전체</option>
       </select>
       <select id="typeFilter" onchange="render()">
-        <option value="">고용형태 전체</option>
+        <option value="">고용형태</option>
         <option value="정규직">정규직</option>
         <option value="계약직">계약직</option>
         <option value="시간제">시간제·알바</option>
       </select>
       <select id="sourceFilter" onchange="render()">
-        <option value="">출처 전체</option>
+        <option value="">출처</option>
         <option value="고용24">고용24</option>
         <option value="알바몬">알바몬</option>
         <option value="알바천국">알바천국</option>
         <option value="시니어로">시니어로</option>
         <option value="서울일자리포털">서울일자리포털</option>
-        <option value="잡아바">잡아바(경기)</option>
-        <option value="어르신일자리">어르신일자리(경기)</option>
+        <option value="잡아바">잡아바</option>
+        <option value="어르신일자리">어르신일자리</option>
       </select>
       <select id="sortSelect" onchange="render()">
-        <option value="deadline">마감 임박순</option>
-        <option value="salary">급여 높은순</option>
+        <option value="deadline">마감순</option>
+        <option value="salary">급여순</option>
         <option value="title">직종명순</option>
       </select>
+      <button class="btn-search-icon" id="searchToggle" onclick="toggleSearch()" aria-label="검색">🔍</button>
+    </div>
+    <div class="search-row-expand" id="searchRowExpand">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="직종명, 회사명으로 검색…" oninput="render()" />
+      </div>
+      <button class="btn-search-close" onclick="toggleSearch()">✕</button>
     </div>
   </div>
 </div>
@@ -658,6 +718,19 @@
   운영자 문의: <a href="mailto:jun@dolight.co.kr" style="color:inherit">jun@dolight.co.kr</a>
   &nbsp;·&nbsp; <a href="privacy.html" style="color:inherit">개인정보 처리방침</a>
 </footer>
+
+<!-- 지역 선택 바텀시트 -->
+<div class="rsheet-overlay" id="rsheetOverlay">
+  <div class="rsheet">
+    <div class="rsheet-drag"></div>
+    <div class="rsheet-head">
+      <div class="rsheet-title" id="rsheetTitle"></div>
+      <button class="rsheet-close" id="rsheetClose">✕</button>
+    </div>
+    <button class="rsheet-btn-all" id="rsheetBtnAll"><span id="rsheetBtnAllLabel"></span><span>→</span></button>
+    <div class="rsheet-grid" id="rsheetGrid"></div>
+  </div>
+</div>
 
 <script src="whitelist_data.js"></script>
 <script src="manual_excluded.js"></script>
@@ -1020,9 +1093,29 @@ function updateRegionLabel() {
 }
 
 function buildRegionTabs() {
-  const tabsEl = document.getElementById('regionTabs');
+  updateRegionBtn();
+}
+
+function updateRegionBtn() {
+  const btn = document.getElementById('regionBtn');
+  const label = btn.querySelector('.rbn-label');
   if (_urlRegion !== '전체') {
-    // 특정 지역 진입 → 해당 지역의 구/군 탭 표시
+    label.textContent = activeDistrict ? activeDistrict : `${_urlRegion}전체`;
+    btn.classList.toggle('active', !!activeDistrict);
+  } else {
+    label.textContent = activeRegion === '전체' ? '전체 지역' : activeRegion;
+    btn.classList.toggle('active', activeRegion !== '전체');
+  }
+}
+
+function openRegionSheet() {
+  const overlay  = document.getElementById('rsheetOverlay');
+  const title    = document.getElementById('rsheetTitle');
+  const btnAll   = document.getElementById('rsheetBtnAll');
+  const btnLabel = document.getElementById('rsheetBtnAllLabel');
+  const grid     = document.getElementById('rsheetGrid');
+
+  if (_urlRegion !== '전체') {
     const dists = DISTRICTS[_urlRegion] || [];
     const regionJobs = allJobs.filter(j => j._region === _urlRegion);
     const dc = {};
@@ -1030,39 +1123,67 @@ function buildRegionTabs() {
       const d = dists.find(d => (j.location||'').includes(d));
       if (d) dc[d] = (dc[d]||0) + 1;
     });
-    const sorted = dists.filter(d => dc[d]).sort((a,b) => dc[b] - dc[a]);
-    tabsEl.innerHTML = [
-      `<button class="rtab${!activeDistrict?' active':''}" onclick="setDistrict('',this)">${_urlRegion}전체 <small style="opacity:.7;font-weight:400">${regionJobs.length}</small></button>`,
-      ...sorted.map(d =>
-        `<button class="rtab${d===activeDistrict?' active':''}" onclick="setDistrict('${d}',this)">${d} <small style="opacity:.7;font-weight:400">${dc[d]}</small></button>`)
-    ].join('');
+    const sorted = dists.filter(d => dc[d]).sort((a,b) => dc[b]-dc[a]);
+    title.textContent = `${_urlRegion} 구/군 선택`;
+    btnLabel.textContent = `${_urlRegion}전체 (${regionJobs.length}건)`;
+    btnAll.onclick = () => { setDistrict(''); closeRegionSheet(); };
+    grid.innerHTML = sorted.map(d =>
+      `<button class="rsheet-item${d===activeDistrict?' active':''}"
+        onclick="setDistrict('${d}');closeRegionSheet()">
+        ${d}<span class="rsheet-count">${dc[d]}건</span>
+      </button>`
+    ).join('');
   } else {
-    // 전국 전체 → 기존 시/도 탭
     const counts = {};
     allJobs.forEach(j => { counts[j._region] = (counts[j._region]||0) + 1; });
-    const regions = ['전체', ...Object.keys(counts).sort((a,b) => (counts[b]||0) - (counts[a]||0))];
-    tabsEl.innerHTML = regions.map(r => {
-      const cnt = r === '전체' ? allJobs.length : (counts[r]||0);
-      return `<button class="rtab${r===activeRegion?' active':''}"
-        onclick="setRegion('${r}',this)">${r} <small style="opacity:.7;font-weight:400">${cnt}</small></button>`;
-    }).join('');
+    const regions = Object.keys(counts).sort((a,b) => counts[b]-counts[a]);
+    title.textContent = '지역 선택';
+    btnLabel.textContent = `전국 전체 (${allJobs.length}건)`;
+    btnAll.onclick = () => { setRegion('전체'); closeRegionSheet(); };
+    grid.innerHTML = regions.map(r =>
+      `<button class="rsheet-item${r===activeRegion?' active':''}"
+        onclick="setRegion('${r}');closeRegionSheet()">
+        ${r}<span class="rsheet-count">${counts[r]}건</span>
+      </button>`
+    ).join('');
+  }
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeRegionSheet() {
+  document.getElementById('rsheetOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function toggleSearch() {
+  const row = document.getElementById('searchRowExpand');
+  const btn = document.getElementById('searchToggle');
+  const isOpen = row.classList.contains('show');
+  if (isOpen) {
+    row.classList.remove('show');
+    btn.classList.remove('active');
+    document.getElementById('searchInput').value = '';
+    render();
+  } else {
+    row.classList.add('show');
+    btn.classList.add('active');
+    setTimeout(() => document.getElementById('searchInput').focus(), 260);
   }
 }
 
-function setRegion(r, el) {
+function setRegion(r) {
   activeRegion = r;
   activeDistrict = '';
-  document.querySelectorAll('.rtab').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
+  updateRegionBtn();
   buildIndustryOptions();
   updateRegionLabel();
   render();
 }
 
-function setDistrict(d, el) {
+function setDistrict(d) {
   activeDistrict = d;
-  document.querySelectorAll('.rtab').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
+  updateRegionBtn();
   buildIndustryOptions();
   updateRegionLabel();
   render();
@@ -1195,6 +1316,11 @@ function render() {
     grid.innerHTML = jobs.map(renderCard).join('');
   }
 }
+
+document.getElementById('rsheetClose').addEventListener('click', closeRegionSheet);
+document.getElementById('rsheetOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('rsheetOverlay')) closeRegionSheet();
+});
 
 loadData();
 </script>
