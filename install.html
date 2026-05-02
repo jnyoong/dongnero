@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYD0Q5NTPD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PYD0Q5NTPD');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>동네로 — 홈 화면에 추가</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#2563EB" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="동네로" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #FFF9F4;
+      --surface:  #FFFFFF;
+      --border:   #EDE5DC;
+      --text-pri: #1C1917;
+      --text-sec: #6B6560;
+      --text-ter: #A8A29E;
+      --blue:     #2563EB;
+      --blue-lt:  #EFF6FF;
+      --radius:   16px;
+      --shadow:   0 2px 12px rgba(0,0,0,.07);
+    }
+    body {
+      font-family: 'Malgun Gothic','맑은 고딕',system-ui,sans-serif;
+      background: var(--bg); color: var(--text-pri);
+      min-height: 100vh; font-size: 16px; line-height: 1.6;
+    }
+
+    /* 헤더 */
+    header {
+      background: linear-gradient(135deg, #1E40AF 0%, #2563EB 60%, #3B82F6 100%);
+      padding: 20px 18px 24px;
+      position: relative; overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .header-inner {
+      max-width: 520px; margin: 0 auto; position: relative;
+    }
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: rgba(255,255,255,.85); text-decoration: none;
+      font-size: .88rem; font-weight: 600; margin-bottom: 18px;
+      background: rgba(255,255,255,.12); border-radius: 50px;
+      padding: 6px 14px; border: 1px solid rgba(255,255,255,.2);
+    }
+    .header-app {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .header-icon {
+      width: 60px; height: 60px; border-radius: 15px;
+      background: rgba(255,255,255,.18); padding: 8px; flex-shrink: 0;
+    }
+    .header-title { font-size: 1.5rem; font-weight: 900; color: #fff; }
+    .header-sub   { font-size: .88rem; color: rgba(255,255,255,.75); margin-top: 3px; }
+
+    /* 본문 */
+    main {
+      max-width: 520px; margin: 0 auto;
+      padding: 24px 16px 80px;
+    }
+
+    /* 이미 설치됨 */
+    .installed-box {
+      background: var(--surface); border: 1.5px solid #BBF7D0;
+      border-radius: var(--radius); padding: 20px 18px;
+      text-align: center; margin-bottom: 24px;
+    }
+    .installed-icon { font-size: 2.5rem; margin-bottom: 8px; }
+    .installed-title { font-size: 1.05rem; font-weight: 800; color: #15803D; }
+    .installed-sub   { font-size: .85rem; color: var(--text-sec); margin-top: 4px; }
+
+    /* 안내 카드 */
+    .guide-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow); margin-bottom: 16px;
+    }
+    .guide-card-head {
+      background: var(--blue-lt); padding: 14px 18px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid #BFDBFE;
+    }
+    .guide-card-head-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .guide-card-head-title { font-size: 1rem; font-weight: 800; color: var(--blue); }
+    .guide-steps { padding: 16px 18px; display: flex; flex-direction: column; gap: 14px; }
+    .step {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .step-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--blue); color: #fff;
+      font-size: .8rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .step-text { font-size: .92rem; color: var(--text-pri); line-height: 1.55; }
+    .step-text strong { color: var(--text-pri); font-weight: 700; }
+    .step-text em {
+      display: inline-flex; align-items: center;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 1px 7px;
+      font-style: normal; font-size: .85rem; font-weight: 700;
+    }
+
+    /* 설치 버튼 */
+    .btn-install {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 17px;
+      background: var(--blue); color: #fff;
+      border: none; border-radius: 14px;
+      font-size: 1.05rem; font-weight: 800;
+      cursor: pointer; font-family: inherit;
+      box-shadow: 0 4px 16px rgba(37,99,235,.35);
+      transition: background .15s;
+      text-decoration: none;
+    }
+    .btn-install:active { background: #1D4ED8; }
+    .btn-install:disabled { background: var(--text-ter); box-shadow: none; cursor: not-allowed; }
+
+    /* 공유 버튼 (iOS) */
+    .btn-share {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 17px;
+      background: #000; color: #fff;
+      border: none; border-radius: 14px;
+      font-size: 1.05rem; font-weight: 800;
+      cursor: pointer; font-family: inherit;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      transition: background .15s;
+    }
+    .btn-share:active { background: #333; }
+
+    .tip-box {
+      background: #FFFBEB; border: 1px solid #FDE68A;
+      border-radius: 12px; padding: 12px 14px;
+      font-size: .82rem; color: #92400E; line-height: 1.65;
+      margin-top: 16px;
+    }
+    .tip-box strong { font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="btn-back" href="javascript:history.back()">← 뒤로</a>
+    <div class="header-app">
+      <img src="icon.svg" class="header-icon" alt="동네로" />
+      <div>
+        <div class="header-title">홈 화면에 추가</div>
+        <div class="header-sub">앱처럼 바로 실행하세요</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- 이미 설치된 경우 -->
+  <div class="installed-box" id="installedBox" style="display:none">
+    <div class="installed-icon">✅</div>
+    <div class="installed-title">이미 홈 화면에 추가되어 있어요!</div>
+    <div class="installed-sub">앱 아이콘을 탭해서 바로 실행하세요.</div>
+  </div>
+
+  <!-- 안드로이드 안내 -->
+  <div id="androidGuide" style="display:none">
+    <div class="guide-card">
+      <div class="guide-card-head">
+        <span class="guide-card-head-icon">🤖</span>
+        <div class="guide-card-head-title">안드로이드 (Chrome) 설치 방법</div>
+      </div>
+      <div class="guide-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">아래 <strong>홈 화면에 추가</strong> 버튼을 탭하세요.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">팝업이 뜨면 <em>설치</em> 또는 <em>추가</em> 를 탭하세요.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">홈 화면에 동네로 아이콘이 생기면 완료!</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn-install" id="androidInstallBtn" disabled>
+      📲 홈 화면에 추가하기
+    </button>
+    <div class="tip-box" id="androidTip" style="display:none">
+      💡 <strong>버튼이 활성화되지 않는 경우</strong><br>
+      Chrome 주소창 우측 <strong>⋮ 메뉴</strong> → <strong>'홈 화면에 추가'</strong> 또는 <strong>'앱 설치'</strong>를 선택해 주세요.
+    </div>
+  </div>
+
+  <!-- iOS 안내 -->
+  <div id="iosGuide" style="display:none">
+    <div class="guide-card">
+      <div class="guide-card-head">
+        <span class="guide-card-head-icon">🍎</span>
+        <div class="guide-card-head-title">아이폰 (Safari) 설치 방법</div>
+      </div>
+      <div class="guide-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">화면 하단의 <em>□↑ 공유</em> 버튼을 탭하세요.<br><span style="font-size:.8rem;color:var(--text-sec)">메뉴바가 숨겨진 경우 화면을 한 번 탭하면 나타나요</span></div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">아래로 스크롤해서 <em>홈 화면에 추가</em> 를 탭하세요.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">우측 상단 <em>추가</em> 를 탭하면 완료!</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn-share" id="iosShareBtn">
+      □↑ 공유 메뉴 열기
+    </button>
+    <div class="tip-box" style="margin-top:12px">
+      💡 <strong>Safari에서 접속</strong>해야 홈 화면 추가가 가능해요.<br>
+      다른 브라우저(Chrome 등)에서 접속 중이라면 Safari로 열어주세요.
+    </div>
+  </div>
+
+  <!-- 기타 (데스크탑 등) -->
+  <div id="defaultGuide" style="display:none">
+    <div class="guide-card">
+      <div class="guide-card-head">
+        <span class="guide-card-head-icon">💻</span>
+        <div class="guide-card-head-title">설치 방법</div>
+      </div>
+      <div class="guide-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">Chrome 주소창 우측 <em>⋮ 메뉴</em> 를 클릭하세요.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><em>홈 화면에 추가</em> 또는 <em>앱 설치</em> 를 선택하세요.</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn-install" id="defaultInstallBtn" disabled>
+      📲 앱으로 설치하기
+    </button>
+    <div class="tip-box" id="defaultTip" style="display:none">
+      💡 버튼이 비활성화 상태라면 Chrome 메뉴에서 직접 설치해 주세요.
+    </div>
+  </div>
+
+</main>
+
+<script>
+const ua = navigator.userAgent;
+const isIOS      = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+const isAndroid  = /Android/.test(ua);
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+                  || window.navigator.standalone === true;
+
+if (isStandalone) {
+  document.getElementById('installedBox').style.display = 'block';
+} else if (isIOS) {
+  document.getElementById('iosGuide').style.display = 'block';
+} else if (isAndroid) {
+  document.getElementById('androidGuide').style.display = 'block';
+} else {
+  document.getElementById('defaultGuide').style.display = 'block';
+}
+
+/* 안드로이드 설치 버튼 */
+let deferredPrompt = null;
+const androidBtn  = document.getElementById('androidInstallBtn');
+const defaultBtn  = document.getElementById('defaultInstallBtn');
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (androidBtn) { androidBtn.disabled = false; document.getElementById('androidTip').style.display = 'none'; }
+  if (defaultBtn) { defaultBtn.disabled = false; document.getElementById('defaultTip').style.display = 'none'; }
+});
+
+async function doInstall(btn) {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    if (outcome === 'accepted') {
+      btn.textContent = '✅ 설치 완료!';
+      btn.disabled = true;
+    }
+  } else {
+    if (isAndroid) document.getElementById('androidTip').style.display = 'block';
+    else document.getElementById('defaultTip').style.display = 'block';
+  }
+}
+
+if (androidBtn) androidBtn.addEventListener('click', () => doInstall(androidBtn));
+if (defaultBtn) defaultBtn.addEventListener('click', () => doInstall(defaultBtn));
+
+/* iOS 공유 버튼 */
+const iosShareBtn = document.getElementById('iosShareBtn');
+if (iosShareBtn) {
+  iosShareBtn.addEventListener('click', () => {
+    if (navigator.share) {
+      navigator.share({ title: '동네로 — 시니어 취업정보', url: window.location.origin }).catch(() => {});
+    } else {
+      alert('Safari 하단 공유 버튼(□↑)을 탭한 뒤 "홈 화면에 추가"를 선택해 주세요.');
+    }
+  });
+}
+</script>
+</body>
+</html>
