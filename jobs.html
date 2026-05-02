@@ -36,6 +36,9 @@
       --c-alb:     #EA580C;
       --c-abc:     #16A34A;
       --c-rro:     #0891B2;
+      --c-sel:     #0F766E;
+      --c-jab:     #7C3AED;
+      --c-eld:     #15803D;
       --radius:    16px;
       --radius-lg: 20px;
       --shadow:    0 2px 10px rgba(0,0,0,.07);
@@ -179,10 +182,13 @@
       -webkit-tap-highlight-color: transparent;
     }
     .card-top-bar { height: 4px; width: 100%; }
-    .line-고용24   { background: var(--c-gov); }
-    .line-알바몬   { background: var(--c-alb); }
-    .line-알바천국 { background: var(--c-abc); }
-    .line-시니어로 { background: var(--c-rro); }
+    .line-고용24       { background: var(--c-gov); }
+    .line-알바몬       { background: var(--c-alb); }
+    .line-알바천국     { background: var(--c-abc); }
+    .line-시니어로     { background: var(--c-rro); }
+    .line-서울일자리포털 { background: var(--c-sel); }
+    .line-잡아바       { background: var(--c-jab); }
+    .line-어르신일자리  { background: var(--c-eld); }
 
     .card-inner { padding: 14px 16px; }
 
@@ -208,10 +214,13 @@
       font-size: .72rem; font-weight: 700;
       padding: 3px 9px; border-radius: 6px; flex-shrink: 0;
     }
-    .src-고용24   { background: #EFF6FF; color: var(--c-gov); }
-    .src-알바몬   { background: #FFF7ED; color: var(--c-alb); }
-    .src-알바천국 { background: #F0FDF4; color: var(--c-abc); }
-    .src-시니어로 { background: #ECFEFF; color: var(--c-rro); }
+    .src-고용24       { background: #EFF6FF; color: var(--c-gov); }
+    .src-알바몬       { background: #FFF7ED; color: var(--c-alb); }
+    .src-알바천국     { background: #F0FDF4; color: var(--c-abc); }
+    .src-시니어로     { background: #ECFEFF; color: var(--c-rro); }
+    .src-서울일자리포털 { background: #F0FDFA; color: var(--c-sel); }
+    .src-잡아바       { background: #F5F3FF; color: var(--c-jab); }
+    .src-어르신일자리  { background: #F0FDF4; color: var(--c-eld); }
 
     /* 제목 */
     .card-title {
@@ -605,6 +614,9 @@
         <option value="알바몬">알바몬</option>
         <option value="알바천국">알바천국</option>
         <option value="시니어로">시니어로</option>
+        <option value="서울일자리포털">서울일자리포털</option>
+        <option value="잡아바">잡아바(경기)</option>
+        <option value="어르신일자리">어르신일자리(경기)</option>
       </select>
       <select id="sortSelect" onchange="render()">
         <option value="deadline">마감 임박순</option>
@@ -623,12 +635,14 @@
 <div class="grid" id="jobGrid"></div>
 
 <footer>
-  고용24 · 알바몬 · 알바천국 · 시니어로 공개 정보를 수집·제공합니다.<br>
+  고용24 · 알바몬 · 알바천국 · 시니어로 · 서울일자리포털 · 잡아바(경기) · 어르신일자리(경기) 공개 정보를 수집·제공합니다.<br>
   실제 지원은 원문 공고 사이트에서 진행해 주세요.<br>
   운영자 문의: <a href="mailto:jun@dolight.co.kr" style="color:inherit">jun@dolight.co.kr</a>
   &nbsp;·&nbsp; <a href="privacy.html" style="color:inherit">개인정보 처리방침</a>
 </footer>
 
+<script src="whitelist_data.js"></script>
+<script src="manual_excluded.js"></script>
 <script src="jobs_data.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
@@ -916,6 +930,14 @@ function loadData() {
   }
   const data = JOBS_DATA;
   allJobs = Array.isArray(data) ? data : (data.jobs || []);
+  if (typeof WHITELIST_DATA !== 'undefined' && Array.isArray(WHITELIST_DATA.jobs) && WHITELIST_DATA.jobs.length) {
+    const existingLinks = new Set(allJobs.map(j => j.apply_link));
+    WHITELIST_DATA.jobs.forEach(j => { if (!existingLinks.has(j.apply_link)) allJobs.push(j); });
+  }
+  if (typeof MANUAL_EXCLUDED_DATA !== 'undefined' && Array.isArray(MANUAL_EXCLUDED_DATA.links) && MANUAL_EXCLUDED_DATA.links.length) {
+    const mfSet = new Set(MANUAL_EXCLUDED_DATA.links);
+    allJobs = allJobs.filter(j => !mfSet.has(j.apply_link));
+  }
   allJobs.forEach(j => {
     j._region   = getRegion(j.location||'');
     j._industry = getIndustry(j.title, j.description);
@@ -934,8 +956,8 @@ function loadData() {
 function buildHeaderStats(data) {
   const counts = data.source_counts || {};
   const total  = allJobs.length;
-  const srcList = ['고용24','알바몬','알바천국','시니어로'];
-  const colors  = { '고용24':'#2563EB','알바몬':'#EA580C','알바천국':'#16A34A','시니어로':'#0891B2' };
+  const srcList = ['고용24','알바몬','알바천국','시니어로','서울일자리포털','잡아바','어르신일자리'];
+  const colors  = { '고용24':'#2563EB','알바몬':'#EA580C','알바천국':'#16A34A','시니어로':'#0891B2','서울일자리포털':'#0F766E','잡아바':'#7C3AED','어르신일자리':'#15803D' };
   let html = `<span class="stat-chip"><strong>${total}</strong>건 수집</span>`;
   srcList.forEach(src => {
     const cnt = counts[src];

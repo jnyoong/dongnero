@@ -12,6 +12,7 @@ import json
 import time
 import re
 import sys
+import random
 import xml.etree.ElementTree as ET
 from datetime import datetime, date, timezone, timedelta
 
@@ -39,6 +40,9 @@ OUTPUT_FILE = Path(__file__).parent / "jobs.json"
 
 WORK24_AUTH_KEY = "YOUR_AUTH_KEY_HERE"
 
+# 경기도 잡아바 API 키 (경기데이터드림에서 발급: https://data.gg.go.kr/portal/myPage/actKeyPage.do)
+JOBABA_API_KEY = "YOUR_JOBABA_KEY_HERE"
+
 # ── 시니어 부적합 필터 ────────────────────────────────────────────────────────
 
 # 회사명에 포함 시 제외
@@ -50,6 +54,14 @@ EXCLUDE_COMPANIES = {
     # 젊은층 카페 프랜차이즈
     '스타벅스', '이디야', '빽다방', '투썸플레이스', '공차', '컴포즈',
     '할리스', '파스쿠찌', '탐앤탐스', '폴바셋',
+    '메가커피', '엔제리너스', '커피빈', '블루보틀', '더벤티', '카페베네',
+    # 패스트푸드 프랜차이즈 (젊은층 위주)
+    '롯데리아', '맥도날드', 'kfc', '버거킹', '서브웨이',
+    '파파이스', '노브랜드버거', '맘스터치', '쉐이크쉑', '파이브가이즈',
+    # 디저트 프랜차이즈
+    '배스킨라빈스', '던킨', '크리스피크림',
+    # 편의점 (시간제 위주, 젊은층 타겟)
+    '이마트24', 'gs25', 'cu편의점', '세븐일레븐',
 }
 
 # 공고 제목·회사명에 포함 시 제외
@@ -63,11 +75,17 @@ EXCLUDE_KEYWORDS = [
     '10대', '20대 초반', '나이 제한',
 
     # IT 소프트웨어 개발직 (시니어 채용 가능성 낮음)
+    '개발자',                        # "Python 개발자", "Java 개발자" 등 광범위 캐치
     '백엔드 개발자', '프론트엔드 개발자', '풀스택 개발자',
-    'ios 개발자', 'android 개발자', '앱 개발자',
-    'devops 엔지니어', 'ui/ux 디자이너', 'ux 디자이너',
+    'ios 개발자', 'android 개발자', '앱 개발자', '웹 개발자',
+    'devops 엔지니어', 'ui/ux 디자이너', 'ux 디자이너', 'ui 디자이너',
     '데이터 사이언티스트', '머신러닝 엔지니어', '딥러닝 엔지니어', 'ai 엔지니어',
-    '소프트웨어 엔지니어', '클라우드 엔지니어',
+    '소프트웨어 엔지니어', '클라우드 엔지니어', 'qa 엔지니어', '테스트 엔지니어',
+    '데이터 분석가', '데이터 엔지니어', '데이터 사이언스',
+    '게임 개발', '모바일 개발', '앱 개발',
+    '프로덕트 매니저', '프로덕트 디자이너', '게임 pd',
+    'node.js', 'react', 'vue.js', 'spring', 'flutter', 'kotlin', 'typescript',
+    '병역특례',                       # 청년 IT 개발자 채용 신호
 
     # 크리에이터·SNS (젊은층 위주)
     '유튜브 크리에이터', '틱톡 크리에이터', '인플루언서',
@@ -80,10 +98,13 @@ EXCLUDE_KEYWORDS = [
     '고등학생 가능', '대학생 전용',
 ]
 
-REQUEST_DELAY   = 2.0
-MAX_PAGES       = 50
-ITEMS_PER_PAGE  = 20
-MAX_RETRIES     = 3
+REQUEST_DELAY       = 3.0   # 페이지 간 기본 대기(초)
+REQUEST_JITTER      = 2.0   # 랜덤 추가 대기 최대값
+SOURCE_DELAY_MIN    = 5.0   # 출처 전환 최소 대기
+SOURCE_DELAY_MAX    = 10.0  # 출처 전환 최대 대기
+MAX_PAGES           = 50
+ITEMS_PER_PAGE      = 20
+MAX_RETRIES         = 3
 
 BIRTH_YEAR_LIMIT = str(date.today().year - 50)
 
@@ -97,9 +118,33 @@ HEADERS = {
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/124.0.0.0 Safari/537.36"
     ),
-    "Accept-Language": "ko-KR,ko;q=0.9",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Cache-Control": "max-age=0",
+    "Upgrade-Insecure-Requests": "1",
+    "DNT": "1",
     "Referer": BASE_URL + "/wk/a/b/1200/retriveDtlEmpSrchList.do",
 }
+
+# 출처별 세션 (쿠키 유지·커넥션 재사용)
+_sessions: dict[str, requests.Session] = {}
+
+def _session(name: str) -> requests.Session:
+    if name not in _sessions:
+        s = requests.Session()
+        s.headers.update(HEADERS)
+        _sessions[name] = s
+    return _sessions[name]
+
+def _sleep_page():
+    """페이지 간 자연스러운 대기"""
+    time.sleep(REQUEST_DELAY + random.uniform(0, REQUEST_JITTER))
+
+def _sleep_source():
+    """출처 전환 시 충분한 대기"""
+    time.sleep(random.uniform(SOURCE_DELAY_MIN, SOURCE_DELAY_MAX))
 
 
 # ── 고용24 오픈API 모드 ────────────────────────────────────────────────────────
@@ -174,15 +219,17 @@ def scrape_work24_web(page: int) -> list[dict]:
         "keywordJobCont" : "N",
         "keywordStaAreaNm": "N",
     }
+    sess = _session('work24')
     for attempt in range(MAX_RETRIES):
         try:
-            resp = requests.post(POST_URL, data=post_data, headers=HEADERS, timeout=30)
+            resp = sess.post(POST_URL, data=post_data, timeout=30)
             resp.raise_for_status()
             break
         except Exception as e:
             if attempt < MAX_RETRIES - 1:
-                print(f"재시도 {attempt+1}/{MAX_RETRIES-1}...", end=" ", flush=True)
-                time.sleep(3)
+                wait = 2 ** (attempt + 1) + random.uniform(0, 1.5)
+                print(f"재시도 {attempt+1}/{MAX_RETRIES-1} ({wait:.1f}초 대기)...", end=" ", flush=True)
+                time.sleep(wait)
             else:
                 print(f"\n  [고용24 스크래핑 오류] {e}")
                 return []
@@ -235,10 +282,21 @@ def scrape_albamon(page: int) -> list[dict]:
     """알바몬 시니어 키워드 검색 — __NEXT_DATA__ 파싱"""
     url = f"{ALBAMON_BASE}/jobs/part?keyword=%EC%8B%9C%EB%8B%88%EC%96%B4&page={page}"
     ref = f"{ALBAMON_BASE}/jobs/part?keyword=%EC%8B%9C%EB%8B%88%EC%96%B4&page={page - 1}"
-    headers = {**HEADERS, "Referer": ref if page > 1 else ALBAMON_BASE + "/"}
+    sess = _session('albamon')
+    sess.headers.update({"Referer": ref if page > 1 else ALBAMON_BASE + "/"})
+    for attempt in range(MAX_RETRIES):
+        try:
+            resp = sess.get(url, timeout=15)
+            resp.raise_for_status()
+            break
+        except Exception as e:
+            if attempt < MAX_RETRIES - 1:
+                wait = 2 ** (attempt + 1) + random.uniform(0, 1)
+                time.sleep(wait)
+            else:
+                print(f"\n  [알바몬 오류] {e}")
+                return []
     try:
-        resp = requests.get(url, headers=headers, timeout=15)
-        resp.raise_for_status()
         soup = BeautifulSoup(resp.text, "html.parser")
 
         nd = soup.find("script", id="__NEXT_DATA__")
@@ -285,10 +343,21 @@ ALBA_BASE = "https://www.alba.co.kr"
 def scrape_albacheon(page: int) -> list[dict]:
     """알바천국 중장년 채용관 스크래핑 — /Job/Professional/Senior"""
     url = f"{ALBA_BASE}/Job/Professional/Senior?page={page}&hidSortCnt=50"
-    headers = {**HEADERS, "Referer": f"{ALBA_BASE}/Job/Professional/Senior"}
+    sess = _session('albacheon')
+    sess.headers.update({"Referer": f"{ALBA_BASE}/Job/Professional/Senior"})
+    for attempt in range(MAX_RETRIES):
+        try:
+            resp = sess.get(url, timeout=15)
+            resp.raise_for_status()
+            break
+        except Exception as e:
+            if attempt < MAX_RETRIES - 1:
+                wait = 2 ** (attempt + 1) + random.uniform(0, 1)
+                time.sleep(wait)
+            else:
+                print(f"\n  [알바천국 오류] {e}")
+                return []
     try:
-        resp = requests.get(url, headers=headers, timeout=15)
-        resp.raise_for_status()
         resp.encoding = resp.apparent_encoding or "utf-8"
         soup = BeautifulSoup(resp.text, "html.parser")
 
@@ -352,11 +421,21 @@ def scrape_seniorro(page: int) -> list[dict]:
         "pageUnit" : "30",
         "align"    : "",
     }
-    headers = {**HEADERS, "Referer": SENIORRO_BASE + "/noin/main.do"}
+    sess = _session('seniorro')
+    sess.headers.update({"Referer": SENIORRO_BASE + "/noin/main.do"})
+    for attempt in range(MAX_RETRIES):
+        try:
+            resp = sess.post(url, data=post_data, timeout=15, verify=False)
+            resp.raise_for_status()
+            break
+        except Exception as e:
+            if attempt < MAX_RETRIES - 1:
+                wait = 2 ** (attempt + 1) + random.uniform(0, 1)
+                time.sleep(wait)
+            else:
+                print(f"\n  [시니어로 오류] {e}")
+                return []
     try:
-        resp = requests.post(url, data=post_data, headers=headers,
-                             timeout=15, verify=False)
-        resp.raise_for_status()
         resp.encoding = "utf-8"
         soup = BeautifulSoup(resp.text, "html.parser")
 
@@ -426,6 +505,313 @@ def scrape_seniorro(page: int) -> list[dict]:
         return []
 
 
+# ── 서울시 일자리포털 스크래핑 ────────────────────────────────────────────────
+
+SEOUL_JOBS_BASE = "https://job.seoul.go.kr"
+SEOUL_JOBS_LIST = SEOUL_JOBS_BASE + "/hmpg/rmim/rcmg/rcmgListPgng.do"
+SEOUL_JOBS_PAGE = SEOUL_JOBS_BASE + "/hmpg/rmim/rcmg/rcmgListPage.do"
+
+def scrape_seoul_jobs(page: int) -> list[dict]:
+    """서울시 일자리포털 구인공고 AJAX 스크래핑"""
+    sess = _session('seoul_jobs')
+    # 첫 페이지 방문 시 쿠키 획득
+    if page == 1:
+        try:
+            sess.get(SEOUL_JOBS_PAGE, timeout=15)
+            time.sleep(random.uniform(1.5, 2.5))
+        except Exception:
+            pass
+
+    post_data = {
+        "miv_pageNo"  : str(page),
+        "miv_pageSize": "100",
+        "total_cnt"   : "",
+        "LISTOP"      : "",
+        "sidx"        : "FRST_REG_DT",
+        "sord"        : "DESC",
+        "wantedAuthNo": "",
+        "occupation"  : "",
+        "region"      : "11000",
+        "certLic"     : "",
+        "major"       : "",
+        "keyword"     : "",
+        "coTp"        : "",
+        "regDate"     : "",
+    }
+    sess.headers.update({
+        "Referer"        : SEOUL_JOBS_PAGE,
+        "Content-Type"   : "application/x-www-form-urlencoded",
+        "X-Requested-With": "XMLHttpRequest",
+    })
+
+    for attempt in range(MAX_RETRIES):
+        try:
+            resp = sess.post(SEOUL_JOBS_LIST, data=post_data, timeout=20)
+            resp.raise_for_status()
+            break
+        except Exception as e:
+            if attempt < MAX_RETRIES - 1:
+                wait = 2 ** (attempt + 1) + random.uniform(0, 1.5)
+                print(f"재시도 {attempt+1}/{MAX_RETRIES-1} ({wait:.1f}초)...", end=" ", flush=True)
+                time.sleep(wait)
+            else:
+                print(f"\n  [서울일자리포털 오류] {e}")
+                return []
+    try:
+        resp.encoding = "utf-8"
+        soup = BeautifulSoup(resp.text, "html.parser")
+
+        jobs = []
+        for row in soup.select("div.boardlist table tbody tr"):
+            try:
+                company_el = row.select_one("td.block")
+                a_tag      = row.select_one("td.title_box div.title a")
+                if not a_tag:
+                    continue
+
+                title   = a_tag.get_text(strip=True)
+                company = company_el.get_text(strip=True) if company_el else ""
+
+                href = a_tag.get("href", "")
+                link = (SEOUL_JOBS_BASE + href) if href.startswith("/") else href
+
+                lis      = row.select("td.title_box ul.list_box li")
+                salary   = re.sub(r"^[가-힣\(\)\s]+:\s*", "", lis[0].get_text(strip=True)).strip() if len(lis) > 0 else ""
+                location = re.sub(r"^[가-힣\s]+:\s*", "",  lis[1].get_text(strip=True)).strip() if len(lis) > 1 else ""
+
+                hidden_tds = row.select("td.m_hidden")
+                deadline   = hidden_tds[-1].get_text(strip=True) if hidden_tds else ""
+
+                jobs.append({
+                    "title"      : title,
+                    "company"    : company,
+                    "location"   : location,
+                    "deadline"   : _normalize_date(deadline),
+                    "type"       : "",
+                    "salary"     : salary,
+                    "description": "",
+                    "apply_link" : link,
+                    "source"     : "서울일자리포털",
+                })
+            except Exception:
+                continue
+
+        return jobs
+    except Exception as e:
+        print(f"\n  [서울일자리포털 파싱 오류] {e}")
+        return []
+
+
+# ── 경기도 잡아바 (경기데이터드림 Sheet API) ──────────────────────────────────
+# 인증 불필요 — data.gg.go.kr 웹열람 Sheet API 사용
+# 데이터: https://data.gg.go.kr/portal/data/service/selectServicePage.do?infId=BF99Q5LCFU0G5XMU9B8L31468278&infSeq=1
+# ※ API 키 발급 후에는 _fetch_jobaba_api_key_mode()로 교체 예정 (JOBABA_API_KEY 입력 시 자동 전환)
+
+JOBABA_SHEET_BASE  = "https://data.gg.go.kr"
+JOBABA_SHEET_URL   = JOBABA_SHEET_BASE + "/portal/data/sheet/searchSheetData.do"
+JOBABA_INF_ID      = "BF99Q5LCFU0G5XMU9B8L31468278"
+JOBABA_INF_SEQ     = "1"
+JOBABA_ROWS        = 1000   # 회당 최대 수집 건수
+
+def _is_jobaba_key_set() -> bool:
+    return JOBABA_API_KEY not in ("", "YOUR_JOBABA_KEY_HERE")
+
+def scrape_jobaba_sheet() -> list[dict]:
+    """경기도 잡아바 — 경기데이터드림 Sheet API (인증 불필요, 전체 일괄 수집)"""
+    sess = _session('jobaba')
+    sess.headers.update({
+        "Referer": f"{JOBABA_SHEET_BASE}/portal/data/service/selectServicePage.do"
+                   f"?infId={JOBABA_INF_ID}&infSeq={JOBABA_INF_SEQ}",
+        "AJAX"   : "true",
+        "Content-Type": "application/x-www-form-urlencoded",
+    })
+
+    all_items: list[dict] = []
+    page = 1
+
+    while True:
+        try:
+            resp = sess.post(
+                JOBABA_SHEET_URL,
+                data={
+                    "rows"  : str(JOBABA_ROWS),
+                    "infId" : JOBABA_INF_ID,
+                    "infSeq": JOBABA_INF_SEQ,
+                    "page"  : str(page),
+                },
+                timeout=20,
+            )
+            resp.raise_for_status()
+            result = resp.json()
+        except Exception as e:
+            print(f"\n  [잡아바 Sheet 오류] page={page} {e}")
+            break
+
+        items = result.get("data", [])
+        all_items.extend(items)
+        total_pages = int(result.get("pages", 1))
+        print(f"  페이지 {page}/{total_pages} ... {len(items)}건", flush=True)
+
+        if page >= total_pages:
+            break
+        page += 1
+        _sleep_page()
+
+    jobs = []
+    for item in all_items:
+        title    = (item.get("PBANC_CONT") or "").strip()
+        company  = (item.get("ENTRPRS_NM") or "").strip()
+        if not title:
+            continue
+        location = (item.get("WORK_REGION_CONT") or "").strip()
+        salary   = (item.get("SALARY_COND")      or "").strip()
+        emp_type = (item.get("PBANC_FORM_DIV")   or "").strip()
+        end_dt   = (item.get("RCPT_END_DE")       or "").strip()
+        link     = (item.get("URL")               or "").strip()
+
+        jobs.append({
+            "title"      : title,
+            "company"    : company,
+            "location"   : location,
+            "deadline"   : _normalize_date(end_dt),
+            "type"       : emp_type,
+            "salary"     : salary,
+            "description": "",
+            "apply_link" : link,
+            "source"     : "잡아바",
+        })
+
+    return jobs
+
+
+def _fetch_jobaba_api_key_mode() -> list[dict]:
+    """경기도 잡아바 — 공식 API 키 모드 (키 발급 후 활성화)
+    현재 openapi.gg.go.kr 엔드포인트 확인 중 — 키 입력 시 이 함수로 자동 전환됨."""
+    params = {
+        "KEY"   : JOBABA_API_KEY,
+        "Type"  : "json",
+        "pIndex": "1",
+        "pSize" : "100",
+    }
+    try:
+        resp = requests.get(
+            "https://openapi.gg.go.kr/JOBABARecrtInfo",
+            params=params, headers=HEADERS, timeout=15,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        root = next(
+            (v for v in data.values() if isinstance(v, list)),
+            []
+        )
+        jobs = []
+        for item in root:
+            title = (item.get("PBANC_CONT") or item.get("recrtPlcNm") or "").strip()
+            if not title:
+                continue
+            jobs.append({
+                "title"      : title,
+                "company"    : (item.get("ENTRPRS_NM") or item.get("cmpnyNm") or "").strip(),
+                "location"   : (item.get("WORK_REGION_CONT") or item.get("workAddr") or "").strip(),
+                "deadline"   : _normalize_date(item.get("RCPT_END_DE") or item.get("recrtEndDt") or ""),
+                "type"       : (item.get("PBANC_FORM_DIV") or "").strip(),
+                "salary"     : (item.get("SALARY_COND") or "").strip(),
+                "description": "",
+                "apply_link" : (item.get("URL") or item.get("recrtUrl") or "").strip(),
+                "source"     : "잡아바",
+            })
+        return jobs
+    except Exception as e:
+        print(f"\n  [잡아바 API 키 모드 오류] {e} — Sheet 모드로 폴백")
+        return scrape_jobaba_sheet()
+
+
+# ── 경기도 어르신자립형일자리사업 (경기데이터드림 Sheet API) ────────────────────
+# 데이터: https://data.gg.go.kr/portal/data/service/selectServicePage.do?infId=AXMYYE3KRB83S1MRYS0Z21195052&infSeq=1
+
+ELDER_JOBS_INF_ID  = "AXMYYE3KRB83S1MRYS0Z21195052"
+ELDER_JOBS_INF_SEQ = "1"
+ELDER_JOBS_LINK    = (
+    "https://data.gg.go.kr/portal/data/service/selectServicePage.do"
+    f"?infId={ELDER_JOBS_INF_ID}&infSeq={ELDER_JOBS_INF_SEQ}"
+)
+
+def scrape_elder_jobs_sheet() -> list[dict]:
+    """경기도 어르신자립형일자리사업 — Sheet API (인증 불필요)"""
+    sess = _session('elder_jobs')
+    sess.headers.update({
+        "Referer"     : ELDER_JOBS_LINK,
+        "AJAX"        : "true",
+        "Content-Type": "application/x-www-form-urlencoded",
+    })
+
+    all_items: list[dict] = []
+    page = 1
+
+    while True:
+        try:
+            resp = sess.post(
+                JOBABA_SHEET_BASE + "/portal/data/sheet/searchSheetData.do",
+                data={
+                    "rows"  : str(JOBABA_ROWS),
+                    "infId" : ELDER_JOBS_INF_ID,
+                    "infSeq": ELDER_JOBS_INF_SEQ,
+                    "page"  : str(page),
+                },
+                timeout=20,
+            )
+            resp.raise_for_status()
+            result = resp.json()
+        except Exception as e:
+            print(f"\n  [어르신일자리 Sheet 오류] page={page} {e}")
+            break
+
+        items = result.get("data", [])
+        all_items.extend(items)
+        total_pages = int(result.get("pages", 1))
+        print(f"  페이지 {page}/{total_pages} ... {len(items)}건", flush=True)
+
+        if page >= total_pages:
+            break
+        page += 1
+        _sleep_page()
+
+    jobs = []
+    for item in all_items:
+        # 모집중인 공고만 포함
+        if (item.get("STATE_DIV_NM") or "").strip() != "모집중":
+            continue
+
+        inst   = (item.get("OPERT_INST_NM") or "").strip()   # 운영기관명
+        sigun  = (item.get("SIGUN_NM")      or "").strip()   # 시군명
+        job_tp = (item.get("JOB_TYPE_NM")   or "").strip()   # 일자리유형명
+        wage   = (item.get("WAGE_INFO")     or "").strip()
+        end_de = (item.get("END_DE")        or "").strip()
+        cnt    = item.get("RECPSNUM_CNT", "")
+
+        # 제목: "어르신자립형일자리 [경기 오산시]"
+        title   = f"어르신자립형일자리 [{sigun}]" if sigun else "어르신자립형일자리"
+        company = inst
+        location = f"경기 {sigun}" if sigun else "경기도"
+        desc = f"모집인원 {cnt}명" if cnt else ""
+        if job_tp and job_tp.lower() != "all":
+            desc = f"{job_tp} · {desc}".strip(" ·")
+
+        jobs.append({
+            "title"      : title,
+            "company"    : company,
+            "location"   : location,
+            "deadline"   : _normalize_date(end_de),
+            "type"       : "어르신일자리",
+            "salary"     : wage,
+            "description": desc,
+            "apply_link" : ELDER_JOBS_LINK,
+            "source"     : "어르신일자리",
+        })
+
+    return jobs
+
+
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
 def _normalize_date(raw: str) -> str:
@@ -478,12 +864,28 @@ def _is_api_key_set() -> bool:
 
 # ── 메인 ──────────────────────────────────────────────────────────────────────
 
+def _crawl_source(name: str, fn, pages: int, stop_if_less: int = 0) -> list[dict]:
+    """페이지 반복 수집 + 자연스러운 대기를 묶어주는 헬퍼"""
+    jobs_all: list[dict] = []
+    for page in range(1, pages + 1):
+        print(f"  페이지 {page}/{pages} ...", end=" ", flush=True)
+        jobs = fn(page)
+        print(f"{len(jobs)}건")
+        jobs_all.extend(jobs)
+        if not jobs or (stop_if_less and len(jobs) < stop_if_less):
+            break
+        if page < pages:
+            _sleep_page()
+    return jobs_all
+
+
 def run_crawler():
     print("=" * 60)
     print("  시니어 취업정보 크롤러")
     print(f"  실행 시각: {datetime.now(KST).strftime('%Y-%m-%d %H:%M:%S KST')}")
     print(f"  대상 연령: 50세 이상 ({BIRTH_YEAR_LIMIT}년 이전 출생)")
-    print("  출처: 고용24 / 알바몬 / 알바천국 / 시니어로")
+    mode_jb = "API 키 모드" if _is_jobaba_key_set() else "Sheet 모드(키 발급 전)"
+    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바({mode_jb}) / 어르신일자리(경기)")
     print("=" * 60)
 
     all_jobs: list[dict] = []
@@ -491,10 +893,10 @@ def run_crawler():
 
     # ── 1단계: 고용24 ────────────────────────────────────────
     if _is_api_key_set():
-        print("\n[1/4] 고용24 오픈API 모드")
+        print("\n[1/6] 고용24 오픈API 모드")
         collect_fn = fetch_work24_api
     else:
-        print("\n[1/4] 고용24 웹 스크래핑 모드")
+        print("\n[1/6] 고용24 웹 스크래핑 모드")
         print(f"      birthToYY={BIRTH_YEAR_LIMIT} (50세 이상)")
         collect_fn = scrape_work24_web
 
@@ -505,48 +907,58 @@ def run_crawler():
         all_jobs.extend(jobs)
         if len(jobs) < ITEMS_PER_PAGE:
             break
-        time.sleep(REQUEST_DELAY)
+        _sleep_page()
 
     source_counts["고용24"] = sum(1 for j in all_jobs if j["source"] == "고용24")
+    _sleep_source()
 
     # ── 2단계: 알바몬 ────────────────────────────────────────
-    print("\n[2/4] 알바몬 스크래핑")
+    print("\n[2/6] 알바몬 스크래핑")
     before = len(all_jobs)
-    for page in range(1, 4):
-        print(f"  페이지 {page}/3 ...", end=" ", flush=True)
-        jobs = scrape_albamon(page)
-        print(f"{len(jobs)}건")
-        all_jobs.extend(jobs)
-        if not jobs:
-            break
-        time.sleep(REQUEST_DELAY)
+    all_jobs.extend(_crawl_source("알바몬", scrape_albamon, pages=4, stop_if_less=1))
     source_counts["알바몬"] = len(all_jobs) - before
+    _sleep_source()
 
     # ── 3단계: 알바천국 ──────────────────────────────────────
-    print("\n[3/4] 알바천국 스크래핑 (중장년 채용관)")
+    print("\n[3/6] 알바천국 스크래핑 (중장년 채용관)")
     before = len(all_jobs)
-    for page in range(1, 5):
-        print(f"  페이지 {page}/4 ...", end=" ", flush=True)
-        jobs = scrape_albacheon(page)
-        print(f"{len(jobs)}건")
-        all_jobs.extend(jobs)
-        if not jobs or len(jobs) < 10:
-            break
-        time.sleep(REQUEST_DELAY)
+    all_jobs.extend(_crawl_source("알바천국", scrape_albacheon, pages=6, stop_if_less=10))
     source_counts["알바천국"] = len(all_jobs) - before
+    _sleep_source()
 
     # ── 4단계: 시니어로 ──────────────────────────────────────
-    print("\n[4/4] 시니어로(seniorro.or.kr) 스크래핑")
+    print("\n[4/6] 시니어로(seniorro.or.kr) 스크래핑")
     before = len(all_jobs)
-    for page in range(1, 7):
-        print(f"  페이지 {page}/6 ...", end=" ", flush=True)
-        jobs = scrape_seniorro(page)
-        print(f"{len(jobs)}건")
-        all_jobs.extend(jobs)
-        if not jobs or len(jobs) < 30:
-            break
-        time.sleep(REQUEST_DELAY)
+    all_jobs.extend(_crawl_source("시니어로", scrape_seniorro, pages=8, stop_if_less=30))
     source_counts["시니어로"] = len(all_jobs) - before
+    _sleep_source()
+
+    # ── 5단계: 서울시 일자리포털 ─────────────────────────────
+    print("\n[5/6] 서울시 일자리포털(job.seoul.go.kr) 스크래핑")
+    before = len(all_jobs)
+    all_jobs.extend(_crawl_source("서울일자리포털", scrape_seoul_jobs, pages=15, stop_if_less=1))
+    source_counts["서울일자리포털"] = len(all_jobs) - before
+
+    # ── 6단계: 경기도 잡아바 ──────────────────────────────────
+    _sleep_source()
+    if _is_jobaba_key_set():
+        print("\n[6/6] 경기도 잡아바 — API 키 모드")
+        before = len(all_jobs)
+        all_jobs.extend(_fetch_jobaba_api_key_mode())
+        source_counts["잡아바"] = len(all_jobs) - before
+    else:
+        print("\n[6/6] 경기도 잡아바 — Sheet 모드 (키 발급 전 임시)")
+        before = len(all_jobs)
+        jobs_jb = scrape_jobaba_sheet()
+        all_jobs.extend(jobs_jb)
+        source_counts["잡아바"] = len(all_jobs) - before
+
+    # ── 7단계: 경기도 어르신자립형일자리사업 ─────────────────
+    _sleep_source()
+    print("\n[7/7] 경기도 어르신자립형일자리사업 — Sheet 모드")
+    before = len(all_jobs)
+    all_jobs.extend(scrape_elder_jobs_sheet())
+    source_counts["어르신일자리"] = len(all_jobs) - before
 
     # ── 후처리 ────────────────────────────────────────────────
     all_jobs = _deduplicate(all_jobs)

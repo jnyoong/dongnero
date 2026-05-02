@@ -80,6 +80,20 @@
     .title-text { font-weight: 600; line-height: 1.35; }
     .company-text { font-size: .78rem; color: #6B7280; margin-top: 2px; }
     .reason-cell { color: #DC2626; font-size: .8rem; font-weight: 600; }
+
+    /* 수동 해제 */
+    .btn-red { background: #DC2626; color: #fff; }
+    .btn-red:hover { background: #b91c1c; }
+    input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; accent-color: #2563EB; }
+    .badge-teal { background: #F0FDFA; color: #0F766E; }
+    .wl-toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; padding: 10px 14px; background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 10px; }
+    .wl-toolbar span { font-size: .85rem; color: #1E40AF; }
+    .wl-export-box { background: #fff; border: 1px solid #E2E5EA; border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+    .wl-export-box pre { font-size: .75rem; background: #F9FAFB; border: 1px solid #E2E5EA; border-radius: 6px; padding: 10px; max-height: 180px; overflow: auto; white-space: pre-wrap; word-break: break-all; margin-top: 8px; }
+    tr.wl-restored  td { background: #F0FDFA; }
+    tr.mf-filtered   td { background: #FEF2F2; }
+    .mf-toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; padding: 10px 14px; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 10px; }
+    .mf-toolbar span { font-size: .85rem; color: #991B1B; }
   </style>
 </head>
 <body>
@@ -132,21 +146,51 @@
     <div class="summary-row">
       <div class="summary-chip"><strong id="jobTotal">-</strong>전체 공고</div>
       <div class="summary-chip"><strong id="jobUpdated">-</strong>업데이트</div>
+      <div class="summary-chip warn"><strong id="mfCount">0</strong>수동 필터됨</div>
     </div>
+
+    <!-- 수동 필터 툴바 -->
+    <div class="mf-toolbar">
+      <span id="mfCheckInfo">항목을 선택하면 필터 버튼이 활성화됩니다</span>
+      <button class="btn btn-red"  id="btnMfAdd"    disabled onclick="doMfAdd()">🚫 선택 필터 처리</button>
+      <button class="btn btn-blue" id="btnMfRemove" disabled onclick="doMfRemove()">✅ 필터 해제</button>
+      <button class="btn btn-green" onclick="exportManualFilter()">💾 manual_excluded.js 생성</button>
+      <button class="btn btn-gray"  onclick="clearAllMf()">전체 초기화</button>
+    </div>
+
+    <!-- manual_excluded.js 내보내기 박스 -->
+    <div class="wl-export-box" id="mfExportBox" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <span style="font-size:.85rem;font-weight:700;color:#DC2626">manual_excluded.js — 아래 내용을 복사해 프로젝트 루트에 저장 후 커밋하세요</span>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-red"  onclick="copyMfJs()">📋 복사</button>
+          <button class="btn btn-gray" onclick="downloadMfJs()">⬇️ 다운로드</button>
+          <button class="btn btn-gray" onclick="document.getElementById('mfExportBox').style.display='none'">닫기</button>
+        </div>
+      </div>
+      <pre id="mfExportPre"></pre>
+    </div>
+
     <div class="filter-bar">
       <input type="text" id="jobSearch" placeholder="제목·회사·지역 검색…" oninput="renderJobs()">
       <select id="jobSource" onchange="renderJobs()">
         <option value="">출처 전체</option>
-        <option>고용24</option><option>알바몬</option><option>알바천국</option><option>시니어로</option>
+        <option>고용24</option><option>알바몬</option><option>알바천국</option><option>시니어로</option><option>서울일자리포털</option><option>잡아바</option><option>어르신일자리</option>
       </select>
       <select id="jobType" onchange="renderJobs()">
         <option value="">유형 전체</option>
         <option>정규직</option><option>계약직</option><option>시간제</option>
       </select>
+      <select id="jobMfFilter" onchange="renderJobs()">
+        <option value="">전체 상태</option>
+        <option value="filtered">수동 필터됨만</option>
+        <option value="normal">정상 공고만</option>
+      </select>
     </div>
     <div class="table-wrap">
       <table>
         <thead><tr>
+          <th><input type="checkbox" id="jobSelectAll" onchange="toggleJobSelectAll(this)"></th>
           <th>#</th>
           <th>제목 / 회사</th>
           <th>지역</th>
@@ -154,9 +198,10 @@
           <th>급여</th>
           <th>출처</th>
           <th>마감일</th>
+          <th>상태</th>
           <th>링크</th>
         </tr></thead>
-        <tbody id="jobBody"><tr><td colspan="8" class="loading">공고 데이터 로딩 중…</td></tr></tbody>
+        <tbody id="jobBody"><tr><td colspan="10" class="loading">공고 데이터 로딩 중…</td></tr></tbody>
       </table>
     </div>
     <div style="margin-top:10px;font-size:.8rem;color:#9CA3AF" id="jobRangeInfo"></div>
@@ -167,6 +212,29 @@
     <div class="summary-row">
       <div class="summary-chip warn"><strong id="exTotal">-</strong>제외된 공고</div>
       <div class="summary-chip"><strong id="exUpdated">-</strong>업데이트</div>
+      <div class="summary-chip badge-teal"><strong id="wlCount">0</strong>수동 해제됨</div>
+    </div>
+
+    <!-- 수동 해제 툴바 -->
+    <div class="wl-toolbar" id="wlToolbar">
+      <span id="wlCheckInfo">항목을 선택하면 해제 버튼이 활성화됩니다</span>
+      <button class="btn btn-blue" id="btnUnfilter" disabled onclick="doUnfilter()">✅ 선택 해제 처리</button>
+      <button class="btn btn-red"  id="btnRefilter" disabled onclick="doRefilter()">🚫 해제 취소</button>
+      <button class="btn btn-green" onclick="exportWhitelist()">💾 whitelist_data.js 생성</button>
+      <button class="btn btn-gray"  onclick="clearAllWhitelist()">전체 해제 초기화</button>
+    </div>
+
+    <!-- whitelist_data.js 내보내기 박스 -->
+    <div class="wl-export-box" id="wlExportBox" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <span style="font-size:.85rem;font-weight:700;color:#059669">whitelist_data.js — 아래 내용을 복사해 프로젝트 루트에 저장 후 커밋하세요</span>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-green" onclick="copyWhitelistJs()">📋 복사</button>
+          <button class="btn btn-gray" onclick="downloadWhitelistJs()">⬇️ 다운로드</button>
+          <button class="btn btn-gray" onclick="document.getElementById('wlExportBox').style.display='none'">닫기</button>
+        </div>
+      </div>
+      <pre id="wlExportPre"></pre>
     </div>
 
     <!-- 필터 기준 표시 -->
@@ -190,23 +258,32 @@
         <option value="업체명">업체명</option>
         <option value="키워드">키워드</option>
       </select>
+      <select id="exWlFilter" onchange="renderExcluded()">
+        <option value="">전체 상태</option>
+        <option value="restored">수동 해제됨만</option>
+        <option value="filtered">필터링 중만</option>
+      </select>
     </div>
     <div class="table-wrap">
       <table>
         <thead><tr>
+          <th><input type="checkbox" id="exSelectAll" onchange="toggleSelectAll(this)"></th>
           <th>#</th>
           <th>제목 / 회사</th>
           <th>지역</th>
           <th>출처</th>
           <th>제외 이유</th>
+          <th>상태</th>
           <th>링크</th>
         </tr></thead>
-        <tbody id="exBody"><tr><td colspan="6" class="loading">필터 데이터 로딩 중…</td></tr></tbody>
+        <tbody id="exBody"><tr><td colspan="8" class="loading">필터 데이터 로딩 중…</td></tr></tbody>
       </table>
     </div>
   </div>
 </div>
 
+<script src="whitelist_data.js"></script>
+<script src="manual_excluded.js"></script>
 <script src="jobs_data.js"></script>
 <script src="excluded_data.js"></script>
 <script>
@@ -217,6 +294,29 @@ const ADMIN_PW     = 'dongnero2024';
 let allSignups = [], allJobs = [], allExcluded = [];
 let jobPage = 1;
 const JOB_PER_PAGE = 200;
+
+/* ── Whitelist (수동 해제) ── */
+const WL_KEY = 'dongnero_whitelist_v1';
+function wlLoad() {
+  try { return JSON.parse(localStorage.getItem(WL_KEY) || '[]'); } catch { return []; }
+}
+function wlSave(list) { localStorage.setItem(WL_KEY, JSON.stringify(list)); }
+function wlLinks() { return wlLoad().map(j => j.apply_link); }
+function updateWlCount() {
+  document.getElementById('wlCount').textContent = wlLoad().length;
+}
+
+/* ── Manual Filter (수동 필터) ── */
+const MF_KEY = 'dongnero_manual_filter_v1';
+function mfLoad() {
+  try { return JSON.parse(localStorage.getItem(MF_KEY) || '[]'); } catch { return []; }
+}
+function mfSave(list) { localStorage.setItem(MF_KEY, JSON.stringify(list)); }
+function mfLinks() { return mfLoad().map(j => j.apply_link); }
+function mfIsFiltered(link) { return mfLinks().includes(link); }
+function updateMfCount() {
+  document.getElementById('mfCount').textContent = mfLoad().length;
+}
 
 /* ── 로그인 ── */
 function tryLogin() {
@@ -292,6 +392,7 @@ function loadJobData() {
     document.getElementById('jobTotal').textContent = allJobs.length.toLocaleString();
     document.getElementById('jobUpdated').textContent = JOBS_DATA.updated_at || '-';
     document.getElementById('tabJobCount').textContent = `(${allJobs.length.toLocaleString()})`;
+    updateMfCount();
     renderJobs();
   }
   if (typeof EXCLUDED_DATA !== 'undefined' && EXCLUDED_DATA.updated_at) {
@@ -299,6 +400,7 @@ function loadJobData() {
     document.getElementById('exTotal').textContent = allExcluded.length;
     document.getElementById('exUpdated').textContent = EXCLUDED_DATA.updated_at || '-';
     document.getElementById('tabExCount').textContent = `(${allExcluded.length})`;
+    updateWlCount();
     renderExcluded();
     renderFilterConfig(EXCLUDED_DATA.filter_config);
   } else {
@@ -309,7 +411,7 @@ function loadJobData() {
 }
 
 function srcBadge(src) {
-  const map = { '고용24':'badge-blue', '알바몬':'badge-orange', '알바천국':'badge-green', '시니어로':'badge-purple' };
+  const map = { '고용24':'badge-blue', '알바몬':'badge-orange', '알바천국':'badge-green', '시니어로':'badge-purple', '서울일자리포털':'badge-teal', '잡아바':'badge-gray', '어르신일자리':'badge-green' };
   return `<span class="badge ${map[src]||'badge-gray'}">${src||''}</span>`;
 }
 function typeBadge(t) {
@@ -318,26 +420,39 @@ function typeBadge(t) {
 }
 
 function renderJobs() {
-  const kw  = document.getElementById('jobSearch').value.trim().toLowerCase();
-  const src = document.getElementById('jobSource').value;
-  const typ = document.getElementById('jobType').value;
+  const kw      = document.getElementById('jobSearch').value.trim().toLowerCase();
+  const src     = document.getElementById('jobSource').value;
+  const typ     = document.getElementById('jobType').value;
+  const mfFilt  = document.getElementById('jobMfFilter').value;
+  const filtered = mfLinks();
 
   let list = allJobs.filter(j => {
     if (src && j.source !== src) return false;
     if (typ && j.type !== typ) return false;
     if (kw && !(j.title + j.company + j.location).toLowerCase().includes(kw)) return false;
+    const isMf = filtered.includes(j.apply_link);
+    if (mfFilt === 'filtered' && !isMf) return false;
+    if (mfFilt === 'normal'   &&  isMf) return false;
     return true;
   });
 
+  document.getElementById('jobSelectAll').checked = false;
+  updateMfToolbar();
   document.getElementById('jobRangeInfo').textContent = `${list.length.toLocaleString()}건 표시`;
 
   if (!list.length) {
-    document.getElementById('jobBody').innerHTML = '<tr><td colspan="8" class="empty-msg">검색 결과가 없습니다.</td></tr>';
+    document.getElementById('jobBody').innerHTML = '<tr><td colspan="10" class="empty-msg">검색 결과가 없습니다.</td></tr>';
     return;
   }
 
-  document.getElementById('jobBody').innerHTML = list.map((j, i) => `
-    <tr>
+  document.getElementById('jobBody').innerHTML = list.map((j, i) => {
+    const isMf = filtered.includes(j.apply_link);
+    const rowCls = isMf ? ' class="mf-filtered"' : '';
+    const statusBadge = isMf
+      ? '<span class="badge badge-red">🚫 수동필터</span>'
+      : '<span class="badge badge-green">✅ 정상</span>';
+    return `<tr${rowCls}>
+      <td><input type="checkbox" class="job-chk" data-link="${j.apply_link}" onchange="updateMfToolbar()"></td>
       <td class="row-num">${i + 1}</td>
       <td class="title-cell">
         <div class="title-text">${j.title}</div>
@@ -348,8 +463,89 @@ function renderJobs() {
       <td style="font-size:.78rem;white-space:nowrap">${j.salary || '-'}</td>
       <td>${srcBadge(j.source)}</td>
       <td style="white-space:nowrap;font-size:.8rem">${j.deadline || '-'}</td>
+      <td>${statusBadge}</td>
       <td>${j.apply_link ? `<a href="${j.apply_link}" target="_blank">보기↗</a>` : '-'}</td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
+}
+
+function toggleJobSelectAll(cb) {
+  document.querySelectorAll('.job-chk').forEach(c => { c.checked = cb.checked; });
+  updateMfToolbar();
+}
+
+function updateMfToolbar() {
+  const checked = [...document.querySelectorAll('.job-chk:checked')];
+  const filtered = mfLinks();
+  const hasNormal   = checked.some(c => !filtered.includes(c.dataset.link));
+  const hasFiltered = checked.some(c =>  filtered.includes(c.dataset.link));
+  document.getElementById('btnMfAdd').disabled    = !hasNormal;
+  document.getElementById('btnMfRemove').disabled = !hasFiltered;
+  if (checked.length)
+    document.getElementById('mfCheckInfo').textContent = `${checked.length}건 선택됨`;
+  else
+    document.getElementById('mfCheckInfo').textContent = '항목을 선택하면 필터 버튼이 활성화됩니다';
+}
+
+function getMfCheckedLinks() {
+  return [...document.querySelectorAll('.job-chk:checked')].map(c => c.dataset.link);
+}
+
+function doMfAdd() {
+  const links = getMfCheckedLinks();
+  if (!links.length) return;
+  const mf = mfLoad();
+  const mfMap = new Map(mf.map(j => [j.apply_link, j]));
+  links.forEach(link => {
+    if (!mfMap.has(link)) {
+      const job = allJobs.find(j => j.apply_link === link);
+      if (job) mfMap.set(link, { ...job });
+    }
+  });
+  mfSave([...mfMap.values()]);
+  updateMfCount();
+  renderJobs();
+}
+
+function doMfRemove() {
+  const links = getMfCheckedLinks();
+  if (!links.length) return;
+  mfSave(mfLoad().filter(j => !links.includes(j.apply_link)));
+  updateMfCount();
+  renderJobs();
+}
+
+function clearAllMf() {
+  if (!confirm('수동 필터 처리된 공고를 모두 초기화하시겠습니까?')) return;
+  mfSave([]);
+  updateMfCount();
+  renderJobs();
+}
+
+function exportManualFilter() {
+  const mf = mfLoad();
+  const payload = {
+    updated_at: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) + ' KST',
+    total: mf.length,
+    links: mf.map(j => j.apply_link),
+    jobs: mf,
+  };
+  const content = `/* 수동 필터 처리 목록 — 관리자 페이지에서 생성 */\nvar MANUAL_EXCLUDED_DATA = ${JSON.stringify(payload, null, 2)};\n`;
+  document.getElementById('mfExportPre').textContent = content;
+  document.getElementById('mfExportBox').style.display = 'block';
+  document.getElementById('mfExportBox').scrollIntoView({ behavior: 'smooth' });
+  window._mfExportContent = content;
+}
+
+function copyMfJs() {
+  navigator.clipboard.writeText(window._mfExportContent || '').then(() => alert('클립보드에 복사되었습니다.'));
+}
+
+function downloadMfJs() {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([window._mfExportContent || ''], { type: 'text/javascript' }));
+  a.download = 'manual_excluded.js';
+  a.click();
 }
 
 function renderFilterConfig(cfg) {
@@ -364,22 +560,36 @@ function renderFilterConfig(cfg) {
 }
 
 function renderExcluded() {
-  const kw  = document.getElementById('exSearch').value.trim().toLowerCase();
-  const rsn = document.getElementById('exReason').value;
+  const kw     = document.getElementById('exSearch').value.trim().toLowerCase();
+  const rsn    = document.getElementById('exReason').value;
+  const wlFilt = document.getElementById('exWlFilter').value;
+  const restored = wlLinks();
 
   let list = allExcluded.filter(j => {
     if (rsn && !(j._exclude_reason || '').startsWith(rsn)) return false;
     if (kw && !(j.title + j.company).toLowerCase().includes(kw)) return false;
+    const isR = restored.includes(j.apply_link);
+    if (wlFilt === 'restored' && !isR) return false;
+    if (wlFilt === 'filtered' && isR) return false;
     return true;
   });
 
+  document.getElementById('exSelectAll').checked = false;
+  updateCheckToolbar();
+
   if (!list.length) {
-    document.getElementById('exBody').innerHTML = '<tr><td colspan="6" class="empty-msg">제외된 공고가 없습니다.</td></tr>';
+    document.getElementById('exBody').innerHTML = '<tr><td colspan="8" class="empty-msg">제외된 공고가 없습니다.</td></tr>';
     return;
   }
 
-  document.getElementById('exBody').innerHTML = list.map((j, i) => `
-    <tr>
+  document.getElementById('exBody').innerHTML = list.map((j, i) => {
+    const isR = restored.includes(j.apply_link);
+    const rowCls = isR ? ' class="wl-restored"' : '';
+    const statusBadge = isR
+      ? '<span class="badge badge-teal">✅ 해제됨</span>'
+      : '<span class="badge badge-red">🚫 필터링</span>';
+    return `<tr${rowCls}>
+      <td><input type="checkbox" class="ex-chk" data-link="${j.apply_link}" onchange="updateCheckToolbar()"></td>
       <td class="row-num">${i + 1}</td>
       <td class="title-cell">
         <div class="title-text">${j.title}</div>
@@ -388,8 +598,89 @@ function renderExcluded() {
       <td>${j.location || '-'}</td>
       <td>${srcBadge(j.source)}</td>
       <td class="reason-cell">${j._exclude_reason || '-'}</td>
+      <td>${statusBadge}</td>
       <td>${j.apply_link ? `<a href="${j.apply_link}" target="_blank">보기↗</a>` : '-'}</td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
+}
+
+function toggleSelectAll(cb) {
+  document.querySelectorAll('.ex-chk').forEach(c => { c.checked = cb.checked; });
+  updateCheckToolbar();
+}
+
+function updateCheckToolbar() {
+  const checked = [...document.querySelectorAll('.ex-chk:checked')];
+  const restored = wlLinks();
+  const hasRestored = checked.some(c => restored.includes(c.dataset.link));
+  const hasFiltered = checked.some(c => !restored.includes(c.dataset.link));
+  document.getElementById('btnUnfilter').disabled = !hasFiltered;
+  document.getElementById('btnRefilter').disabled = !hasRestored;
+  if (checked.length)
+    document.getElementById('wlCheckInfo').textContent = `${checked.length}건 선택됨`;
+  else
+    document.getElementById('wlCheckInfo').textContent = '항목을 선택하면 해제 버튼이 활성화됩니다';
+}
+
+function getCheckedLinks() {
+  return [...document.querySelectorAll('.ex-chk:checked')].map(c => c.dataset.link);
+}
+
+function doUnfilter() {
+  const links = getCheckedLinks();
+  if (!links.length) return;
+  const wl = wlLoad();
+  const wlMap = new Map(wl.map(j => [j.apply_link, j]));
+  links.forEach(link => {
+    if (!wlMap.has(link)) {
+      const job = allExcluded.find(j => j.apply_link === link);
+      if (job) wlMap.set(link, { ...job });
+    }
+  });
+  wlSave([...wlMap.values()]);
+  updateWlCount();
+  renderExcluded();
+}
+
+function doRefilter() {
+  const links = getCheckedLinks();
+  if (!links.length) return;
+  const wl = wlLoad().filter(j => !links.includes(j.apply_link));
+  wlSave(wl);
+  updateWlCount();
+  renderExcluded();
+}
+
+function clearAllWhitelist() {
+  if (!confirm('수동 해제된 공고를 모두 초기화하시겠습니까?')) return;
+  wlSave([]);
+  updateWlCount();
+  renderExcluded();
+}
+
+function exportWhitelist() {
+  const wl = wlLoad();
+  const payload = {
+    updated_at: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) + ' KST',
+    total: wl.length,
+    jobs: wl.map(j => { const o = { ...j }; delete o._exclude_reason; return o; }),
+  };
+  const content = `/* 수동 필터링 해제 목록 — 관리자 페이지에서 생성 */\nvar WHITELIST_DATA = ${JSON.stringify(payload, null, 2)};\n`;
+  document.getElementById('wlExportPre').textContent = content;
+  document.getElementById('wlExportBox').style.display = 'block';
+  document.getElementById('wlExportBox').scrollIntoView({ behavior: 'smooth' });
+  window._wlExportContent = content;
+}
+
+function copyWhitelistJs() {
+  navigator.clipboard.writeText(window._wlExportContent || '').then(() => alert('클립보드에 복사되었습니다.'));
+}
+
+function downloadWhitelistJs() {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([window._wlExportContent || ''], { type: 'text/javascript' }));
+  a.download = 'whitelist_data.js';
+  a.click();
 }
 
 /* ── CSV ── */

@@ -23,7 +23,7 @@ jobs:
           python-version: '3.11'
 
       - name: 패키지 설치
-        run: pip install -r requirements.txt
+        run: pip install requests beautifulsoup4
 
       - name: 크롤러 실행
         run: python crawler.py
@@ -33,5 +33,5 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add jobs.json jobs_data.js excluded_data.js
-          git diff --cached --quiet || git commit -m "데이터 업데이트: $(TZ=Asia/Seoul date +'%Y-%m-%d %H:%M KST')"
+          git diff --cached --quiet || git commit -m "daily update $(TZ=Asia/Seoul date +'%Y-%m-%d')"
           git push
