@@ -1321,8 +1321,9 @@ function buildIndustryOptions() {
 }
 
 function renderCard(job) {
-  const typeClass  = ['정규직','계약직','시간제'].includes(job.type) ? job.type : '기타';
-  const typeLabel  = job.type || '미기재';
+  const KNOWN_TYPES = ['정규직','계약직','시간제'];
+  const typeClass  = KNOWN_TYPES.includes(job.type) ? job.type : '기타';
+  const typeLabel  = KNOWN_TYPES.includes(job.type) ? job.type : '미기재';
   const salRow     = job.salary
     ? `<div class="info-row"><span class="info-icon">💰</span>
          <span class="info-text salary">${job.salary.replace(/\s+/g,' ').trim()}</span></div>` : '';

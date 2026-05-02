@@ -711,7 +711,16 @@ def scrape_jobaba_sheet() -> list[dict]:
             continue
         location = (item.get("WORK_REGION_CONT") or "").strip() or "경기"
         salary   = (item.get("SALARY_COND")      or "").strip()
-        emp_type = (item.get("PBANC_FORM_DIV")   or "").strip()
+        emp_type_raw = (item.get("PBANC_FORM_DIV") or "").strip()
+        # 잡아바 고용형태 원문("기간의 정함이 없는 근로계약..." 등)을 표준값으로 정규화
+        if "시간제" in emp_type_raw or "단시간" in emp_type_raw:
+            emp_type = "시간제"
+        elif "정함이 없는" in emp_type_raw:
+            emp_type = "정규직"
+        elif "정함이 있는" in emp_type_raw or "계약" in emp_type_raw:
+            emp_type = "계약직"
+        else:
+            emp_type = ""
         end_dt   = (item.get("RCPT_END_DE")       or "").strip()
         link     = (item.get("URL")               or "").strip()
 
