@@ -149,10 +149,11 @@
     .header-home-name {
       font-size: 1.2rem; font-weight: 900; color: var(--text-pri);
     }
-    .header-region-label {
-      flex: 1; min-width: 0;
-      font-size: .84rem; font-weight: 600; color: var(--text-sec);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    .header-region-label { display: none; }
+    .region-count-label {
+      margin-left: auto;
+      font-size: .67rem; font-weight: 600; color: var(--text-sec);
+      white-space: nowrap;
     }
     .header-right-actions {
       display: flex; align-items: center; gap: 6px; flex-shrink: 0;
@@ -737,7 +738,6 @@
       <img src="icon.svg" class="header-home-icon" alt="동네로" />
       <span class="header-home-name">동네로</span>
     </a>
-    <div class="header-region-label" id="regionLabel"></div>
     <div class="header-right-actions">
       <button class="btn-search-icon" id="searchToggle" onclick="toggleSearch()" aria-label="검색">🔍</button>
     </div>
@@ -753,6 +753,7 @@
         <span class="rbn-label">전체 지역</span>
         <span class="rbn-arrow"></span>
       </button>
+      <div class="region-count-label" id="regionLabel"></div>
     </div>
     <div class="filter-row">
       <select id="industryFilter" onchange="render()">
