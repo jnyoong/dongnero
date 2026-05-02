@@ -663,7 +663,7 @@ def scrape_jobaba_sheet() -> list[dict]:
         company  = (item.get("ENTRPRS_NM") or "").strip()
         if not title:
             continue
-        location = (item.get("WORK_REGION_CONT") or "").strip()
+        location = (item.get("WORK_REGION_CONT") or "").strip() or "경기"
         salary   = (item.get("SALARY_COND")      or "").strip()
         emp_type = (item.get("PBANC_FORM_DIV")   or "").strip()
         end_dt   = (item.get("RCPT_END_DE")       or "").strip()
