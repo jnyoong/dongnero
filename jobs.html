@@ -601,9 +601,7 @@
       <div class="header-region-label" id="regionLabel"></div>
     </div>
   </div>
-  <div class="header-stats" id="headerStats">
-    <span class="stat-chip">공고 로딩 중…</span>
-  </div>
+  <div class="header-stats" id="headerStats" style="display:none"></div>
 </header>
 
 <div class="toolbar">
@@ -1034,7 +1032,7 @@ function buildRegionTabs() {
     });
     const sorted = dists.filter(d => dc[d]).sort((a,b) => dc[b] - dc[a]);
     tabsEl.innerHTML = [
-      `<button class="rtab${!activeDistrict?' active':''}" onclick="setDistrict('',this)">전체 <small style="opacity:.7;font-weight:400">${regionJobs.length}</small></button>`,
+      `<button class="rtab${!activeDistrict?' active':''}" onclick="setDistrict('',this)">${_urlRegion}전체 <small style="opacity:.7;font-weight:400">${regionJobs.length}</small></button>`,
       ...sorted.map(d =>
         `<button class="rtab${d===activeDistrict?' active':''}" onclick="setDistrict('${d}',this)">${d} <small style="opacity:.7;font-weight:400">${dc[d]}</small></button>`)
     ].join('');
