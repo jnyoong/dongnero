@@ -219,31 +219,30 @@
       .logo-name { font-size: 1.45rem; }
     }
 
-    /* ── 위치 기반 배너 ── */
-    .loc-banner {
-      overflow: hidden;
-      max-height: 0;
+    /* ── 위치 기반 플로팅 배너 ── */
+    .loc-float {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 12px 16px 20px;
+      transform: translateY(110%);
       opacity: 0;
-      transform: translateY(-10px);
-      margin-bottom: 0;
-      transition: max-height .42s cubic-bezier(.4,0,.2,1),
-                  opacity .32s ease,
-                  transform .32s ease,
-                  margin-bottom .42s;
       pointer-events: none;
+      transition: transform .4s cubic-bezier(.32,0,.16,1), opacity .3s;
     }
-    .loc-banner.show {
-      max-height: 260px;
-      opacity: 1;
+    .loc-float.show {
       transform: translateY(0);
-      margin-bottom: 14px;
+      opacity: 1;
       pointer-events: auto;
     }
-    .loc-banner-inner {
-      background: linear-gradient(135deg, #EFF6FF 0%, #E0EDFF 100%);
+    .loc-float-inner {
+      background: var(--surface);
       border: 1.5px solid #BFDBFE;
       border-radius: var(--radius-lg);
       padding: 16px 18px 18px;
+      box-shadow: 0 -4px 24px rgba(37,99,235,.15);
+      max-width: 540px;
+      margin: 0 auto;
     }
     .loc-banner-row {
       display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;
@@ -601,37 +600,6 @@
 </header>
 
 <main>
-  <!-- 위치 기반 배너 -->
-  <div class="loc-banner" id="locBanner">
-    <div class="loc-banner-inner">
-      <div class="loc-banner-row">
-        <span class="loc-banner-icon">📍</span>
-        <div class="loc-banner-text">
-          <div class="loc-banner-title">현재 위치 기반으로 공고를 보여드릴까요?</div>
-          <div class="loc-banner-sub">내 동네 채용 공고를 바로 찾아드려요.</div>
-        </div>
-      </div>
-      <div class="loc-banner-btns">
-        <button class="loc-btn-yes" id="locBtnYes">📍 현재 위치로 보기</button>
-        <button class="loc-btn-no"  id="locBtnNo">나중에</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 내 동네 일자리 -->
-  <a class="btn-all" href="local.html" style="border-color:var(--orange);box-shadow:0 4px 20px rgba(234,88,12,.15);margin-bottom:10px;">
-    <div class="btn-all-left">
-      <span class="btn-all-emoji">📍</span>
-      <div>
-        <div class="btn-all-title">내 동네 일자리 찾기</div>
-        <div class="btn-all-sub">구·시·군 단위로 가까운 공고만 보기</div>
-      </div>
-    </div>
-    <div class="btn-all-right">
-      <span style="font-size:1.5rem">→</span>
-    </div>
-  </a>
-
   <!-- 전국 전체보기 -->
   <a class="btn-all" href="jobs.html" id="btnAll">
     <div class="btn-all-left">
@@ -665,6 +633,23 @@
   운영자 문의: <a href="mailto:jun@dolight.co.kr" style="color:inherit">jun@dolight.co.kr</a>
   &nbsp;·&nbsp; <a href="privacy.html" style="color:inherit">개인정보 처리방침</a>
 </footer>
+
+<!-- 위치 기반 플로팅 배너 -->
+<div class="loc-float" id="locBanner">
+  <div class="loc-float-inner">
+    <div class="loc-banner-row">
+      <span class="loc-banner-icon">📍</span>
+      <div class="loc-banner-text">
+        <div class="loc-banner-title">현재 위치 기반으로 공고를 보여드릴까요?</div>
+        <div class="loc-banner-sub">내 동네 채용 공고를 바로 찾아드려요.</div>
+      </div>
+    </div>
+    <div class="loc-banner-btns">
+      <button class="loc-btn-yes" id="locBtnYes">📍 현재 위치로 보기</button>
+      <button class="loc-btn-no"  id="locBtnNo">나중에</button>
+    </div>
+  </div>
+</div>
 
 <script src="jobs_data.js"></script>
 <script>
