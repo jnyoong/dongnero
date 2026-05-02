@@ -2,6 +2,15 @@
 
 ---
 
+## [v0.15] 2026-05-02 — Google Analytics 4 추가
+
+### 전체 HTML 파일 (5개)
+- `index.html`, `jobs.html`, `local.html`, `privacy.html`, `admin-dongnero.html` `<head>` 최상단에 GA4 스크립트 삽입
+- 측정 ID: G-PYD0Q5NTPD
+- 방문자수·유입채널·페이지뷰·지역·기기 등 분석 가능
+
+---
+
 ## [v0.14] 2026-05-02 — index.html 지역별 공고수 집계 수정
 
 ### index.html — REGION_MAP jobs.html과 동기화
