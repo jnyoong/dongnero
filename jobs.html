@@ -117,6 +117,12 @@
     }
     .toolbar-inner { display: flex; flex-direction: column; gap: 8px; }
 
+    /* ── 지역 전용 행 ── */
+    .region-row {
+      display: flex; align-items: center;
+      padding-bottom: 1px;
+    }
+
     /* ── 지역 버튼 ── */
     .region-btn {
       flex-shrink: 0; display: flex; align-items: center; gap: 5px;
@@ -269,7 +275,7 @@
     .line-잡아바       { background: var(--c-jab); }
     .line-어르신일자리  { background: var(--c-eld); }
 
-    .card-inner { padding: 14px 16px; }
+    .card-inner { padding: 10px 14px; }
 
     /* 태그 + 출처 뱃지 */
     .card-meta {
@@ -303,20 +309,20 @@
 
     /* 제목 */
     .card-title {
-      font-size: 1.1rem; font-weight: 800;
-      color: var(--text-pri); line-height: 1.45;
-      margin-bottom: 4px;
+      font-size: 1.05rem; font-weight: 800;
+      color: var(--text-pri); line-height: 1.4;
+      margin-bottom: 2px;
     }
     .card-company {
-      font-size: .88rem; color: var(--text-sec); font-weight: 500;
-      margin-bottom: 12px;
+      font-size: .85rem; color: var(--text-sec); font-weight: 500;
+      margin-bottom: 8px;
     }
 
     /* 정보 행 */
-    .info-rows { display: flex; flex-direction: column; gap: 7px; }
-    .info-row  { display: flex; align-items: flex-start; gap: 8px; }
-    .info-icon { font-size: .9rem; flex-shrink: 0; margin-top: 1px; }
-    .info-text { font-size: .88rem; color: var(--text-pri); line-height: 1.4; }
+    .info-rows { display: flex; flex-direction: column; gap: 4px; }
+    .info-row  { display: flex; align-items: flex-start; gap: 7px; }
+    .info-icon { font-size: .85rem; flex-shrink: 0; margin-top: 1px; }
+    .info-text { font-size: .85rem; color: var(--text-pri); line-height: 1.35; }
     .info-text.salary {
       font-weight: 800; color: var(--orange); font-size: .95rem;
     }
@@ -333,10 +339,14 @@
 
     /* 요약 */
     .ai-summary {
-      font-size: .82rem; color: var(--text-sec); line-height: 1.55;
-      padding: 9px 12px; margin-top: 10px;
-      background: var(--bg); border-radius: 10px;
+      font-size: .8rem; color: var(--text-sec); line-height: 1.4;
+      padding: 6px 10px; margin-top: 7px;
+      background: var(--bg); border-radius: 8px;
       border-left: 3px solid var(--border-h);
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
 
     /* 공고 보기 버튼 */
@@ -657,10 +667,6 @@
     </a>
     <div class="header-region-label" id="regionLabel"></div>
     <div class="header-right-actions">
-      <button class="region-btn" id="regionBtn" onclick="openRegionSheet()">
-        <span class="rbn-label">전체 지역</span>
-        <span class="rbn-arrow">▾</span>
-      </button>
       <button class="btn-search-icon" id="searchToggle" onclick="toggleSearch()" aria-label="검색">🔍</button>
     </div>
   </div>
@@ -669,6 +675,12 @@
 
 <div class="toolbar">
   <div class="toolbar-inner">
+    <div class="region-row">
+      <button class="region-btn" id="regionBtn" onclick="openRegionSheet()">
+        <span class="rbn-label">전체 지역</span>
+        <span class="rbn-arrow">▾</span>
+      </button>
+    </div>
     <div class="filter-row">
       <select id="industryFilter" onchange="render()">
         <option value="">업종 전체</option>
@@ -1001,10 +1013,7 @@ function getIndustry(title, desc) {
 }
 function makeSummary(job) {
   const ind = getIndustry(job.title, job.description);
-  const base = JOB_DESC[ind] || JOB_DESC['기타'];
-  const loc = (job.location||'').split(' ').slice(0,2).join(' ');
-  const sal = job.salary ? ` 급여 ${job.salary.replace(/\s+/g,' ').trim()}` : '';
-  return base + (loc||sal ? ' /' + (loc ? ' ' + loc : '') + sal : '');
+  return JOB_DESC[ind] || JOB_DESC['기타'];
 }
 
 function dlChip(dl) {
