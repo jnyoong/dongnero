@@ -47,6 +47,7 @@
       --c-sel:     #0F766E;
       --c-jab:     #7C3AED;
       --c-eld:     #15803D;
+      --c-mst:     #FF7F25;
       --radius:    16px;
       --radius-lg: 20px;
       --shadow:    0 2px 10px rgba(0,0,0,.07);
@@ -208,6 +209,18 @@
       margin-top: -5px; margin-left: 4px; opacity: .65; flex-shrink: 0;
     }
 
+    /* ── 맘시터 토글 버튼 ── */
+    .btn-momsitter {
+      flex-shrink: 0; margin-left: auto;
+      border: 1.5px solid var(--c-mst); border-radius: 50px;
+      background: none; padding: 3px 10px;
+      font-size: .74rem; font-weight: 700; color: var(--c-mst);
+      cursor: pointer; white-space: nowrap; font-family: inherit;
+      transition: background .15s, color .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-momsitter.active { background: var(--c-mst); color: #fff; }
+
     /* ── 검색 토글 ── */
     .btn-search-icon {
       flex-shrink: 0; border: 1.5px solid var(--border);
@@ -347,6 +360,7 @@
     .line-서울일자리포털 { background: var(--c-sel); }
     .line-잡아바       { background: var(--c-jab); }
     .line-어르신일자리  { background: var(--c-eld); }
+    .line-맘시터       { background: var(--c-mst); }
 
     .card-inner { padding: 10px 14px; }
 
@@ -379,6 +393,7 @@
     .src-서울일자리포털 { background: #F0FDFA; color: var(--c-sel); }
     .src-잡아바       { background: #F5F3FF; color: var(--c-jab); }
     .src-어르신일자리  { background: #F0FDF4; color: var(--c-eld); }
+    .src-맘시터       { background: #FFF4EE; color: var(--c-mst); }
 
     /* 제목 */
     .card-title {
@@ -755,6 +770,7 @@
         <span class="rbn-arrow"></span>
       </button>
       <div class="region-count-label" id="regionLabel"></div>
+      <button class="btn-momsitter" id="momsitterToggle" onclick="toggleMomsitter()">맘시터 공고</button>
     </div>
     <div class="filter-row">
       <select id="industryFilter" onchange="render()">
@@ -775,6 +791,7 @@
         <option value="서울일자리포털">서울일자리포털</option>
         <option value="잡아바">잡아바</option>
         <option value="어르신일자리">어르신일자리</option>
+        <option value="맘시터">맘시터</option>
       </select>
       <select id="sortSelect" onchange="render()">
         <option value="deadline">마감순</option>
@@ -800,7 +817,7 @@
 <div class="grid" id="jobGrid"></div>
 
 <footer>
-  고용24 · 알바몬 · 알바천국 · 시니어로 · 서울일자리포털 · 잡아바(경기) · 어르신일자리(경기) 공개 정보를 수집·제공합니다.<br>
+  고용24 · 알바몬 · 알바천국 · 시니어로 · 서울일자리포털 · 잡아바(경기) · 어르신일자리(경기) · 맘시터 공개 정보를 수집·제공합니다.<br>
   실제 지원은 원문 공고 사이트에서 진행해 주세요.<br>
   운영자 문의: <a href="mailto:jun@dolight.co.kr" style="color:inherit">jun@dolight.co.kr</a>
   &nbsp;·&nbsp; <a href="privacy.html" style="color:inherit">개인정보 처리방침</a>
@@ -1153,6 +1170,7 @@ const _urlParams   = new URLSearchParams(location.search);
 const _urlRegion   = _urlParams.get('region')   || '전체';
 const _urlDistrict = _urlParams.get('district')  || '';
 let allJobs = [], activeRegion = _urlRegion, activeDistrict = _urlDistrict;
+let showMomsitter = false;
 
 function loadData() {
   if (typeof JOBS_DATA === 'undefined') {
@@ -1188,8 +1206,8 @@ function loadData() {
 function buildHeaderStats(data) {
   const counts = data.source_counts || {};
   const total  = allJobs.length;
-  const srcList = ['고용24','알바몬','알바천국','시니어로','서울일자리포털','잡아바','어르신일자리'];
-  const colors  = { '고용24':'#2563EB','알바몬':'#EA580C','알바천국':'#16A34A','시니어로':'#0891B2','서울일자리포털':'#0F766E','잡아바':'#7C3AED','어르신일자리':'#15803D' };
+  const srcList = ['고용24','알바몬','알바천국','시니어로','서울일자리포털','잡아바','어르신일자리','맘시터'];
+  const colors  = { '고용24':'#2563EB','알바몬':'#EA580C','알바천국':'#16A34A','시니어로':'#0891B2','서울일자리포털':'#0F766E','잡아바':'#7C3AED','어르신일자리':'#15803D','맘시터':'#FF7F25' };
   let html = `<span class="stat-chip"><strong>${total}</strong>건 수집</span>`;
   srcList.forEach(src => {
     const cnt = counts[src];
@@ -1278,6 +1296,12 @@ function openRegionSheet() {
 function closeRegionSheet() {
   document.getElementById('rsheetOverlay').classList.remove('show');
   document.body.style.overflow = '';
+}
+
+function toggleMomsitter() {
+  showMomsitter = !showMomsitter;
+  document.getElementById('momsitterToggle').classList.toggle('active', showMomsitter);
+  render();
 }
 
 function toggleSearch() {
@@ -1381,6 +1405,7 @@ function render() {
   const srt = document.getElementById('sortSelect').value;
 
   let jobs = allJobs.filter(j => {
+    if (!showMomsitter && j.source === '맘시터') return false;
     if (activeRegion !== '전체' && j._region !== activeRegion) return false;
     if (activeDistrict && !(j.location||'').includes(activeDistrict)) return false;
     if (ind && j._industry !== ind) return false;

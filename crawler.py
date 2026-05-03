@@ -788,7 +788,7 @@ def _fetch_jobaba_api_key_mode() -> list[dict]:
 
 MOMSITTER_SITE   = "https://www.mom-sitter.com"
 MOMSITTER_API    = "https://api.mom-sitter.com/public-web-api/v1/parents/search"
-MOMSITTER_PAGES  = 20   # 최대 200건 (페이지당 10건, 최신순)
+MOMSITTER_PAGES  = 100  # 최대 1000건 (페이지당 10건, 최신순)
 
 
 def scrape_momsitter(page: int) -> list[dict]:
