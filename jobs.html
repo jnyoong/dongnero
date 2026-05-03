@@ -1369,8 +1369,9 @@ function renderCard(job) {
   const salRow     = job.salary
     ? `<div class="info-row"><span class="info-icon">💰</span>
          <span class="info-text salary">${job.salary.replace(/\s+/g,' ').trim()}</span></div>` : '';
-  const link       = job.apply_link || '#';
-  const target     = job.apply_link ? 'target="_blank" rel="noopener"' : '';
+  const rawLink    = job.source === '맘시터' ? 'https://www.mom-sitter.com/search/parent' : (job.apply_link || '#');
+  const link       = rawLink;
+  const target     = rawLink !== '#' ? 'target="_blank" rel="noopener"' : '';
   const lineClass  = `line-${job.source||'기타'}`;
   const badgeClass = `src-${job.source||'기타'}`;
   return `
