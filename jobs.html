@@ -212,14 +212,16 @@
     /* ── 맘시터 토글 버튼 ── */
     .btn-momsitter {
       flex-shrink: 0; margin-left: auto;
-      border: 1.5px solid var(--c-mst); border-radius: 50px;
-      background: none; padding: 3px 10px;
-      font-size: .74rem; font-weight: 700; color: var(--c-mst);
+      border: 1.5px solid #CBD5E1; border-radius: 50px;
+      background: #F1F5F9; padding: 3px 10px;
+      font-size: .74rem; font-weight: 700; color: #94A3B8;
       cursor: pointer; white-space: nowrap; font-family: inherit;
-      transition: background .15s, color .15s;
+      transition: background .15s, color .15s, border-color .15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .btn-momsitter.active { background: var(--c-mst); color: #fff; }
+    .btn-momsitter.active {
+      background: var(--c-mst); border-color: var(--c-mst); color: #fff;
+    }
 
     /* ── 검색 토글 ── */
     .btn-search-icon {
@@ -770,7 +772,7 @@
         <span class="rbn-arrow"></span>
       </button>
       <div class="region-count-label" id="regionLabel"></div>
-      <button class="btn-momsitter" id="momsitterToggle" onclick="toggleMomsitter()">맘시터 공고</button>
+      <button class="btn-momsitter active" id="momsitterToggle" onclick="toggleMomsitter()">맘시터 공고</button>
     </div>
     <div class="filter-row">
       <select id="industryFilter" onchange="render()">
@@ -1179,7 +1181,7 @@ const _urlParams   = new URLSearchParams(location.search);
 const _urlRegion   = _urlParams.get('region')   || '전체';
 const _urlDistrict = _urlParams.get('district')  || '';
 let allJobs = [], activeRegion = _urlRegion, activeDistrict = _urlDistrict;
-let showMomsitter = false;
+let showMomsitter = true;
 
 function loadData() {
   if (typeof JOBS_DATA === 'undefined') {
@@ -1369,9 +1371,8 @@ function renderCard(job) {
   const salRow     = job.salary
     ? `<div class="info-row"><span class="info-icon">💰</span>
          <span class="info-text salary">${job.salary.replace(/\s+/g,' ').trim()}</span></div>` : '';
-  const rawLink    = job.source === '맘시터' ? 'https://www.mom-sitter.com/search/parent' : (job.apply_link || '#');
-  const link       = rawLink;
-  const target     = rawLink !== '#' ? 'target="_blank" rel="noopener"' : '';
+  const link       = job.apply_link || '#';
+  const target     = job.apply_link ? 'target="_blank" rel="noopener"' : '';
   const lineClass  = `line-${job.source||'기타'}`;
   const badgeClass = `src-${job.source||'기타'}`;
   return `

@@ -842,7 +842,7 @@ def scrape_momsitter(page: int) -> list[dict]:
                 "type"       : emp_type,
                 "salary"     : salary,
                 "description": desc,
-                "apply_link" : MOMSITTER_SITE + "/search/parent",
+                "apply_link" : f"{MOMSITTER_SITE}/parent/{user_id}" if user_id else MOMSITTER_SITE + "/search/parent",
                 "source"     : "맘시터",
             })
         return jobs
