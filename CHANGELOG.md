@@ -2,6 +2,18 @@
 
 ---
 
+## [v0.20] 2026-05-03 — 맘시터 베이비시터 구인공고 수집 추가
+
+### crawler.py
+- **맘시터(mom-sitter.com) 출처 추가** — 부모님이 베이비시터를 구하는 공고 수집
+  - 공개 JSON API (`POST https://api.mom-sitter.com/public-web-api/v1/parents/search`) 사용, 인증 불필요
+  - 페이지당 10건, 최대 20페이지(200건) 수집
+  - 제목·지역·급여(월정액/협의)·돌봄 유형(정기/단기)·아이 정보 파싱
+  - 상세 링크: `https://www.mom-sitter.com/parent/{userId}` (로그인 후 열람 가능)
+- 출처 단계 번호 일괄 수정: 기존 [1/6]~[7/7] → [1/8]~[8/8]
+
+---
+
 ## [v0.19] 2026-05-03 — jobs.html UI 개선: 지역 드롭버튼 + 검색 토글
 
 ### jobs.html

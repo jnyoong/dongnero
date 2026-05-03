@@ -1,6 +1,6 @@
 """
 시니어(50대 이상) 취업정보 크롤러
-출처: 고용24 / 알바몬 / 알바천국 / 시니어로
+출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 맘시터
 저장: jobs.json + jobs_data.js
 
 [고용24 오픈API 키 발급]
@@ -781,6 +781,76 @@ def _fetch_jobaba_api_key_mode() -> list[dict]:
         return scrape_jobaba_sheet()
 
 
+# ── 맘시터 (mom-sitter.com) 베이비시터 구인공고 ───────────────────────────────
+# 공개 API — 인증 불필요
+# POST https://api.mom-sitter.com/public-web-api/v1/parents/search
+# 상세 보기: https://www.mom-sitter.com/parent/{userId} (로그인 필요)
+
+MOMSITTER_SITE   = "https://www.mom-sitter.com"
+MOMSITTER_API    = "https://api.mom-sitter.com/public-web-api/v1/parents/search"
+MOMSITTER_PAGES  = 20   # 최대 200건 (페이지당 10건, 최신순)
+
+
+def scrape_momsitter(page: int) -> list[dict]:
+    """맘시터 — 부모님이 베이비시터를 구하는 공고 수집 (공개 JSON API)"""
+    sess = _session('momsitter')
+    sess.headers.update({
+        "Referer"     : MOMSITTER_SITE + "/search/parent",
+        "Content-Type": "application/json",
+        "Accept"      : "application/json",
+    })
+    for attempt in range(MAX_RETRIES):
+        try:
+            resp = sess.post(MOMSITTER_API, json={"page": page}, timeout=20)
+            resp.raise_for_status()
+            break
+        except Exception as e:
+            if attempt < MAX_RETRIES - 1:
+                wait = 2 ** (attempt + 1) + random.uniform(0, 1)
+                time.sleep(wait)
+            else:
+                print(f"\n  [맘시터 오류] {e}")
+                return []
+    try:
+        data    = resp.json()
+        parents = data.get("parents", [])
+
+        jobs = []
+        for item in parents:
+            user_id    = item.get("userId", "")
+            title      = (item.get("profileTitle") or "").strip()
+            location   = (item.get("careLocationSummary") or "").strip()
+            salary     = (item.get("estimatedSummary") or "").strip()
+            children   = (item.get("childrenSummary") or "").strip()
+            sched_tp   = (item.get("careSchedule", {}).get("careScheduleType", {}).get("text") or "")
+            sched_sum  = (item.get("careSchedule", {}).get("careScheduleSummary") or "").strip()
+
+            if not title:
+                continue
+
+            emp_type = f"{sched_tp} 돌봄" if sched_tp else "돌봄"
+            desc     = " · ".join(filter(None, [
+                f"아이: {children}" if children else "",
+                sched_sum,
+            ]))
+
+            jobs.append({
+                "title"      : title,
+                "company"    : "개인(부모님)",
+                "location"   : location,
+                "deadline"   : "",
+                "type"       : emp_type,
+                "salary"     : salary,
+                "description": desc,
+                "apply_link" : f"{MOMSITTER_SITE}/parent/{user_id}" if user_id else MOMSITTER_SITE + "/search/parent",
+                "source"     : "맘시터",
+            })
+        return jobs
+    except Exception as e:
+        print(f"\n  [맘시터 파싱 오류] {e}")
+        return []
+
+
 # ── 경기도 어르신자립형일자리사업 (경기데이터드림 Sheet API) ────────────────────
 # 데이터: https://data.gg.go.kr/portal/data/service/selectServicePage.do?infId=AXMYYE3KRB83S1MRYS0Z21195052&infSeq=1
 
@@ -940,7 +1010,7 @@ def run_crawler():
     print(f"  실행 시각: {datetime.now(KST).strftime('%Y-%m-%d %H:%M:%S KST')}")
     print(f"  대상 연령: 50세 이상 ({BIRTH_YEAR_LIMIT}년 이전 출생)")
     mode_jb = "API 키 모드" if _is_jobaba_key_set() else "Sheet 모드(키 발급 전)"
-    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바({mode_jb}) / 어르신일자리(경기)")
+    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바({mode_jb}) / 어르신일자리(경기) / 맘시터")
     print("=" * 60)
 
     all_jobs: list[dict] = []
@@ -948,10 +1018,10 @@ def run_crawler():
 
     # ── 1단계: 고용24 ────────────────────────────────────────
     if _is_api_key_set():
-        print("\n[1/6] 고용24 오픈API 모드")
+        print("\n[1/8] 고용24 오픈API 모드")
         collect_fn = fetch_work24_api
     else:
-        print("\n[1/6] 고용24 웹 스크래핑 모드")
+        print("\n[1/8] 고용24 웹 스크래핑 모드")
         print(f"      birthToYY={BIRTH_YEAR_LIMIT} (50세 이상)")
         collect_fn = scrape_work24_web
 
@@ -968,28 +1038,28 @@ def run_crawler():
     _sleep_source()
 
     # ── 2단계: 알바몬 ────────────────────────────────────────
-    print("\n[2/6] 알바몬 스크래핑")
+    print("\n[2/8] 알바몬 스크래핑")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("알바몬", scrape_albamon, pages=4, stop_if_less=1))
     source_counts["알바몬"] = len(all_jobs) - before
     _sleep_source()
 
     # ── 3단계: 알바천국 ──────────────────────────────────────
-    print("\n[3/6] 알바천국 스크래핑 (중장년 채용관)")
+    print("\n[3/8] 알바천국 스크래핑 (중장년 채용관)")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("알바천국", scrape_albacheon, pages=6, stop_if_less=10))
     source_counts["알바천국"] = len(all_jobs) - before
     _sleep_source()
 
     # ── 4단계: 시니어로 ──────────────────────────────────────
-    print("\n[4/6] 시니어로(seniorro.or.kr) 스크래핑")
+    print("\n[4/8] 시니어로(seniorro.or.kr) 스크래핑")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("시니어로", scrape_seniorro, pages=8, stop_if_less=30))
     source_counts["시니어로"] = len(all_jobs) - before
     _sleep_source()
 
     # ── 5단계: 서울시 일자리포털 ─────────────────────────────
-    print("\n[5/6] 서울시 일자리포털(job.seoul.go.kr) 스크래핑")
+    print("\n[5/8] 서울시 일자리포털(job.seoul.go.kr) 스크래핑")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("서울일자리포털", scrape_seoul_jobs, pages=15, stop_if_less=1))
     source_counts["서울일자리포털"] = len(all_jobs) - before
@@ -997,12 +1067,12 @@ def run_crawler():
     # ── 6단계: 경기도 잡아바 ──────────────────────────────────
     _sleep_source()
     if _is_jobaba_key_set():
-        print("\n[6/6] 경기도 잡아바 — API 키 모드")
+        print("\n[6/8] 경기도 잡아바 — API 키 모드")
         before = len(all_jobs)
         all_jobs.extend(_fetch_jobaba_api_key_mode())
         source_counts["잡아바"] = len(all_jobs) - before
     else:
-        print("\n[6/6] 경기도 잡아바 — Sheet 모드 (키 발급 전 임시)")
+        print("\n[6/8] 경기도 잡아바 — Sheet 모드 (키 발급 전 임시)")
         before = len(all_jobs)
         jobs_jb = scrape_jobaba_sheet()
         all_jobs.extend(jobs_jb)
@@ -1010,10 +1080,17 @@ def run_crawler():
 
     # ── 7단계: 경기도 어르신자립형일자리사업 ─────────────────
     _sleep_source()
-    print("\n[7/7] 경기도 어르신자립형일자리사업 — Sheet 모드")
+    print("\n[7/8] 경기도 어르신자립형일자리사업 — Sheet 모드")
     before = len(all_jobs)
     all_jobs.extend(scrape_elder_jobs_sheet())
     source_counts["어르신일자리"] = len(all_jobs) - before
+
+    # ── 8단계: 맘시터 베이비시터 구인공고 ────────────────────
+    _sleep_source()
+    print(f"\n[8/8] 맘시터(mom-sitter.com) 베이비시터 구인공고")
+    before = len(all_jobs)
+    all_jobs.extend(_crawl_source("맘시터", scrape_momsitter, pages=MOMSITTER_PAGES, stop_if_less=1))
+    source_counts["맘시터"] = len(all_jobs) - before
 
     # ── 후처리 ────────────────────────────────────────────────
     all_jobs = _deduplicate(all_jobs)
