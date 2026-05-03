@@ -1401,7 +1401,7 @@ function renderCard(job) {
       <div class="ai-summary">${job._summary}</div>
     </div>
     <div class="card-foot">
-      <a class="btn-view" href="${link}" ${target}>공고 보기 →</a>
+      <a class="btn-view" href="${link}" ${target}>${job.source === '맘시터' ? '맘시터에서 찾기 →' : '공고 보기 →'}</a>
     </div>
   </div>`;
 }

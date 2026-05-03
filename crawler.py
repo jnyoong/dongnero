@@ -784,7 +784,7 @@ def _fetch_jobaba_api_key_mode() -> list[dict]:
 # ── 맘시터 (mom-sitter.com) 베이비시터 구인공고 ───────────────────────────────
 # 공개 API — 인증 불필요
 # POST https://api.mom-sitter.com/public-web-api/v1/parents/search
-# 상세 보기: https://www.mom-sitter.com/parent/{userId} (로그인 필요)
+# 링크: /search/parent (개별 /parent/{id}는 서버가 직접 접근 404 반환 — SPA 내부 라우팅 전용)
 
 MOMSITTER_SITE   = "https://www.mom-sitter.com"
 MOMSITTER_API    = "https://api.mom-sitter.com/public-web-api/v1/parents/search"
@@ -842,7 +842,7 @@ def scrape_momsitter(page: int) -> list[dict]:
                 "type"       : emp_type,
                 "salary"     : salary,
                 "description": desc,
-                "apply_link" : f"{MOMSITTER_SITE}/parent/{user_id}" if user_id else MOMSITTER_SITE + "/search/parent",
+                "apply_link" : MOMSITTER_SITE + "/search/parent",
                 "source"     : "맘시터",
             })
         return jobs
