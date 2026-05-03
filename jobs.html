@@ -316,11 +316,57 @@
     .rsheet-count { display: block; font-size: .75rem; font-weight: 500; opacity: .6; margin-top: 2px; }
     @media (max-width: 380px) { .rsheet-grid { grid-template-columns: repeat(2, 1fr); } }
 
-    /* ── 맘시터 안내 ── */
-    .mst-guide {
-      font-size: .76rem; color: var(--c-mst);
-      background: #FFF4EE; border-radius: 6px;
-      padding: 5px 10px; margin-top: 8px;
+    /* ── 맘시터 팝업 ── */
+    .mst-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.45);
+      z-index: 500; display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .mst-overlay.show { opacity: 1; pointer-events: auto; }
+    .mst-popup {
+      background: var(--surface); border-radius: var(--radius-lg);
+      width: min(340px, 90vw); padding: 22px 20px 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.18);
+      transform: translateY(12px); transition: transform .2s;
+    }
+    .mst-overlay.show .mst-popup { transform: translateY(0); }
+    .mst-popup-head {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+    }
+    .mst-popup-icon { font-size: 1.4rem; }
+    .mst-popup-title { font-size: 1rem; font-weight: 900; }
+    .mst-popup-steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+    .mst-step {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: .88rem; line-height: 1.6;
+    }
+    .mst-step-num {
+      flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+      background: var(--c-mst); color: #fff;
+      font-size: .72rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px;
+    }
+    .mst-keyword {
+      display: inline-block; background: #FFF4EE; color: var(--c-mst);
+      border: 1px solid #FED7AA; border-radius: 6px;
+      padding: 2px 8px; font-weight: 700; word-break: break-all;
+    }
+    .mst-popup-btns { display: flex; gap: 8px; }
+    .btn-mst-go {
+      flex: 1; padding: 11px; border-radius: 50px;
+      background: var(--c-mst); color: #fff; border: none;
+      font-size: .9rem; font-weight: 800; font-family: inherit;
+      cursor: pointer; text-decoration: none;
+      display: flex; align-items: center; justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-mst-close {
+      padding: 11px 16px; border-radius: 50px;
+      background: var(--bg); color: var(--text-sec);
+      border: 1.5px solid var(--border);
+      font-size: .9rem; font-weight: 700; font-family: inherit;
+      cursor: pointer; -webkit-tap-highlight-color: transparent;
     }
 
     /* ── 구 그룹 헤더 ── */
@@ -814,6 +860,34 @@
         <input type="text" id="searchInput" placeholder="직종명, 회사명으로 검색…" oninput="render()" />
       </div>
       <button class="btn-search-close" onclick="toggleSearch()">✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- 맘시터 안내 팝업 -->
+<div class="mst-overlay" id="mstOverlay" onclick="closeMstPopup()">
+  <div class="mst-popup" onclick="event.stopPropagation()">
+    <div class="mst-popup-head">
+      <span class="mst-popup-icon">🍊</span>
+      <span class="mst-popup-title">맘시터에서 공고 찾는 법</span>
+    </div>
+    <div class="mst-popup-steps">
+      <div class="mst-step">
+        <span class="mst-step-num">1</span>
+        <span>맘시터 <strong>회원가입</strong> 후 로그인하세요.</span>
+      </div>
+      <div class="mst-step">
+        <span class="mst-step-num">2</span>
+        <span>일자리 찾기 페이지에서 <strong>지역 필터</strong>를<br><span class="mst-keyword" id="mstKeywordLoc"></span>&nbsp;로 설정하세요.</span>
+      </div>
+      <div class="mst-step">
+        <span class="mst-step-num">3</span>
+        <span>목록에서 제목 <span class="mst-keyword" id="mstKeywordTitle"></span> 공고를 찾으세요.</span>
+      </div>
+    </div>
+    <div class="mst-popup-btns">
+      <a class="btn-mst-go" href="https://www.mom-sitter.com/search/parent" target="_blank" rel="noopener">맘시터 바로가기 →</a>
+      <button class="btn-mst-close" onclick="closeMstPopup()">닫기</button>
     </div>
   </div>
 </div>
@@ -1316,6 +1390,18 @@ function closeRegionSheet() {
   document.body.style.overflow = '';
 }
 
+function openMstPopup(location, title) {
+  const parts   = (location || '').trim().split(/\s+/);
+  const locHint = parts.length >= 3 ? parts.slice(-2).join(' ') : (location || '');
+  const titleHint = title.length > 14 ? title.slice(0, 14) + '…' : title;
+  document.getElementById('mstKeywordLoc').textContent   = locHint;
+  document.getElementById('mstKeywordTitle').textContent = titleHint;
+  document.getElementById('mstOverlay').classList.add('show');
+}
+function closeMstPopup() {
+  document.getElementById('mstOverlay').classList.remove('show');
+}
+
 function toggleMomsitter() {
   showMomsitter = !showMomsitter;
   document.getElementById('momsitterToggle').classList.toggle('active', showMomsitter);
@@ -1379,12 +1465,16 @@ function renderCard(job) {
   const salRow     = job.salary
     ? `<div class="info-row"><span class="info-icon">💰</span>
          <span class="info-text salary">${job.salary.replace(/\s+/g,' ').trim()}</span></div>` : '';
-  const link       = isMst ? 'https://www.mom-sitter.com/search/parent' : (job.apply_link || '#');
-  const target     = 'target="_blank" rel="noopener"';
+  const link       = job.apply_link || '#';
   const lineClass  = `line-${job.source||'기타'}`;
   const badgeClass = `src-${job.source||'기타'}`;
-  const mstGuide   = isMst
-    ? `<div class="mst-guide">가입 후 위 조건으로 검색하세요</div>` : '';
+
+  const locAttr   = (job.location||'').replace(/'/g,"\\'");
+  const titleAttr = (job.title||'').replace(/'/g,"\\'");
+  const footBtn   = isMst
+    ? `<button class="btn-view" onclick="openMstPopup('${locAttr}','${titleAttr}')">공고 보기 →</button>`
+    : `<a class="btn-view" href="${link}" target="_blank" rel="noopener">공고 보기 →</a>`;
+
   return `
   <div class="card">
     <div class="card-top-bar ${lineClass}"></div>
@@ -1411,11 +1501,8 @@ function renderCard(job) {
         </div>
       </div>
       <div class="ai-summary">${job._summary}</div>
-      ${mstGuide}
     </div>
-    <div class="card-foot">
-      <a class="btn-view" href="${link}" ${target}>${isMst ? '맘시터 회원가입·찾기 →' : '공고 보기 →'}</a>
-    </div>
+    <div class="card-foot">${footBtn}</div>
   </div>`;
 }
 
