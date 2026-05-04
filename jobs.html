@@ -755,6 +755,17 @@
     .lv2-field { display: none; }
     .lv3-field { display: none; }
 
+    /* 3단계 무료·인증 안내 */
+    .lv3-notice {
+      display: none;
+      flex-direction: row; flex-wrap: wrap; gap: 8px;
+      background: var(--green-lt); border: 1.5px solid #BBF7D0;
+      border-radius: 12px; padding: 11px 14px; margin-bottom: 14px;
+    }
+    .lv3-notice span {
+      font-size: .82rem; color: #166534; display: flex; align-items: center; gap: 4px;
+    }
+
     .nform-hint { font-size: .78rem; margin-top: 4px; display: block; min-height: 1.2em; }
     .nform-checkbox-row { display: flex; gap: 20px; padding: 6px 0; flex-wrap: wrap; }
     .nform-check {
@@ -851,8 +862,8 @@
 
       <form id="notifyForm" novalidate>
 
-        <!-- 연령대 (항상) -->
-        <div class="nform-group">
+        <!-- 연령대 (1·2단계) -->
+        <div class="nform-group" id="ageRangeGroup">
           <div class="nform-label">연령대 <span class="nform-req">*</span></div>
           <div class="nform-btn-row" id="ageRow">
             <button type="button" class="nform-opt-btn" data-val="50대" onclick="selectAge(this)">50대</button>
@@ -860,6 +871,22 @@
             <button type="button" class="nform-opt-btn" data-val="70대" onclick="selectAge(this)">70대</button>
             <button type="button" class="nform-opt-btn" data-val="80대이상" onclick="selectAge(this)">80대↑</button>
           </div>
+        </div>
+
+        <!-- 만 나이 (3단계) -->
+        <div class="nform-group lv3-field" id="ageInputGroup">
+          <label class="nform-label" for="inputAgeNum">만 나이 <span class="nform-req">*</span></label>
+          <input class="nform-input" id="inputAgeNum" type="number"
+                 min="40" max="90" placeholder="예: 58" inputmode="numeric"
+                 style="max-width:160px">
+          <span class="nform-hint" style="color:var(--text-ter)">실제 만 나이를 입력해 주세요</span>
+        </div>
+
+        <!-- 3단계 안내 박스 -->
+        <div class="lv3-field lv3-notice" id="lv3Notice">
+          <span>✓ 완전 <strong>무료</strong></span>
+          <span>✓ 동네로 인증 기업에게<strong>만</strong> 공개</span>
+          <span>✓ 언제든지 삭제 요청 가능</span>
         </div>
 
         <!-- 희망 지역 (항상) -->
@@ -1263,9 +1290,9 @@ function updateDistricts() {
     },
     3: {
       fillW: '76%',
-      desc: '<strong>💼 적극 구직</strong> — 구직카드를 동네 업체들에게 공개해 기업 담당자가 먼저 연락드려요.',
-      btn: '구직카드 등록하기',
-      success: { icon:'💼', msg:'구직카드 등록 완료!', sub:'동네 업체 담당자가 구직카드를 보고\n직접 연락드릴 거예요.' }
+      desc: '<strong>💼 적극 구직 (무료)</strong> — 동네로 인증 기업 담당자에게만 구직카드가 공개돼요. 원치 않으면 언제든 삭제 가능해요.',
+      btn: '구직카드 무료 등록하기',
+      success: { icon:'💼', msg:'구직카드 등록 완료!', sub:'동네로 인증 기업 담당자만 구직카드를 볼 수 있어요.\n담당자가 직접 연락드릴 거예요.' }
     }
   };
 
@@ -1279,6 +1306,10 @@ function updateDistricts() {
     document.getElementById('levelDescBox').innerHTML = cfg.desc;
     document.querySelectorAll('.lv2-field').forEach(el => el.style.display = lv >= 2 ? 'flex' : 'none');
     document.querySelectorAll('.lv3-field').forEach(el => el.style.display = lv >= 3 ? 'flex' : 'none');
+    // 나이: 1·2단계=연령대버튼, 3단계=만 나이 숫자 입력
+    document.getElementById('ageRangeGroup').style.display = lv >= 3 ? 'none' : 'flex';
+    // lv3-notice는 row 방향이므로 별도 처리
+    document.getElementById('lv3Notice').style.display = lv >= 3 ? 'flex' : 'none';
     submitBtn.textContent = cfg.btn;
   };
 
@@ -1337,13 +1368,23 @@ function updateDistricts() {
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!document.getElementById('consentCheck').checked) { alert('개인정보 수집·이용에 동의해 주세요.'); return; }
-    if (!selectedAge) { alert('연령대를 선택해 주세요.'); return; }
 
     const phone      = document.getElementById('inputPhone').value.trim();
     const name       = document.getElementById('inputName').value.trim();
     const desiredJob = document.getElementById('inputDesiredJob').value.trim();
     const sido       = document.getElementById('regionSelect').value;
     const gu         = document.getElementById('districtSelect').value;
+
+    // 나이 값 결정: 3단계=만 나이 숫자, 1·2단계=연령대 버튼
+    let ageValue;
+    if (currentLevel >= 3) {
+      const ageNum = parseInt(document.getElementById('inputAgeNum').value.trim(), 10);
+      if (!ageNum || ageNum < 40 || ageNum > 90) { alert('만 나이를 올바르게 입력해 주세요. (40~90)'); return; }
+      ageValue = ageNum + '세';
+    } else {
+      if (!selectedAge) { alert('연령대를 선택해 주세요.'); return; }
+      ageValue = selectedAge;
+    }
 
     if (currentLevel >= 2) {
       if (!phone) { alert('전화번호를 입력해 주세요.'); return; }
@@ -1363,7 +1404,7 @@ function updateDistricts() {
         headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` },
         body: JSON.stringify({
           name:          name || null,
-          age_range:     selectedAge,
+          age_range:     ageValue,
           location_sido: sido || null,
           location_gu:   gu   || null,
           desired_job:   desiredJob || (selectedJobTypes.join(',') || null),
