@@ -273,13 +273,14 @@ async function submitJob() {
   isSubmitting = true;
 
   try {
+    const company_token = crypto.randomUUID();
     const res = await fetch(`${SB_URL}/rest/v1/company_jobs`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'apikey': SB_KEY,
         'Authorization': `Bearer ${SB_KEY}`,
-        'Prefer': 'return=representation'
+        'Prefer': 'return=minimal'
       },
       body: JSON.stringify({
         company_name, contact_email,
@@ -291,13 +292,13 @@ async function submitJob() {
         salary: salary || null,
         work_hours: work_hours || null,
         deadline: deadline || null,
-        website: website || null
+        website: website || null,
+        company_token
       })
     });
 
     if (!res.ok) throw new Error(await res.text());
-    const [row] = await res.json();
-    document.getElementById('tokenValue').textContent = row.company_token;
+    document.getElementById('tokenValue').textContent = company_token;
     document.getElementById('formSection').style.display = 'none';
     document.getElementById('successWrap').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
