@@ -1277,8 +1277,8 @@ function updateDistricts() {
     );
     document.getElementById('levelFill').style.width = cfg.fillW;
     document.getElementById('levelDescBox').innerHTML = cfg.desc;
-    document.querySelectorAll('.lv2-field').forEach(el => el.style.display = lv >= 2 ? '' : 'none');
-    document.querySelectorAll('.lv3-field').forEach(el => el.style.display = lv >= 3 ? '' : 'none');
+    document.querySelectorAll('.lv2-field').forEach(el => el.style.display = lv >= 2 ? 'flex' : 'none');
+    document.querySelectorAll('.lv3-field').forEach(el => el.style.display = lv >= 3 ? 'flex' : 'none');
     submitBtn.textContent = cfg.btn;
   };
 
