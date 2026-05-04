@@ -125,12 +125,16 @@
     .drawer-item-desc  { font-size: .75rem; color: var(--text-sec); margin-top: 2px; }
     .drawer-sep { height: 1px; background: var(--border); margin: 4px 20px; }
 
+    /* ── 헤더 래퍼 (헤더+툴바 통째로 고정) ── */
+    .sticky-top {
+      position: sticky; top: 0; z-index: 110;
+    }
+
     /* ── 헤더 ── */
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       padding: 12px 14px 10px;
-      position: relative;
     }
     .header-top {
       display: flex; align-items: center; gap: 8px;
@@ -175,7 +179,6 @@
 
     /* ── 툴바 ── */
     .toolbar {
-      position: sticky; top: 0; z-index: 100;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       padding: 10px 14px;
@@ -959,6 +962,7 @@
   </div>
 </div>
 
+<div class="sticky-top">
 <header>
   <div class="header-top">
     <button class="btn-menu" onclick="openDrawer()" aria-label="메뉴">☰</button>
@@ -1020,6 +1024,7 @@
     </div>
   </div>
 </div>
+</div><!-- /sticky-top -->
 
 <!-- 맘시터 안내 팝업 -->
 <div class="mst-overlay" id="mstOverlay" onclick="closeMstPopup()">
