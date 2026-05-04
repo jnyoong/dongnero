@@ -351,7 +351,7 @@
     <div class="table-wrap">
       <table>
         <thead><tr>
-          <th>#</th><th>참여단계</th><th>이름</th><th>연령대</th>
+          <th>#</th><th>참여단계</th><th>이름</th><th>나이</th>
           <th>희망지역</th><th>희망직종</th><th>전화번호</th><th>등록일</th>
         </tr></thead>
         <tbody id="scBody"><tr><td colspan="8" class="loading">불러오는 중…</td></tr></tbody>
@@ -951,11 +951,17 @@ function renderSeekerCards() {
     const phoneCell = j.contact_phone
       ? `<a href="tel:${j.contact_phone}" style="color:#2563EB">${j.contact_phone}</a>`
       : `<span style="color:#9CA3AF">-</span>`;
+    // 나이: 3단계=만 나이(숫자+'세'), 1·2단계=연령대
+    const ageRaw = j.age_range || '-';
+    const isActualAge = lvi >= 3 && /^\d+세$/.test(ageRaw);
+    const ageCell = isActualAge
+      ? `<span class="badge badge-blue" title="만 나이">만 ${ageRaw}</span>`
+      : `<span>${ageRaw}</span>`;
     return `<tr>
       <td class="row-num">${i + 1}</td>
       <td>${lvBadge}</td>
       <td>${nameCell}</td>
-      <td>${j.age_range || '-'}</td>
+      <td style="white-space:nowrap">${ageCell}</td>
       <td>${loc || '-'}</td>
       <td style="max-width:140px;white-space:normal">${j.desired_job || '-'}</td>
       <td style="white-space:nowrap">${phoneCell}</td>
@@ -975,7 +981,7 @@ function exportSeekerCsv() {
     return true;
   });
   if (!list.length) { alert('내보낼 데이터가 없습니다.'); return; }
-  const header = ['#','단계','이름','연령대','시/도','구/군','희망직종','전화번호','등록일'];
+  const header = ['#','단계','이름','나이(연령대/만나이)','시/도','구/군','희망직종','전화번호','등록일'];
   const rows = list.map((j, i) => {
     const lvi = SC_LEVEL[j.alert_level||2] || SC_LEVEL[2];
     return [

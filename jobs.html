@@ -862,6 +862,26 @@
 
       <form id="notifyForm" novalidate>
 
+        <!-- 3단계 안내 박스 (필드 위) -->
+        <div class="lv3-field lv3-notice" id="lv3Notice">
+          <span>✓ 완전 <strong>무료</strong></span>
+          <span>✓ 동네로 인증 기업에게<strong>만</strong> 공개</span>
+        </div>
+
+        <!-- 이름 (3단계) -->
+        <div class="nform-group lv3-field" id="nameGroup">
+          <label class="nform-label" for="inputName">이름 <span class="nform-req">*</span></label>
+          <input class="nform-input" id="inputName" type="text" placeholder="예: 홍길동" autocomplete="name">
+        </div>
+
+        <!-- 전화번호 (2단계+) -->
+        <div class="nform-group lv2-field" id="phoneGroup">
+          <label class="nform-label" for="inputPhone">전화번호 <span class="nform-req">*</span></label>
+          <input class="nform-input" id="inputPhone" type="tel" name="phone"
+                 placeholder="010-0000-0000" autocomplete="tel" inputmode="tel" maxlength="13">
+          <span class="nform-hint" id="phoneHint"></span>
+        </div>
+
         <!-- 연령대 (1·2단계) -->
         <div class="nform-group" id="ageRangeGroup">
           <div class="nform-label">연령대 <span class="nform-req">*</span></div>
@@ -879,14 +899,7 @@
           <input class="nform-input" id="inputAgeNum" type="number"
                  min="40" max="90" placeholder="예: 58" inputmode="numeric"
                  style="max-width:160px">
-          <span class="nform-hint" style="color:var(--text-ter)">실제 만 나이를 입력해 주세요</span>
-        </div>
-
-        <!-- 3단계 안내 박스 -->
-        <div class="lv3-field lv3-notice" id="lv3Notice">
-          <span>✓ 완전 <strong>무료</strong></span>
-          <span>✓ 동네로 인증 기업에게<strong>만</strong> 공개</span>
-          <span>✓ 언제든지 삭제 요청 가능</span>
+          <span class="nform-hint" style="color:var(--text-ter)">실제 만 나이를 입력해 주세요 (40~90)</span>
         </div>
 
         <!-- 희망 지역 (항상) -->
@@ -915,20 +928,6 @@
             <button type="button" class="nform-opt-btn" data-val="정규직" onclick="toggleJobType(this)">정규직</button>
             <button type="button" class="nform-opt-btn" data-val="시간제·알바" onclick="toggleJobType(this)">시간제·알바</button>
           </div>
-        </div>
-
-        <!-- 전화번호 (2단계+) -->
-        <div class="nform-group lv2-field" id="phoneGroup">
-          <label class="nform-label" for="inputPhone">전화번호 <span class="nform-req">*</span></label>
-          <input class="nform-input" id="inputPhone" type="tel" name="phone"
-                 placeholder="010-0000-0000" autocomplete="tel" inputmode="tel" maxlength="13">
-          <span class="nform-hint" id="phoneHint"></span>
-        </div>
-
-        <!-- 이름 (3단계) -->
-        <div class="nform-group lv3-field" id="nameGroup">
-          <label class="nform-label" for="inputName">이름 <span class="nform-req">*</span></label>
-          <input class="nform-input" id="inputName" type="text" placeholder="예: 홍길동" autocomplete="name">
         </div>
 
         <!-- 희망 직종 (3단계) -->
