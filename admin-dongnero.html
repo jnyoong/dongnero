@@ -134,8 +134,11 @@
     <div class="tab" data-tab="seekercards">💼 구직카드 <span id="tabScCount"></span></div>
   </div>
 
-  <!-- 탭1: 알림 신청 -->
+  <!-- 탭1: 알림 신청 (레거시) -->
   <div class="tab-panel active" id="panel-signups">
+    <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:10px 14px;font-size:.82rem;color:#92400E;margin-bottom:14px">
+      ⚠️ <strong>구버전 알림 신청 데이터</strong> — 2026-05-04 이후 신규 등록자는 <strong>💼 구직카드 탭</strong>에서 확인하세요.
+    </div>
     <div class="summary-row">
       <div class="summary-chip"><strong id="totalCount">-</strong>총 신청</div>
       <div class="summary-chip"><strong id="todayCount">-</strong>오늘 신청</div>
@@ -322,20 +325,39 @@
   <!-- 탭5: 구직카드 -->
   <div class="tab-panel" id="panel-seekercards">
     <div class="summary-row">
-      <div class="summary-chip"><strong id="scTotal">-</strong>전체 구직카드</div>
+      <div class="summary-chip"><strong id="scTotal">-</strong>전체</div>
+      <div class="summary-chip"><strong id="scLv1">0</strong>👀 정보보기</div>
+      <div class="summary-chip"><strong id="scLv2">0</strong>🔔 알림받기</div>
+      <div class="summary-chip badge-green"><strong id="scLv3">0</strong>💼 적극구직</div>
     </div>
     <div class="filter-bar">
-      <input type="text" id="scSearch" placeholder="이름·희망직종·지역 검색…" oninput="renderSeekerCards()" style="flex:1;min-width:140px">
+      <select id="scLvFilter" onchange="renderSeekerCards()">
+        <option value="">단계 전체</option>
+        <option value="1">1단계 — 정보보기</option>
+        <option value="2">2단계 — 알림받기</option>
+        <option value="3">3단계 — 적극구직</option>
+      </select>
+      <select id="scRegionFilter" onchange="renderSeekerCards()">
+        <option value="">지역 전체</option>
+        <option>서울</option><option>경기</option><option>인천</option>
+        <option>부산</option><option>대구</option><option>광주</option>
+        <option>대전</option><option>울산</option><option>강원</option>
+        <option>충북</option><option>충남</option><option>전북</option>
+        <option>전남</option><option>경북</option><option>경남</option><option>제주</option>
+      </select>
+      <input type="text" id="scSearch" placeholder="이름·희망직종·연락처 검색…" oninput="renderSeekerCards()" style="flex:1;min-width:140px">
+      <button class="btn btn-green" onclick="exportSeekerCsv()">CSV 내보내기</button>
     </div>
     <div class="table-wrap">
       <table>
         <thead><tr>
-          <th>#</th><th>이름</th><th>연령대</th><th>희망지역</th>
-          <th>희망직종</th><th>경력·기술</th><th>전화번호</th><th>등록일</th>
+          <th>#</th><th>참여단계</th><th>이름</th><th>연령대</th>
+          <th>희망지역</th><th>희망직종</th><th>전화번호</th><th>등록일</th>
         </tr></thead>
         <tbody id="scBody"><tr><td colspan="8" class="loading">불러오는 중…</td></tr></tbody>
       </table>
     </div>
+    <div style="margin-top:8px;font-size:.78rem;color:#9CA3AF" id="scRangeInfo"></div>
   </div>
 
 </div>
@@ -864,6 +886,12 @@ function copyToken(token) {
 /* ── 구직카드 ── */
 let allSeekerCards = [];
 
+const SC_LEVEL = {
+  1: { icon:'👀', label:'정보보기', cls:'badge-gray'   },
+  2: { icon:'🔔', label:'알림받기', cls:'badge-orange' },
+  3: { icon:'💼', label:'적극구직', cls:'badge-green'  },
+};
+
 async function loadSeekerCards() {
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_get_seeker_cards`, {
@@ -873,39 +901,96 @@ async function loadSeekerCards() {
     });
     if (!res.ok) throw new Error(await res.text());
     allSeekerCards = await res.json();
-    document.getElementById('scTotal').textContent  = allSeekerCards.length;
-    document.getElementById('tabScCount').textContent = `(${allSeekerCards.length})`;
+    updateScSummary();
     renderSeekerCards();
   } catch(e) {
     document.getElementById('scBody').innerHTML = `<tr><td colspan="8" class="empty-msg">불러오기 실패: ${e.message}</td></tr>`;
   }
 }
 
+function updateScSummary() {
+  document.getElementById('scTotal').textContent = allSeekerCards.length;
+  document.getElementById('tabScCount').textContent = `(${allSeekerCards.length})`;
+  document.getElementById('scLv1').textContent = allSeekerCards.filter(j => (j.alert_level||2) === 1).length;
+  document.getElementById('scLv2').textContent = allSeekerCards.filter(j => (j.alert_level||2) === 2).length;
+  document.getElementById('scLv3').textContent = allSeekerCards.filter(j => (j.alert_level||2) === 3).length;
+}
+
 function renderSeekerCards() {
-  const kw   = document.getElementById('scSearch').value.trim().toLowerCase();
+  const kw  = document.getElementById('scSearch').value.trim().toLowerCase();
+  const lv  = document.getElementById('scLvFilter').value;
+  const rgn = document.getElementById('scRegionFilter').value;
+
   const list = allSeekerCards.filter(j => {
-    if (!kw) return true;
-    return (j.name + j.desired_job + (j.location_sido||'') + (j.location_gu||'')).toLowerCase().includes(kw);
+    if (lv  && String(j.alert_level||2) !== lv) return false;
+    if (rgn && j.location_sido !== rgn) return false;
+    if (kw  && !(
+      (j.name||'') + (j.desired_job||'') +
+      (j.location_sido||'') + (j.location_gu||'') +
+      (j.contact_phone||'')
+    ).toLowerCase().includes(kw)) return false;
+    return true;
   });
+
+  document.getElementById('scRangeInfo').textContent = `${list.length}건 표시`;
+
   if (!list.length) {
-    document.getElementById('scBody').innerHTML = '<tr><td colspan="8" class="empty-msg">구직카드가 없습니다.</td></tr>';
+    document.getElementById('scBody').innerHTML = '<tr><td colspan="8" class="empty-msg">해당 구직카드가 없습니다.</td></tr>';
     return;
   }
+
   document.getElementById('scBody').innerHTML = list.map((j, i) => {
-    const dt  = new Date(j.created_at).toLocaleDateString('ko-KR');
-    const loc = [j.location_sido, j.location_gu].filter(Boolean).join(' ');
-    const exp = [j.experience, j.skills].filter(Boolean).join(' / ');
+    const dt   = new Date(j.created_at).toLocaleDateString('ko-KR');
+    const loc  = [j.location_sido, j.location_gu].filter(Boolean).join(' ');
+    const lvi  = j.alert_level || 2;
+    const lvcf = SC_LEVEL[lvi] || SC_LEVEL[2];
+    const lvBadge = `<span class="badge ${lvcf.cls}">${lvcf.icon} ${lvcf.label}</span>`;
+    const nameCell = j.name
+      ? `<strong>${j.name}</strong>`
+      : `<span style="color:#9CA3AF">미입력</span>`;
+    const phoneCell = j.contact_phone
+      ? `<a href="tel:${j.contact_phone}" style="color:#2563EB">${j.contact_phone}</a>`
+      : `<span style="color:#9CA3AF">-</span>`;
     return `<tr>
       <td class="row-num">${i + 1}</td>
-      <td><strong>${j.name}</strong></td>
+      <td>${lvBadge}</td>
+      <td>${nameCell}</td>
       <td>${j.age_range || '-'}</td>
       <td>${loc || '-'}</td>
-      <td>${j.desired_job}</td>
-      <td style="font-size:.78rem;max-width:160px;white-space:normal">${exp || '-'}</td>
-      <td style="white-space:nowrap">${j.contact_phone}</td>
+      <td style="max-width:140px;white-space:normal">${j.desired_job || '-'}</td>
+      <td style="white-space:nowrap">${phoneCell}</td>
       <td style="white-space:nowrap;font-size:.8rem">${dt}</td>
     </tr>`;
   }).join('');
+}
+
+function exportSeekerCsv() {
+  const lv  = document.getElementById('scLvFilter').value;
+  const rgn = document.getElementById('scRegionFilter').value;
+  const kw  = document.getElementById('scSearch').value.trim().toLowerCase();
+  const list = allSeekerCards.filter(j => {
+    if (lv  && String(j.alert_level||2) !== lv) return false;
+    if (rgn && j.location_sido !== rgn) return false;
+    if (kw  && !((j.name||'')+(j.desired_job||'')+(j.location_sido||'')+(j.contact_phone||'')).toLowerCase().includes(kw)) return false;
+    return true;
+  });
+  if (!list.length) { alert('내보낼 데이터가 없습니다.'); return; }
+  const header = ['#','단계','이름','연령대','시/도','구/군','희망직종','전화번호','등록일'];
+  const rows = list.map((j, i) => {
+    const lvi = SC_LEVEL[j.alert_level||2] || SC_LEVEL[2];
+    return [
+      i+1, `${lvi.icon}${lvi.label}`,
+      j.name||'', j.age_range||'',
+      j.location_sido||'', j.location_gu||'',
+      j.desired_job||'', j.contact_phone||'',
+      new Date(j.created_at).toLocaleDateString('ko-KR')
+    ];
+  });
+  const csv = [header, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' }));
+  a.download = `구직카드_${new Date().toLocaleDateString('ko-KR').replace(/\. /g,'-').replace('.','')}.csv`;
+  a.click();
 }
 </script>
 </body>
