@@ -87,7 +87,7 @@
     <a class="back-link" href="jobs.html">← 채용공고로</a>
   </div>
   <div class="header-title">공고 직접 등록</div>
-  <div class="header-desc">동네 어르신·시니어 채용 공고를 무료로 등록하세요</div>
+  <div class="header-desc">우리 동네 구직자에게 직접 닿는 채용 공고, 무료로 올리세요</div>
 </header>
 
 <div class="wrap">
@@ -98,7 +98,7 @@
     <ul class="benefit-list">
       <li>지역 공고 목록 <strong>최상단</strong>에 고정 노출</li>
       <li><strong>동네로 인증</strong> 블루 체크 배지 부착</li>
-      <li>관리자 승인 후 즉시 게시 (현재 무료)</li>
+      <li>완전 무료 · 관리자 승인 후 즉시 게시</li>
       <li>승인 완료 기업은 구직자 카드 열람 가능</li>
     </ul>
   </div>
@@ -132,7 +132,7 @@
       <div class="section-title">📋 공고 정보</div>
       <div class="form-group">
         <label class="form-label" for="jobTitle">공고 제목 <span class="form-req">*</span></label>
-        <input class="form-input" id="jobTitle" type="text" placeholder="예: 어르신 돌봄 요양보호사 모집" />
+        <input class="form-input" id="jobTitle" type="text" placeholder="예: 요양보호사 구합니다, 경비원 모집" />
       </div>
       <div class="form-group">
         <label class="form-label" for="jobDescription">공고 내용 <span class="form-req">*</span></label>
@@ -184,15 +184,21 @@
       </div>
       <div class="form-group">
         <label class="form-label" for="deadline">모집 마감일</label>
-        <input class="form-input" id="deadline" type="text" placeholder="예: 2025-12-31 또는 상시모집" />
-        <span class="form-hint">YYYY-MM-DD 형식 또는 '상시모집'</span>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <input class="form-input" id="deadline" type="date" style="flex:1;min-width:150px;max-width:220px" />
+          <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.92rem;font-weight:700;white-space:nowrap">
+            <input type="checkbox" id="alwaysOpen" onchange="toggleAlwaysOpen()"
+                   style="width:18px;height:18px;accent-color:#2563EB;cursor:pointer">
+            상시모집
+          </label>
+        </div>
       </div>
     </div>
 
     <div class="notice-box">
       <strong>📌 등록 안내</strong>
-      관리자 검토 후 승인된 공고가 게시됩니다. 승인 완료 시 이메일로 안내드립니다.<br>
-      등록 후 발급되는 <strong>기업 토큰</strong>을 보관해 두시면 구직자 카드를 열람할 수 있습니다.
+      관리자 검토 후 승인되면 채용공고 목록 최상단에 바로 노출됩니다.<br>
+      등록 후 발급되는 <strong>기업 토큰</strong>을 저장해 두시면 구직자 카드를 열람하실 수 있습니다.
     </div>
 
     <button class="submit-btn" id="submitBtn" onclick="submitJob()">공고 등록 신청</button>
@@ -225,6 +231,13 @@ const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
 let selectedType = '';
 let isSubmitting = false;
 
+function toggleAlwaysOpen() {
+  const cb = document.getElementById('alwaysOpen');
+  const inp = document.getElementById('deadline');
+  inp.disabled = cb.checked;
+  if (cb.checked) inp.value = '';
+}
+
 function selectType(btn) {
   document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -244,7 +257,8 @@ async function submitJob() {
   const salary          = document.getElementById('salary').value.trim();
   const work_hours      = document.getElementById('workHours').value.trim();
   const website         = document.getElementById('website').value.trim();
-  let   deadline        = document.getElementById('deadline').value.trim();
+  const alwaysOpen = document.getElementById('alwaysOpen').checked;
+  let   deadline   = alwaysOpen ? '상시모집' : (document.getElementById('deadline').value || null);
 
   if (!company_name) return alert('회사명을 입력해 주세요.');
   if (!contact_email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact_email))
@@ -252,9 +266,6 @@ async function submitJob() {
   if (!job_title) return alert('공고 제목을 입력해 주세요.');
   if (!job_description) return alert('공고 내용을 입력해 주세요.');
   if (!location_sido) return alert('근무 지역(시/도)을 선택해 주세요.');
-
-  if (deadline && deadline !== '상시모집' && !/^\d{4}-\d{2}-\d{2}$/.test(deadline))
-    return alert('마감일은 YYYY-MM-DD 형식 또는 "상시모집"으로 입력해 주세요.');
 
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;

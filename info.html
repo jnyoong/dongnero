@@ -111,6 +111,8 @@
     .drawer-item-title.active-title { color: var(--blue); }
     .drawer-item-desc  { font-size: .75rem; color: var(--text-sec); margin-top: 2px; }
     .drawer-sep { height: 1px; background: var(--border); margin: 4px 20px; }
+    .drawer-item-action { background: #FFF4EE; }
+    .drawer-item-action:active { background: #FFE8D6; }
 
     /* ── 헤더 ── */
     header {
@@ -395,11 +397,12 @@
           <div class="drawer-item-desc">시/도 지역을 다시 선택해요</div>
         </div>
       </a>
+      <div class="drawer-sep"></div>
       <a class="drawer-item" href="jobs.html">
         <span class="drawer-item-icon">💼</span>
         <div class="drawer-item-body">
           <div class="drawer-item-title">채용공고</div>
-          <div class="drawer-item-desc">시니어 일자리 공고 모아보기</div>
+          <div class="drawer-item-desc">내 동네 일자리 공고 모아보기</div>
         </div>
       </a>
       <div class="drawer-sep"></div>
@@ -416,6 +419,22 @@
         <div class="drawer-item-body">
           <div class="drawer-item-title">홈 화면에 추가</div>
           <div class="drawer-item-desc">앱처럼 바로 실행할 수 있어요</div>
+        </div>
+      </a>
+      <div class="drawer-sep"></div>
+      <a class="drawer-item drawer-item-action" href="company-job-form.html">
+        <span class="drawer-item-icon">📝</span>
+        <div class="drawer-item-body">
+          <div class="drawer-item-title">공고 직접 등록</div>
+          <div class="drawer-item-desc">기업 담당자 — 무료 공고 등록</div>
+        </div>
+      </a>
+      <div class="drawer-sep"></div>
+      <a class="drawer-item drawer-item-action" href="seeker-card-form.html">
+        <span class="drawer-item-icon">🔔</span>
+        <div class="drawer-item-body">
+          <div class="drawer-item-title">구직카드 · 알림 신청</div>
+          <div class="drawer-item-desc">구직자 — 알림 받고 기업 제안 받기</div>
         </div>
       </a>
     </nav>

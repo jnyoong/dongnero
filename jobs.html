@@ -124,6 +124,8 @@
     .drawer-item-title { font-size: .97rem; font-weight: 700; }
     .drawer-item-desc  { font-size: .75rem; color: var(--text-sec); margin-top: 2px; }
     .drawer-sep { height: 1px; background: var(--border); margin: 4px 20px; }
+    .drawer-item-action { background: #FFF4EE; }
+    .drawer-item-action:active { background: #FFE8D6; }
 
     /* ── 헤더 래퍼 (헤더+툴바 통째로 고정) ── */
     .sticky-top {
@@ -1109,7 +1111,7 @@
         </div>
       </a>
       <div class="drawer-sep"></div>
-      <a class="drawer-item" href="company-job-form.html">
+      <a class="drawer-item drawer-item-action" href="company-job-form.html">
         <span class="drawer-item-icon">📝</span>
         <div class="drawer-item-body">
           <div class="drawer-item-title">공고 직접 등록</div>
@@ -1117,8 +1119,8 @@
         </div>
       </a>
       <div class="drawer-sep"></div>
-      <button class="drawer-item" onclick="closeDrawer(); if(window.openNotifyModal) openNotifyModal();">
-        <span class="drawer-item-icon">💼</span>
+      <button class="drawer-item drawer-item-action" onclick="closeDrawer(); if(window.openNotifyModal) openNotifyModal();">
+        <span class="drawer-item-icon">🔔</span>
         <div class="drawer-item-body">
           <div class="drawer-item-title">구직카드 · 알림 신청</div>
           <div class="drawer-item-desc">구직자 — 알림 받고 기업 제안 받기</div>
