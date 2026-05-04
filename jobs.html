@@ -700,47 +700,28 @@
     .notify-success-msg  { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
     .notify-success-sub  { font-size: .92rem; color: var(--text-sec); line-height: 1.65; white-space: pre-line; }
 
-    /* ── 레벨 슬라이더 ── */
-    .level-slider-wrap { margin: 14px 0 6px; }
-    .level-slider {
-      position: relative; display: flex; justify-content: space-between;
-      align-items: flex-start; margin-bottom: 14px;
-    }
-    .level-slider::before {
-      content: ''; position: absolute; top: 12px; left: 12%; right: 12%;
-      height: 4px; background: var(--border); border-radius: 2px; z-index: 0;
-    }
-    .level-track-fill {
-      position: absolute; top: 12px; left: 12%; height: 4px;
-      background: var(--orange); border-radius: 2px; z-index: 0;
-      width: 0%; transition: width .35s cubic-bezier(.4,0,.2,1);
-    }
-    .level-node {
-      display: flex; flex-direction: column; align-items: center;
-      cursor: pointer; gap: 5px; z-index: 1; user-select: none; flex: 1;
+    /* ── 레벨 카드 선택 ── */
+    .level-cards-wrap { display: flex; flex-direction: column; gap: 9px; margin: 14px 0 16px; }
+    .level-card {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px;
+      border: 2px solid var(--border); border-radius: 14px;
+      background: var(--bg); cursor: pointer; user-select: none;
+      transition: border-color .15s, background .15s;
       -webkit-tap-highlight-color: transparent;
+      text-align: left; width: 100%; font-family: inherit;
     }
-    .level-dot {
-      width: 26px; height: 26px; border-radius: 50%;
-      border: 3px solid var(--border); background: var(--surface);
-      display: flex; align-items: center; justify-content: center;
-      transition: all .22s; flex-shrink: 0;
+    .level-card:active { opacity: .85; }
+    .level-card.active { border-color: var(--orange); background: var(--orange-lt); }
+    .level-card-icon { font-size: 1.9rem; flex-shrink: 0; line-height: 1; }
+    .level-card-main {
+      font-size: 1rem; font-weight: 800; color: var(--text-pri); line-height: 1.3;
     }
-    .level-node.active .level-dot {
-      border-color: var(--orange); background: var(--orange);
-      box-shadow: 0 0 0 5px rgba(234,88,12,.15);
+    .level-card.active .level-card-main { color: var(--orange); }
+    .level-card-sub {
+      font-size: .78rem; color: var(--text-sec); margin-top: 4px; line-height: 1.4;
     }
-    .level-node-step { font-size: .68rem; font-weight: 700; color: var(--text-ter); letter-spacing: -.2px; }
-    .level-node.active .level-node-step { color: var(--orange); }
-    .level-node-name { font-size: .78rem; font-weight: 800; color: var(--text-ter); text-align: center; }
-    .level-node.active .level-node-name { color: var(--orange); }
-
-    .level-desc-box {
-      background: #FFF4EE; border: 1.5px solid #FED7AA; border-radius: 12px;
-      padding: 11px 14px; font-size: .88rem; color: #C2410C;
-      line-height: 1.65; margin-bottom: 14px;
-    }
-    .level-desc-box strong { font-weight: 800; }
+    .level-card.active .level-card-sub { color: #C2410C; }
 
     /* 선택 버튼 행 */
     .nform-btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -840,27 +821,29 @@
       <div class="notify-title">내 동네 일자리 정보 받기</div>
       <p class="notify-desc">간단한 구직카드 하나로<br>새 일자리 알림부터 기업 제안까지 받아보세요</p>
 
-      <!-- ── 레벨 슬라이더 ── -->
-      <div class="level-slider-wrap">
-        <div class="level-slider" id="levelSlider">
-          <div class="level-track-fill" id="levelFill"></div>
-          <div class="level-node active" data-lv="1" onclick="setLevel(1)">
-            <div class="level-dot"></div>
-            <span class="level-node-step">1단계</span>
-            <span class="level-node-name">정보보기</span>
+      <!-- ── 참여 방법 선택 ── -->
+      <div class="level-cards-wrap">
+        <button type="button" class="level-card" data-lv="1" onclick="setLevel(1)">
+          <span class="level-card-icon">👀</span>
+          <div>
+            <div class="level-card-main">그냥 정보만 볼게요</div>
+            <div class="level-card-sub">알림이나 연락은 필요없어요</div>
           </div>
-          <div class="level-node" data-lv="2" onclick="setLevel(2)">
-            <div class="level-dot"></div>
-            <span class="level-node-step">2단계</span>
-            <span class="level-node-name">알림받기</span>
+        </button>
+        <button type="button" class="level-card active" data-lv="2" onclick="setLevel(2)">
+          <span class="level-card-icon">🔔</span>
+          <div>
+            <div class="level-card-main">새 일자리 나오면 알려주세요</div>
+            <div class="level-card-sub">맞는 공고가 나오면 문자로 알려드려요</div>
           </div>
-          <div class="level-node" data-lv="3" onclick="setLevel(3)">
-            <div class="level-dot"></div>
-            <span class="level-node-step">3단계</span>
-            <span class="level-node-name">적극구직</span>
+        </button>
+        <button type="button" class="level-card" data-lv="3" onclick="setLevel(3)">
+          <span class="level-card-icon">💼</span>
+          <div>
+            <div class="level-card-main">업체에서 먼저 연락오게 해주세요</div>
+            <div class="level-card-sub">동네로 인증 기업에게만 구직카드 공개 · 완전 무료</div>
           </div>
-        </div>
-        <div class="level-desc-box" id="levelDescBox"></div>
+        </button>
       </div>
 
       <form id="notifyForm" novalidate>
@@ -1271,41 +1254,21 @@ function updateDistricts() {
   let selectedJobTypes = [];
 
   const LEVEL_CFG = {
-    1: {
-      fillW: '0%',
-      desc: '<strong>👀 정보만 보기</strong> — 연락은 필요 없어요. 조용히 내 동네 일자리 정보를 둘러보세요.',
-      btn: '등록하기',
-      success: { icon:'👀', msg:'등록됐습니다!', sub:'동네 일자리 정보를 자유롭게 둘러보세요.\n나중에 알림 단계를 언제든지 높일 수 있어요.' }
-    },
-    2: {
-      fillW: '38%',
-      desc: '<strong>🔔 알림 받기</strong> — 내 동네에 새 일자리가 나오면 문자로 바로 알려드릴게요.',
-      btn: '알림 신청하기',
-      success: { icon:'🔔', msg:'알림 신청 완료!', sub:'내 동네에 새 일자리가 나오면\n문자로 바로 알려드릴게요.' }
-    },
-    3: {
-      fillW: '76%',
-      desc: '<strong>💼 적극 구직 (무료)</strong> — 동네로 인증 기업 담당자에게만 구직카드가 공개돼요. 원치 않으면 언제든 삭제 가능해요.',
-      btn: '구직카드 무료 등록하기',
-      success: { icon:'💼', msg:'구직카드 등록 완료!', sub:'동네로 인증 기업 담당자만 구직카드를 볼 수 있어요.\n담당자가 직접 연락드릴 거예요.' }
-    }
+    1: { btn: '등록하기',              success: { icon:'👀', msg:'등록됐습니다!',       sub:'동네 일자리 정보를 자유롭게 둘러보세요.\n나중에 언제든 알림으로 업그레이드할 수 있어요.' } },
+    2: { btn: '알림 신청하기',         success: { icon:'🔔', msg:'알림 신청 완료!',     sub:'내 동네에 새 일자리가 나오면\n문자로 바로 알려드릴게요.' } },
+    3: { btn: '구직카드 무료 등록하기', success: { icon:'💼', msg:'구직카드 등록 완료!', sub:'동네로 인증 기업 담당자만 구직카드를 볼 수 있어요.\n담당자가 직접 연락드릴 거예요.' } }
   };
 
   window.setLevel = function(lv) {
     currentLevel = lv;
-    const cfg = LEVEL_CFG[lv];
-    document.querySelectorAll('.level-node').forEach(n =>
-      n.classList.toggle('active', parseInt(n.dataset.lv) <= lv)
+    document.querySelectorAll('.level-card').forEach(c =>
+      c.classList.toggle('active', parseInt(c.dataset.lv) === lv)
     );
-    document.getElementById('levelFill').style.width = cfg.fillW;
-    document.getElementById('levelDescBox').innerHTML = cfg.desc;
     document.querySelectorAll('.lv2-field').forEach(el => el.style.display = lv >= 2 ? 'flex' : 'none');
     document.querySelectorAll('.lv3-field').forEach(el => el.style.display = lv >= 3 ? 'flex' : 'none');
-    // 나이: 1·2단계=연령대버튼, 3단계=만 나이 숫자 입력
     document.getElementById('ageRangeGroup').style.display = lv >= 3 ? 'none' : 'flex';
-    // lv3-notice는 row 방향이므로 별도 처리
-    document.getElementById('lv3Notice').style.display = lv >= 3 ? 'flex' : 'none';
-    submitBtn.textContent = cfg.btn;
+    document.getElementById('lv3Notice').style.display     = lv >= 3 ? 'flex' : 'none';
+    submitBtn.textContent = LEVEL_CFG[lv].btn;
   };
 
   window.selectAge = function(btn) {
