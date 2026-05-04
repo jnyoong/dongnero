@@ -1082,7 +1082,6 @@
         </div>
       </a>
       <div class="drawer-sep"></div>
-      <div class="drawer-sep"></div>
       <a class="drawer-item" href="info.html">
         <span class="drawer-item-icon">📰</span>
         <div class="drawer-item-body">
@@ -1112,14 +1111,6 @@
         <div class="drawer-item-body">
           <div class="drawer-item-title">구직카드 · 알림 신청</div>
           <div class="drawer-item-desc">구직자 — 알림 받고 기업 제안 받기</div>
-        </div>
-      </button>
-      <div class="drawer-sep"></div>
-      <button class="drawer-item" id="drawerNotifyBtn">
-        <span class="drawer-item-icon">🔔</span>
-        <div class="drawer-item-body">
-          <div class="drawer-item-title">일자리 알림 받기</div>
-          <div class="drawer-item-desc">새 공고를 문자로 알려드려요</div>
         </div>
       </button>
     </nav>
@@ -1933,10 +1924,6 @@ function closeDrawer() {
 }
 document.getElementById('drawerOverlay').addEventListener('click', e => {
   if (e.target === document.getElementById('drawerOverlay')) closeDrawer();
-});
-document.getElementById('drawerNotifyBtn').addEventListener('click', () => {
-  closeDrawer();
-  if (window.openNotifyModal) window.openNotifyModal();
 });
 
 document.getElementById('rsheetClose').addEventListener('click', closeRegionSheet);
