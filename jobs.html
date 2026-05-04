@@ -862,10 +862,6 @@
 
       <form id="notifyForm" novalidate>
 
-        <!-- 3단계 안내 박스 (필드 위) -->
-        <div class="lv3-field lv3-notice" id="lv3Notice">
-          <span>✓ 동네로 인증 기업에게<strong>만</strong> 공개됩니다</span>
-        </div>
 
         <!-- 이름 (3단계) -->
         <div class="nform-group lv3-field" id="nameGroup">
@@ -1294,7 +1290,6 @@ function updateDistricts() {
     document.querySelectorAll('.lv2-field').forEach(el => el.style.display = lv >= 2 ? 'flex' : 'none');
     document.querySelectorAll('.lv3-field').forEach(el => el.style.display = lv >= 3 ? 'flex' : 'none');
     document.getElementById('ageRangeGroup').style.display = lv >= 3 ? 'none' : 'flex';
-    document.getElementById('lv3Notice').style.display     = lv >= 3 ? 'flex' : 'none';
     submitBtn.textContent = LEVEL_CFG[lv].btn;
   };
 
