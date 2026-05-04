@@ -121,41 +121,19 @@
     <div class="admin-title">⚙️ 동네로 관리자</div>
     <div class="admin-actions">
       <button class="btn btn-blue"  id="btnRefresh">새로고침</button>
-      <button class="btn btn-green" id="btnCsv">CSV 다운로드</button>
       <button class="btn btn-gray"  id="btnLogout">로그아웃</button>
     </div>
   </div>
 
   <div class="tabs">
-    <div class="tab active" data-tab="signups">📋 알림 신청 <span id="tabSignupCount"></span></div>
-    <div class="tab" data-tab="jobs">📰 공고 목록 <span id="tabJobCount"></span></div>
+    <div class="tab active" data-tab="jobs">📰 공고 목록 <span id="tabJobCount"></span></div>
     <div class="tab" data-tab="excluded">🚫 필터링 제외 <span id="tabExCount"></span></div>
     <div class="tab" data-tab="companyjobs">📝 기업공고 <span id="tabCjCount"></span></div>
     <div class="tab" data-tab="seekercards">💼 구직카드 <span id="tabScCount"></span></div>
   </div>
 
-  <!-- 탭1: 알림 신청 (레거시) -->
-  <div class="tab-panel active" id="panel-signups">
-    <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:10px 14px;font-size:.82rem;color:#92400E;margin-bottom:14px">
-      ⚠️ <strong>구버전 알림 신청 데이터</strong> — 2026-05-04 이후 신규 등록자는 <strong>💼 구직카드 탭</strong>에서 확인하세요.
-    </div>
-    <div class="summary-row">
-      <div class="summary-chip"><strong id="totalCount">-</strong>총 신청</div>
-      <div class="summary-chip"><strong id="todayCount">-</strong>오늘 신청</div>
-      <div class="summary-chip"><strong id="lastDate">-</strong>최근 신청일</div>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr>
-          <th>#</th><th>전화번호</th><th>나이</th><th>일자리 유형</th><th>선호 지역</th><th>신청일시</th>
-        </tr></thead>
-        <tbody id="signupBody"><tr><td colspan="6" class="loading">불러오는 중…</td></tr></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- 탭2: 공고 목록 -->
-  <div class="tab-panel" id="panel-jobs">
+  <!-- 탭1: 공고 목록 -->
+  <div class="tab-panel active" id="panel-jobs">
     <div class="summary-row">
       <div class="summary-chip"><strong id="jobTotal">-</strong>전체 공고</div>
       <div class="summary-chip"><strong id="jobUpdated">-</strong>업데이트</div>
@@ -371,7 +349,7 @@ const SUPABASE_URL = 'https://riomousxlyvwmembuhvc.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
 const ADMIN_PW     = 'dongnero2024';
 
-let allSignups = [], allJobs = [], allExcluded = [];
+let allJobs = [], allExcluded = [];
 let jobPage = 1;
 const JOB_PER_PAGE = 200;
 
@@ -403,7 +381,6 @@ function tryLogin() {
   if (document.getElementById('pwInput').value === ADMIN_PW) {
     document.getElementById('loginWrap').style.display = 'none';
     document.getElementById('adminWrap').style.display = 'block';
-    loadSignups();
     loadJobData();
     loadCompanyJobs();
     loadSeekerCards();
@@ -424,48 +401,6 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
   });
 });
-
-/* ── 알림 신청 로드 ── */
-async function loadSignups() {
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/notify_signups?select=*&order=created_at.desc`, {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
-    });
-    allSignups = await res.json();
-    renderSignups();
-    renderSignupSummary();
-    document.getElementById('tabSignupCount').textContent = `(${allSignups.length})`;
-  } catch(e) {
-    document.getElementById('signupBody').innerHTML = '<tr><td colspan="6" class="empty-msg">불러오기 실패</td></tr>';
-  }
-}
-
-function renderSignups() {
-  if (!allSignups.length) {
-    document.getElementById('signupBody').innerHTML = '<tr><td colspan="6" class="empty-msg">신청 내역이 없습니다.</td></tr>';
-    return;
-  }
-  document.getElementById('signupBody').innerHTML = allSignups.map((row, i) => {
-    const dt = new Date(row.created_at);
-    const dateStr = dt.toLocaleDateString('ko-KR') + ' ' + dt.toLocaleTimeString('ko-KR', {hour:'2-digit', minute:'2-digit'});
-    const loc = [row.preferred_region, row.preferred_district].filter(Boolean).join(' ') || row.region || '전체';
-    return `<tr>
-      <td class="row-num">${allSignups.length - i}</td>
-      <td>${row.phone || '-'}</td>
-      <td>${row.age || '-'}세</td>
-      <td>${row.job_types || '-'}</td>
-      <td><span class="badge badge-blue">${loc}</span></td>
-      <td>${dateStr}</td>
-    </tr>`;
-  }).join('');
-}
-
-function renderSignupSummary() {
-  document.getElementById('totalCount').textContent = allSignups.length;
-  const today = new Date().toLocaleDateString('ko-KR');
-  document.getElementById('todayCount').textContent = allSignups.filter(r => new Date(r.created_at).toLocaleDateString('ko-KR') === today).length;
-  if (allSignups.length) document.getElementById('lastDate').textContent = new Date(allSignups[0].created_at).toLocaleDateString('ko-KR');
-}
 
 /* ── 공고 데이터 로드 ── */
 function loadJobData() {
@@ -765,22 +700,7 @@ function downloadWhitelistJs() {
   a.click();
 }
 
-/* ── CSV ── */
-document.getElementById('btnCsv').addEventListener('click', () => {
-  if (!allSignups.length) { alert('데이터가 없습니다.'); return; }
-  const header = ['번호','전화번호','나이','일자리유형','선호지역','신청일시'];
-  const rows = allSignups.map((r, i) => {
-    const loc = [r.preferred_region, r.preferred_district].filter(Boolean).join(' ') || r.region || '전체';
-    return [allSignups.length - i, r.phone||'', r.age||'', r.job_types||'', loc, new Date(r.created_at).toLocaleString('ko-KR')];
-  });
-  const csv = [header, ...rows].map(r => r.join(',')).join('\n');
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' }));
-  a.download = `알림신청_${new Date().toLocaleDateString('ko-KR').replace(/\. /g,'-').replace('.','')}.csv`;
-  a.click();
-});
-
-document.getElementById('btnRefresh').addEventListener('click', () => { loadSignups(); loadJobData(); loadCompanyJobs(); loadSeekerCards(); });
+document.getElementById('btnRefresh').addEventListener('click', () => { loadJobData(); loadCompanyJobs(); loadSeekerCards(); });
 
 /* ── 기업 직접 공고 ── */
 let allCompanyJobs = [];
