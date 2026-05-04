@@ -688,12 +688,72 @@
       padding: 17px; font-size: 1.05rem; font-weight: 800;
       cursor: pointer; font-family: inherit; width: 100%;
       box-shadow: 0 4px 16px rgba(234,88,12,.3);
+      transition: background .15s;
     }
+    .notify-submit:hover { background: #c2410c; }
     .notify-submit:disabled { background: var(--border); color: var(--text-ter); cursor: not-allowed; box-shadow: none; }
     .notify-success { text-align: center; padding: 28px 0 8px; display: none; }
     .notify-success-icon { font-size: 3.8rem; margin-bottom: 14px; }
     .notify-success-msg  { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
-    .notify-success-sub  { font-size: .92rem; color: var(--text-sec); line-height: 1.65; }
+    .notify-success-sub  { font-size: .92rem; color: var(--text-sec); line-height: 1.65; white-space: pre-line; }
+
+    /* ── 레벨 슬라이더 ── */
+    .level-slider-wrap { margin: 14px 0 6px; }
+    .level-slider {
+      position: relative; display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 14px;
+    }
+    .level-slider::before {
+      content: ''; position: absolute; top: 12px; left: 12%; right: 12%;
+      height: 4px; background: var(--border); border-radius: 2px; z-index: 0;
+    }
+    .level-track-fill {
+      position: absolute; top: 12px; left: 12%; height: 4px;
+      background: var(--orange); border-radius: 2px; z-index: 0;
+      width: 0%; transition: width .35s cubic-bezier(.4,0,.2,1);
+    }
+    .level-node {
+      display: flex; flex-direction: column; align-items: center;
+      cursor: pointer; gap: 5px; z-index: 1; user-select: none; flex: 1;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .level-dot {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 3px solid var(--border); background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      transition: all .22s; flex-shrink: 0;
+    }
+    .level-node.active .level-dot {
+      border-color: var(--orange); background: var(--orange);
+      box-shadow: 0 0 0 5px rgba(234,88,12,.15);
+    }
+    .level-node-step { font-size: .68rem; font-weight: 700; color: var(--text-ter); letter-spacing: -.2px; }
+    .level-node.active .level-node-step { color: var(--orange); }
+    .level-node-name { font-size: .78rem; font-weight: 800; color: var(--text-ter); text-align: center; }
+    .level-node.active .level-node-name { color: var(--orange); }
+
+    .level-desc-box {
+      background: #FFF4EE; border: 1.5px solid #FED7AA; border-radius: 12px;
+      padding: 11px 14px; font-size: .88rem; color: #C2410C;
+      line-height: 1.65; margin-bottom: 14px;
+    }
+    .level-desc-box strong { font-weight: 800; }
+
+    /* 선택 버튼 행 */
+    .nform-btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .nform-opt-btn {
+      flex: 1; min-width: 60px; padding: 10px 8px;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      background: var(--bg); font-size: .9rem; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: all .15s; text-align: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nform-opt-btn.active { border-color: var(--orange); background: var(--orange-lt); color: var(--orange); }
+    .nform-region-row { display: flex; flex-direction: column; gap: 8px; }
+
+    /* 레벨별 조건부 필드 */
+    .lv2-field { display: none; }
+    .lv3-field { display: none; }
 
     .nform-hint { font-size: .78rem; margin-top: 4px; display: block; min-height: 1.2em; }
     .nform-checkbox-row { display: flex; gap: 20px; padding: 6px 0; flex-wrap: wrap; }
@@ -749,50 +809,64 @@
   </div>
 </div>
 
-<!-- 알림 신청 플로팅 버튼 -->
-<button class="notify-fab" id="notifyFab" aria-label="새 일자리 알림 신청">
-  🔔 새 일자리 알림 받기
+<!-- 알림·구직카드 플로팅 버튼 -->
+<button class="notify-fab" id="notifyFab" aria-label="구직카드 등록 및 알림 신청">
+  🔔 구직카드 · 알림 신청
 </button>
 
-<!-- 알림 신청 모달 -->
+<!-- 구직카드 / 알림 통합 모달 -->
 <div class="notify-overlay" id="notifyOverlay" role="dialog" aria-modal="true">
   <div class="notify-sheet">
     <div class="notify-drag"></div>
     <div class="notify-head-row">
       <button class="notify-close" id="notifyClose">✕</button>
     </div>
+
     <div id="notifyFormWrap">
-      <div class="notify-icon">🔔</div>
-      <div class="notify-title">새 일자리 나오면 알려드릴게요!</div>
-      <p class="notify-desc">아래 정보를 남겨주시면<br>새 공고가 올라올 때 문자로 알려드려요.</p>
-      <form id="notifyForm" novalidate>
-        <div class="nform-group">
-          <label class="nform-label" for="inputPhone">전화번호 <span class="nform-req">*</span></label>
-          <input class="nform-input" id="inputPhone" type="tel" name="phone"
-                 placeholder="010-0000-0000" autocomplete="tel"
-                 inputmode="tel" maxlength="13" required>
-          <span class="nform-hint" id="phoneHint"></span>
-        </div>
-        <div class="nform-group">
-          <label class="nform-label" for="inputAge">나이 <span class="nform-req">*</span></label>
-          <input class="nform-input" id="inputAge" type="number" name="age"
-                 placeholder="예: 58" min="40" max="90" inputmode="numeric" required>
-        </div>
-        <div class="nform-group">
-          <div class="nform-label">원하시는 일자리 유형 <span class="nform-req">*</span></div>
-          <div class="nform-checkbox-row">
-            <label class="nform-check">
-              <input type="checkbox" id="typeRegular"> 정규직
-            </label>
-            <label class="nform-check">
-              <input type="checkbox" id="typePart"> 시간제·알바
-            </label>
+      <div class="notify-title">내 동네 일자리 정보 받기</div>
+      <p class="notify-desc">간단한 구직카드 하나로<br>새 일자리 알림부터 기업 제안까지 받아보세요</p>
+
+      <!-- ── 레벨 슬라이더 ── -->
+      <div class="level-slider-wrap">
+        <div class="level-slider" id="levelSlider">
+          <div class="level-track-fill" id="levelFill"></div>
+          <div class="level-node active" data-lv="1" onclick="setLevel(1)">
+            <div class="level-dot"></div>
+            <span class="level-node-step">1단계</span>
+            <span class="level-node-name">정보보기</span>
+          </div>
+          <div class="level-node" data-lv="2" onclick="setLevel(2)">
+            <div class="level-dot"></div>
+            <span class="level-node-step">2단계</span>
+            <span class="level-node-name">알림받기</span>
+          </div>
+          <div class="level-node" data-lv="3" onclick="setLevel(3)">
+            <div class="level-dot"></div>
+            <span class="level-node-step">3단계</span>
+            <span class="level-node-name">적극구직</span>
           </div>
         </div>
+        <div class="level-desc-box" id="levelDescBox"></div>
+      </div>
+
+      <form id="notifyForm" novalidate>
+
+        <!-- 연령대 (항상) -->
         <div class="nform-group">
-          <div class="nform-label">선호 지역 <span style="font-weight:400;color:var(--text-ter)">(선택)</span></div>
+          <div class="nform-label">연령대 <span class="nform-req">*</span></div>
+          <div class="nform-btn-row" id="ageRow">
+            <button type="button" class="nform-opt-btn" data-val="50대" onclick="selectAge(this)">50대</button>
+            <button type="button" class="nform-opt-btn" data-val="60대" onclick="selectAge(this)">60대</button>
+            <button type="button" class="nform-opt-btn" data-val="70대" onclick="selectAge(this)">70대</button>
+            <button type="button" class="nform-opt-btn" data-val="80대이상" onclick="selectAge(this)">80대↑</button>
+          </div>
+        </div>
+
+        <!-- 희망 지역 (항상) -->
+        <div class="nform-group">
+          <div class="nform-label">희망 지역</div>
           <div class="nform-region-row">
-            <select class="nform-select" id="regionSelect" onchange="updateDistricts()">
+            <select class="nform-input" id="regionSelect" onchange="updateDistricts()" style="padding:12px 14px">
               <option value="">시/도 선택</option>
               <option>서울</option><option>경기</option><option>인천</option>
               <option>부산</option><option>대구</option><option>광주</option>
@@ -801,29 +875,60 @@
               <option>전북</option><option>전남</option><option>경북</option>
               <option>경남</option><option>제주</option>
             </select>
-            <select class="nform-select" id="districtSelect" disabled>
+            <select class="nform-input" id="districtSelect" disabled style="padding:12px 14px">
               <option value="">구/군/시 선택</option>
             </select>
           </div>
         </div>
+
+        <!-- 일자리 유형 (2단계+) -->
+        <div class="nform-group lv2-field" id="jobTypeGroup">
+          <div class="nform-label">원하는 일자리 유형</div>
+          <div class="nform-btn-row">
+            <button type="button" class="nform-opt-btn" data-val="정규직" onclick="toggleJobType(this)">정규직</button>
+            <button type="button" class="nform-opt-btn" data-val="시간제·알바" onclick="toggleJobType(this)">시간제·알바</button>
+          </div>
+        </div>
+
+        <!-- 전화번호 (2단계+) -->
+        <div class="nform-group lv2-field" id="phoneGroup">
+          <label class="nform-label" for="inputPhone">전화번호 <span class="nform-req">*</span></label>
+          <input class="nform-input" id="inputPhone" type="tel" name="phone"
+                 placeholder="010-0000-0000" autocomplete="tel" inputmode="tel" maxlength="13">
+          <span class="nform-hint" id="phoneHint"></span>
+        </div>
+
+        <!-- 이름 (3단계) -->
+        <div class="nform-group lv3-field" id="nameGroup">
+          <label class="nform-label" for="inputName">이름 <span class="nform-req">*</span></label>
+          <input class="nform-input" id="inputName" type="text" placeholder="예: 홍길동" autocomplete="name">
+        </div>
+
+        <!-- 희망 직종 (3단계) -->
+        <div class="nform-group lv3-field" id="desiredJobGroup">
+          <label class="nform-label" for="inputDesiredJob">희망 직종 <span class="nform-req">*</span></label>
+          <input class="nform-input" id="inputDesiredJob" type="text" placeholder="예: 요양보호사, 경비, 사무보조">
+        </div>
+
         <div class="nform-consent">
           <div class="nform-consent-title">📋 개인정보 수집·이용 동의 (<a href="privacy.html" target="_blank" style="color:var(--blue);font-weight:400">전문 보기</a>)</div>
-          · 수집 항목: 전화번호, 나이, 선호 일자리 유형, 선호 지역<br>
-          · 이용 목적: 채용 공고 알림 문자 발송<br>
-          · 보유 기간: 동의 철회 또는 서비스 종료 시까지<br>
-          · 동의를 거부할 권리가 있으며, 거부 시 알림 서비스 이용 불가
+          · 수집 항목: 연령대, 희망지역, 전화번호(2·3단계), 이름·직종(3단계)<br>
+          · 이용 목적: 일자리 알림 발송 및 구직카드 제공(3단계)<br>
+          · 보유 기간: 동의 철회 또는 서비스 종료 시까지
           <label class="nform-consent-check">
-            <input type="checkbox" id="consentCheck" required>
+            <input type="checkbox" id="consentCheck">
             <span>개인정보 수집·이용에 동의합니다 (필수)</span>
           </label>
         </div>
-        <button class="notify-submit" type="submit" id="notifySubmitBtn">알림 신청 완료</button>
+
+        <button class="notify-submit" type="submit" id="notifySubmitBtn" disabled>등록하기</button>
       </form>
     </div>
+
     <div class="notify-success" id="notifySuccess">
-      <div class="notify-success-icon">✅</div>
-      <div class="notify-success-msg">신청이 완료되었습니다!</div>
-      <p class="notify-success-sub">새로운 일자리 공고가 올라오면<br>문자로 바로 알려드릴게요.</p>
+      <div class="notify-success-icon" id="successIcon">✅</div>
+      <div class="notify-success-msg" id="successMsg">등록이 완료됐습니다!</div>
+      <p class="notify-success-sub" id="successSub"></p>
     </div>
   </div>
 </div>
@@ -976,13 +1081,13 @@
         </div>
       </a>
       <div class="drawer-sep"></div>
-      <a class="drawer-item" href="seeker-card-form.html">
+      <button class="drawer-item" onclick="closeDrawer(); if(window.openNotifyModal) openNotifyModal();">
         <span class="drawer-item-icon">💼</span>
         <div class="drawer-item-body">
-          <div class="drawer-item-title">구직카드 등록</div>
-          <div class="drawer-item-desc">구직자 — 기업이 먼저 연락해요</div>
+          <div class="drawer-item-title">구직카드 · 알림 신청</div>
+          <div class="drawer-item-desc">구직자 — 알림 받고 기업 제안 받기</div>
         </div>
-      </a>
+      </button>
       <div class="drawer-sep"></div>
       <button class="drawer-item" id="drawerNotifyBtn">
         <span class="drawer-item-icon">🔔</span>
@@ -1128,7 +1233,7 @@ function updateDistricts() {
 }
 
 (function initNotify() {
-  const DONE_KEY  = 'notify_registered';
+  const DONE_KEY  = 'notify_registered_v3';
   const fab       = document.getElementById('notifyFab');
   const overlay   = document.getElementById('notifyOverlay');
   const closeBtn  = document.getElementById('notifyClose');
@@ -1137,11 +1242,59 @@ function updateDistricts() {
   const success   = document.getElementById('notifySuccess');
   const submitBtn = document.getElementById('notifySubmitBtn');
 
-  if (localStorage.getItem(DONE_KEY)) { fab.style.display = 'none'; return; }
+  if (localStorage.getItem(DONE_KEY)) { fab.style.display = 'none'; }
+
+  let currentLevel = 2;
+  let selectedAge  = '';
+  let selectedJobTypes = [];
+
+  const LEVEL_CFG = {
+    1: {
+      fillW: '0%',
+      desc: '<strong>👀 정보만 보기</strong> — 연락은 필요 없어요. 조용히 내 동네 일자리 정보를 둘러보세요.',
+      btn: '등록하기',
+      success: { icon:'👀', msg:'등록됐습니다!', sub:'동네 일자리 정보를 자유롭게 둘러보세요.\n나중에 알림 단계를 언제든지 높일 수 있어요.' }
+    },
+    2: {
+      fillW: '38%',
+      desc: '<strong>🔔 알림 받기</strong> — 내 동네에 새 일자리가 나오면 문자로 바로 알려드릴게요.',
+      btn: '알림 신청하기',
+      success: { icon:'🔔', msg:'알림 신청 완료!', sub:'내 동네에 새 일자리가 나오면\n문자로 바로 알려드릴게요.' }
+    },
+    3: {
+      fillW: '76%',
+      desc: '<strong>💼 적극 구직</strong> — 구직카드를 동네 업체들에게 공개해 기업 담당자가 먼저 연락드려요.',
+      btn: '구직카드 등록하기',
+      success: { icon:'💼', msg:'구직카드 등록 완료!', sub:'동네 업체 담당자가 구직카드를 보고\n직접 연락드릴 거예요.' }
+    }
+  };
+
+  window.setLevel = function(lv) {
+    currentLevel = lv;
+    const cfg = LEVEL_CFG[lv];
+    document.querySelectorAll('.level-node').forEach(n =>
+      n.classList.toggle('active', parseInt(n.dataset.lv) <= lv)
+    );
+    document.getElementById('levelFill').style.width = cfg.fillW;
+    document.getElementById('levelDescBox').innerHTML = cfg.desc;
+    document.querySelectorAll('.lv2-field').forEach(el => el.style.display = lv >= 2 ? '' : 'none');
+    document.querySelectorAll('.lv3-field').forEach(el => el.style.display = lv >= 3 ? '' : 'none');
+    submitBtn.textContent = cfg.btn;
+  };
+
+  window.selectAge = function(btn) {
+    document.querySelectorAll('#ageRow .nform-opt-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedAge = btn.dataset.val;
+  };
+
+  window.toggleJobType = function(btn) {
+    btn.classList.toggle('active');
+    selectedJobTypes = [...document.querySelectorAll('#jobTypeGroup .nform-opt-btn.active')].map(b => b.dataset.val);
+  };
 
   /* 전화번호 자동 포맷 */
-  const phoneInput = document.getElementById('inputPhone');
-  phoneInput.addEventListener('input', function() {
+  document.getElementById('inputPhone').addEventListener('input', function() {
     let raw = this.value.replace(/\D/g, '');
     if (raw.length > 11) raw = raw.slice(0, 11);
     let fmt = raw;
@@ -1154,19 +1307,24 @@ function updateDistricts() {
     }
     this.value = fmt;
     const hint = document.getElementById('phoneHint');
-    if (hint && fmt.length > 7) {
-      const valid = /^01[016789]-\d{3,4}-\d{4}$/.test(fmt);
-      hint.textContent = valid ? '✓ 올바른 번호입니다' : '올바른 휴대폰 번호를 입력해 주세요';
-      hint.style.color = valid ? '#15803D' : '#DC2626';
-    } else if (hint) { hint.textContent = ''; }
+    if (fmt.length > 7) {
+      const ok = /^01[016789]-\d{3,4}-\d{4}$/.test(fmt);
+      hint.textContent = ok ? '✓ 올바른 번호입니다' : '올바른 휴대폰 번호를 입력해 주세요';
+      hint.style.color = ok ? '#15803D' : '#DC2626';
+    } else { hint.textContent = ''; }
   });
 
-  let fabScrollCount = 0;
-  function onFabScroll() {
-    fabScrollCount++;
-    if (fabScrollCount >= 3) { fab.classList.add('show'); window.removeEventListener('scroll', onFabScroll); }
+  /* 동의 체크 → 버튼 활성화 */
+  document.getElementById('consentCheck').addEventListener('change', function() {
+    submitBtn.disabled = !this.checked;
+  });
+
+  /* FAB 스크롤 후 표시 */
+  if (!localStorage.getItem(DONE_KEY)) {
+    let cnt = 0;
+    const onScroll = () => { if (++cnt >= 3) { fab.classList.add('show'); window.removeEventListener('scroll', onScroll); } };
+    window.addEventListener('scroll', onScroll);
   }
-  window.addEventListener('scroll', onFabScroll);
 
   function openModal()  { overlay.classList.add('show');    document.body.style.overflow = 'hidden'; }
   function closeModal() { overlay.classList.remove('show'); document.body.style.overflow = ''; }
@@ -1178,42 +1336,57 @@ function updateDistricts() {
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const phone        = document.getElementById('inputPhone').value.trim();
-    const age          = document.getElementById('inputAge').value.trim();
-    const consent      = document.getElementById('consentCheck').checked;
-    const typeRegular  = document.getElementById('typeRegular').checked;
-    const typePart     = document.getElementById('typePart').checked;
-    const prefRegion   = document.getElementById('regionSelect').value;
-    const prefDistrict = document.getElementById('districtSelect').value;
-    const region       = new URLSearchParams(location.search).get('region') || '전체';
+    if (!document.getElementById('consentCheck').checked) { alert('개인정보 수집·이용에 동의해 주세요.'); return; }
+    if (!selectedAge) { alert('연령대를 선택해 주세요.'); return; }
 
-    if (!phone || !age) { alert('전화번호와 나이를 모두 입력해 주세요.'); return; }
-    if (!/^01[016789]-\d{3,4}-\d{4}$/.test(phone)) {
-      alert('올바른 휴대폰 번호를 입력해 주세요.\n예) 010-1234-5678'); return;
+    const phone      = document.getElementById('inputPhone').value.trim();
+    const name       = document.getElementById('inputName').value.trim();
+    const desiredJob = document.getElementById('inputDesiredJob').value.trim();
+    const sido       = document.getElementById('regionSelect').value;
+    const gu         = document.getElementById('districtSelect').value;
+
+    if (currentLevel >= 2) {
+      if (!phone) { alert('전화번호를 입력해 주세요.'); return; }
+      if (!/^01[016789]-\d{3,4}-\d{4}$/.test(phone)) { alert('올바른 휴대폰 번호를 입력해 주세요.\n예) 010-1234-5678'); return; }
     }
-    if (!typeRegular && !typePart) { alert('원하시는 일자리 유형을 하나 이상 선택해 주세요.'); return; }
-    if (!consent) { alert('개인정보 수집·이용에 동의해 주세요.'); return; }
+    if (currentLevel >= 3) {
+      if (!name)       { alert('이름을 입력해 주세요.'); return; }
+      if (!desiredJob) { alert('희망 직종을 입력해 주세요.'); return; }
+    }
 
-    const jobTypes = [typeRegular && '정규직', typePart && '시간제·알바'].filter(Boolean).join(',');
-    submitBtn.disabled    = true;
-    submitBtn.textContent = '신청 중…';
+    submitBtn.disabled = true;
+    submitBtn.textContent = '등록 중…';
+
     try {
-      await fetch('https://riomousxlyvwmembuhvc.supabase.co/rest/v1/notify_signups', {
+      await fetch(`${SB_URL}/rest/v1/seeker_cards`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh',
-          'Authorization': 'Bearer sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh'
-        },
-        body: JSON.stringify({ phone, age: parseInt(age)||0, region, job_types: jobTypes, preferred_region: prefRegion, preferred_district: prefDistrict })
+        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` },
+        body: JSON.stringify({
+          name:          name || null,
+          age_range:     selectedAge,
+          location_sido: sido || null,
+          location_gu:   gu   || null,
+          desired_job:   desiredJob || (selectedJobTypes.join(',') || null),
+          contact_phone: phone || null,
+          alert_level:   currentLevel,
+          is_active:     currentLevel >= 3
+        })
       });
     } catch (_) {}
+
+    const m = LEVEL_CFG[currentLevel].success;
+    document.getElementById('successIcon').textContent = m.icon;
+    document.getElementById('successMsg').textContent  = m.msg;
+    document.getElementById('successSub').textContent  = m.sub;
     formWrap.style.display = 'none';
     success.style.display  = 'block';
     localStorage.setItem(DONE_KEY, '1');
     fab.style.display = 'none';
-    setTimeout(closeModal, 3500);
+    setTimeout(closeModal, 4200);
   });
+
+  /* 초기 레벨 설정 */
+  setLevel(2);
 })();
 
 /* ── 페이지 로직 ── */
