@@ -749,6 +749,12 @@
     .nform-region-row { display: flex; flex-direction: column; gap: 8px; }
 
     /* 레벨별 조건부 필드 */
+    .lv1-msg {
+      display: none;
+      background: #F0FDF4; border: 1.5px solid #BBF7D0; border-radius: 12px;
+      padding: 12px 15px; font-size: .9rem; color: #166534;
+      line-height: 1.65; margin-bottom: 14px;
+    }
     .lv2-field { display: none; }
     .lv3-field { display: none; }
 
@@ -840,7 +846,7 @@
           <span class="level-card-icon">👀</span>
           <div>
             <div class="level-card-main">그냥 정보만 볼게요</div>
-            <div class="level-card-sub">알림이나 연락은 필요없어요</div>
+            <div class="level-card-sub">이름·전화번호만으로 10초 가입, 알림은 없어요</div>
           </div>
           <span class="free-badge">무료</span>
         </button>
@@ -864,23 +870,28 @@
 
       <form id="notifyForm" novalidate>
 
+        <!-- 1단계 안내 -->
+        <div class="lv1-msg" id="lv1Msg">
+          이름과 전화번호만 넣으면 <strong>10초 가입 완료!</strong><br>
+          알림이나 연락 없이 동네 일자리 정보를 자유롭게 이용하세요.
+        </div>
 
-        <!-- 이름 (3단계) -->
-        <div class="nform-group lv3-field" id="nameGroup">
+        <!-- 이름 (항상) -->
+        <div class="nform-group" id="nameGroup">
           <label class="nform-label" for="inputName">이름 <span class="nform-req">*</span></label>
           <input class="nform-input" id="inputName" type="text" placeholder="예: 홍길동" autocomplete="name">
         </div>
 
-        <!-- 전화번호 (2단계+) -->
-        <div class="nform-group lv2-field" id="phoneGroup">
+        <!-- 전화번호 (항상) -->
+        <div class="nform-group" id="phoneGroup">
           <label class="nform-label" for="inputPhone">전화번호 <span class="nform-req">*</span></label>
           <input class="nform-input" id="inputPhone" type="tel" name="phone"
                  placeholder="010-0000-0000" autocomplete="tel" inputmode="tel" maxlength="13">
           <span class="nform-hint" id="phoneHint"></span>
         </div>
 
-        <!-- 연령대 (1·2단계) -->
-        <div class="nform-group" id="ageRangeGroup">
+        <!-- 연령대 (2단계만) -->
+        <div class="nform-group" id="ageRangeGroup" style="display:none">
           <div class="nform-label">연령대 <span style="font-size:.78rem;font-weight:400;color:var(--text-ter)">(만 나이)</span> <span class="nform-req">*</span></div>
           <div class="nform-btn-row" id="ageRow">
             <button type="button" class="nform-opt-btn" data-val="50대미만" onclick="selectAge(this)">50대 미만</button>
@@ -1289,9 +1300,10 @@ function updateDistricts() {
     document.querySelectorAll('.level-card').forEach(c =>
       c.classList.toggle('active', parseInt(c.dataset.lv) === lv)
     );
+    document.getElementById('lv1Msg').style.display       = lv === 1 ? 'block' : 'none';
     document.querySelectorAll('.lv2-field').forEach(el => el.style.display = lv >= 2 ? 'flex' : 'none');
     document.querySelectorAll('.lv3-field').forEach(el => el.style.display = lv >= 3 ? 'flex' : 'none');
-    document.getElementById('ageRangeGroup').style.display = lv >= 3 ? 'none' : 'flex';
+    document.getElementById('ageRangeGroup').style.display = lv === 2 ? 'flex' : 'none';
     submitBtn.textContent = LEVEL_CFG[lv].btn;
   };
 
@@ -1365,33 +1377,31 @@ function updateDistricts() {
     e.preventDefault();
     if (!document.getElementById('consentCheck').checked) { alert('개인정보 수집·이용에 동의해 주세요.'); return; }
 
-    const phone      = document.getElementById('inputPhone').value.trim();
     const name       = document.getElementById('inputName').value.trim();
+    const phone      = document.getElementById('inputPhone').value.trim();
     const sido       = document.getElementById('regionSelect').value;
     const gu         = document.getElementById('districtSelect').value;
     const selInds    = [...document.querySelectorAll('#industryRow .nform-opt-btn.active')].map(b => b.dataset.val);
     const etcJob     = document.getElementById('inputDesiredJobEtc').value.trim().slice(0, 8);
     const desiredJob = [...selInds, etcJob].filter(Boolean).join(', ') || null;
 
-    // 나이 값 결정: 3단계=만 나이 숫자, 1·2단계=연령대 버튼
-    let ageValue;
-    if (currentLevel >= 3) {
+    // 이름·전화번호: 모든 단계 필수
+    if (!name)  { alert('이름을 입력해 주세요.'); return; }
+    if (!phone) { alert('전화번호를 입력해 주세요.'); return; }
+    if (!/^01[016789]-\d{3,4}-\d{4}$/.test(phone)) { alert('올바른 휴대폰 번호를 입력해 주세요.\n예) 010-1234-5678'); return; }
+
+    // 나이: 2단계=연령대, 3단계=만 나이, 1단계=불필요
+    let ageValue = null;
+    if (currentLevel === 2) {
+      if (!selectedAge) { alert('연령대를 선택해 주세요.'); return; }
+      ageValue = selectedAge;
+    } else if (currentLevel >= 3) {
       const ageNum = parseInt(document.getElementById('inputAgeNum').value.trim(), 10);
       if (!ageNum || ageNum < 40 || ageNum > 90) { alert('만 나이를 올바르게 입력해 주세요. (40~90)'); return; }
       ageValue = ageNum + '세';
-    } else {
-      if (!selectedAge) { alert('연령대를 선택해 주세요.'); return; }
-      ageValue = selectedAge;
     }
 
-    if (currentLevel >= 2) {
-      if (!phone) { alert('전화번호를 입력해 주세요.'); return; }
-      if (!/^01[016789]-\d{3,4}-\d{4}$/.test(phone)) { alert('올바른 휴대폰 번호를 입력해 주세요.\n예) 010-1234-5678'); return; }
-    }
-    if (currentLevel >= 3) {
-      if (!name)       { alert('이름을 입력해 주세요.'); return; }
-      if (!desiredJob) { alert('희망 직종을 하나 이상 선택해 주세요.'); return; }
-    }
+    if (currentLevel >= 3 && !desiredJob) { alert('희망 직종을 하나 이상 선택해 주세요.'); return; }
 
     submitBtn.disabled = true;
     submitBtn.textContent = '등록 중…';
