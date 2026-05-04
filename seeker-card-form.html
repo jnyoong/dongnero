@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYD0Q5NTPD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-PYD0Q5NTPD');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>구직카드 등록 — 동네로</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #FFF9F4; --surface: #FFFFFF; --border: #EDE5DC;
+      --text-pri: #1C1917; --text-sec: #6B6560; --text-ter: #A8A29E;
+      --blue: #2563EB; --blue-lt: #EFF6FF; --green: #15803D; --green-lt: #F0FDF4;
+      --red: #DC2626; --orange: #EA580C;
+      --radius: 16px; --shadow: 0 2px 10px rgba(0,0,0,.07);
+    }
+    body { font-family: 'Malgun Gothic','맑은 고딕',system-ui,sans-serif; background: var(--bg); color: var(--text-pri); min-height: 100vh; }
+
+    header { background: linear-gradient(135deg,#065f46 0%,#059669 100%); padding: 18px 20px 22px; }
+    .header-top { display: flex; align-items: center; gap: 12px; }
+    .back-link { color: rgba(255,255,255,.8); text-decoration: none; font-size: .9rem; }
+    .back-link:hover { color: #fff; }
+    .header-title { color: #fff; font-size: 1.2rem; font-weight: 800; }
+    .header-desc { color: rgba(255,255,255,.75); font-size: .85rem; margin-top: 6px; }
+
+    .wrap { max-width: 680px; margin: 0 auto; padding: 28px 20px 80px; }
+
+    .info-card { background: var(--green-lt); border: 1.5px solid #BBF7D0; border-radius: var(--radius); padding: 18px 20px; margin-bottom: 24px; }
+    .info-title { font-size: 1rem; font-weight: 800; color: var(--green); margin-bottom: 8px; }
+    .info-text { font-size: .88rem; color: #166534; line-height: 1.7; }
+
+    .section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 20px; margin-bottom: 18px; box-shadow: var(--shadow); }
+    .section-title { font-size: 1rem; font-weight: 800; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-label { font-size: .92rem; font-weight: 700; }
+    .form-req { color: var(--red); }
+    .form-hint { font-size: .78rem; color: var(--text-sec); }
+    .form-input, .form-select, .form-textarea {
+      border: 1.5px solid var(--border); border-radius: 12px;
+      padding: 13px 15px; font-size: .95rem; font-family: inherit;
+      color: var(--text-pri); background: var(--surface);
+      outline: none; transition: border-color .15s; width: 100%;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--green); }
+    .form-textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
+    .age-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .age-btn { flex: 1; min-width: 70px; padding: 10px 8px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--bg); font-size: .9rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: all .15s; text-align: center; }
+    .age-btn.active { border-color: var(--green); background: var(--green-lt); color: var(--green); }
+
+    .consent-box { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px 15px; font-size: .82rem; color: var(--text-sec); line-height: 1.75; margin-bottom: 14px; }
+    .consent-check { display: flex; align-items: flex-start; gap: 10px; margin-top: 10px; cursor: pointer; }
+    .consent-check input { margin-top: 2px; width: 18px; height: 18px; accent-color: var(--green); flex-shrink: 0; cursor: pointer; }
+    .consent-check span { font-size: .88rem; font-weight: 700; line-height: 1.5; color: var(--text-pri); }
+
+    .submit-btn { width: 100%; padding: 17px; background: var(--green); color: #fff; border: none; border-radius: 14px; font-size: 1.05rem; font-weight: 800; cursor: pointer; font-family: inherit; margin-top: 8px; transition: background .15s; }
+    .submit-btn:hover { background: #166534; }
+    .submit-btn:disabled { background: var(--border); color: var(--text-ter); cursor: not-allowed; }
+
+    .success-wrap { display: none; text-align: center; padding: 50px 0 20px; }
+    .success-icon { font-size: 4rem; margin-bottom: 16px; }
+    .success-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; }
+    .success-desc { font-size: .95rem; color: var(--text-sec); line-height: 1.7; margin-bottom: 32px; }
+    .back-home-btn { display: inline-block; background: var(--bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 28px; font-size: .95rem; font-weight: 700; color: var(--text-pri); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <a class="back-link" href="jobs.html">← 채용공고로</a>
+  </div>
+  <div class="header-title">구직카드 등록</div>
+  <div class="header-desc">나에게 맞는 일자리를 기업이 먼저 연락할 수 있도록 등록하세요</div>
+</header>
+
+<div class="wrap">
+
+  <div class="info-card">
+    <div class="info-title">📋 구직카드란?</div>
+    <div class="info-text">
+      동네로에 공고를 직접 등록하고 관리자 승인을 받은 기업만 구직카드를 열람할 수 있습니다.<br>
+      채용 담당자가 조건에 맞는 분을 찾아 직접 연락드립니다.
+    </div>
+  </div>
+
+  <div id="formSection">
+
+    <div class="section">
+      <div class="section-title">👤 기본 정보</div>
+      <div class="form-group">
+        <label class="form-label" for="name">이름 <span class="form-req">*</span></label>
+        <input class="form-input" id="name" type="text" placeholder="예: 홍길동" autocomplete="name" />
+      </div>
+      <div class="form-group">
+        <div class="form-label">연령대 <span class="form-req">*</span></div>
+        <div class="age-row">
+          <button type="button" class="age-btn" data-val="50대" onclick="selectAge(this)">50대</button>
+          <button type="button" class="age-btn" data-val="60대" onclick="selectAge(this)">60대</button>
+          <button type="button" class="age-btn" data-val="70대" onclick="selectAge(this)">70대</button>
+          <button type="button" class="age-btn" data-val="80대이상" onclick="selectAge(this)">80대 이상</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">📍 희망 근무지역</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="locationSido">시/도 <span class="form-req">*</span></label>
+          <select class="form-select" id="locationSido">
+            <option value="">선택하세요</option>
+            <option>서울</option><option>경기</option><option>인천</option>
+            <option>부산</option><option>대구</option><option>광주</option>
+            <option>대전</option><option>울산</option><option>세종</option>
+            <option>강원</option><option>충북</option><option>충남</option>
+            <option>전북</option><option>전남</option><option>경북</option>
+            <option>경남</option><option>제주</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="locationGu">구/군/시</label>
+          <input class="form-input" id="locationGu" type="text" placeholder="예: 강남구 (선택)" />
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">💼 희망 직종 · 경력</div>
+      <div class="form-group">
+        <label class="form-label" for="desiredJob">희망 직종 <span class="form-req">*</span></label>
+        <input class="form-input" id="desiredJob" type="text" placeholder="예: 요양보호사, 사무보조, 경비, 청소" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="experience">경력 사항</label>
+        <textarea class="form-textarea" id="experience" placeholder="이전 직장, 경력 기간 등을 간략히 적어주세요. (선택)"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="skills">보유 기술 · 자격증</label>
+        <input class="form-input" id="skills" type="text" placeholder="예: 요양보호사 자격증, 운전면허 1종 (선택)" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="availableTime">근무 가능 시간대</label>
+        <input class="form-input" id="availableTime" type="text" placeholder="예: 평일 오전, 주 3일 가능 (선택)" />
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">📞 연락처</div>
+      <div class="form-group">
+        <label class="form-label" for="contactPhone">전화번호 <span class="form-req">*</span></label>
+        <input class="form-input" id="contactPhone" type="tel" placeholder="010-0000-0000" autocomplete="tel" inputmode="tel" />
+        <span class="form-hint">채용 담당자가 이 번호로 연락드립니다.</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="contactEmail">이메일</label>
+        <input class="form-input" id="contactEmail" type="email" placeholder="선택 사항" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="notes">기타 사항</label>
+        <textarea class="form-textarea" id="notes" placeholder="희망 급여, 근무 조건 등 추가로 전달할 내용 (선택)"></textarea>
+      </div>
+    </div>
+
+    <div class="consent-box">
+      <strong style="display:block;margin-bottom:5px;color:var(--text-pri)">개인정보 수집·이용 동의</strong>
+      수집 항목: 이름, 연령대, 희망 지역, 희망 직종, 경력, 기술, 연락처<br>
+      수집 목적: 동네로 인증 기업의 채용 활동 지원<br>
+      보유 기간: 등록 후 1년 (요청 시 즉시 삭제)<br>
+      제3자 제공: 동네로 인증 기업에 한하여 제공
+      <label class="consent-check">
+        <input type="checkbox" id="consentCheck" onchange="updateSubmitBtn()" />
+        <span>위 개인정보 수집·이용에 동의합니다 (필수)</span>
+      </label>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitCard()" disabled>구직카드 등록</button>
+  </div>
+
+  <div class="success-wrap" id="successWrap">
+    <div class="success-icon">✅</div>
+    <div class="success-title">구직카드가 등록됐습니다!</div>
+    <div class="success-desc">
+      동네로 인증 기업 담당자가 확인 후<br>
+      등록하신 전화번호로 직접 연락드립니다.
+    </div>
+    <a class="back-home-btn" href="jobs.html">← 채용공고 목록으로</a>
+  </div>
+
+</div>
+
+<script>
+const SB_URL = 'https://riomousxlyvwmembuhvc.supabase.co';
+const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
+let selectedAge = '';
+let isSubmitting = false;
+
+function selectAge(btn) {
+  document.querySelectorAll('.age-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedAge = btn.dataset.val;
+}
+
+function updateSubmitBtn() {
+  document.getElementById('submitBtn').disabled = !document.getElementById('consentCheck').checked;
+}
+
+async function submitCard() {
+  if (isSubmitting) return;
+  const name          = document.getElementById('name').value.trim();
+  const location_sido = document.getElementById('locationSido').value;
+  const location_gu   = document.getElementById('locationGu').value.trim();
+  const desired_job   = document.getElementById('desiredJob').value.trim();
+  const experience    = document.getElementById('experience').value.trim();
+  const skills        = document.getElementById('skills').value.trim();
+  const available_time = document.getElementById('availableTime').value.trim();
+  const contact_phone = document.getElementById('contactPhone').value.trim();
+  const contact_email = document.getElementById('contactEmail').value.trim();
+  const notes         = document.getElementById('notes').value.trim();
+
+  if (!name) return alert('이름을 입력해 주세요.');
+  if (!selectedAge) return alert('연령대를 선택해 주세요.');
+  if (!location_sido) return alert('희망 근무지역(시/도)을 선택해 주세요.');
+  if (!desired_job) return alert('희망 직종을 입력해 주세요.');
+  if (!contact_phone) return alert('전화번호를 입력해 주세요.');
+  if (!/^01[016789]-?\d{3,4}-?\d{4}$/.test(contact_phone.replace(/-/g, '')))
+    return alert('올바른 휴대폰 번호를 입력해 주세요.\n예) 010-1234-5678');
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '등록 중…';
+  isSubmitting = true;
+
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/seeker_cards`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SB_KEY,
+        'Authorization': `Bearer ${SB_KEY}`
+      },
+      body: JSON.stringify({
+        name, age_range: selectedAge,
+        location_sido, location_gu: location_gu || null,
+        desired_job,
+        experience: experience || null,
+        skills: skills || null,
+        available_time: available_time || null,
+        contact_phone,
+        contact_email: contact_email || null,
+        notes: notes || null
+      })
+    });
+
+    if (!res.ok) throw new Error(await res.text());
+    document.getElementById('formSection').style.display = 'none';
+    document.getElementById('successWrap').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (e) {
+    alert('등록 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    btn.disabled = false;
+    btn.textContent = '구직카드 등록';
+    isSubmitting = false;
+  }
+}
+</script>
+</body>
+</html>

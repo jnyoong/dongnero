@@ -130,6 +130,8 @@
     <div class="tab active" data-tab="signups">📋 알림 신청 <span id="tabSignupCount"></span></div>
     <div class="tab" data-tab="jobs">📰 공고 목록 <span id="tabJobCount"></span></div>
     <div class="tab" data-tab="excluded">🚫 필터링 제외 <span id="tabExCount"></span></div>
+    <div class="tab" data-tab="companyjobs">📝 기업공고 <span id="tabCjCount"></span></div>
+    <div class="tab" data-tab="seekercards">💼 구직카드 <span id="tabScCount"></span></div>
   </div>
 
   <!-- 탭1: 알림 신청 -->
@@ -288,6 +290,54 @@
       </table>
     </div>
   </div>
+
+  <!-- 탭4: 기업 직접 공고 -->
+  <div class="tab-panel" id="panel-companyjobs">
+    <div class="summary-row">
+      <div class="summary-chip"><strong id="cjTotal">-</strong>전체</div>
+      <div class="summary-chip warn"><strong id="cjPending">0</strong>심사 대기</div>
+      <div class="summary-chip"><strong id="cjApproved">0</strong>승인</div>
+      <div class="summary-chip"><strong id="cjRejected">0</strong>반려</div>
+    </div>
+    <div class="filter-bar">
+      <select id="cjStatusFilter" onchange="renderCompanyJobs()">
+        <option value="">전체 상태</option>
+        <option value="pending">대기</option>
+        <option value="approved">승인</option>
+        <option value="rejected">반려</option>
+      </select>
+      <input type="text" id="cjSearch" placeholder="회사명·공고제목 검색…" oninput="renderCompanyJobs()" style="flex:1;min-width:140px">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>#</th><th>회사명</th><th>공고 제목</th><th>지역</th>
+          <th>고용형태</th><th>상태</th><th>기업 토큰</th><th>등록일</th><th>액션</th>
+        </tr></thead>
+        <tbody id="cjBody"><tr><td colspan="9" class="loading">불러오는 중…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 탭5: 구직카드 -->
+  <div class="tab-panel" id="panel-seekercards">
+    <div class="summary-row">
+      <div class="summary-chip"><strong id="scTotal">-</strong>전체 구직카드</div>
+    </div>
+    <div class="filter-bar">
+      <input type="text" id="scSearch" placeholder="이름·희망직종·지역 검색…" oninput="renderSeekerCards()" style="flex:1;min-width:140px">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>#</th><th>이름</th><th>연령대</th><th>희망지역</th>
+          <th>희망직종</th><th>경력·기술</th><th>전화번호</th><th>등록일</th>
+        </tr></thead>
+        <tbody id="scBody"><tr><td colspan="8" class="loading">불러오는 중…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 
 <script src="whitelist_data.js"></script>
@@ -333,6 +383,8 @@ function tryLogin() {
     document.getElementById('adminWrap').style.display = 'block';
     loadSignups();
     loadJobData();
+    loadCompanyJobs();
+    loadSeekerCards();
   } else {
     document.getElementById('loginErr').style.display = 'block';
   }
@@ -706,7 +758,155 @@ document.getElementById('btnCsv').addEventListener('click', () => {
   a.click();
 });
 
-document.getElementById('btnRefresh').addEventListener('click', () => { loadSignups(); loadJobData(); });
+document.getElementById('btnRefresh').addEventListener('click', () => { loadSignups(); loadJobData(); loadCompanyJobs(); loadSeekerCards(); });
+
+/* ── 기업 직접 공고 ── */
+let allCompanyJobs = [];
+
+async function loadCompanyJobs() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_get_company_jobs`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY },
+      body: JSON.stringify({ p_pw: ADMIN_PW })
+    });
+    if (!res.ok) throw new Error(await res.text());
+    allCompanyJobs = await res.json();
+    updateCjSummary();
+    renderCompanyJobs();
+    document.getElementById('tabCjCount').textContent = `(${allCompanyJobs.length})`;
+  } catch(e) {
+    document.getElementById('cjBody').innerHTML = `<tr><td colspan="9" class="empty-msg">불러오기 실패: ${e.message}</td></tr>`;
+  }
+}
+
+function updateCjSummary() {
+  document.getElementById('cjTotal').textContent   = allCompanyJobs.length;
+  document.getElementById('cjPending').textContent  = allCompanyJobs.filter(j => j.status === 'pending').length;
+  document.getElementById('cjApproved').textContent = allCompanyJobs.filter(j => j.status === 'approved').length;
+  document.getElementById('cjRejected').textContent = allCompanyJobs.filter(j => j.status === 'rejected').length;
+}
+
+function renderCompanyJobs() {
+  const kw  = document.getElementById('cjSearch').value.trim().toLowerCase();
+  const st  = document.getElementById('cjStatusFilter').value;
+  const list = allCompanyJobs.filter(j => {
+    if (st && j.status !== st) return false;
+    if (kw && !(j.company_name + j.job_title).toLowerCase().includes(kw)) return false;
+    return true;
+  });
+  if (!list.length) {
+    document.getElementById('cjBody').innerHTML = '<tr><td colspan="9" class="empty-msg">해당 공고가 없습니다.</td></tr>';
+    return;
+  }
+  const statusBadge = s => {
+    if (s === 'approved') return '<span class="badge badge-green">승인</span>';
+    if (s === 'rejected') return '<span class="badge badge-red">반려</span>';
+    return '<span class="badge badge-orange">대기</span>';
+  };
+  document.getElementById('cjBody').innerHTML = list.map((j, i) => {
+    const dt  = new Date(j.created_at).toLocaleDateString('ko-KR');
+    const loc = [j.location_sido, j.location_gu].filter(Boolean).join(' ');
+    const tokenShort = j.company_token ? j.company_token.slice(0, 8) + '…' : '-';
+    const actionBtns = `
+      <button class="btn btn-green" style="padding:4px 10px;font-size:.78rem" onclick="approveJob('${j.id}')">승인</button>
+      <button class="btn btn-red"   style="padding:4px 10px;font-size:.78rem;margin-left:4px" onclick="rejectJob('${j.id}')">반려</button>`;
+    return `<tr>
+      <td class="row-num">${i + 1}</td>
+      <td><strong>${j.company_name}</strong><div style="font-size:.75rem;color:#6B7280">${j.contact_email}</div></td>
+      <td class="title-cell"><div class="title-text">${j.job_title}</div></td>
+      <td>${loc || '-'}</td>
+      <td>${j.employment_type ? `<span class="badge badge-gray">${j.employment_type}</span>` : '-'}</td>
+      <td>${statusBadge(j.status)}</td>
+      <td>
+        <span title="${j.company_token}" style="font-family:monospace;font-size:.75rem;cursor:help">${tokenShort}</span>
+        <button class="btn btn-gray" style="padding:2px 8px;font-size:.72rem;margin-left:4px" onclick="copyToken('${j.company_token}')">복사</button>
+      </td>
+      <td style="white-space:nowrap;font-size:.8rem">${dt}</td>
+      <td style="white-space:nowrap">${actionBtns}</td>
+    </tr>`;
+  }).join('');
+}
+
+async function approveJob(id) {
+  if (!confirm('이 공고를 승인하시겠습니까?')) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_update_company_job`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY },
+      body: JSON.stringify({ p_pw: ADMIN_PW, p_id: id, p_status: 'approved', p_reason: null })
+    });
+    if (!res.ok) throw new Error(await res.text());
+    await loadCompanyJobs();
+  } catch(e) { alert('처리 실패: ' + e.message); }
+}
+
+async function rejectJob(id) {
+  const reason = prompt('반려 사유를 입력하세요 (선택):') ?? '';
+  if (reason === null) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_update_company_job`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY },
+      body: JSON.stringify({ p_pw: ADMIN_PW, p_id: id, p_status: 'rejected', p_reason: reason || null })
+    });
+    if (!res.ok) throw new Error(await res.text());
+    await loadCompanyJobs();
+  } catch(e) { alert('처리 실패: ' + e.message); }
+}
+
+function copyToken(token) {
+  navigator.clipboard.writeText(token)
+    .then(() => alert('토큰 복사 완료!\n기업 담당자에게 전달하세요:\n' + token))
+    .catch(() => prompt('토큰을 복사하세요:', token));
+}
+
+/* ── 구직카드 ── */
+let allSeekerCards = [];
+
+async function loadSeekerCards() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_get_seeker_cards`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY },
+      body: JSON.stringify({ p_pw: ADMIN_PW })
+    });
+    if (!res.ok) throw new Error(await res.text());
+    allSeekerCards = await res.json();
+    document.getElementById('scTotal').textContent  = allSeekerCards.length;
+    document.getElementById('tabScCount').textContent = `(${allSeekerCards.length})`;
+    renderSeekerCards();
+  } catch(e) {
+    document.getElementById('scBody').innerHTML = `<tr><td colspan="8" class="empty-msg">불러오기 실패: ${e.message}</td></tr>`;
+  }
+}
+
+function renderSeekerCards() {
+  const kw   = document.getElementById('scSearch').value.trim().toLowerCase();
+  const list = allSeekerCards.filter(j => {
+    if (!kw) return true;
+    return (j.name + j.desired_job + (j.location_sido||'') + (j.location_gu||'')).toLowerCase().includes(kw);
+  });
+  if (!list.length) {
+    document.getElementById('scBody').innerHTML = '<tr><td colspan="8" class="empty-msg">구직카드가 없습니다.</td></tr>';
+    return;
+  }
+  document.getElementById('scBody').innerHTML = list.map((j, i) => {
+    const dt  = new Date(j.created_at).toLocaleDateString('ko-KR');
+    const loc = [j.location_sido, j.location_gu].filter(Boolean).join(' ');
+    const exp = [j.experience, j.skills].filter(Boolean).join(' / ');
+    return `<tr>
+      <td class="row-num">${i + 1}</td>
+      <td><strong>${j.name}</strong></td>
+      <td>${j.age_range || '-'}</td>
+      <td>${loc || '-'}</td>
+      <td>${j.desired_job}</td>
+      <td style="font-size:.78rem;max-width:160px;white-space:normal">${exp || '-'}</td>
+      <td style="white-space:nowrap">${j.contact_phone}</td>
+      <td style="white-space:nowrap;font-size:.8rem">${dt}</td>
+    </tr>`;
+  }).join('');
+}
 </script>
 </body>
 </html>

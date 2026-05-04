@@ -2,6 +2,44 @@
 
 ---
 
+## [v0.23] 2026-05-04 — 기업 직접 공고 등록 + 구직카드 시스템
+
+### 신규 페이지
+- **company-job-form.html** — 기업 공고 직접 등록 폼
+  - 회사정보·공고내용·근무지역 입력 후 Supabase `company_jobs`에 저장
+  - 등록 후 `company_token`(UUID) 화면에 표시 + 복사 기능
+- **seeker-card-form.html** — 구직자 프로필 카드 등록 폼
+  - 이름·연령대·희망직종·연락처 등 입력, Supabase `seeker_cards`에 저장
+  - 개인정보 수집·이용 동의 체크 필수
+- **supabase_setup.sql** — Supabase SQL Editor에서 실행할 테이블·RLS·RPC 전체 스크립트
+
+### Supabase 테이블 및 보안
+- `company_jobs` 테이블: pending/approved/rejected 상태 관리, `company_token` UUID 자동생성
+- `seeker_cards` 테이블: RLS로 직접 SELECT 차단, RPC로만 접근 가능
+- RPC 함수 4개: `admin_get_company_jobs`, `admin_update_company_job`, `get_seeker_cards_by_token`, `admin_get_seeker_cards`
+  - 승인된 기업의 `company_token`으로만 구직카드 열람 가능
+
+### jobs.html
+- Supabase에서 승인된 기업공고(`status=approved`) 비동기 로드
+- 직접공고를 지역 목록 **최상단**에 고정 노출 ("📌 동네로 인증 공고" 섹션)
+- **동네로 인증** 블루 체크 배지 + 파란 테두리 카드 스타일 적용
+- 출처 필터 적용 시 직접공고 자동 제외 (UX 일관성)
+- 드로어 메뉴에 📝 공고 직접 등록, 💼 구직카드 등록 항목 추가
+
+### local.html
+- 지역 선택 시 해당 지역 직접공고도 최상단 노출
+- `loadDirectJobsLocal(sido, gu)` 비동기 함수로 Supabase 조회 후 prepend
+
+### admin-dongnero.html
+- **📝 기업공고 탭** 추가
+  - `admin_get_company_jobs` RPC로 전체 공고(pending 포함) 조회
+  - 건별 승인(초록)/반려(빨강) 버튼, 반려 시 사유 입력
+  - 기업 토큰 복사 버튼 (승인 후 기업에 전달용)
+  - 상태별 요약 칩 (대기/승인/반려 건수)
+- **💼 구직카드 탭** 추가
+  - `admin_get_seeker_cards` RPC로 전체 구직카드 조회
+  - 이름·연령대·희망지역·희망직종·연락처 표시
+
 ## [v0.22] 2026-05-03 — 정보게시판(info.html) 신설
 
 ### 신규: info.html + posts_data.js

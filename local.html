@@ -183,6 +183,32 @@
     }
     .empty-icon { font-size: 2.5rem; display: block; margin-bottom: 10px; }
 
+    /* ── 동네로 인증 직접공고 ── */
+    .card-direct { border: 2px solid #BFDBFE; }
+    .direct-cert-bar {
+      background: #EFF6FF; border-bottom: 1px solid #BFDBFE;
+      padding: 7px 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .dongnero-cert {
+      font-size: .75rem; font-weight: 800; color: #2563EB;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .dongnero-cert::before { content: '✓'; font-size: .9rem; }
+    .direct-label {
+      font-size: .7rem; font-weight: 700; color: #2563EB;
+      background: #DBEAFE; border-radius: 4px; padding: 2px 6px;
+    }
+    .direct-section-label {
+      font-size: .82rem; font-weight: 800; color: #2563EB;
+      padding: 4px 4px 8px;
+    }
+    .crawl-section-label {
+      font-size: .82rem; font-weight: 700; color: #A8A29E;
+      padding: 16px 4px 8px;
+      border-top: 1px dashed #EDE5DC;
+      margin-top: 4px;
+    }
+
     footer {
       text-align: center; padding: 20px 16px;
       font-size: .78rem; color: var(--text-ter);
@@ -385,11 +411,85 @@ function search() {
   }).join('');
 
   wrap.innerHTML = `
+    <div id="directSlot"></div>
     <div class="result-bar">
       <span class="result-count"><strong>${jobs.length}</strong>건의 공고</span>
       <span class="district-badge">📍 ${sido} ${gu || '전체'}</span>
     </div>
     ${cards}`;
+
+  loadDirectJobsLocal(sido, gu);
+}
+
+const SB_URL = 'https://riomousxlyvwmembuhvc.supabase.co';
+const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
+
+async function loadDirectJobsLocal(sido, gu) {
+  const slot = document.getElementById('directSlot');
+  if (!slot) return;
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/company_jobs?status=eq.approved&select=*`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const keyword = gu || sido;
+    const matching = data.filter(j => {
+      const fullLoc = [j.location_sido, j.location_gu, j.location_detail].filter(Boolean).join(' ');
+      return fullLoc.includes(keyword) || j.location_sido === sido;
+    });
+    if (!matching.length) return;
+    const directCards = matching.map(j => {
+      const fullLoc = [j.location_sido, j.location_gu, j.location_detail].filter(Boolean).join(' ');
+      const industry = getIndustry(j.job_title, j.job_description);
+      const typeClass = ['정규직','계약직','시간제'].includes(j.employment_type) ? j.employment_type : '기타';
+      const salRow = j.salary
+        ? `<div class="info-row"><span class="info-icon">💰</span><span class="info-text salary">${j.salary}</span></div>` : '';
+      const footBtn = j.website
+        ? `<a class="btn-view" href="${j.website}" target="_blank" rel="noopener">공고 보기 →</a>`
+        : `<a class="btn-view" href="company-job-form.html">문의하기 →</a>`;
+      return `
+      <div class="card card-direct">
+        <div class="direct-cert-bar">
+          <span class="dongnero-cert"> 동네로 인증</span>
+          <span class="direct-label">직접등록</span>
+        </div>
+        <div class="card-inner">
+          <div class="card-meta">
+            <div class="tag-row">
+              <span class="tag tag-region">${getRegion(j.location_sido)}</span>
+              <span class="tag tag-industry">${industry}</span>
+              ${j.employment_type ? `<span class="tag tag-${typeClass}">${j.employment_type}</span>` : ''}
+            </div>
+            <span class="source-badge" style="background:#DBEAFE;color:#1D4ED8">동네로</span>
+          </div>
+          <div class="card-title">${j.job_title}</div>
+          <div class="card-company">🏢 ${j.company_name}</div>
+          <div class="info-rows">
+            <div class="info-row">
+              <span class="info-icon">📍</span>
+              <span class="info-text">${fullLoc || j.location_sido}</span>
+            </div>
+            ${salRow}
+            <div class="info-row">
+              <span class="info-icon">📅</span>
+              <span class="info-text">${dlChip(j.deadline)}</span>
+            </div>
+          </div>
+          <div class="info-text" style="font-size:.8rem;margin-top:4px">${(j.job_description||'').slice(0,80)}${(j.job_description||'').length>80?'…':''}</div>
+        </div>
+        <div class="card-foot">${footBtn}</div>
+      </div>`;
+    }).join('');
+
+    const existingCount = wrap.querySelector('.result-count strong');
+    if (existingCount) {
+      existingCount.textContent = parseInt(existingCount.textContent) + matching.length;
+    }
+    slot.innerHTML = `<div class="direct-section-label">📌 동네로 인증 공고 ${matching.length}건</div>${directCards}<div class="crawl-section-label">전국 크롤링 공고</div>`;
+  } catch (e) {
+    console.error('직접공고 로드 실패:', e);
+  }
 }
 
 /* URL 파라미터로 진입 시 자동 선택 */

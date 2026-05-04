@@ -507,6 +507,32 @@
     }
     .btn-view:active { background: #1D4ED8; }
 
+    /* ── 동네로 인증 직접공고 ── */
+    .card-direct { border: 2px solid #BFDBFE; }
+    .direct-cert-bar {
+      background: var(--blue-lt); border-bottom: 1px solid #BFDBFE;
+      padding: 7px 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .dongnero-cert {
+      font-size: .75rem; font-weight: 800; color: var(--blue);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .dongnero-cert::before { content: '✓'; font-size: .9rem; }
+    .direct-label {
+      font-size: .7rem; font-weight: 700; color: var(--blue);
+      background: #DBEAFE; border-radius: 4px; padding: 2px 6px;
+    }
+    .direct-section-label {
+      font-size: .82rem; font-weight: 800; color: var(--blue);
+      padding: 10px 4px 6px;
+    }
+    .crawl-section-label {
+      font-size: .82rem; font-weight: 700; color: var(--text-ter);
+      padding: 16px 4px 6px;
+      border-top: 1px dashed var(--border);
+      margin-top: 8px;
+    }
+
     .empty {
       text-align: center;
       padding: 60px 20px; color: var(--text-sec); font-size: 1rem;
@@ -942,6 +968,22 @@
         </div>
       </a>
       <div class="drawer-sep"></div>
+      <a class="drawer-item" href="company-job-form.html">
+        <span class="drawer-item-icon">📝</span>
+        <div class="drawer-item-body">
+          <div class="drawer-item-title">공고 직접 등록</div>
+          <div class="drawer-item-desc">기업 담당자 — 무료 공고 등록</div>
+        </div>
+      </a>
+      <div class="drawer-sep"></div>
+      <a class="drawer-item" href="seeker-card-form.html">
+        <span class="drawer-item-icon">💼</span>
+        <div class="drawer-item-body">
+          <div class="drawer-item-title">구직카드 등록</div>
+          <div class="drawer-item-desc">구직자 — 기업이 먼저 연락해요</div>
+        </div>
+      </a>
+      <div class="drawer-sep"></div>
       <button class="drawer-item" id="drawerNotifyBtn">
         <span class="drawer-item-icon">🔔</span>
         <div class="drawer-item-body">
@@ -1264,6 +1306,10 @@ const _urlDistrict = _urlParams.get('district')  || '';
 let allJobs = [], activeRegion = _urlRegion, activeDistrict = _urlDistrict;
 let showMomsitter = true;
 
+const SB_URL = 'https://riomousxlyvwmembuhvc.supabase.co';
+const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
+let directJobs = [];
+
 function loadData() {
   if (typeof JOBS_DATA === 'undefined') {
     document.getElementById('jobGrid').innerHTML =
@@ -1293,6 +1339,7 @@ function loadData() {
   buildIndustryOptions();
   updateRegionLabel();
   render();
+  loadDirectJobs();
 }
 
 function buildHeaderStats(data) {
@@ -1457,6 +1504,72 @@ function buildIndustryOptions() {
     ).join('');
 }
 
+async function loadDirectJobs() {
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/company_jobs?status=eq.approved&select=*`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    directJobs = data.map(j => {
+      const fullLoc = [j.location_sido, j.location_gu, j.location_detail].filter(Boolean).join(' ');
+      return {
+        ...j,
+        _region:   getRegion(fullLoc || j.location_sido),
+        _industry: getIndustry(j.job_title, j.job_description),
+        _fullLoc:  fullLoc
+      };
+    });
+    if (directJobs.length) render();
+  } catch (e) {
+    console.error('직접공고 로드 실패:', e);
+  }
+}
+
+function renderDirectCard(job) {
+  const fullLoc = job._fullLoc || job.location_sido;
+  const salRow = job.salary
+    ? `<div class="info-row"><span class="info-icon">💰</span><span class="info-text salary">${job.salary}</span></div>` : '';
+  const footBtn = job.website
+    ? `<a class="btn-view" href="${job.website}" target="_blank" rel="noopener">공고 보기 →</a>`
+    : `<a class="btn-view" href="company-job-form.html">문의하기 →</a>`;
+  const typeLabel = job.employment_type || '';
+  const typeClass = ['정규직','계약직','시간제'].includes(typeLabel) ? typeLabel : '기타';
+
+  return `
+  <div class="card card-direct">
+    <div class="direct-cert-bar">
+      <span class="dongnero-cert"> 동네로 인증</span>
+      <span class="direct-label">직접등록</span>
+    </div>
+    <div class="card-inner">
+      <div class="card-meta">
+        <div class="tag-row">
+          <span class="tag tag-region">${job._region}</span>
+          <span class="tag tag-industry">${job._industry}</span>
+          ${typeLabel ? `<span class="tag tag-${typeClass}">${typeLabel}</span>` : ''}
+        </div>
+        <span class="source-badge" style="background:#EFF6FF;color:#2563EB;border:1px solid #BFDBFE">동네로</span>
+      </div>
+      <div class="card-title">${job.job_title}</div>
+      <div class="card-company">🏢 ${job.company_name}</div>
+      <div class="info-rows">
+        <div class="info-row">
+          <span class="info-icon">📍</span>
+          <span class="info-text">${fullLoc || '위치 미공개'}</span>
+        </div>
+        ${salRow}
+        <div class="info-row">
+          <span class="info-icon">📅</span>
+          <span class="info-text">${dlChip(job.deadline)}</span>
+        </div>
+      </div>
+      <div class="ai-summary">${(job.job_description||'').slice(0,80)}${(job.job_description||'').length>80?'…':''}</div>
+    </div>
+    <div class="card-foot">${footBtn}</div>
+  </div>`;
+}
+
 function renderCard(job) {
   const KNOWN_TYPES = ['정규직','계약직','시간제'];
   const typeClass  = KNOWN_TYPES.includes(job.type) ? job.type : '기타';
@@ -1513,6 +1626,17 @@ function render() {
   const src = document.getElementById('sourceFilter').value;
   const srt = document.getElementById('sortSelect').value;
 
+  // 직접 등록 공고 (출처 필터 없을 때만 표시)
+  const showDirect = !src;
+  const matchingDirect = showDirect ? directJobs.filter(j => {
+    if (activeRegion !== '전체' && j._region !== activeRegion) return false;
+    if (activeDistrict && !j._fullLoc.includes(activeDistrict)) return false;
+    if (ind && j._industry !== ind) return false;
+    if (typ && j.employment_type !== typ) return false;
+    if (kw && !(j.job_title + j.company_name).toLowerCase().includes(kw)) return false;
+    return true;
+  }) : [];
+
   let jobs = allJobs.filter(j => {
     if (!showMomsitter && j.source === '맘시터') return false;
     if (activeRegion !== '전체' && j._region !== activeRegion) return false;
@@ -1539,15 +1663,25 @@ function render() {
     return arr;
   }
 
-  document.getElementById('resultCount').innerHTML = `<strong>${jobs.length}</strong>건의 공고`;
+  const totalCount = matchingDirect.length + jobs.length;
+  document.getElementById('resultCount').innerHTML = `<strong>${totalCount}</strong>건의 공고`;
 
   const grid = document.getElementById('jobGrid');
-  if (!jobs.length) {
+  if (!totalCount) {
     grid.innerHTML = '<div class="empty"><span class="empty-icon">🔍</span>검색 결과가 없습니다.</div>';
     return;
   }
 
-  // 특정 지역이고 구 필터 없으면 → 구별 그룹핑
+  // 직접등록 공고 섹션
+  let directHtml = '';
+  if (matchingDirect.length) {
+    directHtml = `<div class="direct-section-label">📌 동네로 인증 공고 ${matchingDirect.length}건</div>`;
+    directHtml += matchingDirect.map(renderDirectCard).join('');
+    if (jobs.length) directHtml += `<div class="crawl-section-label">전국 크롤링 공고</div>`;
+  }
+
+  // 크롤링 공고 섹션
+  let regularHtml = '';
   if (_urlRegion !== '전체' && !activeDistrict) {
     const dists = DISTRICTS[_urlRegion] || [];
     const groups = {}, noDistrict = [];
@@ -1556,24 +1690,23 @@ function render() {
       if (d) { if (!groups[d]) groups[d] = []; groups[d].push(j); }
       else noDistrict.push(j);
     });
-    // 구 순서: 공고 수 많은 순
     const sortedDists = Object.keys(groups).sort((a,b) => groups[b].length - groups[a].length);
     sortedDists.forEach(d => sortArr(groups[d]));
     sortArr(noDistrict);
-    let html = '';
     sortedDists.forEach(d => {
-      html += `<div class="district-header">${d} <span>${groups[d].length}건</span></div>`;
-      html += groups[d].map(renderCard).join('');
+      regularHtml += `<div class="district-header">${d} <span>${groups[d].length}건</span></div>`;
+      regularHtml += groups[d].map(renderCard).join('');
     });
     if (noDistrict.length) {
-      html += `<div class="district-header">기타 <span>${noDistrict.length}건</span></div>`;
-      html += noDistrict.map(renderCard).join('');
+      regularHtml += `<div class="district-header">기타 <span>${noDistrict.length}건</span></div>`;
+      regularHtml += noDistrict.map(renderCard).join('');
     }
-    grid.innerHTML = html;
   } else {
     sortArr(jobs);
-    grid.innerHTML = jobs.map(renderCard).join('');
+    regularHtml = jobs.map(renderCard).join('');
   }
+
+  grid.innerHTML = directHtml + regularHtml;
 }
 
 /* ── 드로어 ── */
