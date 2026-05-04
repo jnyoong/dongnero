@@ -491,6 +491,10 @@
       -webkit-tap-highlight-color: transparent;
     }
     .nform-opt-btn.active { border-color: var(--orange); background: #FFF4EE; color: var(--orange); }
+    .nform-opt-btn.maxed  { opacity: .38; cursor: not-allowed; }
+    .nform-label-hint { font-size: .75rem; font-weight: 400; color: #A8A29E; margin-left: 5px; }
+    .industry-row { flex-wrap: wrap; gap: 7px; }
+    .industry-row .nform-opt-btn { flex: none; min-width: 0; padding: 8px 12px; font-size: .85rem; }
     /* 조건부 필드 */
     .lv2-field { display: none; }
     .lv3-field { display: none; }
@@ -644,10 +648,24 @@
             <button type="button" class="nform-opt-btn" data-val="시간제·알바" onclick="toggleJobType(this)">시간제·알바</button>
           </div>
         </div>
-        <!-- 희망 직종 (3단계) -->
-        <div class="nform-group lv3-field">
-          <label class="nform-label" for="inputDesiredJob">희망 직종 <span class="nform-req">*</span></label>
-          <input class="nform-input" id="inputDesiredJob" type="text" placeholder="예: 요양보호사, 경비, 사무보조">
+        <!-- 희망 직종 (2단계+) -->
+        <div class="nform-group lv2-field" id="desiredJobGroup">
+          <div class="nform-label">희망 직종 <span class="nform-label-hint">최대 3개 선택</span></div>
+          <div class="nform-btn-row industry-row" id="industryRow">
+            <button type="button" class="nform-opt-btn" data-val="요양·돌봄"  onclick="toggleIndustry(this)">요양·돌봄</button>
+            <button type="button" class="nform-opt-btn" data-val="경비·보안"  onclick="toggleIndustry(this)">경비·보안</button>
+            <button type="button" class="nform-opt-btn" data-val="청소·미화"  onclick="toggleIndustry(this)">청소·미화</button>
+            <button type="button" class="nform-opt-btn" data-val="조리·급식"  onclick="toggleIndustry(this)">조리·급식</button>
+            <button type="button" class="nform-opt-btn" data-val="복지·상담"  onclick="toggleIndustry(this)">복지·상담</button>
+            <button type="button" class="nform-opt-btn" data-val="사무·행정"  onclick="toggleIndustry(this)">사무·행정</button>
+            <button type="button" class="nform-opt-btn" data-val="농업·생산"  onclick="toggleIndustry(this)">농업·생산</button>
+            <button type="button" class="nform-opt-btn" data-val="교육·지도"  onclick="toggleIndustry(this)">교육·지도</button>
+            <button type="button" class="nform-opt-btn" data-val="판매·영업"  onclick="toggleIndustry(this)">판매·영업</button>
+            <button type="button" class="nform-opt-btn" data-val="시설·건설"  onclick="toggleIndustry(this)">시설·건설</button>
+            <button type="button" class="nform-opt-btn" data-val="의료·보건"  onclick="toggleIndustry(this)">의료·보건</button>
+          </div>
+          <input class="nform-input" id="inputDesiredJobEtc" type="text" maxlength="8"
+                 placeholder="기타 직접 입력 (선택, 8자 이내)" style="margin-top:6px">
         </div>
         <div class="nform-consent">
           <div class="nform-consent-title">📋 개인정보 수집·이용 동의 (<a href="privacy.html" target="_blank" style="color:#2563EB;font-weight:400">전문 보기</a>)</div>
@@ -826,7 +844,21 @@ const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
 
   window.toggleJobType = function(btn) {
     btn.classList.toggle('active');
-    selectedJobTypes = [...document.querySelectorAll('.lv2-field .nform-opt-btn.active')].map(b => b.dataset.val);
+    selectedJobTypes = [...document.querySelectorAll('#jobTypeRow .nform-opt-btn.active')].map(b => b.dataset.val);
+  };
+
+  window.toggleIndustry = function(btn) {
+    if (btn.classList.contains('active')) {
+      btn.classList.remove('active');
+    } else {
+      const active = document.querySelectorAll('#industryRow .nform-opt-btn.active');
+      if (active.length >= 3) return;
+      btn.classList.add('active');
+    }
+    const active = document.querySelectorAll('#industryRow .nform-opt-btn.active');
+    document.querySelectorAll('#industryRow .nform-opt-btn:not(.active)').forEach(b =>
+      b.classList.toggle('maxed', active.length >= 3)
+    );
   };
 
   document.getElementById('inputPhone').addEventListener('input', function() {
@@ -871,11 +903,13 @@ const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
     e.preventDefault();
     if (!document.getElementById('consentCheck').checked) { alert('개인정보 수집·이용에 동의해 주세요.'); return; }
 
-    const phone      = document.getElementById('inputPhone').value.trim();
-    const name       = document.getElementById('inputName').value.trim();
-    const desiredJob = document.getElementById('inputDesiredJob').value.trim();
-    const sido       = document.getElementById('regionSelect').value;
-    const gu         = document.getElementById('districtSelect').value;
+    const phone   = document.getElementById('inputPhone').value.trim();
+    const name    = document.getElementById('inputName').value.trim();
+    const sido    = document.getElementById('regionSelect').value;
+    const gu      = document.getElementById('districtSelect').value;
+    const selInds = [...document.querySelectorAll('#industryRow .nform-opt-btn.active')].map(b => b.dataset.val);
+    const etcJob  = document.getElementById('inputDesiredJobEtc').value.trim().slice(0, 8);
+    const desiredJob = [...selInds, etcJob].filter(Boolean).join(', ') || null;
 
     let ageValue;
     if (currentLevel >= 3) {
@@ -893,7 +927,7 @@ const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
     }
     if (currentLevel >= 3) {
       if (!name)       { alert('이름을 입력해 주세요.'); return; }
-      if (!desiredJob) { alert('희망 직종을 입력해 주세요.'); return; }
+      if (!desiredJob) { alert('희망 직종을 하나 이상 선택해 주세요.'); return; }
     }
 
     submitBtn.disabled = true;
@@ -905,7 +939,7 @@ const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
         body: JSON.stringify({
           name: name || null, age_range: ageValue,
           location_sido: sido || null, location_gu: gu || null,
-          desired_job: desiredJob || (selectedJobTypes.join(',') || null),
+          desired_job: desiredJob,
           contact_phone: phone || null,
           alert_level: currentLevel, is_active: currentLevel >= 3
         })

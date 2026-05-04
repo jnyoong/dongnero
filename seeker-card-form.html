@@ -54,6 +54,9 @@
     .age-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .age-btn { flex: 1; min-width: 70px; padding: 10px 8px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--bg); font-size: .9rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: all .15s; text-align: center; }
     .age-btn.active { border-color: var(--green); background: var(--green-lt); color: var(--green); }
+    .ind-btn { padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--bg); font-size: .85rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: all .15s; }
+    .ind-btn.active { border-color: var(--green); background: var(--green-lt); color: var(--green); }
+    .ind-btn.maxed  { opacity: .38; cursor: not-allowed; }
 
     .consent-box { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px 15px; font-size: .82rem; color: var(--text-sec); line-height: 1.75; margin-bottom: 14px; }
     .consent-check { display: flex; align-items: flex-start; gap: 10px; margin-top: 10px; cursor: pointer; }
@@ -135,8 +138,22 @@
     <div class="section">
       <div class="section-title">💼 희망 직종 · 경력</div>
       <div class="form-group">
-        <label class="form-label" for="desiredJob">희망 직종 <span class="form-req">*</span></label>
-        <input class="form-input" id="desiredJob" type="text" placeholder="예: 요양보호사, 사무보조, 경비, 청소" />
+        <div class="form-label">희망 직종 <span class="form-req">*</span> <span style="font-size:.78rem;font-weight:400;color:#A8A29E">최대 3개</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px" id="industryRow">
+          <button type="button" class="ind-btn" data-val="요양·돌봄"  onclick="toggleInd(this)">요양·돌봄</button>
+          <button type="button" class="ind-btn" data-val="경비·보안"  onclick="toggleInd(this)">경비·보안</button>
+          <button type="button" class="ind-btn" data-val="청소·미화"  onclick="toggleInd(this)">청소·미화</button>
+          <button type="button" class="ind-btn" data-val="조리·급식"  onclick="toggleInd(this)">조리·급식</button>
+          <button type="button" class="ind-btn" data-val="복지·상담"  onclick="toggleInd(this)">복지·상담</button>
+          <button type="button" class="ind-btn" data-val="사무·행정"  onclick="toggleInd(this)">사무·행정</button>
+          <button type="button" class="ind-btn" data-val="농업·생산"  onclick="toggleInd(this)">농업·생산</button>
+          <button type="button" class="ind-btn" data-val="교육·지도"  onclick="toggleInd(this)">교육·지도</button>
+          <button type="button" class="ind-btn" data-val="판매·영업"  onclick="toggleInd(this)">판매·영업</button>
+          <button type="button" class="ind-btn" data-val="시설·건설"  onclick="toggleInd(this)">시설·건설</button>
+          <button type="button" class="ind-btn" data-val="의료·보건"  onclick="toggleInd(this)">의료·보건</button>
+        </div>
+        <input class="form-input" id="desiredJobEtc" type="text" maxlength="8"
+               placeholder="기타 직접 입력 (선택, 8자 이내)" />
       </div>
       <div class="form-group">
         <label class="form-label" for="experience">경력 사항</label>
@@ -202,6 +219,20 @@ const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
 let selectedAge = '';
 let isSubmitting = false;
 
+function toggleInd(btn) {
+  if (btn.classList.contains('active')) {
+    btn.classList.remove('active');
+  } else {
+    const active = document.querySelectorAll('#industryRow .ind-btn.active');
+    if (active.length >= 3) return;
+    btn.classList.add('active');
+  }
+  const active = document.querySelectorAll('#industryRow .ind-btn.active');
+  document.querySelectorAll('#industryRow .ind-btn:not(.active)').forEach(b =>
+    b.classList.toggle('maxed', active.length >= 3)
+  );
+}
+
 function selectAge(btn) {
   document.querySelectorAll('.age-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -217,7 +248,9 @@ async function submitCard() {
   const name          = document.getElementById('name').value.trim();
   const location_sido = document.getElementById('locationSido').value;
   const location_gu   = document.getElementById('locationGu').value.trim();
-  const desired_job   = document.getElementById('desiredJob').value.trim();
+  const selInds = [...document.querySelectorAll('#industryRow .ind-btn.active')].map(b => b.dataset.val);
+  const etcJob  = document.getElementById('desiredJobEtc').value.trim().slice(0, 8);
+  const desired_job = [...selInds, etcJob].filter(Boolean).join(', ');
   const experience    = document.getElementById('experience').value.trim();
   const skills        = document.getElementById('skills').value.trim();
   const available_time = document.getElementById('availableTime').value.trim();
@@ -228,7 +261,7 @@ async function submitCard() {
   if (!name) return alert('이름을 입력해 주세요.');
   if (!selectedAge) return alert('연령대를 선택해 주세요.');
   if (!location_sido) return alert('희망 근무지역(시/도)을 선택해 주세요.');
-  if (!desired_job) return alert('희망 직종을 입력해 주세요.');
+  if (!desired_job) return alert('희망 직종을 하나 이상 선택해 주세요.');
   if (!contact_phone) return alert('전화번호를 입력해 주세요.');
   if (!/^01[016789]-?\d{3,4}-?\d{4}$/.test(contact_phone.replace(/-/g, '')))
     return alert('올바른 휴대폰 번호를 입력해 주세요.\n예) 010-1234-5678');
