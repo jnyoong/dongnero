@@ -463,15 +463,39 @@ function fmtRelative(str) {
   return fmtDate(str);
 }
 
+let allPosts = [];
+
+async function loadSupabasePosts() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/info_posts?select=*&order=created_at.desc`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+    );
+    if (!res.ok) return [];
+    const rows = await res.json();
+    return rows.map(r => ({
+      id: r.id,
+      category: r.category,
+      categoryColor: r.category_color || '#2563EB',
+      title: r.title,
+      summary: r.summary || '',
+      content: r.content || '',
+      tags: r.tags || [],
+      author: r.author || '동네로 AI',
+      date: (r.created_at || '').split('T')[0],
+      _sb: true
+    }));
+  } catch { return []; }
+}
+
 /* ── 목록 렌더 ─────────────────────────────────────── */
 function renderList() {
-  const posts = typeof POSTS_DATA !== 'undefined' ? POSTS_DATA : [];
-  if (!posts.length) {
+  if (!allPosts.length) {
     document.getElementById('postList').innerHTML =
       '<div class="empty-state"><span class="empty-icon">📭</span>게시물이 없습니다.</div>';
     return;
   }
-  document.getElementById('postList').innerHTML = posts.map(p => `
+  document.getElementById('postList').innerHTML = allPosts.map(p => `
     <div class="post-card" onclick="openPost('${p.id}')">
       <div class="post-card-bar" style="background:${p.categoryColor||'#2563EB'}"></div>
       <div class="post-card-body">
@@ -488,7 +512,7 @@ function renderList() {
 
 /* ── 상세 열기 ─────────────────────────────────────── */
 function openPost(id) {
-  const post = (POSTS_DATA||[]).find(p => p.id === id);
+  const post = allPosts.find(p => String(p.id) === String(id));
   if (!post) return;
 
   // 헤더 업데이트
@@ -533,8 +557,8 @@ window.addEventListener('popstate', e => {
     showList();
   } else {
     const id = location.hash.slice(1);
-    const post = (POSTS_DATA||[]).find(p => p.id === id);
-    if (post) openPost(post.id);
+    const post = allPosts.find(p => String(p.id) === id);
+    if (post) openPost(String(post.id));
   }
 });
 function showList() {
@@ -645,12 +669,17 @@ function escHtml(str) {
 }
 
 /* ── 초기화 ─────────────────────────────────────────── */
-function init() {
+async function init() {
+  const staticPosts = (typeof POSTS_DATA !== 'undefined' ? POSTS_DATA : [])
+    .map(p => ({...p, _sb: false}));
+  const sbPosts = await loadSupabasePosts();
+  // AI 생성 글(최신순) → 기존 정적 글 순으로 합침
+  allPosts = [...sbPosts, ...staticPosts];
   renderList();
   const hash = location.hash.slice(1);
   if (hash) {
-    const post = (POSTS_DATA||[]).find(p => p.id === hash);
-    if (post) { openPost(post.id); return; }
+    const post = allPosts.find(p => String(p.id) === hash);
+    if (post) { openPost(String(post.id)); return; }
   }
 }
 init();

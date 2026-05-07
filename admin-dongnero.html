@@ -130,6 +130,7 @@
     <div class="tab" data-tab="excluded">🚫 필터링 제외 <span id="tabExCount"></span></div>
     <div class="tab" data-tab="companyjobs">📝 기업공고 <span id="tabCjCount"></span></div>
     <div class="tab" data-tab="seekercards">💼 구직카드 <span id="tabScCount"></span></div>
+    <div class="tab" data-tab="infoposts">📝 정보 글 <span id="tabIpCount"></span></div>
   </div>
 
   <!-- 탭1: 공고 목록 -->
@@ -338,6 +339,21 @@
     <div style="margin-top:8px;font-size:.78rem;color:#9CA3AF" id="scRangeInfo"></div>
   </div>
 
+  <!-- 탭6: 정보 글 -->
+  <div class="tab-panel" id="panel-infoposts">
+    <div class="summary-row">
+      <div class="summary-chip"><strong id="ipTotal">-</strong>AI 생성 글</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>#</th><th>카테고리</th><th>제목</th><th>부제목</th><th>등록일</th><th>삭제</th>
+        </tr></thead>
+        <tbody id="ipBody"><tr><td colspan="6" class="loading">불러오는 중…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 
 <script src="whitelist_data.js"></script>
@@ -399,8 +415,52 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     tab.classList.add('active');
     document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+    if (tab.dataset.tab === 'infoposts') loadInfoPosts();
   });
 });
+
+/* ── 정보 글 (AI 생성) ── */
+async function loadInfoPosts() {
+  document.getElementById('ipBody').innerHTML = '<tr><td colspan="6" class="loading">불러오는 중…</td></tr>';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/info_posts?select=*&order=created_at.desc`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    const rows = await res.json();
+    document.getElementById('ipTotal').textContent = rows.length;
+    document.getElementById('tabIpCount').textContent = rows.length ? `(${rows.length})` : '';
+    if (!rows.length) {
+      document.getElementById('ipBody').innerHTML = '<tr><td colspan="6" class="empty-msg">정보 글이 없습니다.</td></tr>';
+      return;
+    }
+    document.getElementById('ipBody').innerHTML = rows.map((r, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td><span style="background:${r.category_color}18;color:${r.category_color};padding:2px 8px;border-radius:20px;font-size:.8rem;font-weight:700">${r.category}</span></td>
+        <td style="max-width:220px;word-break:keep-all">${r.title}</td>
+        <td style="max-width:180px;color:#6B7280;font-size:.85rem">${r.summary || ''}</td>
+        <td style="white-space:nowrap">${(r.created_at||'').slice(0,10)}</td>
+        <td><button class="btn btn-red" onclick="deleteInfoPost('${r.id}')">🗑 삭제</button></td>
+      </tr>
+    `).join('');
+  } catch (e) {
+    document.getElementById('ipBody').innerHTML = `<tr><td colspan="6" class="empty-msg">불러오기 실패: ${e.message}</td></tr>`;
+  }
+}
+
+async function deleteInfoPost(id) {
+  if (!confirm('이 정보 글을 삭제하시겠습니까?')) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/info_posts?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    if (!res.ok) throw new Error(res.status);
+    await loadInfoPosts();
+  } catch (e) {
+    alert('삭제 실패: ' + e.message);
+  }
+}
 
 /* ── 공고 데이터 로드 ── */
 function loadJobData() {
