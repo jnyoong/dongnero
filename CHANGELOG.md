@@ -2,6 +2,75 @@
 
 ---
 
+## [v0.28] 2026-05-08 — 정보게시판 AI 예약 발행 + 어드민 글 삭제
+
+### info.html
+- 게시물 카드 UI 단순화 — 제목 + 한 줄 부제목만 표시, 작성자·태그 푸터 제거
+- Supabase `info_posts` 테이블 연동 — AI 생성 글을 정적 글과 병합해 노출
+- 발행된 글만 표시 (`published_at IS NOT NULL` 필터), AI 글이 상단 정렬
+- `allPosts` 전역 배열로 통합 관리, `openPost()` / popstate 핸들러 동일하게 수정
+- 드로어 `구직카드 · 알림 신청` → `내 동네 일자리 알림` 문구 통일
+
+### admin-dongnero.html
+- **📝 정보 글 탭** 신규 추가 — Supabase `info_posts` 목록 조회 + 행별 삭제 버튼
+- `loadInfoPosts()` / `deleteInfoPost(id)` 함수 추가
+
+### .github/workflows/daily-post.yml (신규)
+- 매일 KST 10:00 (UTC 01:00) 자동 실행
+- Supabase에서 `published_at = NULL`인 가장 오래된 글 1개를 찾아 `published_at = now()` 설정
+- Anthropic API 불필요 — 미리 작성된 30개 예약 글 순차 발행
+
+### Supabase (수동 실행 필요)
+- `info_posts` 테이블 생성 (uuid PK, category, title, summary, content, tags, author, created_at, published_at)
+- RLS: 공개 SELECT / anon INSERT / anon DELETE 정책 설정
+- 30개 정보 글 INSERT (근로계약서·4대보험·주휴수당·최저임금·퇴직금 등 노동 권리·취업 준비 주제)
+
+---
+
+## [v0.27] 2026-05-08 — UI 문구 통일 + FAB 깜박임 애니메이션
+
+### jobs.html
+- 플로팅 버튼 텍스트 `구직카드 · 알림 신청` → `내 동네 일자리 알림`
+- FAB 20초 주기 깜박임 애니메이션 추가 (`@keyframes fab-blink`, 3초 딜레이 후 시작)
+- 드로어 `공고 직접 등록` → `공고 등록`
+- 드로어 `구직카드 · 알림 신청` → `내 동네 일자리 알림`
+
+### info.html
+- 드로어 `공고 직접 등록` → `공고 등록`
+- 드로어 `구직카드 · 알림 신청` → `내 동네 일자리 알림`
+
+### index.html
+- FAB 버튼 텍스트 `구직카드 · 알림 신청` → `내 동네 일자리 알림`
+
+---
+
+## [v0.26] 2026-05-08 — jobs.html 무한 스크롤 + info.html 드로어 링크 수정
+
+### jobs.html
+- **무한 스크롤** 도입 — 최초 50건만 렌더링, 스크롤 하단 300px 근접 시 50건씩 추가 (`IntersectionObserver`)
+- 필터·지역·검색 변경 시 Observer 초기화 후 첫 배치부터 재렌더링
+- 지역별 구 그룹 헤더 순서 유지, 직접등록 공고 섹션 우선 표시
+
+### info.html
+- 드로어 `구직카드 · 알림 신청` 링크 `seeker-card-form.html` → `index.html?notify=1` 변경
+
+### index.html
+- `?notify=1` URL 파라미터 감지 시 구직카드·알림 모달 자동 오픈
+
+---
+
+## [v0.25] 2026-05-08 — 크롤링 시간 조정 + 로컬 작업스케줄러 제거
+
+### .github/workflows/crawl.yml
+- 크론 `0 0 * * *` (UTC 00:00 = KST 09:00) → `0 23 * * *` (UTC 23:00 = KST 08:00)
+- UTC 자정 혼잡 시간대 회피로 실제 실행 지연 감소
+
+### 삭제 파일
+- `register_task.bat` — Windows 작업스케줄러 등록 스크립트 (GitHub Actions로 대체)
+- `run_crawler.bat` — 로컬 크롤러 실행 배치 파일
+
+---
+
 ## [v0.24] 2026-05-04 — 알림 신청·구직카드 통합 모달 (레벨 슬라이더)
 
 ### jobs.html
