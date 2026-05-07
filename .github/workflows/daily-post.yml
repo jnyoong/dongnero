@@ -67,8 +67,13 @@ jobs:
                   'content-type': 'application/json'
               }
           )
-          with urllib.request.urlopen(req) as r:
-              result = json.loads(r.read())
+          try:
+              with urllib.request.urlopen(req) as r:
+                  result = json.loads(r.read())
+          except urllib.error.HTTPError as e:
+              print('Anthropic API 오류:', e.code, e.reason)
+              print('상세:', e.read().decode())
+              raise
 
           text = result['content'][0]['text'].strip()
           m = re.search(r'\{[\s\S]*\}', text)
