@@ -1,4 +1,4 @@
-name: 매일 정보 글 자동 생성
+name: 매일 정보 글 발행
 
 on:
   schedule:
@@ -6,91 +6,42 @@ on:
   workflow_dispatch:
 
 jobs:
-  generate:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Claude로 정보 글 생성 후 Supabase 저장
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: 미발행 글 1개 발행
         run: |
           python3 - << 'PYEOF'
-          import os, json, urllib.request, re, random
+          import urllib.request, json, datetime
 
-          api_key = os.environ['ANTHROPIC_API_KEY']
-          sb_url  = 'https://riomousxlyvwmembuhvc.supabase.co'
-          sb_key  = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh'
-
-          topics = [
-              '근로계약서 작성 시 꼭 확인할 것',
-              '4대보험 가입 기준과 혜택',
-              '주휴수당 계산하는 법',
-              '최저임금 확인 및 적용 방법',
-              '퇴직금 받을 수 있는 조건',
-              '고용24 사이트 제대로 활용하기',
-              '면접 당일 복장과 태도 팁',
-              '자기소개서 쉽게 쓰는 법',
-              '나이 제한 없이 뽑는 직종 모음',
-              '급여명세서 항목별 이해하기',
-              '연차 발생 기준과 계산법',
-              '국민취업지원제도 신청 방법',
-              '파트타임 근로자의 권리와 보호',
-              '재취업 준비할 때 자신감 키우는 법',
-              '면접에서 나이를 강점으로 만드는 법',
-          ]
-          topic = random.choice(topics)
-
-          prompt = (
-              '50대 이상 중장년 구직자를 위한 실용적인 취업 정보 글을 JSON으로 작성해주세요.\n'
-              '오늘 주제: ' + topic + '\n\n'
-              '반드시 아래 JSON 형식만 출력하세요 (마크다운 코드블록 없이 순수 JSON만):\n'
-              '{\n'
-              '  "category": "카테고리명 (노동 권리 / 취업 준비 / 면접 팁 / 급여 정보 중 택1)",\n'
-              '  "category_color": "#색상코드 (예: #2563EB #15803D #7C3AED #EA580C 중 택1)",\n'
-              '  "title": "실용적이고 명확한 제목",\n'
-              '  "summary": "한 줄 부제목 (40자 이내)",\n'
-              '  "content": "본문 HTML 600~900자 (<h3> <p> <ul><li> 태그 활용)",\n'
-              '  "tags": ["태그1", "태그2", "태그3"]\n'
-              '}'
-          )
+          sb_url = 'https://riomousxlyvwmembuhvc.supabase.co'
+          sb_key = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh'
+          headers_get = {'apikey': sb_key, 'Authorization': 'Bearer ' + sb_key}
 
           req = urllib.request.Request(
-              'https://api.anthropic.com/v1/messages',
-              data=json.dumps({
-                  'model': 'claude-3-5-haiku-20241022',
-                  'max_tokens': 2000,
-                  'messages': [{'role': 'user', 'content': prompt}]
-              }).encode(),
-              headers={
-                  'x-api-key': api_key,
-                  'anthropic-version': '2023-06-01',
-                  'content-type': 'application/json'
-              }
+              sb_url + '/rest/v1/info_posts?select=id,title&published_at=is.null&order=created_at.asc&limit=1',
+              headers=headers_get
           )
-          try:
-              with urllib.request.urlopen(req) as r:
-                  result = json.loads(r.read())
-          except urllib.error.HTTPError as e:
-              print('Anthropic API 오류:', e.code, e.reason)
-              print('상세:', e.read().decode())
-              raise
+          with urllib.request.urlopen(req) as r:
+              posts = json.loads(r.read())
 
-          text = result['content'][0]['text'].strip()
-          m = re.search(r'\{[\s\S]*\}', text)
-          post = json.loads(m.group() if m else text)
-          post['author'] = '동네로 AI'
+          if not posts:
+              print('발행할 글이 없습니다.')
+              exit(0)
 
-          insert_req = urllib.request.Request(
-              sb_url + '/rest/v1/info_posts',
-              data=json.dumps(post).encode(),
-              headers={
-                  'apikey': sb_key,
-                  'Authorization': 'Bearer ' + sb_key,
-                  'Content-Type': 'application/json',
-                  'Prefer': 'return=minimal'
-              },
-              method='POST'
+          post_id = posts[0]['id']
+          title   = posts[0]['title']
+          now = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.000Z')
+
+          patch = urllib.request.Request(
+              sb_url + '/rest/v1/info_posts?id=eq.' + str(post_id),
+              data=json.dumps({'published_at': now}).encode(),
+              headers={**headers_get,
+                       'Content-Type': 'application/json',
+                       'Prefer': 'return=minimal'},
+              method='PATCH'
           )
-          with urllib.request.urlopen(insert_req) as r:
-              print('저장 완료: ' + post['title'])
+          with urllib.request.urlopen(patch) as r:
+              print('발행 완료:', title)
           PYEOF
