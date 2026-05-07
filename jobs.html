@@ -398,9 +398,13 @@
 
     /* ── 카드 목록 ── */
     .grid {
-      padding: 0 12px 100px;
+      padding: 0 12px 0;
       display: flex; flex-direction: column; gap: 12px;
       max-width: 600px; margin: 0 auto;
+    }
+    #js-sentinel {
+      height: 60px; display: flex; align-items: center; justify-content: center;
+      color: var(--text-ter); font-size: .85rem; padding-bottom: 80px;
     }
 
     /* ── 카드 ── */
@@ -1079,6 +1083,7 @@
 </div>
 
 <div class="grid" id="jobGrid"></div>
+<div id="js-sentinel"></div>
 
 <footer>
   고용24 · 알바몬 · 알바천국 · 시니어로 · 서울일자리포털 · 잡아바(경기) · 어르신일자리(경기) · 맘시터 공개 정보를 수집·제공합니다.<br>
@@ -1528,6 +1533,9 @@ const _urlDistrict = _urlParams.get('district')  || '';
 let allJobs = [], activeRegion = _urlRegion, activeDistrict = _urlDistrict;
 let showMomsitter = true;
 
+const PAGE_SIZE = 50;
+let _flatItems = [], _renderOffset = 0, _scrollObserver = null;
+
 const SB_URL = 'https://riomousxlyvwmembuhvc.supabase.co';
 const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
 let directJobs = [];
@@ -1841,6 +1849,64 @@ function renderCard(job) {
   </div>`;
 }
 
+function _htmlToEl(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html.trim();
+  return tmp.firstChild;
+}
+
+function _appendBatch() {
+  if (_renderOffset >= _flatItems.length) return;
+  const grid = document.getElementById('jobGrid');
+  const frag = document.createDocumentFragment();
+  let jobsAdded = 0;
+
+  while (_renderOffset < _flatItems.length && jobsAdded < PAGE_SIZE) {
+    const item = _flatItems[_renderOffset++];
+    if (item.type === 'direct-label') {
+      const el = document.createElement('div');
+      el.className = 'direct-section-label';
+      el.textContent = `📌 동네로 인증 공고 ${item.count}건`;
+      frag.appendChild(el);
+    } else if (item.type === 'crawl-label') {
+      const el = document.createElement('div');
+      el.className = 'crawl-section-label';
+      el.textContent = '전국 크롤링 공고';
+      frag.appendChild(el);
+    } else if (item.type === 'district-header') {
+      const el = document.createElement('div');
+      el.className = 'district-header';
+      el.innerHTML = `${item.label} <span>${item.count}건</span>`;
+      frag.appendChild(el);
+    } else if (item.type === 'direct') {
+      frag.appendChild(_htmlToEl(renderDirectCard(item.job)));
+      jobsAdded++;
+    } else {
+      frag.appendChild(_htmlToEl(renderCard(item.job)));
+      jobsAdded++;
+    }
+  }
+
+  grid.appendChild(frag);
+
+  const sentinel = document.getElementById('js-sentinel');
+  if (_renderOffset >= _flatItems.length) {
+    if (_scrollObserver) { _scrollObserver.disconnect(); _scrollObserver = null; }
+    sentinel.textContent = '';
+  } else {
+    sentinel.textContent = '불러오는 중…';
+  }
+}
+
+function _setupObserver() {
+  if (_scrollObserver) _scrollObserver.disconnect();
+  const sentinel = document.getElementById('js-sentinel');
+  _scrollObserver = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) _appendBatch();
+  }, { rootMargin: '300px' });
+  _scrollObserver.observe(sentinel);
+}
+
 function render() {
   const kw  = document.getElementById('searchInput').value.trim().toLowerCase();
   const ind = document.getElementById('industryFilter').value;
@@ -1848,7 +1914,6 @@ function render() {
   const src = document.getElementById('sourceFilter').value;
   const srt = document.getElementById('sortSelect').value;
 
-  // 직접 등록 공고 (출처 필터 없을 때만 표시)
   const showDirect = !src;
   const matchingDirect = showDirect ? directJobs.filter(j => {
     if (activeRegion !== '전체' && j._region !== activeRegion) return false;
@@ -1888,22 +1953,27 @@ function render() {
   const totalCount = matchingDirect.length + jobs.length;
   document.getElementById('resultCount').innerHTML = `<strong>${totalCount}</strong>건의 공고`;
 
+  // 기존 Observer 해제 & 그리드 초기화
+  if (_scrollObserver) { _scrollObserver.disconnect(); _scrollObserver = null; }
   const grid = document.getElementById('jobGrid');
+  grid.innerHTML = '';
+  document.getElementById('js-sentinel').textContent = '';
+
   if (!totalCount) {
     grid.innerHTML = '<div class="empty"><span class="empty-icon">🔍</span>검색 결과가 없습니다.</div>';
     return;
   }
 
-  // 직접등록 공고 섹션
-  let directHtml = '';
+  // 플랫 아이템 목록 구성
+  _flatItems = [];
+  _renderOffset = 0;
+
   if (matchingDirect.length) {
-    directHtml = `<div class="direct-section-label">📌 동네로 인증 공고 ${matchingDirect.length}건</div>`;
-    directHtml += matchingDirect.map(renderDirectCard).join('');
-    if (jobs.length) directHtml += `<div class="crawl-section-label">전국 크롤링 공고</div>`;
+    _flatItems.push({ type: 'direct-label', count: matchingDirect.length });
+    matchingDirect.forEach(j => _flatItems.push({ type: 'direct', job: j }));
+    if (jobs.length) _flatItems.push({ type: 'crawl-label' });
   }
 
-  // 크롤링 공고 섹션
-  let regularHtml = '';
   if (_urlRegion !== '전체' && !activeDistrict) {
     const dists = DISTRICTS[_urlRegion] || [];
     const groups = {}, noDistrict = [];
@@ -1916,19 +1986,20 @@ function render() {
     sortedDists.forEach(d => sortArr(groups[d]));
     sortArr(noDistrict);
     sortedDists.forEach(d => {
-      regularHtml += `<div class="district-header">${d} <span>${groups[d].length}건</span></div>`;
-      regularHtml += groups[d].map(renderCard).join('');
+      _flatItems.push({ type: 'district-header', label: d, count: groups[d].length });
+      groups[d].forEach(j => _flatItems.push({ type: 'job', job: j }));
     });
     if (noDistrict.length) {
-      regularHtml += `<div class="district-header">기타 <span>${noDistrict.length}건</span></div>`;
-      regularHtml += noDistrict.map(renderCard).join('');
+      _flatItems.push({ type: 'district-header', label: '기타', count: noDistrict.length });
+      noDistrict.forEach(j => _flatItems.push({ type: 'job', job: j }));
     }
   } else {
     sortArr(jobs);
-    regularHtml = jobs.map(renderCard).join('');
+    jobs.forEach(j => _flatItems.push({ type: 'job', job: j }));
   }
 
-  grid.innerHTML = directHtml + regularHtml;
+  _appendBatch();
+  if (_renderOffset < _flatItems.length) _setupObserver();
 }
 
 /* ── 드로어 ── */
