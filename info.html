@@ -180,16 +180,11 @@
       margin-bottom: 6px;
     }
     .post-card-summary {
-      font-size: .85rem; color: var(--text-sec); line-height: 1.6;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      font-size: .83rem; color: var(--text-ter); line-height: 1.5;
+      margin-top: 2px;
+      display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;
       overflow: hidden;
     }
-    .post-card-foot {
-      padding: 10px 16px; border-top: 1px solid var(--border);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .post-card-author { font-size: .78rem; color: var(--text-ter); }
-    .post-card-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-left: auto; }
     .post-tag {
       font-size: .7rem; padding: 2px 8px; border-radius: 50px;
       background: var(--bg); color: var(--text-sec); border: 1px solid var(--border);
@@ -486,10 +481,6 @@ function renderList() {
         </div>
         <div class="post-card-title">${p.title}</div>
         <div class="post-card-summary">${p.summary}</div>
-      </div>
-      <div class="post-card-foot">
-        <span class="post-card-author">✍️ ${p.author}</span>
-        <div class="post-card-tags">${(p.tags||[]).map(t=>`<span class="post-tag">#${t}</span>`).join('')}</div>
       </div>
     </div>
   `).join('');
