@@ -623,8 +623,17 @@
       transform: translateY(16px);
       transition: opacity .3s, transform .3s;
     }
-    .notify-fab.show    { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .notify-fab.show    { opacity: 1; pointer-events: auto; transform: translateY(0);
+                          animation: fab-blink 20s 3s infinite; }
     .notify-fab.low-pos { bottom: 24px; }
+    @keyframes fab-blink {
+      0%, 80%  { transform: translateY(0) scale(1);    box-shadow: 0 4px 20px rgba(234,88,12,.45); }
+      83%      { transform: translateY(0) scale(.93);  box-shadow: 0 2px  8px rgba(234,88,12,.15); }
+      86%      { transform: translateY(0) scale(1.07); box-shadow: 0 6px 28px rgba(234,88,12,.85); }
+      89%      { transform: translateY(0) scale(.96);  box-shadow: 0 3px 12px rgba(234,88,12,.25); }
+      93%      { transform: translateY(0) scale(1.03); box-shadow: 0 5px 22px rgba(234,88,12,.65); }
+      100%     { transform: translateY(0) scale(1);    box-shadow: 0 4px 20px rgba(234,88,12,.45); }
+    }
 
     /* ── 알림 모달 ── */
     .notify-overlay {
@@ -828,8 +837,8 @@
 </div>
 
 <!-- 알림·구직카드 플로팅 버튼 -->
-<button class="notify-fab" id="notifyFab" aria-label="구직카드 등록 및 알림 신청">
-  🔔 구직카드 · 알림 신청
+<button class="notify-fab" id="notifyFab" aria-label="내 동네 일자리 알림 신청">
+  🔔 내 동네 일자리 알림
 </button>
 
 <!-- 구직카드 / 알림 통합 모달 -->
@@ -1130,7 +1139,7 @@
       <a class="drawer-item drawer-item-action" href="company-job-form.html">
         <span class="drawer-item-icon">📝</span>
         <div class="drawer-item-body">
-          <div class="drawer-item-title">공고 직접 등록</div>
+          <div class="drawer-item-title">공고 등록</div>
           <div class="drawer-item-desc">기업 담당자 — 무료 공고 등록</div>
         </div>
       </a>
@@ -1138,7 +1147,7 @@
       <button class="drawer-item drawer-item-action" onclick="closeDrawer(); if(window.openNotifyModal) openNotifyModal();">
         <span class="drawer-item-icon">🔔</span>
         <div class="drawer-item-body">
-          <div class="drawer-item-title">구직카드 · 알림 신청</div>
+          <div class="drawer-item-title">내 동네 일자리 알림</div>
           <div class="drawer-item-desc">구직자 — 알림 받고 기업 제안 받기</div>
         </div>
       </button>
