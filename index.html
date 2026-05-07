@@ -709,7 +709,7 @@
     <img src="icon.svg" class="logo-img" alt="동네로" />
     <div class="logo-text">
       <div class="logo-name">동네로</div>
-      <div class="logo-sub">시니어 취업정보</div>
+      <div class="logo-sub">50,60대를 위한 취업정보</div>
     </div>
   </div>
   <p class="header-desc">50대 이상을 위한 전국 일자리<br>쉽고 빠르게 찾아보세요 😊</p>
@@ -910,6 +910,8 @@ const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
   function openModal()  { overlay.classList.add('show');    document.body.style.overflow = 'hidden'; }
   function closeModal() { overlay.classList.remove('show'); document.body.style.overflow = ''; }
   window.openNotifyModal = openModal;
+
+  if (new URLSearchParams(location.search).get('notify') === '1') openModal();
 
   fab.addEventListener('click', openModal);
   closeBtn.addEventListener('click', closeModal);
