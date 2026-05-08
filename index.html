@@ -694,6 +694,7 @@
           </label>
         </div>
         <button class="notify-submit" type="submit" id="notifySubmitBtn" disabled>알림 신청하기</button>
+        <p id="notifyErrMsg" style="display:none;color:#DC2626;font-size:.85rem;margin-top:10px;text-align:center;word-break:break-all;line-height:1.5;"></p>
       </form>
     </div>
     <div class="notify-success" id="notifySuccess">
@@ -947,10 +948,18 @@ const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
 
     submitBtn.disabled = true;
     submitBtn.textContent = '등록 중…';
+    const errEl = document.getElementById('notifyErrMsg');
+    errEl.style.display = 'none';
+
     try {
-      await fetch(`${SB_URL}/rest/v1/seeker_cards`, {
+      const res = await fetch(`${SB_URL}/rest/v1/seeker_cards`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` },
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SB_KEY,
+          'Authorization': `Bearer ${SB_KEY}`,
+          'Prefer': 'return=minimal'
+        },
         body: JSON.stringify({
           name: name || null, age_range: ageValue,
           location_sido: sido || null, location_gu: gu || null,
@@ -959,7 +968,26 @@ const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
           alert_level: currentLevel, is_active: currentLevel >= 3
         })
       });
-    } catch (_) {}
+
+      if (!res.ok) {
+        let detail = '';
+        try { const j = await res.json(); detail = j.message || j.hint || j.details || JSON.stringify(j); }
+        catch (_) { detail = await res.text().catch(() => ''); }
+        console.error('[notify] Supabase error', res.status, detail);
+        errEl.textContent = `저장 실패 (${res.status}): ${detail || '알 수 없는 오류'}`;
+        errEl.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = '알림 신청하기';
+        return;
+      }
+    } catch (netErr) {
+      console.error('[notify] 네트워크 오류', netErr);
+      errEl.textContent = '네트워크 오류가 발생했습니다. 인터넷 연결을 확인해 주세요.';
+      errEl.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = '알림 신청하기';
+      return;
+    }
 
     const m = LEVEL_CFG[currentLevel].success;
     document.getElementById('successIcon').textContent = m.icon;
