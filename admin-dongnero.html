@@ -920,7 +920,8 @@ function renderSeekerCards() {
   }
 
   document.getElementById('scBody').innerHTML = list.map((j, i) => {
-    const dt   = new Date(j.created_at).toLocaleDateString('ko-KR');
+    const _d   = new Date(j.created_at);
+    const dt   = `${_d.getMonth()+1}/${_d.getDate()} ${String(_d.getHours()).padStart(2,'0')}:${String(_d.getMinutes()).padStart(2,'0')}`;
     const loc  = [j.location_sido, j.location_gu].filter(Boolean).join(' ');
     const lvi  = j.alert_level || 2;
     const lvcf = SC_LEVEL[lvi] || SC_LEVEL[2];
@@ -969,7 +970,7 @@ function exportSeekerCsv() {
       j.name||'', j.age_range||'',
       j.location_sido||'', j.location_gu||'',
       j.desired_job||'', j.contact_phone||'',
-      new Date(j.created_at).toLocaleDateString('ko-KR')
+      (() => { const _d = new Date(j.created_at); return `${_d.getFullYear()}-${String(_d.getMonth()+1).padStart(2,'0')}-${String(_d.getDate()).padStart(2,'0')} ${String(_d.getHours()).padStart(2,'0')}:${String(_d.getMinutes()).padStart(2,'0')}`; })()
     ];
   });
   const csv = [header, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
