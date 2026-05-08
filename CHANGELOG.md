@@ -2,6 +2,22 @@
 
 ---
 
+## [v0.29] 2026-05-08 — 알림신청 저장 버그 수정
+
+### index.html
+- 알림신청 폼 제출 시 Supabase 에러를 `catch (_) {}`로 무시하던 버그 수정
+- `res.ok` 체크 추가 — HTTP 4xx/5xx 에러 시 빨간 에러 메시지 표시
+- 네트워크 오류 별도 처리 — "인터넷 연결을 확인해 주세요" 메시지
+- 에러 발생 시 버튼 재활성화 (재시도 가능)
+- 성공 시에만 localStorage 저장 (기존: 에러 여부 무관하게 저장)
+
+### Supabase (직접 수정)
+- `seeker_cards.location_sido` NOT NULL 제약 제거 → nullable
+- `seeker_cards.desired_job` NOT NULL 제약 제거 → nullable
+- 1·2단계 신청자(지역·직종 미입력)도 정상 저장되도록 수정
+
+---
+
 ## [v0.28] 2026-05-08 — 정보게시판 AI 예약 발행 + 어드민 글 삭제
 
 ### info.html
