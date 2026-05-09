@@ -1698,13 +1698,13 @@ function updateRegionLabel() {
   const el = document.getElementById('regionLabel');
   const base = allJobs.filter(j => showMomsitter || j.source !== '맘시터');
   if (activeRegion === '전체') {
-    el.textContent = '전국 전체 공고';
+    el.textContent = '';
   } else if (activeDistrict) {
     const cnt = base.filter(j => j._region === activeRegion && (j.location||'').includes(activeDistrict)).length;
-    el.textContent = `${activeRegion} ${activeDistrict} — ${cnt}건`;
+    el.textContent = `${cnt}건`;
   } else {
     const cnt = base.filter(j => j._region === activeRegion).length;
-    el.textContent = `${activeRegion} — ${cnt}건`;
+    el.textContent = `${cnt}건`;
   }
 }
 
