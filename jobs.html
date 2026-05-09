@@ -596,6 +596,9 @@
       transition: color .15s;
     }
     .bottom-tab-item.active { color: var(--blue); font-weight: 800; }
+    .bottom-tab-item + .bottom-tab-item {
+      border-left: 1px solid rgba(37,99,235,.12);
+    }
 
     /* ── PWA 홈화면 배너 ── */
     .home-hint-bar {
@@ -2132,8 +2135,6 @@ if (location.hash === '#notify') {
   const filterRow   = document.querySelector('.filter-row');
   const placeholder = document.getElementById('stickyPlaceholder');
 
-  placeholder.style.transition = 'height .3s cubic-bezier(0.4,0,0.2,1)';
-
   function syncPlaceholder() {
     placeholder.style.height = stickyTop.offsetHeight + 'px';
   }
@@ -2145,15 +2146,14 @@ if (location.hash === '#notify') {
     const y = window.scrollY;
     if (y > lastY && y > 60 && !hidden) {
       hidden = true;
-      const toolbarH = toolbar.offsetHeight;
-      stickyTop.style.transform = 'translateY(-' + toolbarH + 'px)';
+      stickyTop.style.transform = 'translateY(-' + toolbar.offsetHeight + 'px)';
       filterRow.classList.add('collapsed');
-      placeholder.style.height = (stickyTop.offsetHeight - toolbarH) + 'px';
+      toolbar.style.paddingBottom = '4px';
     } else if (y < lastY && hidden) {
       hidden = false;
       stickyTop.style.transform = '';
       filterRow.classList.remove('collapsed');
-      placeholder.style.height = stickyTop.offsetHeight + 'px';
+      toolbar.style.paddingBottom = '';
     }
     lastY = y;
   }, { passive: true });
