@@ -348,6 +348,31 @@
       color: var(--text-ter); font-size: .95rem;
     }
     .empty-icon { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+
+    /* ── 하단 탭바 ── */
+    .bottom-tab {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--surface);
+      border-top: 1.5px solid var(--border);
+      display: flex;
+      z-index: 185;
+      padding-bottom: env(safe-area-inset-bottom);
+      box-shadow: 0 -2px 12px rgba(0,0,0,.07);
+    }
+    .bottom-tab-item {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      padding: 18px 0 19px;
+      font-size: .92rem; font-weight: 600;
+      color: var(--text-sec);
+      text-decoration: none;
+      border: none; background: none; cursor: pointer;
+      font-family: inherit; letter-spacing: -.01em;
+      -webkit-tap-highlight-color: transparent;
+      transition: color .15s;
+    }
+    .bottom-tab-item.active { color: var(--blue); font-weight: 800; }
+    body { padding-bottom: 64px; }
   </style>
 </head>
 <body>
@@ -693,5 +718,13 @@ async function init() {
 }
 init();
 </script>
+
+<!-- 하단 탭바 -->
+<nav class="bottom-tab" role="navigation" aria-label="주요 메뉴">
+  <a class="bottom-tab-item" href="index.html">홈</a>
+  <a class="bottom-tab-item" href="jobs.html">공고</a>
+  <a class="bottom-tab-item active" href="info.html">정보</a>
+  <a class="bottom-tab-item" href="jobs.html#notify">알림신청</a>
+</nav>
 </body>
 </html>

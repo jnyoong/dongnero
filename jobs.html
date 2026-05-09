@@ -196,14 +196,18 @@
       box-shadow: 0 2px 8px rgba(0,0,0,.05);
       overflow: hidden;
       max-height: 150px;
-      transition: max-height .28s ease, opacity .22s ease, padding .28s ease, box-shadow .22s;
+      transition: max-height .3s cubic-bezier(0.4,0,0.2,1),
+                  padding .3s cubic-bezier(0.4,0,0.2,1);
     }
     .toolbar.collapsed {
-      max-height: 0; opacity: 0;
+      max-height: 0;
       padding-top: 0; padding-bottom: 0;
-      box-shadow: none; border-bottom: none;
     }
-    .toolbar-inner { display: flex; flex-direction: column; gap: 8px; }
+    .toolbar-inner {
+      display: flex; flex-direction: column; gap: 8px;
+      transition: transform .3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .toolbar.collapsed .toolbar-inner { transform: translateY(-100%); }
 
     /* ── 지역 전용 행 ── */
     .region-row {
@@ -585,8 +589,8 @@
     .bottom-tab-item {
       flex: 1;
       display: flex; align-items: center; justify-content: center;
-      padding: 13px 0 14px;
-      font-size: .82rem; font-weight: 600;
+      padding: 18px 0 19px;
+      font-size: .92rem; font-weight: 600;
       color: var(--text-sec);
       text-decoration: none;
       border: none; background: none; cursor: pointer;
@@ -2116,6 +2120,12 @@ document.getElementById('rsheetOverlay').addEventListener('click', e => {
 });
 
 loadData();
+
+/* #notify 해시로 진입 시 알림 모달 자동 오픈 */
+if (location.hash === '#notify') {
+  history.replaceState(null, '', location.pathname);
+  window.addEventListener('load', () => { if (window.openNotifyModal) openNotifyModal(); }, { once: true });
+}
 
 /* ── 툴바 스크롤 접기/펼치기 ── */
 (function() {
