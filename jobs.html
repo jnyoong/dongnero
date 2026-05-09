@@ -1889,6 +1889,7 @@ function renderDirectCard(job) {
       <div class="card-company">${job.company_name}</div>
       <div class="info-rows">
         <div class="info-row">
+          <span class="info-label">위치</span>
           <span class="info-text">${fullLoc || '위치 미공개'}</span>
         </div>
         ${salRow}
@@ -1936,6 +1937,7 @@ function renderCard(job) {
       <div class="card-company">${job.company || '회사명 미공개'}</div>
       <div class="info-rows">
         <div class="info-row">
+          <span class="info-label">위치</span>
           <span class="info-text">${job.location || '위치 미공개'}</span>
         </div>
         ${salRow}
