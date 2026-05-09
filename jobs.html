@@ -596,9 +596,6 @@
       transition: color .15s;
     }
     .bottom-tab-item.active { color: var(--blue); font-weight: 800; }
-    .bottom-tab-item + .bottom-tab-item {
-      border-left: 1px solid rgba(37,99,235,.12);
-    }
 
     /* ── PWA 홈화면 배너 ── */
     .home-hint-bar {
@@ -2149,11 +2146,15 @@ if (location.hash === '#notify') {
       stickyTop.style.transform = 'translateY(-' + toolbar.offsetHeight + 'px)';
       filterRow.classList.add('collapsed');
       toolbar.style.paddingBottom = '4px';
+      toolbar.style.borderBottom = 'none';
+      toolbar.style.boxShadow = 'none';
     } else if (y < lastY && hidden) {
       hidden = false;
       stickyTop.style.transform = '';
       filterRow.classList.remove('collapsed');
       toolbar.style.paddingBottom = '';
+      toolbar.style.borderBottom = '';
+      toolbar.style.boxShadow = '';
     }
     lastY = y;
   }, { passive: true });
