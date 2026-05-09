@@ -630,11 +630,11 @@
       z-index: 190; white-space: nowrap;
       opacity: 0; pointer-events: none;
       transform: translateY(16px);
-      transition: opacity .3s, transform .3s;
+      transition: opacity .3s, transform .3s, bottom .35s;
     }
     .notify-fab.show    { opacity: 1; pointer-events: auto; transform: translateY(0);
                           animation: fab-blink 20s 3s infinite; }
-    .notify-fab.low-pos { bottom: 24px; }
+    .notify-fab.pwa-active { bottom: 210px; }
     @keyframes fab-blink {
       0%, 70%  { transform: scale(1)    translateY(0);  background: var(--orange); box-shadow: 0 4px 20px rgba(234,88,12,.45); }
       74%      { transform: scale(1.25) translateY(-8px); background: #DC2626;      box-shadow: 0 18px 48px rgba(220,38,38,.8); }
@@ -1219,14 +1219,14 @@ if ('serviceWorker' in navigator) {
   }
 
   function showBanner(trigger) {
-    banner.classList.add('show'); fab && fab.classList.remove('low-pos');
+    banner.classList.add('show'); fab && fab.classList.add('pwa-active');
     gaEvent('pwa_banner_show', { trigger: trigger || 'scroll' });
   }
   window.openPwaBanner = showBanner;
   function dismissBanner() {
     banner.classList.remove('show');
     localStorage.setItem(DISMISS_KEY, Date.now() + DISMISS_DAYS * 86400000);
-    fab && fab.classList.add('low-pos');
+    fab && fab.classList.remove('pwa-active');
   }
 
   closeBtn.addEventListener('click', dismissBanner);
