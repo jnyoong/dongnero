@@ -347,7 +347,8 @@
       </select>
       <input type="text" id="scSearch" placeholder="이름·희망직종·연락처 검색…" oninput="renderSeekerCards()" style="flex:1;min-width:140px">
       <button class="btn btn-green" onclick="exportSeekerCsv()">CSV 내보내기</button>
-      <button class="btn" style="background:#EF4444;color:#fff" onclick="deleteSelectedCards()">선택 삭제</button>
+      <button class="btn" style="background:#F59E0B;color:#fff" onclick="trashSelectedCards()">🗑 휴지통으로</button>
+      <button class="btn" style="background:#6B7280;color:#fff" onclick="toggleTrashView()">휴지통 보기</button>
     </div>
     <div class="table-wrap">
       <table>
@@ -1016,18 +1017,20 @@ function renderSeekerCards() {
   }).join('');
 }
 
+let scTrashMode = false;
+let allSeekerCardsTrash = [];
+
 function toggleAllScChecks(el) {
   document.querySelectorAll('.sc-check').forEach(c => c.checked = el.checked);
 }
 
-async function deleteSelectedCards() {
+async function trashSelectedCards() {
   const checked = [...document.querySelectorAll('.sc-check:checked')];
-  if (!checked.length) { alert('삭제할 항목을 선택해주세요.'); return; }
+  if (!checked.length) { alert('항목을 선택해주세요.'); return; }
   const ids = checked.map(c => Number(c.dataset.id));
-  if (!confirm(`선택한 ${ids.length}건을 삭제합니다. 되돌릴 수 없습니다.`)) return;
-
+  if (!confirm(`선택한 ${ids.length}건을 휴지통으로 이동합니다.`)) return;
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_delete_seeker_cards`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_trash_seeker_cards`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY },
       body: JSON.stringify({ p_pw: ADMIN_PW, p_ids: ids })
@@ -1037,10 +1040,72 @@ async function deleteSelectedCards() {
     document.getElementById('scCheckAll').checked = false;
     updateScSummary();
     renderSeekerCards();
-    alert(`${ids.length}건 삭제 완료`);
-  } catch(e) {
-    alert('삭제 실패: ' + e.message);
+    alert(`${ids.length}건 휴지통 이동 완료`);
+  } catch(e) { alert('실패: ' + e.message); }
+}
+
+async function toggleTrashView() {
+  scTrashMode = !scTrashMode;
+  document.querySelector('[onclick="toggleTrashView()"]').textContent = scTrashMode ? '← 목록으로' : '휴지통 보기';
+  document.querySelector('[onclick="trashSelectedCards()"]').style.display = scTrashMode ? 'none' : '';
+
+  if (scTrashMode) {
+    document.getElementById('scBody').innerHTML = '<tr><td colspan="9" class="loading">불러오는 중…</td></tr>';
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_get_seeker_cards_trash`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY },
+        body: JSON.stringify({ p_pw: ADMIN_PW })
+      });
+      if (!res.ok) throw new Error(await res.text());
+      allSeekerCardsTrash = await res.json();
+      renderTrashCards();
+    } catch(e) { alert('불러오기 실패: ' + e.message); }
+  } else {
+    renderSeekerCards();
   }
+}
+
+function renderTrashCards() {
+  document.getElementById('scRangeInfo').textContent = `휴지통 ${allSeekerCardsTrash.length}건`;
+  if (!allSeekerCardsTrash.length) {
+    document.getElementById('scBody').innerHTML = '<tr><td colspan="9" class="empty-msg">휴지통이 비어있습니다.</td></tr>';
+    return;
+  }
+  document.getElementById('scBody').innerHTML = allSeekerCardsTrash.map((j, i) => {
+    const _d = new Date(j.deleted_at);
+    const dt = `${_d.getMonth()+1}/${_d.getDate()} ${String(_d.getHours()).padStart(2,'0')}:${String(_d.getMinutes()).padStart(2,'0')}`;
+    const loc = [j.location_sido, j.location_gu].filter(Boolean).join(' ');
+    const lvi = SC_LEVEL[j.alert_level||2] || SC_LEVEL[2];
+    return `<tr style="opacity:.7">
+      <td><input type="checkbox" class="sc-check" data-id="${j.id}"></td>
+      <td class="row-num">${i+1}</td>
+      <td><span class="badge ${lvi.cls}">${lvi.icon} ${lvi.label}</span></td>
+      <td>${j.name || '<span style="color:#9CA3AF">미입력</span>'}</td>
+      <td>${j.age_range || '-'}</td>
+      <td>${loc || '-'}</td>
+      <td style="max-width:140px;white-space:normal">${j.desired_job || '-'}</td>
+      <td>${j.contact_phone || '-'}</td>
+      <td style="font-size:.8rem;color:#EF4444">${dt} 삭제됨
+        <br><button class="btn" style="margin-top:4px;padding:2px 8px;font-size:.75rem" onclick="restoreCard(${j.id})">복구</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+async function restoreCard(id) {
+  if (!confirm('이 항목을 복구하시겠습니까?')) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_restore_seeker_cards`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY },
+      body: JSON.stringify({ p_pw: ADMIN_PW, p_ids: [id] })
+    });
+    if (!res.ok) throw new Error(await res.text());
+    allSeekerCardsTrash = allSeekerCardsTrash.filter(j => j.id !== id);
+    renderTrashCards();
+    alert('복구 완료');
+  } catch(e) { alert('실패: ' + e.message); }
 }
 
 function exportSeekerCsv() {
