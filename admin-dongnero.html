@@ -1027,7 +1027,7 @@ function toggleAllScChecks(el) {
 async function trashSelectedCards() {
   const checked = [...document.querySelectorAll('.sc-check:checked')];
   if (!checked.length) { alert('항목을 선택해주세요.'); return; }
-  const ids = checked.map(c => Number(c.dataset.id));
+  const ids = checked.map(c => c.dataset.id);
   if (!confirm(`선택한 ${ids.length}건을 휴지통으로 이동합니다.`)) return;
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_trash_seeker_cards`, {
@@ -1099,7 +1099,7 @@ async function restoreCard(id) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_restore_seeker_cards`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY },
-      body: JSON.stringify({ p_pw: ADMIN_PW, p_ids: [id] })
+      body: JSON.stringify({ p_pw: ADMIN_PW, p_ids: [String(id)] })
     });
     if (!res.ok) throw new Error(await res.text());
     allSeekerCardsTrash = allSeekerCardsTrash.filter(j => j.id !== id);
