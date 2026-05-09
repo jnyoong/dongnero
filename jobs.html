@@ -1064,7 +1064,7 @@
         <span class="rbn-arrow"></span>
       </button>
       <div class="region-count-label" id="regionLabel"></div>
-      <button class="btn-momsitter active" id="momsitterToggle" onclick="toggleMomsitter()">맘시터 공고</button>
+      <button class="btn-momsitter active" id="momsitterToggle" onclick="toggleMomsitter()">맘시터 공고 ON</button>
     </div>
     <div class="filter-row">
       <select id="industryFilter" onchange="render()">
@@ -1785,7 +1785,9 @@ function closeMstPopup() {
 
 function toggleMomsitter() {
   showMomsitter = !showMomsitter;
-  document.getElementById('momsitterToggle').classList.toggle('active', showMomsitter);
+  const btn = document.getElementById('momsitterToggle');
+  btn.classList.toggle('active', showMomsitter);
+  btn.textContent = '맘시터 공고 ' + (showMomsitter ? 'ON' : 'OFF');
   render();
 }
 
@@ -1929,7 +1931,7 @@ function renderCard(job) {
         <div class="tag-row">
           <span class="tag tag-region">${job._region}</span>
           <span class="tag tag-industry">${job._industry}</span>
-          <span class="tag tag-${typeClass}">${typeLabel}</span>
+          ${KNOWN_TYPES.includes(job.type) ? `<span class="tag tag-${typeClass}">${typeLabel}</span>` : ''}
         </div>
         <span class="source-badge ${badgeClass}">${job.source||''}</span>
       </div>
