@@ -2,6 +2,112 @@
 
 ---
 
+## [v0.41] 2026-05-09 — 어드민 구직카드 휴지통(소프트삭제) 기능
+
+### admin-dongnero.html
+- 구직카드 "선택 삭제" → "휴지통으로" 소프트삭제 방식으로 전환
+- 휴지통 보기 버튼: 삭제된 항목 목록 + 삭제 시각 표시
+- 항목별 "복구" 버튼으로 정상 목록 복원 가능
+- Supabase SQL: `deleted_at timestamptz` 컬럼 추가, `admin_trash/restore/get_trash_seeker_cards(uuid[])` 함수 생성
+- uuid 타입 오류 수정 (bigint[] → uuid[]), 중복 함수 정리
+
+---
+
+## [v0.40] 2026-05-09 — 어드민 구직카드 선택 삭제 + desired_job 표시
+
+### admin-dongnero.html
+- 구직카드 테이블 체크박스 + 선택 삭제 버튼 추가
+- Supabase RPC `admin_get_seeker_cards` → `RETURNS SETOF seeker_cards`로 변경해 `desired_job`(기타 입력 포함) 표시
+- `admin_delete_seeker_cards(uuid[])` 함수 생성
+
+---
+
+## [v0.39] 2026-05-09 — UX 세부 개선 (탭·카드·맘시터·공고수)
+
+### jobs.html
+- 공고카드 이모지(🏢📍💰📅) 제거 → 텍스트 라벨(위치·급여·마감)로 교체
+- 고용형태 "미기재" 태그 숨김 (정규직·계약직·시간제만 표시)
+- 맘시터 토글 버튼 텍스트 "맘시터 공고 ON/OFF" 추가
+- 맘시터 OFF 시 지역 공고수(`regionLabel`)도 맘시터 제외한 수로 갱신 (버그 수정)
+- 지역 공고수 표시 "서울 — 50건" → "50건"으로 간소화
+- 알림신청 자동팝업 30초 → 60초로 변경
+- 활성 탭 `font-weight: 900` 강화
+
+### info.html
+- 탭바 디자인 jobs.html과 통일 (연하늘 배경, 1rem 폰트)
+
+---
+
+## [v0.38] 2026-05-09 — 하단 탭바 + 스크롤 상단 개선
+
+### jobs.html
+- 하단 탭바 추가: 홈·공고·정보·알림신청 (텍스트 전용, 연하늘 배경)
+- 스크롤 시 toolbar(필터행 포함) 슬라이드업 — `position: fixed` + `transform` 방식으로 layout-jump 제거
+- FAB 버튼 탭바 위 고정 (`bottom: 72px`), PWA 배너 표시 시 배너 높이 동적 계산
+- 스크롤 후 상단 가로선(header/toolbar border) 숨김 처리
+- PWA 배너 표시 시 FAB 위치 동적 계산 (`banner.offsetHeight + 16px`)
+
+### info.html
+- 하단 탭바 추가 (정보 탭 active), 알림신청 탭 → `jobs.html#notify`로 이동
+
+---
+
+## [v0.37] 2026-05-09 — SEO 설정 + 네이버 인증
+
+### index.html / jobs.html / info.html
+- `description`, `keywords`, `canonical`, `og:` 태그 추가
+- 네이버 서치어드바이저 소유권 인증 태그 추가 (index.html)
+- 도메인 `dongnero.kr` 기준으로 모든 URL 통일
+
+### sitemap.xml / robots.txt (신규)
+- sitemap.xml 생성 (index·jobs·info 3페이지, dongnero.kr 기준)
+- robots.txt 생성 (admin 제외, sitemap 경로 명시)
+
+---
+
+## [v0.36] 2026-05-09 — PWA GA 이벤트 + 드로어 아이콘 확대
+
+### jobs.html
+- 드로어 햄버거 아이콘 크기 1.25rem → 1.7rem 확대
+- PWA 배너 GA 이벤트 추가: `pwa_banner_show(trigger)` / `pwa_install_tap(platform)` / `pwa_install_done`
+
+---
+
+## [v0.35] 2026-05-09 — index.html 메인 헤더 개편
+
+### index.html
+- 소개 문구 "50대 이상을 위한 전국 일자리…" 제거
+- 8개 출처 칩(고용24·알바몬·알바천국 등) 추가
+- 한 줄 소개: "공신력 있는 8개 사이트 공고를 내 동네 맞춤으로 드려요"
+
+---
+
+## [v0.34] 2026-05-09 — 크롤링·정보글 발행 스케줄 KST 07:00 통일
+
+### .github/workflows/crawl.yml / daily-post.yml
+- 크롤링: `0 23 * * *`(08시 KST) → `0 22 * * *`(07시 KST)
+- 정보글 발행: `0 1 * * *`(10시 KST) → `0 22 * * *`(07시 KST)
+
+---
+
+## [v0.33] 2026-05-09 — 알림신청 UX 개선
+
+### jobs.html
+- FAB 노출 타이밍: 스크롤 3회 → 첫 스크롤 또는 10초 후
+- 알림신청 자동팝업: 페이지 진입 60초 후 1회 (미등록·미노출 사용자)
+- GA4 이벤트: `notify_auto_popup` 추가
+
+---
+
+## [v0.32] 2026-05-09 — GA 이벤트 + 구글·네이버 Search Console 등록
+
+### jobs.html
+- GA4 이벤트: `notify_modal_open` / `notify_form_submit` 추가
+- Google Search Console: GA 연동으로 소유권 확인 완료, sitemap 제출
+- Naver Search Advisor: 소유권 확인 완료, sitemap 제출
+
+---
+
 ## [v0.31] 2026-05-09 — 홈화면 배너 고정·알림버튼 애니·GA 이벤트
 
 ### jobs.html
