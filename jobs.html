@@ -1214,7 +1214,14 @@ if ('serviceWorker' in navigator) {
   const iosSteps   = document.getElementById('pwaIosSteps');
   let deferredPrompt = null;
 
-  function showBanner()    { banner.classList.add('show');    fab && fab.classList.remove('low-pos'); }
+  function gaEvent(name, params) {
+    if (typeof gtag === 'function') gtag('event', name, { event_category: 'pwa', ...params });
+  }
+
+  function showBanner(trigger) {
+    banner.classList.add('show'); fab && fab.classList.remove('low-pos');
+    gaEvent('pwa_banner_show', { trigger: trigger || 'scroll' });
+  }
   window.openPwaBanner = showBanner;
   function dismissBanner() {
     banner.classList.remove('show');
@@ -1223,10 +1230,10 @@ if ('serviceWorker' in navigator) {
   }
 
   closeBtn.addEventListener('click', dismissBanner);
-  if (hintBtn) hintBtn.addEventListener('click', showBanner);
+  if (hintBtn) hintBtn.addEventListener('click', () => showBanner('hint_bar'));
 
   function onPwaScroll() {
-    if (window.scrollY >= 2500) { showBanner(); window.removeEventListener('scroll', onPwaScroll); }
+    if (window.scrollY >= 2500) { showBanner('scroll'); window.removeEventListener('scroll', onPwaScroll); }
   }
   window.addEventListener('scroll', onPwaScroll);
 
@@ -1235,6 +1242,7 @@ if ('serviceWorker' in navigator) {
     if (navigator.share) {
       iosBtn.style.display = 'block';
       iosBtn.addEventListener('click', () => {
+        gaEvent('pwa_install_tap', { platform: 'ios' });
         navigator.share({ title: '동네로 — 시니어 취업정보', url: window.location.href }).catch(() => {});
       });
     } else {
@@ -1244,10 +1252,14 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
     androidBtn.style.display = 'block';
     androidBtn.addEventListener('click', () => {
+      gaEvent('pwa_install_tap', { platform: 'android' });
       if (deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then(c => {
-          if (c.outcome === 'accepted') dismissBanner();
+          if (c.outcome === 'accepted') {
+            gaEvent('pwa_install_done', { platform: 'android' });
+            dismissBanner();
+          }
           deferredPrompt = null;
         });
       } else {
