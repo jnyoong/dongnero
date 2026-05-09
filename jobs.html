@@ -1394,11 +1394,19 @@ function updateDistricts() {
     submitBtn.disabled = !this.checked;
   });
 
-  /* FAB 스크롤 후 표시 */
+  /* FAB 표시 — 첫 스크롤 또는 10초 후 */
   if (!localStorage.getItem(DONE_KEY)) {
-    let cnt = 0;
-    const onScroll = () => { if (++cnt >= 3) { fab.classList.add('show'); window.removeEventListener('scroll', onScroll); } };
-    window.addEventListener('scroll', onScroll);
+    let fabShown = false;
+    function showFab() {
+      if (fabShown) return;
+      fabShown = true;
+      fab.classList.add('show');
+      window.removeEventListener('scroll', onFirstScroll);
+      clearTimeout(fabTimer);
+    }
+    const onFirstScroll = () => showFab();
+    window.addEventListener('scroll', onFirstScroll);
+    const fabTimer = setTimeout(showFab, 10000);
   }
 
   function openModal()  {
@@ -1406,6 +1414,18 @@ function updateDistricts() {
     if (typeof gtag === 'function') gtag('event', 'notify_modal_open', { event_category: 'notify' });
   }
   function closeModal() { overlay.classList.remove('show'); document.body.style.overflow = ''; }
+
+  /* 자동 팝업 — 30초 후 1회 (미등록·미노출 사용자만) */
+  const AUTO_KEY = 'notify_auto_v1';
+  if (!localStorage.getItem(DONE_KEY) && !localStorage.getItem(AUTO_KEY)) {
+    setTimeout(() => {
+      if (!overlay.classList.contains('show')) {
+        openModal();
+        localStorage.setItem(AUTO_KEY, '1');
+        if (typeof gtag === 'function') gtag('event', 'notify_auto_popup', { event_category: 'notify' });
+      }
+    }, 30000);
+  }
   window.openNotifyModal = openModal;
 
   fab.addEventListener('click', openModal);
