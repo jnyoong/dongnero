@@ -2,6 +2,16 @@
 
 ---
 
+## [v0.31] 2026-05-09 — 홈화면 배너 고정·알림버튼 애니·GA 이벤트
+
+### jobs.html
+- 홈화면 추가 힌트 바(`home-hint-bar`)를 `sticky-top` 안으로 이동 — 스크롤해도 상단 고정
+- 알림신청 FAB 깜박임 애니(`fab-blink`) 강화 — 최대 1.25배 확대·8px 상하이동·주황↔빨강↔노랑 색상 전환
+- GA4 이벤트 추가: `notify_modal_open`(버튼 클릭 시) / `notify_form_submit`(등록 완료 시)
+  → Explore > 퍼널 탐색에서 두 이벤트 비교 시 미등록 이탈률 측정 가능
+
+---
+
 ## [v0.30] 2026-05-08 — 어드민 UX 개선
 
 ### admin-dongnero.html
