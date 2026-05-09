@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin-dongnero.html
+
+Sitemap: https://jnyoong.github.io/dongnero/sitemap.xml
