@@ -489,12 +489,15 @@
     }
 
     /* 정보 행 */
-    .info-rows { display: flex; flex-direction: column; gap: 4px; }
-    .info-row  { display: flex; align-items: flex-start; gap: 7px; }
-    .info-icon { font-size: .85rem; flex-shrink: 0; margin-top: 1px; }
-    .info-text { font-size: .85rem; color: var(--text-pri); line-height: 1.35; }
+    .info-rows { display: flex; flex-direction: column; gap: 3px; }
+    .info-row  { display: flex; align-items: baseline; gap: 7px; }
+    .info-label {
+      font-size: .72rem; font-weight: 700; color: var(--text-ter);
+      flex-shrink: 0; width: 26px; padding-top: 1px;
+    }
+    .info-text { font-size: .85rem; color: var(--text-sec); line-height: 1.35; }
     .info-text.salary {
-      font-weight: 800; color: var(--orange); font-size: .95rem;
+      font-weight: 800; color: var(--orange); font-size: .92rem;
     }
 
     /* 마감 칩 */
@@ -1860,7 +1863,7 @@ async function loadDirectJobs() {
 function renderDirectCard(job) {
   const fullLoc = job._fullLoc || job.location_sido;
   const salRow = job.salary
-    ? `<div class="info-row"><span class="info-icon">💰</span><span class="info-text salary">${job.salary}</span></div>` : '';
+    ? `<div class="info-row"><span class="info-label">급여</span><span class="info-text salary">${job.salary}</span></div>` : '';
   const footBtn = job.website
     ? `<a class="btn-view" href="${job.website}" target="_blank" rel="noopener">공고 보기 →</a>`
     : `<a class="btn-view" href="company-job-form.html">문의하기 →</a>`;
@@ -1883,15 +1886,15 @@ function renderDirectCard(job) {
         <span class="source-badge" style="background:#EFF6FF;color:#2563EB;border:1px solid #BFDBFE">동네로</span>
       </div>
       <div class="card-title">${job.job_title}</div>
-      <div class="card-company">🏢 ${job.company_name}</div>
+      <div class="card-company">${job.company_name}</div>
       <div class="info-rows">
         <div class="info-row">
-          <span class="info-icon">📍</span>
+          <span class="info-label">위치</span>
           <span class="info-text">${fullLoc || '위치 미공개'}</span>
         </div>
         ${salRow}
         <div class="info-row">
-          <span class="info-icon">📅</span>
+          <span class="info-label">마감</span>
           <span class="info-text">${dlChip(job.deadline)}</span>
         </div>
       </div>
@@ -1907,8 +1910,7 @@ function renderCard(job) {
   const typeLabel  = KNOWN_TYPES.includes(job.type) ? job.type : '미기재';
   const isMst      = job.source === '맘시터';
   const salRow     = job.salary
-    ? `<div class="info-row"><span class="info-icon">💰</span>
-         <span class="info-text salary">${job.salary.replace(/\s+/g,' ').trim()}</span></div>` : '';
+    ? `<div class="info-row"><span class="info-label">급여</span><span class="info-text salary">${job.salary.replace(/\s+/g,' ').trim()}</span></div>` : '';
   const link       = job.apply_link || '#';
   const lineClass  = `line-${job.source||'기타'}`;
   const badgeClass = `src-${job.source||'기타'}`;
@@ -1932,15 +1934,15 @@ function renderCard(job) {
         <span class="source-badge ${badgeClass}">${job.source||''}</span>
       </div>
       <div class="card-title">${job.title}</div>
-      <div class="card-company">🏢 ${job.company || '회사명 미공개'}</div>
+      <div class="card-company">${job.company || '회사명 미공개'}</div>
       <div class="info-rows">
         <div class="info-row">
-          <span class="info-icon">📍</span>
+          <span class="info-label">위치</span>
           <span class="info-text">${job.location || '위치 미공개'}</span>
         </div>
         ${salRow}
         <div class="info-row">
-          <span class="info-icon">📅</span>
+          <span class="info-label">마감</span>
           <span class="info-text">${dlChip(job.deadline)}</span>
         </div>
       </div>
