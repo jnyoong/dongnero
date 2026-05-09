@@ -576,19 +576,19 @@
     /* ── 하단 탭바 ── */
     .bottom-tab {
       position: fixed; bottom: 0; left: 0; right: 0;
-      background: var(--surface);
-      border-top: 1.5px solid var(--border);
+      background: #EFF6FF;
+      border-top: 1.5px solid #BFDBFE;
       display: flex;
       z-index: 185;
       padding-bottom: env(safe-area-inset-bottom);
-      box-shadow: 0 -2px 12px rgba(0,0,0,.07);
+      box-shadow: 0 -2px 12px rgba(37,99,235,.08);
     }
     .bottom-tab-item {
       flex: 1;
       display: flex; align-items: center; justify-content: center;
       padding: 18px 0 19px;
-      font-size: .92rem; font-weight: 600;
-      color: var(--text-sec);
+      font-size: 1rem; font-weight: 600;
+      color: #64748B;
       text-decoration: none;
       border: none; background: none; cursor: pointer;
       font-family: inherit; letter-spacing: -.01em;
@@ -1466,7 +1466,7 @@ function updateDistricts() {
         localStorage.setItem(AUTO_KEY, '1');
         if (typeof gtag === 'function') gtag('event', 'notify_auto_popup', { event_category: 'notify' });
       }
-    }, 30000);
+    }, 60000);
   }
   window.openNotifyModal = openModal;
 
@@ -2132,6 +2132,8 @@ if (location.hash === '#notify') {
   const filterRow   = document.querySelector('.filter-row');
   const placeholder = document.getElementById('stickyPlaceholder');
 
+  placeholder.style.transition = 'height .3s cubic-bezier(0.4,0,0.2,1)';
+
   function syncPlaceholder() {
     placeholder.style.height = stickyTop.offsetHeight + 'px';
   }
@@ -2143,12 +2145,15 @@ if (location.hash === '#notify') {
     const y = window.scrollY;
     if (y > lastY && y > 60 && !hidden) {
       hidden = true;
-      stickyTop.style.transform = 'translateY(-' + toolbar.offsetHeight + 'px)';
+      const toolbarH = toolbar.offsetHeight;
+      stickyTop.style.transform = 'translateY(-' + toolbarH + 'px)';
       filterRow.classList.add('collapsed');
+      placeholder.style.height = (stickyTop.offsetHeight - toolbarH) + 'px';
     } else if (y < lastY && hidden) {
       hidden = false;
       stickyTop.style.transform = '';
       filterRow.classList.remove('collapsed');
+      placeholder.style.height = stickyTop.offsetHeight + 'px';
     }
     lastY = y;
   }, { passive: true });
