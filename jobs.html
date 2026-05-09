@@ -598,7 +598,7 @@
       -webkit-tap-highlight-color: transparent;
       transition: color .15s;
     }
-    .bottom-tab-item.active { color: var(--blue); font-weight: 800; }
+    .bottom-tab-item.active { color: var(--blue); font-weight: 900; letter-spacing: -.02em; }
 
     /* ── PWA 홈화면 배너 ── */
     .home-hint-bar {
@@ -1696,13 +1696,14 @@ function buildHeaderStats(data) {
 
 function updateRegionLabel() {
   const el = document.getElementById('regionLabel');
+  const base = allJobs.filter(j => showMomsitter || j.source !== '맘시터');
   if (activeRegion === '전체') {
     el.textContent = '전국 전체 공고';
   } else if (activeDistrict) {
-    const cnt = allJobs.filter(j => j._region === activeRegion && (j.location||'').includes(activeDistrict)).length;
+    const cnt = base.filter(j => j._region === activeRegion && (j.location||'').includes(activeDistrict)).length;
     el.textContent = `${activeRegion} ${activeDistrict} — ${cnt}건`;
   } else {
-    const cnt = allJobs.filter(j => j._region === activeRegion).length;
+    const cnt = base.filter(j => j._region === activeRegion).length;
     el.textContent = `${activeRegion} — ${cnt}건`;
   }
 }
@@ -1788,6 +1789,7 @@ function toggleMomsitter() {
   const btn = document.getElementById('momsitterToggle');
   btn.classList.toggle('active', showMomsitter);
   btn.textContent = '맘시터 공고 ' + (showMomsitter ? 'ON' : 'OFF');
+  updateRegionLabel();
   render();
 }
 
