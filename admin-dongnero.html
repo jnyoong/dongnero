@@ -1087,7 +1087,7 @@ function renderTrashCards() {
       <td style="max-width:140px;white-space:normal">${j.desired_job || '-'}</td>
       <td>${j.contact_phone || '-'}</td>
       <td style="font-size:.8rem;color:#EF4444">${dt} 삭제됨
-        <br><button class="btn" style="margin-top:4px;padding:2px 8px;font-size:.75rem" onclick="restoreCard(${j.id})">복구</button>
+        <br><button class="btn" style="margin-top:4px;padding:2px 8px;font-size:.75rem" onclick="restoreCard('${j.id}')">복구</button>
       </td>
     </tr>`;
   }).join('');
