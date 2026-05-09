@@ -194,6 +194,14 @@
       border-bottom: 1px solid var(--border);
       padding: 10px 14px;
       box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      overflow: hidden;
+      max-height: 150px;
+      transition: max-height .28s ease, opacity .22s ease, padding .28s ease, box-shadow .22s;
+    }
+    .toolbar.collapsed {
+      max-height: 0; opacity: 0;
+      padding-top: 0; padding-bottom: 0;
+      box-shadow: none; border-bottom: none;
     }
     .toolbar-inner { display: flex; flex-direction: column; gap: 8px; }
 
@@ -558,11 +566,35 @@
     .empty-icon { font-size: 2.8rem; display: block; margin-bottom: 12px; }
 
     footer {
-      text-align: center; padding: 20px 16px;
+      text-align: center; padding: 20px 16px 80px;
       font-size: .78rem; color: var(--text-ter);
       border-top: 1px solid var(--border);
       background: var(--surface); line-height: 1.8;
     }
+
+    /* ── 하단 탭바 ── */
+    .bottom-tab {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--surface);
+      border-top: 1.5px solid var(--border);
+      display: flex;
+      z-index: 185;
+      padding-bottom: env(safe-area-inset-bottom);
+      box-shadow: 0 -2px 12px rgba(0,0,0,.07);
+    }
+    .bottom-tab-item {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      padding: 13px 0 14px;
+      font-size: .82rem; font-weight: 600;
+      color: var(--text-sec);
+      text-decoration: none;
+      border: none; background: none; cursor: pointer;
+      font-family: inherit; letter-spacing: -.01em;
+      -webkit-tap-highlight-color: transparent;
+      transition: color .15s;
+    }
+    .bottom-tab-item.active { color: var(--blue); font-weight: 800; }
 
     /* ── PWA 홈화면 배너 ── */
     .home-hint-bar {
@@ -1110,6 +1142,14 @@
   운영자 문의: <a href="mailto:jun@dolight.co.kr" style="color:inherit">jun@dolight.co.kr</a>
   &nbsp;·&nbsp; <a href="privacy.html" style="color:inherit">개인정보 처리방침</a>
 </footer>
+
+<!-- 하단 탭바 -->
+<nav class="bottom-tab" role="navigation" aria-label="주요 메뉴">
+  <a class="bottom-tab-item" href="index.html">홈</a>
+  <a class="bottom-tab-item active" href="jobs.html">공고</a>
+  <a class="bottom-tab-item" href="info.html">정보</a>
+  <button class="bottom-tab-item" onclick="if(window.openNotifyModal) openNotifyModal()">알림신청</button>
+</nav>
 
 <!-- 사이드 드로어 -->
 <div class="drawer-overlay" id="drawerOverlay">
@@ -2076,6 +2116,23 @@ document.getElementById('rsheetOverlay').addEventListener('click', e => {
 });
 
 loadData();
+
+/* ── 툴바 스크롤 접기/펼치기 ── */
+(function() {
+  const toolbar = document.querySelector('.toolbar');
+  let lastY = 0, ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      if (y > lastY && y > 60) toolbar.classList.add('collapsed');
+      else if (y < lastY)      toolbar.classList.remove('collapsed');
+      lastY = y;
+      ticking = false;
+    });
+  });
+})();
 </script>
 </body>
 </html>
