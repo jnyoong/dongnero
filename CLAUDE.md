@@ -5,6 +5,7 @@
 ## 호스팅 구조
 - 저장소: github.com/jnyoong/dongnero (main 브랜치)
 - 배포: GitHub Pages (main 브랜치 루트, 커밋 즉시 자동반영)
+- **도메인: https://dongnero.kr/** (커스텀 도메인, canonical·sitemap·robots.txt 모두 이 도메인 기준)
 - 크롤러: GitHub Actions (.github/workflows/crawl.yml) — 매일 09시(KST) 자동실행
 - DB: Supabase (`riomousxlyvwmembuhvc`) — 알림신청(notify_signups) + 댓글(post_comments)
 - git remote: `github` = GitHub (push 대상), `origin` = GitLab (무시)
