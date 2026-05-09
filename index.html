@@ -96,16 +96,26 @@
       font-size: .88rem; color: rgba(255,255,255,.8);
       margin-bottom: 14px; line-height: 1.6;
     }
-    .source-chips {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      justify-content: center; margin-bottom: 16px;
+    .source-ticker {
+      overflow: hidden; width: 100%; margin-bottom: 16px;
+      -webkit-mask: linear-gradient(90deg, transparent, #fff 15%, #fff 85%, transparent);
+      mask: linear-gradient(90deg, transparent, #fff 15%, #fff 85%, transparent);
+    }
+    .source-ticker-track {
+      display: flex; gap: 8px; width: max-content;
+      animation: ticker-scroll 18s linear infinite;
+    }
+    .source-ticker-track:hover { animation-play-state: paused; }
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
     .source-chip {
       background: rgba(255,255,255,.18);
       border: 1px solid rgba(255,255,255,.28);
       border-radius: 20px; padding: 4px 11px;
       font-size: .78rem; color: #fff; font-weight: 600;
-      white-space: nowrap;
+      white-space: nowrap; flex-shrink: 0;
     }
     .header-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -734,15 +744,25 @@
       <div class="logo-sub">50,60대를 위한 취업정보</div>
     </div>
   </div>
-  <div class="source-chips">
-    <span class="source-chip">고용24</span>
-    <span class="source-chip">알바몬</span>
-    <span class="source-chip">알바천국</span>
-    <span class="source-chip">시니어로</span>
-    <span class="source-chip">서울일자리포털</span>
-    <span class="source-chip">잡아바</span>
-    <span class="source-chip">어르신일자리</span>
-    <span class="source-chip">맘시터</span>
+  <div class="source-ticker">
+    <div class="source-ticker-track">
+      <span class="source-chip">고용24</span>
+      <span class="source-chip">알바몬</span>
+      <span class="source-chip">알바천국</span>
+      <span class="source-chip">시니어로</span>
+      <span class="source-chip">서울일자리포털</span>
+      <span class="source-chip">잡아바</span>
+      <span class="source-chip">어르신일자리</span>
+      <span class="source-chip">맘시터</span>
+      <span class="source-chip">고용24</span>
+      <span class="source-chip">알바몬</span>
+      <span class="source-chip">알바천국</span>
+      <span class="source-chip">시니어로</span>
+      <span class="source-chip">서울일자리포털</span>
+      <span class="source-chip">잡아바</span>
+      <span class="source-chip">어르신일자리</span>
+      <span class="source-chip">맘시터</span>
+    </div>
   </div>
   <p class="header-desc">공신력 있는 8개 사이트 공고를 내 동네 맞춤으로 드려요</p>
   <div class="header-badge">
