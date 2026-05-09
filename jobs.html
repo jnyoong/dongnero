@@ -667,7 +667,7 @@
     }
     .notify-fab.show    { opacity: 1; pointer-events: auto; transform: translateY(0);
                           animation: fab-blink 20s 3s infinite; }
-    .notify-fab.pwa-active { bottom: 216px; }
+    .notify-fab.pwa-active { bottom: 72px; }
     @keyframes fab-blink {
       0%, 70%  { transform: scale(1)    translateY(0);  background: var(--orange); box-shadow: 0 4px 20px rgba(234,88,12,.45); }
       74%      { transform: scale(1.25) translateY(-8px); background: #DC2626;      box-shadow: 0 18px 48px rgba(220,38,38,.8); }
@@ -1261,14 +1261,18 @@ if ('serviceWorker' in navigator) {
   }
 
   function showBanner(trigger) {
-    banner.classList.add('show'); fab && fab.classList.add('pwa-active');
+    banner.classList.add('show');
+    if (fab) {
+      const bannerH = banner.offsetHeight || 160;
+      fab.style.bottom = (bannerH + 16) + 'px';
+    }
     gaEvent('pwa_banner_show', { trigger: trigger || 'scroll' });
   }
   window.openPwaBanner = showBanner;
   function dismissBanner() {
     banner.classList.remove('show');
     localStorage.setItem(DISMISS_KEY, Date.now() + DISMISS_DAYS * 86400000);
-    fab && fab.classList.remove('pwa-active');
+    if (fab) fab.style.bottom = '';
   }
 
   closeBtn.addEventListener('click', dismissBanner);
@@ -2148,6 +2152,7 @@ if (location.hash === '#notify') {
       toolbar.style.paddingBottom = '4px';
       toolbar.style.borderBottom = 'none';
       toolbar.style.boxShadow = 'none';
+      document.querySelector('header').style.borderBottom = 'none';
     } else if (y < lastY && hidden) {
       hidden = false;
       stickyTop.style.transform = '';
@@ -2155,6 +2160,7 @@ if (location.hash === '#notify') {
       toolbar.style.paddingBottom = '';
       toolbar.style.borderBottom = '';
       toolbar.style.boxShadow = '';
+      document.querySelector('header').style.borderBottom = '';
     }
     lastY = y;
   }, { passive: true });
