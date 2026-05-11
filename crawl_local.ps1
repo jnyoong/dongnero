@@ -1,5 +1,5 @@
-# 동네로 로컬 크롤링 & 자동 배포 스크립트
-# 사용법: 터미널에서 .\crawl_local.ps1
+﻿# dongnero local crawl & auto-deploy
+# Usage: .\crawl_local.ps1
 
 Set-Location $PSScriptRoot
 
@@ -9,52 +9,58 @@ $today   = (Get-Date).ToString('yyyy-MM-dd')
 function Log($msg) {
     $line = "[$((Get-Date).ToString('yyyy-MM-dd HH:mm:ss'))] $msg"
     Write-Host $line
-    Add-Content -Path $logPath -Value $line -Encoding utf8
+    Add-Content -Path $logPath -Value $line -Encoding Default
 }
 
-Log "=== 크롤링 시작 ($today) ==="
+Log "=== crawl start ($today) ==="
 
 python crawler.py
 if ($LASTEXITCODE -ne 0) {
-    Log "크롤러 오류 (exit $LASTEXITCODE). 배포 중단."
+    Log "crawler error (exit $LASTEXITCODE). abort."
     exit 1
 }
-Log "크롤러 완료"
+Log "crawler done"
 
-# 오늘 날짜 기록
-Set-Content -Path "last_crawl.txt" -Value $today -Encoding utf8NoBOM
+# PS 5.1 compatible: write date without BOM (utf8NoBOM is PS6+ only)
+[System.IO.File]::WriteAllText(
+    (Join-Path $PSScriptRoot "last_crawl.txt"),
+    $today,
+    [System.Text.UTF8Encoding]::new($false)
+)
+Log "last_crawl.txt written: $today"
 
-Log "커밋 준비 중..."
+Log "staging..."
 git add jobs.json jobs_data.js excluded_data.js last_crawl.txt
 $changed = git diff --cached --quiet; $hasChanges = ($LASTEXITCODE -ne 0)
 
 if (-not $hasChanges) {
-    Log "변경된 공고 없음. 배포 스킵."
+    Log "no changes. skip deploy."
     exit 0
 }
 
-git commit -m "crawl: 로컬 크롤링 $today"
+git commit -m "crawl: $today"
 if ($LASTEXITCODE -ne 0) {
-    Log "커밋 실패 (exit $LASTEXITCODE)."
+    Log "commit failed (exit $LASTEXITCODE)."
     exit 1
 }
-Log "커밋 완료"
+Log "commit done"
 
-# 비대화형 강제: GUI 자격증명 창이 열리지 않게 함 (스케줄러 환경에서 hang 방지)
+# Prevent git from opening GUI credential prompts in non-interactive context
 $env:GIT_TERMINAL_PROMPT = "0"
 $env:GCM_INTERACTIVE      = "never"
 
-Log "pull --rebase 시작..."
-git pull --rebase github main
+Log "pull --rebase..."
+# -X ours: auto-resolve conflicts by preferring local crawl data
+git pull --rebase -X ours github main
 if ($LASTEXITCODE -ne 0) {
-    Log "pull --rebase 실패 (exit $LASTEXITCODE). push 시도는 계속합니다."
+    Log "pull --rebase failed (exit $LASTEXITCODE). attempting push anyway."
 }
 
-Log "push 시작..."
+Log "push..."
 git push github main
 if ($LASTEXITCODE -ne 0) {
-    Log "push 실패 (exit $LASTEXITCODE). 다음 실행 시 재시도됩니다."
+    Log "push failed (exit $LASTEXITCODE)."
     exit 1
 }
 
-Log "배포 완료: $today"
+Log "deploy done: $today"
