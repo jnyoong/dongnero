@@ -4,7 +4,7 @@ var JOBS_DATA = {
   "total": 3788,
   "source_counts": {
     "고용24": 1000,
-    "알바몬": 80,
+    "알바몬": 0,
     "알바천국": 300,
     "시니어로": 117,
     "서울일자리포털": 100,
@@ -7733,17 +7733,6 @@ var JOBS_DATA = {
       "salary": "시급 10,320 원 ~ 10,320 원",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KEC1102605080004&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
-      "source": "고용24"
-    },
-    {
-      "title": "[동상동] 아파트 경비원 모집",
-      "company": "주식회사 하나종합관리",
-      "location": "경상남도 김해시 가야로515번길",
-      "deadline": "2026-05-22",
-      "type": "",
-      "salary": "월급 263 만원 ~ 263 만원",
-      "description": "경력무관 학력무관",
-      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJSE002605080006&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
       "source": "고용24"
     },
     {
@@ -18010,6 +17999,17 @@ var JOBS_DATA = {
       "source": "고용24"
     },
     {
+      "title": "거창탑치과에서 치기공사(임상기공사)을 모십니다.",
+      "company": "탑치과의원",
+      "location": "대구   등",
+      "deadline": "2026-06-08",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "경력5년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53839520&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
       "title": "[강남밝음나눔안과] 진료지원팀 신입 및 경력사원 채용",
       "company": "밝음나눔안과",
       "location": "서울 서초구",
@@ -18018,6 +18018,17 @@ var JOBS_DATA = {
       "salary": "회사내규에 따름",
       "description": "경력무관 학력무관",
       "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53839521&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24"
+    },
+    {
+      "title": "[평택점]유앤아이의원[코디네이터] 모집",
+      "company": "유앤아이의원 평택점",
+      "location": "경기 평택시",
+      "deadline": "2026-06-08",
+      "type": "",
+      "salary": "연봉 3,700 만원 ~ 3,700 만원",
+      "description": "신입/경력1년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53839531&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
       "source": "고용24"
     },
     {
@@ -34746,7 +34757,7 @@ var JOBS_DATA = {
       "location": "경기 고양시 일산동구 장항동",
       "deadline": "상시모집",
       "type": "시간제",
-      "salary": "시급 10,320원",
+      "salary": "시급 10320",
       "description": "",
       "apply_link": "https://www.albamon.com/jobs/detail/116404990",
       "source": "알바몬"
@@ -35137,12 +35148,12 @@ var JOBS_DATA = {
       "source": "알바천국"
     },
     {
-      "title": "[코디 평균 월소득 327만원] 코웨이 코디 모집",
-      "company": "코웨이 청주분평지국",
-      "location": "충북 청주시 서원구",
+      "title": "[아웃백 목동점] 홀, 주방 월급제 정직원 모집합니다",
+      "company": "아웃백목동점",
+      "location": "서울 양천구",
       "deadline": "",
       "type": "시간제",
-      "salary": "월급 3270000",
+      "salary": "시급 12400",
       "description": "",
       "apply_link": "https://www.alba.co.kr/job/Detail?adid=144030004&listmenucd=SENIOR",
       "source": "알바천국"
@@ -35186,7 +35197,7 @@ var JOBS_DATA = {
       "location": "부산 동래구",
       "deadline": "",
       "type": "시간제",
-      "salary": "시급 10320",
+      "salary": "월급 1500000",
       "description": "",
       "apply_link": "https://www.alba.co.kr/job/Detail?adid=144067281&listmenucd=SENIOR",
       "source": "알바천국"
@@ -36281,9 +36292,64 @@ var JOBS_DATA = {
       "source": "알바천국"
     },
     {
-      "title": "다이소 군산본점 파트사원 채용합니다.",
-      "company": "다이소 군산본점",
-      "location": "전북 군산시",
+      "title": "다이소 영남오픈지원팀 월급 2,156,880원+수당 50만원 출장업무",
+      "company": "다이소 영남 오픈리베로",
+      "location": "부산 전체",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2156880",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143933211&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "다이소 영남오픈지원팀 월급 2,156,880원+수당 50만원 출장업무",
+      "company": "다이소 영남3 오픈리베로",
+      "location": "대구 전체",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2156880",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143933209&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "주말(토,일) 오후 (08시~15시) 근무자 모집(교통비 지급)",
+      "company": "CU 공항디오빌점",
+      "location": "인천 중구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10600",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143925821&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "교촌치킨 명일1호점 교촌경력자 주5일 주방직원 모집해요",
+      "company": "교촌치킨 서울동부 명일1호점",
+      "location": "서울 강동구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 3000000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143923647&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "유가네닭갈비 일산식사점 직원모집",
+      "company": "유가네닭갈비 일산식사점",
+      "location": "경기 고양시 일산동구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 11000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=143921252&listmenucd=SENIOR",
+      "source": "알바천국"
+    },
+    {
+      "title": "써브웨이 광주 수완점 평일 미들 파트타이머 모집합니다.",
+      "company": "써브웨이 광주수완점",
+      "location": "광주 광산구",
       "deadline": "",
       "type": "시간제",
       "salary": "시급 10320",
@@ -37436,7 +37502,7 @@ var JOBS_DATA = {
       "source": "맘시터"
     },
     {
-      "title": "신생아 보육 맘시터 찾습니다.",
+      "title": "시터이모님 모십니다",
       "company": "개인(부모님)",
       "location": "경상남도 창원시 성산구 대원동",
       "deadline": "",
@@ -38954,17 +39020,6 @@ var JOBS_DATA = {
       "source": "맘시터"
     },
     {
-      "title": "하원도우미 선생님 모십니다",
-      "company": "개인(부모님)",
-      "location": "경기도 하남시 감이동",
-      "deadline": "",
-      "type": "정기 돌봄",
-      "salary": "매월 990,000원 (협의 가능)",
-      "description": "아이: 영아 · (월 화 수 목 금)",
-      "apply_link": "https://www.mom-sitter.com/parent/100237186",
-      "source": "맘시터"
-    },
-    {
       "title": "어린이집의 바른생활맨 만5세 남아의 등하원요청",
       "company": "개인(부모님)",
       "location": "서울특별시 강서구 마곡동",
@@ -39336,6 +39391,17 @@ var JOBS_DATA = {
       "salary": "매월 1,254,690원",
       "description": "아이: 신생아 2명 · (화 목)",
       "apply_link": "https://www.mom-sitter.com/parent/100379115",
+      "source": "맘시터"
+    },
+    {
+      "title": "신생아 보육/학습/가사 맘시터 찾습니다.",
+      "company": "개인(부모님)",
+      "location": "서울특별시 영등포구 양평2동",
+      "deadline": "",
+      "type": "정기 돌봄",
+      "salary": "매월 4,950,000원 (협의 가능)",
+      "description": "아이: 신생아 2명 · (월 화 수 목 금/협의 가능)",
+      "apply_link": "https://www.mom-sitter.com/parent/100390329",
       "source": "맘시터"
     },
     {
