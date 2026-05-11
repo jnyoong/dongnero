@@ -13,6 +13,9 @@ import time
 import re
 import sys
 import random
+
+# Windows CP949 환경에서 em dash 등 유니코드 문자 출력 오류 방지
+sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import xml.etree.ElementTree as ET
 from datetime import datetime, date, timezone, timedelta
 
@@ -1067,12 +1070,12 @@ def run_crawler():
     # ── 6단계: 경기도 잡아바 ──────────────────────────────────
     _sleep_source()
     if _is_jobaba_key_set():
-        print("\n[6/8] 경기도 잡아바 — API 키 모드")
+        print("\n[6/8] 경기도 잡아바 - API 키 모드")
         before = len(all_jobs)
         all_jobs.extend(_fetch_jobaba_api_key_mode())
         source_counts["잡아바"] = len(all_jobs) - before
     else:
-        print("\n[6/8] 경기도 잡아바 — Sheet 모드 (키 발급 전 임시)")
+        print("\n[6/8] 경기도 잡아바 - Sheet 모드 (키 발급 전 임시)")
         before = len(all_jobs)
         jobs_jb = scrape_jobaba_sheet()
         all_jobs.extend(jobs_jb)
@@ -1080,7 +1083,7 @@ def run_crawler():
 
     # ── 7단계: 경기도 어르신자립형일자리사업 ─────────────────
     _sleep_source()
-    print("\n[7/8] 경기도 어르신자립형일자리사업 — Sheet 모드")
+    print("\n[7/8] 경기도 어르신자립형일자리사업 - Sheet 모드")
     before = len(all_jobs)
     all_jobs.extend(scrape_elder_jobs_sheet())
     source_counts["어르신일자리"] = len(all_jobs) - before
