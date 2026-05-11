@@ -4,6 +4,237 @@
  */
 var POSTS_DATA = [
   {
+    id: 'job-scam-2026',
+    category: '주의사항',
+    categoryColor: '#DC2626',
+    title: '취업 사기, 이런 공고는 조심하세요 — 시니어를 노리는 5가지 유형',
+    summary: '"일단 교육비만 내면 바로 취업"… 이런 말에 혹하셨다면 잠깐 멈추세요. 중장년층을 노리는 취업 사기 유형과 의심 신호를 정리했습니다.',
+    date: '2026-05-11',
+    author: '동네로 운영팀',
+    tags: ['취업사기', '사기예방', '주의사항', '안전취업'],
+    content: `
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+재취업을 준비하다 보면 "나이 많아도 환영", "바로 고수익" 같은 달콤한 공고가 눈에 띄기도 해요.<br>
+하지만 그 뒤에 사기가 숨어있는 경우가 있습니다. 미리 알아두면 피할 수 있어요.
+</p>
+
+<div class="post-tip" style="background:#FEF2F2;border-color:#FECACA;">
+  ⚠️ 아래 유형 중 하나라도 해당된다면 지원 전에 반드시 한 번 더 확인하세요.
+</div>
+
+<h3>🚨 유형 1 — "교육받으면 취업 보장"</h3>
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#FEF2F2;border-color:#FECACA;">
+    <div class="post-compare-before" style="background:#FECACA;color:#991B1B;">의심되는 말</div>
+    <div class="post-compare-after" style="color:#374151;">"저희 교육 과정(50~200만원)만 이수하면 바로 취업 연결해드립니다."</div>
+  </div>
+</div>
+<p><strong>정상적인 회사는 지원자에게 돈을 요구하지 않습니다.</strong> 입사 전에 교육비·보증금·등록비 등 어떤 명목으로도 돈을 내라는 곳은 사기일 가능성이 높아요.</p>
+
+<h3>🚨 유형 2 — 모호한 업무 설명</h3>
+<p>"영업·판매 보조", "단순 사무 보조", "재택 부업" 같이 실제 업무가 불분명한 공고는 주의하세요. 알고 보면 다단계 판매나 전화 영업이었던 경우가 많아요.</p>
+<div class="post-tip" style="background:#FEF2F2;border-color:#FECACA;">
+  💡 면접 전에 "구체적으로 어떤 일을 하나요?"라고 직접 물어보세요. 명확하게 답하지 못한다면 의심해 보세요.
+</div>
+
+<h3>🚨 유형 3 — 지나치게 높은 급여</h3>
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#FEF2F2;border-color:#FECACA;">
+    <div class="post-compare-before" style="background:#FECACA;color:#991B1B;">의심 문구</div>
+    <div class="post-compare-after" style="color:#374151;">"주 3일 근무, 월 300~500만원 가능", "하루 2시간 재택, 월 200만원"</div>
+  </div>
+</div>
+<p>일반적인 시급·급여 수준을 크게 벗어나는 공고는 허위일 가능성이 높아요. 고용24나 알바천국의 비슷한 직종 급여와 비교해보세요.</p>
+
+<h3>🚨 유형 4 — 개인정보 과다 요구</h3>
+<p>지원 단계에서부터 통장 사본, 신분증 앞뒷면, 가족관계증명서 등을 요구하면 주의하세요. <strong>입사 결정 전에는 신분증 사본 하나도 함부로 보내지 마세요.</strong></p>
+
+<h3>🚨 유형 5 — 계약서 없는 일 시작</h3>
+<p>"일단 며칠만 해보시고 계약해요"라며 구두로만 일을 시작하게 하는 경우예요. 나중에 임금 체불이 생겨도 증거가 없어 대응이 어렵습니다.</p>
+
+<h3>✅ 안전하게 확인하는 방법</h3>
+<ul>
+  <li><strong>사업자등록 확인</strong> — 국세청 홈택스(hometax.go.kr) → 사업자등록번호 조회</li>
+  <li><strong>회사 검색</strong> — 네이버·구글에 "회사명 + 사기·후기" 검색</li>
+  <li><strong>고용노동부 신고</strong> — 사기 의심 시 고용노동부 고객상담센터 ☎ 1350</li>
+  <li><strong>경찰청 신고</strong> — 금품 피해 발생 시 ☎ 112 또는 경찰청 사이버범죄신고시스템(ecrm.police.go.kr)</li>
+</ul>
+
+<div class="post-tip">
+  🛡️ <strong>원칙 하나만 기억하세요</strong>: 좋은 일자리는 지원자에게 돈을 요구하지 않습니다. 돈 얘기가 나오면 일단 의심하고 주변에 물어보세요.
+</div>
+    `
+  },
+
+  {
+    id: 'labor-contract-2026',
+    category: '근로 권리',
+    categoryColor: '#0891B2',
+    title: '근로계약서, 이것만 확인하면 됩니다 — 체크리스트 5가지',
+    summary: '일 시작 전에 꼭 써야 하는 근로계약서. 어떤 내용을 확인해야 하는지, 왜 중요한지 쉽게 정리했습니다.',
+    date: '2026-05-09',
+    author: '동네로 운영팀',
+    tags: ['근로계약서', '근로권리', '임금', '주휴수당'],
+    content: `
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+"그냥 믿고 일하면 되지"라고 생각하기 쉽지만, 근로계약서를 안 쓰면 나중에 임금이나 근무 조건이 달라져도 증거가 없어요.<br>
+어렵지 않아요. 딱 5가지만 확인하면 됩니다.
+</p>
+
+<div class="post-tip">
+  📌 근로계약서는 <strong>반드시 2부</strong> 작성해서 한 부는 내가 가져야 합니다. 안 주면 사업주가 법 위반이에요.
+</div>
+
+<h3>✅ 체크리스트 1 — 임금(급여)</h3>
+<ul>
+  <li>시급 또는 월급이 정확히 적혀있는가</li>
+  <li>2026년 최저시급 <strong>10,030원</strong> 이상인가</li>
+  <li>주휴수당 포함 여부가 명시되어 있는가 (주 15시간 이상이면 발생)</li>
+</ul>
+<div class="post-example">
+  <div class="post-example-label">주휴수당이란?</div>
+  주 15시간 이상 일하면, 일주일에 하루치 임금을 추가로 받을 권리가 생겨요.<br>
+  예) 시급 10,030원 × 주 20시간 근무 → 주휴수당 약 40,120원 추가
+</div>
+
+<h3>✅ 체크리스트 2 — 근무 시간과 요일</h3>
+<ul>
+  <li>시작·종료 시간이 명확한가</li>
+  <li>근무 요일이 적혀있는가</li>
+  <li>휴게 시간(식사 시간 등)이 포함되어 있는가</li>
+</ul>
+<div class="post-tip">
+  💡 4시간 근무 시 30분, 8시간 근무 시 1시간 이상 휴게가 법적으로 보장돼요.
+</div>
+
+<h3>✅ 체크리스트 3 — 계약 기간</h3>
+<ul>
+  <li>언제부터 언제까지인지 기재되어 있는가</li>
+  <li>"기간 정함 없음"이면 무기계약 (정규직에 해당)</li>
+</ul>
+
+<h3>✅ 체크리스트 4 — 업무 내용</h3>
+<ul>
+  <li>내가 실제로 할 일이 구체적으로 적혀있는가</li>
+  <li>구두로 들은 내용과 계약서 내용이 다르지는 않은가</li>
+</ul>
+
+<h3>✅ 체크리스트 5 — 4대보험</h3>
+<ul>
+  <li>주 15시간 이상이면 고용보험·산재보험 가입 의무</li>
+  <li>월 60시간 이상이면 건강보험·국민연금도 의무</li>
+</ul>
+<div class="post-tip">
+  💡 4대보험에 가입하면 나중에 실업급여·의료비 혜택을 받을 수 있어요. "보험 안 들어줄게요"라는 곳은 위법입니다.
+</div>
+
+<h3>❓ 계약서에 서명하기 전에 이렇게 하세요</h3>
+<div class="post-compare">
+  <div class="post-compare-row">
+    <div class="post-compare-before">❌ 이렇게 하지 마세요</div>
+    <div class="post-compare-after" style="color:#374151;">서명 먼저 하고 나중에 읽기</div>
+  </div>
+  <div class="post-compare-row">
+    <div class="post-compare-before">✅ 이렇게 하세요</div>
+    <div class="post-compare-after" style="color:#374151;">"잠깐 읽어봐도 될까요?" 하고 꼼꼼히 읽은 뒤 서명</div>
+  </div>
+</div>
+<p>모르는 내용이 있으면 <strong>고용노동부 ☎ 1350</strong>에 전화하면 무료로 상담해줍니다.</p>
+    `
+  },
+
+  {
+    id: 'senior-job-support-2026',
+    category: '취업 준비',
+    categoryColor: '#2563EB',
+    title: '무료로 취업 도움받는 방법 — 고용센터·시니어클럽 이용 가이드',
+    summary: '정부에서 운영하는 무료 취업지원 서비스를 모르고 계신 분들이 많아요. 어디에 가서, 무엇을 도움받을 수 있는지 정리했습니다.',
+    date: '2026-05-07',
+    author: '동네로 운영팀',
+    tags: ['고용센터', '시니어클럽', '취업지원', '무료서비스'],
+    content: `
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+혼자 취업 준비하기 막막할 때, 전문가의 도움을 무료로 받을 수 있는 곳이 있어요.<br>
+세금으로 운영되는 서비스이니 꼭 활용해 보세요.
+</p>
+
+<h3>🏢 고용복지플러스센터 (고용센터)</h3>
+<p>전국 곳곳에 있는 고용노동부 직영 취업지원 기관이에요.</p>
+
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#F0F9FF;border-color:#BAE6FD;">
+    <div style="font-size:.8rem;font-weight:800;color:#0369A1;margin-bottom:6px;">받을 수 있는 도움</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.8;">
+      • 취업 상담 (1:1, 무료)<br>
+      • 이력서·자기소개서 첨삭<br>
+      • 직업훈련 연계 (국비 지원 교육 안내)<br>
+      • 일자리 정보 제공<br>
+      • 실업급여 신청
+    </div>
+  </div>
+</div>
+
+<div class="post-example">
+  <div class="post-example-label">찾아가는 방법</div>
+  고용24(work24.go.kr) 접속 → "기관찾기" → 내 지역 고용복지플러스센터 검색<br>
+  또는 고용노동부 고객상담센터 <strong>☎ 1350</strong> (무료, 평일 09:00~18:00)
+</div>
+
+<h3>👴 시니어클럽</h3>
+<p>만 60세 이상 어르신을 위한 취업 전담 기관이에요. 전국 약 400여 개소가 운영 중입니다.</p>
+
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#F0FDF4;border-color:#BBF7D0;">
+    <div style="font-size:.8rem;font-weight:800;color:#15803D;margin-bottom:6px;">시니어클럽에서 받을 수 있는 것</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.8;">
+      • 시니어 전용 일자리 소개 (공공기관·사회서비스 등)<br>
+      • 무료 직업훈련 교육<br>
+      • 취업 후 적응 지원<br>
+      • 동년배 취업자들과의 커뮤니티
+    </div>
+  </div>
+</div>
+
+<div class="post-example">
+  <div class="post-example-label">찾아가는 방법</div>
+  한국시니어클럽협회(seniorclub.or.kr) → "시니어클럽 찾기"<br>
+  또는 주민센터에 문의하면 가까운 시니어클럽을 안내받을 수 있어요.
+</div>
+
+<h3>🏛️ 중장년일자리희망센터 (50~69세)</h3>
+<p>50~69세 중장년층을 위한 전담 취업 기관이에요. 전국 주요 도시에 있습니다.</p>
+
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#FFF7ED;border-color:#FED7AA;">
+    <div style="font-size:.8rem;font-weight:800;color:#C2410C;margin-bottom:6px;">제공 서비스</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.8;">
+      • 생애경력설계 상담<br>
+      • 재취업·창업 패키지 지원<br>
+      • 임금피크제 전직 지원
+    </div>
+  </div>
+</div>
+
+<div class="post-example">
+  <div class="post-example-label">찾아가는 방법</div>
+  고용24(work24.go.kr) → "기관찾기" → "중장년일자리희망센터"
+</div>
+
+<h3>📍 가기 전에 이것만 챙기세요</h3>
+<ul>
+  <li>신분증 (주민등록증)</li>
+  <li>이력서 초안 (없어도 괜찮아요, 현장에서 도움받을 수 있어요)</li>
+  <li>희망하는 직종·근무 조건 메모</li>
+</ul>
+
+<div class="post-tip">
+  🎁 <strong>이런 분께 특히 추천해요</strong><br>
+  "이력서를 어떻게 써야 할지 모르겠다", "어떤 일을 해야 할지 막막하다", "면접이 너무 오래 됐다"는 분들은 꼭 한 번 방문해 보세요. 전문 상담사가 함께 방향을 잡아드립니다.
+</div>
+    `
+  },
+
+  {
     id: 'resume-ai-2025',
     category: '취업 준비',
     categoryColor: '#2563EB',
