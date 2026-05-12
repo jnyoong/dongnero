@@ -1,4 +1,4 @@
-﻿# dongnero local crawl & auto-deploy
+# dongnero local crawl & auto-deploy
 # Usage: .\crawl_local.ps1
 
 Set-Location $PSScriptRoot
@@ -9,10 +9,25 @@ $today   = (Get-Date).ToString('yyyy-MM-dd')
 function Log($msg) {
     $line = "[$((Get-Date).ToString('yyyy-MM-dd HH:mm:ss'))] $msg"
     Write-Host $line
-    Add-Content -Path $logPath -Value $line -Encoding Default
+    Add-Content -Path $logPath -Value $line -Encoding UTF8
+}
+
+function RunGit {
+    param([string[]]$args)
+    $result = & git @args 2>&1
+    $result | ForEach-Object { Log "  git> $_" }
+    return $LASTEXITCODE
 }
 
 Log "=== crawl start ($today) ==="
+
+# 이전 실행에서 rebase가 중단된 채 남아있으면 정리
+$rebaseHead = Join-Path $PSScriptRoot ".git\REBASE_HEAD"
+if (Test-Path $rebaseHead) {
+    Log "stale rebase detected — aborting..."
+    RunGit "rebase", "--abort" | Out-Null
+    Log "rebase aborted"
+}
 
 python crawler.py
 if ($LASTEXITCODE -ne 0) {
@@ -31,7 +46,7 @@ Log "last_crawl.txt written: $today"
 
 Log "staging..."
 git add jobs.json jobs_data.js excluded_data.js last_crawl.txt
-$changed = git diff --cached --quiet; $hasChanges = ($LASTEXITCODE -ne 0)
+$hasChanges = (git diff --cached --quiet; $LASTEXITCODE -ne 0)
 
 if (-not $hasChanges) {
     Log "no changes. skip deploy."
@@ -45,21 +60,18 @@ if ($LASTEXITCODE -ne 0) {
 }
 Log "commit done"
 
-# Prevent git from opening GUI credential prompts in non-interactive context
-$env:GIT_TERMINAL_PROMPT = "0"
-$env:GCM_INTERACTIVE      = "never"
-
 Log "pull --rebase..."
-# -X ours: auto-resolve conflicts by preferring local crawl data
-git pull --rebase -X ours github main
-if ($LASTEXITCODE -ne 0) {
-    Log "pull --rebase failed (exit $LASTEXITCODE). attempting push anyway."
+$exitCode = RunGit "pull", "--rebase", "-X", "ours", "github", "main"
+if ($exitCode -ne 0) {
+    Log "pull --rebase failed (exit $exitCode). aborting rebase..."
+    RunGit "rebase", "--abort" | Out-Null
+    Log "rebase aborted. pushing local commit..."
 }
 
 Log "push..."
-git push github main
-if ($LASTEXITCODE -ne 0) {
-    Log "push failed (exit $LASTEXITCODE)."
+$exitCode = RunGit "push", "github", "main"
+if ($exitCode -ne 0) {
+    Log "push failed (exit $exitCode)."
     exit 1
 }
 
