@@ -989,17 +989,15 @@ def scrape_daejeon(page: int) -> list[dict]:
         company  = tds[0].get_text(strip=True)
         title    = link_el.get_text(strip=True)
         link     = link_el["href"].strip()
-        sub_text = tds[1].get_text(" ", strip=True)
+        td2_text = tds[2].get_text(" ", strip=True) if len(tds) > 2 else ""
         deadline_m = re.search(r"(\d{4}-\d{2}-\d{2})", tds[-1].get_text() if len(tds) > 2 else "")
         deadline = deadline_m.group(1) if deadline_m else ""
-        location_m = re.search(r"근무지\s*[:\|]\s*([^\|]+)", sub_text)
-        location = location_m.group(1).strip() if location_m else ""
-        # title·sub_text에서 구 이름 추출
-        gu = next((g for g in DAEJEON_GU if g in title or g in sub_text or g in location), "")
-        if gu:
-            location = f"대전광역시 {gu}"
-        else:
-            location = "대전광역시"
+        # td[2]에 "대전 유성구 시급 10320원" 형태로 구+급여 정보 포함
+        gu = next((g for g in DAEJEON_GU if g in td2_text or g in title), "")
+        location = f"대전광역시 {gu}" if gu else "대전광역시"
+        # 급여 파싱 (시급/월급/연봉)
+        salary_m = re.search(r"(시급|월급|연봉)\s*([\d,]+만?원(?:\s*~\s*[\d,]+만?원)?)", td2_text)
+        salary = f"{salary_m.group(1)} {salary_m.group(2)}" if salary_m else ""
         if not title:
             continue
         jobs.append({
@@ -1008,7 +1006,7 @@ def scrape_daejeon(page: int) -> list[dict]:
             "location"   : location,
             "deadline"   : _normalize_date(deadline),
             "type"       : "",
-            "salary"     : "",
+            "salary"     : salary,
             "description": "",
             "apply_link" : link,
             "source"     : "대전일자리",
