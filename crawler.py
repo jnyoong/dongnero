@@ -1123,26 +1123,33 @@ def _extract_wanted_no(url: str) -> str:
     m = re.search(r'wantedAuthNo=([A-Z0-9]+)', url or '')
     return m.group(1) if m else ''
 
-def _deduplicate(jobs: list[dict]) -> list[dict]:
+def _deduplicate(jobs: list[dict]) -> tuple[list[dict], dict]:
+    """중복 제거 후 (고유 공고 리스트, 출처별 제거 통계) 반환"""
     seen_links: set[str] = set()
     seen_wanted: set[str] = set()
     seen_title_co: set[tuple] = set()
     unique = []
+    removed_counts: dict[str, int] = {}  # 출처별 중복제거 건수
+
     for job in jobs:
         title   = (job.get("title")   or "").strip().lower()
         company = (job.get("company") or "").strip().lower()
         link    = (job.get("apply_link") or "").strip()
         wanted  = _extract_wanted_no(link)
+        src     = job.get("source", "기타")
 
-        # 1순위: wantedAuthNo 동일 (고용24 ↔ 대전/서울포털 중복)
+        # 1순위: wantedAuthNo 동일
         if wanted and wanted in seen_wanted:
+            removed_counts[src] = removed_counts.get(src, 0) + 1
             continue
         # 2순위: apply_link 완전 동일
         if link and link in seen_links:
+            removed_counts[src] = removed_counts.get(src, 0) + 1
             continue
         # 3순위: (제목+회사) 동일
         key = (title, company)
         if title and key in seen_title_co:
+            removed_counts[src] = removed_counts.get(src, 0) + 1
             continue
 
         if wanted: seen_wanted.add(wanted)
@@ -1150,7 +1157,7 @@ def _deduplicate(jobs: list[dict]) -> list[dict]:
         if title:  seen_title_co.add(key)
         if title:
             unique.append(job)
-    return unique
+    return unique, removed_counts
 
 
 def _is_api_key_set() -> bool:
@@ -1277,7 +1284,16 @@ def run_crawler():
     source_counts["부산일자리"] = len(all_jobs) - before
 
     # ── 후처리 ────────────────────────────────────────────────
-    all_jobs = _deduplicate(all_jobs)
+    # 이전 source_counts 읽어서 prev로 보존 (어드민 어제 비교용)
+    prev_source_counts = {}
+    if OUTPUT_FILE.exists():
+        try:
+            prev_data = json.loads(OUTPUT_FILE.read_text(encoding="utf-8"))
+            prev_source_counts = prev_data.get("source_counts", {})
+        except Exception:
+            pass
+
+    all_jobs, dedup_removed = _deduplicate(all_jobs)
 
     excluded_jobs = []
     filtered_jobs = []
@@ -1309,10 +1325,12 @@ def run_crawler():
     # ── 저장 ──────────────────────────────────────────────────
     updated_at = datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S KST")
     output = {
-        "updated_at"   : updated_at,
-        "total"        : len(filtered),
-        "source_counts": source_counts,
-        "jobs"         : filtered,
+        "updated_at"        : updated_at,
+        "total"             : len(filtered),
+        "source_counts"     : source_counts,
+        "prev_source_counts": prev_source_counts,
+        "dedup_removed"     : dedup_removed,
+        "jobs"              : filtered,
     }
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:

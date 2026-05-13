@@ -17,6 +17,8 @@ POSTS_DIR  = Path("posts")
 SITEMAP    = Path("sitemap.xml")
 GA_ID      = "G-PYD0Q5NTPD"
 NAVER_META = "90a8d7a74a69eefe477271e8edb985c9c385f316"
+SB_URL     = "https://riomousxlyvwmembuhvc.supabase.co"
+SB_KEY     = "sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh"
 
 # ── posts_data.js 파싱 ────────────────────────────────────────────────────────
 def parse_posts():
@@ -89,6 +91,36 @@ def build_html(post):
   <meta property="og:site_name"   content="동네로" />
   <meta property="og:locale"      content="ko_KR" />
   <meta property="article:published_time" content="{post['date']}T09:00:00+09:00" />
+
+  <!-- 조회수 추적 -->
+  <script>
+    (function(){{
+      var SB_URL = '{SB_URL}';
+      var SB_KEY = '{SB_KEY}';
+      var postId  = '{post['id']}';
+      fetch(SB_URL + '/rest/v1/post_views?post_id=eq.' + postId + '&select=post_id,view_count', {{
+        headers: {{ apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY }}
+      }})
+      .then(function(r){{ return r.json(); }})
+      .then(function(rows){{
+        var newCount = rows.length > 0 ? rows[0].view_count + 1 : 1;
+        var method   = rows.length > 0 ? 'PATCH' : 'POST';
+        var url      = rows.length > 0
+          ? SB_URL + '/rest/v1/post_views?post_id=eq.' + postId
+          : SB_URL + '/rest/v1/post_views';
+        var body     = rows.length > 0
+          ? JSON.stringify({{ view_count: newCount, updated_at: new Date().toISOString() }})
+          : JSON.stringify({{ post_id: postId, view_count: 1, updated_at: new Date().toISOString() }});
+        return fetch(url, {{
+          method: method,
+          headers: {{ apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY,
+                     'Content-Type': 'application/json', Prefer: 'return=minimal' }},
+          body: body
+        }});
+      }})
+      .catch(function(){{}});
+    }})();
+  </script>
 
   <style>
     *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}

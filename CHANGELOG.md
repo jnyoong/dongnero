@@ -2,6 +2,36 @@
 
 ---
 
+## [v0.55] 2026-05-14 — 어드민 출처별 비교 개선 + 중복제거 통계 + 정보글 조회수
+
+### crawler.py
+- `_deduplicate`: 출처별 중복제거 건수(`dedup_removed`) 반환하도록 수정
+- 저장 시 이전 `source_counts`를 `prev_source_counts`로 보존 → 어드민 전회 비교용
+- `jobs.json`에 `prev_source_counts`, `dedup_removed` 필드 추가
+
+### admin-dongnero.html
+- 출처별 모니터링: Supabase seen_jobs 조회 제거 → `jobs.json`의 `prev_source_counts` 활용
+- 각 카드에 "수집 N건 / 전회 대비 ±X% / 중복제거 N건 → 최종 N건" 표시
+- 정보글 탭: 조회수 컬럼 추가 (Supabase `post_views` 테이블 연동)
+
+### build_posts.py
+- 각 `/posts/{id}.html`에 Supabase `post_views` upsert JS 추가 (페이지 로드 시 조회수 +1)
+
+> ⚠️ **Supabase `post_views` 테이블 생성 필요** (아래 SQL을 대시보드 SQL Editor에서 실행)
+> ```sql
+> CREATE TABLE post_views (
+>   post_id text PRIMARY KEY,
+>   view_count integer NOT NULL DEFAULT 0,
+>   updated_at timestamptz DEFAULT now()
+> );
+> ALTER TABLE post_views ENABLE ROW LEVEL SECURITY;
+> CREATE POLICY "public_read"   ON post_views FOR SELECT USING (true);
+> CREATE POLICY "public_insert" ON post_views FOR INSERT WITH CHECK (true);
+> CREATE POLICY "public_update" ON post_views FOR UPDATE USING (true);
+> ```
+
+---
+
 ## [v0.54] 2026-05-14 — 운영자 가이드(GUIDE.md) 신규 작성 + CHANGELOG 규칙 강화
 
 ### GUIDE.md (신규)

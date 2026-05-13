@@ -383,9 +383,9 @@
     <div class="table-wrap">
       <table>
         <thead><tr>
-          <th>#</th><th>카테고리</th><th>제목</th><th>날짜</th><th>네이버 블로그</th><th>미리보기</th>
+          <th>#</th><th>카테고리</th><th>제목</th><th>날짜</th><th>조회수</th><th>네이버 블로그</th><th>미리보기</th>
         </tr></thead>
-        <tbody id="ipBody"><tr><td colspan="6" class="loading">불러오는 중…</td></tr></tbody>
+        <tbody id="ipBody"><tr><td colspan="7" class="loading">불러오는 중…</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -501,23 +501,43 @@ document.querySelectorAll('.tab').forEach(tab => {
 });
 
 /* ── 정보 글 (posts_data.js 기반) ── */
-function renderInfoPosts() {
+async function renderInfoPosts() {
   const posts = (typeof POSTS_DATA !== 'undefined') ? POSTS_DATA : [];
   document.getElementById('ipTotal').textContent = posts.length;
   document.getElementById('tabIpCount').textContent = posts.length ? `(${posts.length})` : '';
   if (!posts.length) {
-    document.getElementById('ipBody').innerHTML = '<tr><td colspan="6" class="empty-msg">posts_data.js에 글이 없습니다.</td></tr>';
+    document.getElementById('ipBody').innerHTML = '<tr><td colspan="7" class="empty-msg">posts_data.js에 글이 없습니다.</td></tr>';
     return;
   }
-  document.getElementById('ipBody').innerHTML = posts.map((p, i) => `
-    <tr>
+
+  // 조회수 일괄 조회
+  let viewMap = {};
+  try {
+    const ids = posts.map(p => p.id).join(',');
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/post_views?post_id=in.(${ids})&select=post_id,view_count`,
+      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+    );
+    if (res.ok) {
+      const rows = await res.json();
+      rows.forEach(r => { viewMap[r.post_id] = r.view_count; });
+    }
+  } catch(e) {}
+
+  document.getElementById('ipBody').innerHTML = posts.map((p, i) => {
+    const views = viewMap[p.id] != null
+      ? `<span style="font-weight:700;color:#111">${viewMap[p.id].toLocaleString()}</span>회`
+      : `<span style="color:#9CA3AF">-</span>`;
+    return `<tr>
       <td>${i + 1}</td>
       <td><span style="background:${p.categoryColor}18;color:${p.categoryColor};padding:2px 8px;border-radius:20px;font-size:.8rem;font-weight:700">${p.category}</span></td>
       <td style="max-width:240px;word-break:keep-all;font-weight:600">${p.title}</td>
       <td style="white-space:nowrap;font-size:.85rem;color:#6B7280">${p.date}</td>
+      <td style="white-space:nowrap;font-size:.88rem">${views}</td>
       <td><button class="btn btn-naver" onclick="openNaverCopy(${i})">📝 네이버 발행 준비</button></td>
       <td><button class="btn btn-purple" onclick="openPreview(${i})">👁 미리보기</button></td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 }
 
 function openNaverCopy(idx) {
@@ -613,48 +633,47 @@ const SRC_COLORS = {
 };
 
 function renderSourceMonitor(jobs) {
-  const counts = {};
-  jobs.forEach(j => { const s = j.source || '기타'; counts[s] = (counts[s] || 0) + 1; });
+  // 최종 공고 수 (중복제거·만료제거 후)
+  const finalCounts = {};
+  jobs.forEach(j => { const s = j.source || '기타'; finalCounts[s] = (finalCounts[s] || 0) + 1; });
 
-  // Supabase seen_jobs에서 어제 건수 조회
-  const SB_URL = 'https://riomousxlyvwmembuhvc.supabase.co';
-  const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
-  const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-  const yyStr = yesterday.toISOString().slice(0, 10);
+  // jobs.json에서 수집 건수, 이전 수집 건수, 중복제거 통계 로드
+  const rawCounts  = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.source_counts)      || {};
+  const prevCounts = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.prev_source_counts) || {};
+  const dedupRm    = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.dedup_removed)      || {};
 
-  fetch(`${SB_URL}/rest/v1/seen_jobs?select=source,first_seen&first_seen=eq.${yyStr}`, {
-    headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
-  })
-  .then(r => r.ok ? r.json() : [])
-  .then(rows => {
-    const yCounts = {};
-    rows.forEach(r => { const s = r.source || '기타'; yCounts[s] = (yCounts[s] || 0) + 1; });
-    buildMonitorCards(counts, yCounts);
-  })
-  .catch(() => buildMonitorCards(counts, {}));
-}
-
-function buildMonitorCards(today, yesterday) {
   const grid = document.getElementById('sourceMonitorGrid');
-  const allSrcs = [...new Set([...Object.keys(today), ...Object.keys(yesterday)])].sort();
+  const allSrcs = [...new Set([...Object.keys(rawCounts), ...Object.keys(prevCounts)])].sort();
+
   grid.innerHTML = allSrcs.map(src => {
-    const t = today[src] || 0;
-    const y = yesterday[src] || 0;
+    const raw   = rawCounts[src]  || 0;
+    const prev  = prevCounts[src] || 0;
+    const final = finalCounts[src] || 0;
+    const dedup = dedupRm[src]    || 0;
     const color = SRC_COLORS[src] || '#6B7280';
-    let diff = '', diffStyle = '';
-    if (y > 0) {
-      const pct = Math.round((t - y) / y * 100);
+
+    // 이전 수집 건수와 비교
+    let diffHtml = '';
+    if (prev > 0) {
+      const pct = Math.round((raw - prev) / prev * 100);
       const sign = pct > 0 ? '+' : '';
       const isWarn = Math.abs(pct) >= 30;
-      diffStyle = isWarn ? 'color:#D97706;font-weight:700' : 'color:#6B7280';
-      diff = `<div style="font-size:.72rem;${diffStyle}">${sign}${pct}% vs 어제(${y}건)${isWarn ? ' ⚠️' : ''}</div>`;
+      const style = isWarn ? 'color:#D97706;font-weight:700' : 'color:#6B7280';
+      diffHtml = `<div style="font-size:.72rem;${style}">${sign}${pct}% vs 전회(${prev}건)${isWarn ? ' ⚠️' : ''}</div>`;
     } else {
-      diff = `<div style="font-size:.72rem;color:#9CA3AF">어제 데이터 없음</div>`;
+      diffHtml = `<div style="font-size:.72rem;color:#9CA3AF">이전 데이터 없음</div>`;
     }
+
+    // 중복제거 정보
+    const dedupHtml = dedup > 0
+      ? `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">중복제거 ${dedup}건 → 최종 ${final}건</div>`
+      : `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">최종 ${final}건</div>`;
+
     return `<div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px 12px;border-top:3px solid ${color}">
       <div style="font-size:.78rem;font-weight:700;color:${color};margin-bottom:4px">${src}</div>
-      <div style="font-size:1.3rem;font-weight:800;color:#111">${t.toLocaleString()}건</div>
-      ${diff}
+      <div style="font-size:1.3rem;font-weight:800;color:#111">${raw.toLocaleString()}건 수집</div>
+      ${diffHtml}
+      ${dedupHtml}
     </div>`;
   }).join('');
 }
