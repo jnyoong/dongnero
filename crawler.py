@@ -1086,6 +1086,10 @@ def scrape_busan(page: int) -> list[dict]:
     return jobs
 
 
+# 여러 공고가 같은 apply_link를 공유하는 출처는 링크 중복 체크에서 제외
+# (어르신일자리·부산일자리는 개별 공고 URL이 없어 공통 사이트 URL을 사용)
+SHARED_APPLY_LINKS: set[str] = set()  # run_crawler에서 ELDER_JOBS_LINK, BUSAN_SITE_URL 추가
+
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
 def _normalize_date(raw: str) -> str:
@@ -1145,8 +1149,8 @@ def _deduplicate(jobs: list[dict]) -> tuple[list[dict], dict]:
         if wanted and wanted in seen_wanted:
             removed_counts[src] = removed_counts.get(src, 0) + 1
             continue
-        # 2순위: apply_link 완전 동일
-        if link and link in seen_links:
+        # 2순위: apply_link 완전 동일 (여러 공고가 공유하는 공통 URL은 제외)
+        if link and link in seen_links and link not in SHARED_APPLY_LINKS:
             removed_counts[src] = removed_counts.get(src, 0) + 1
             continue
         # 3순위: (제목+회사) 동일
@@ -1195,6 +1199,9 @@ def run_crawler():
 
     all_jobs: list[dict] = []
     source_counts: dict[str, int] = {}
+
+    # 개별 공고 URL이 없어 공통 사이트 URL을 apply_link로 사용하는 출처
+    SHARED_APPLY_LINKS.update([ELDER_JOBS_LINK, BUSAN_SITE_URL])
 
     # ── 1단계: 고용24 ────────────────────────────────────────
     if _is_api_key_set():

@@ -664,11 +664,15 @@ function renderSourceMonitor(jobs) {
       prevLine = `<div style="font-size:.72rem;color:#9CA3AF;margin-top:3px">이전 데이터 없음</div>`;
     }
 
-    // 중복제거 (dedup_removed 값이 있으면 정확한 수, 없으면 raw-final로 추정)
-    const dedupCount = dedup > 0 ? dedup : (raw - final > 0 ? raw - final : 0);
-    const dedupLine = dedupCount > 0
-      ? `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">중복·필터 제거 ${dedupCount.toLocaleString()}건</div>`
-      : '';
+    // 제거 건수: dedup_removed 있으면 중복만, 없으면 raw-final 전체(만료+필터+중복 합산)
+    const totalRemoved = raw - final;
+    let dedupLine = '';
+    if (dedup > 0) {
+      const other = totalRemoved - dedup;
+      dedupLine = `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">중복 ${dedup.toLocaleString()}건 제거${other > 0 ? ` · 만료/필터 ${other.toLocaleString()}건` : ''}</div>`;
+    } else if (totalRemoved > 0) {
+      dedupLine = `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">수집 ${raw.toLocaleString()}건 중 ${totalRemoved.toLocaleString()}건 제거(만료·필터·중복 합산)</div>`;
+    }
 
     return `<div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px 12px;border-top:3px solid ${color}">
       <div style="font-size:.78rem;font-weight:700;color:${color};margin-bottom:4px">${src}</div>
