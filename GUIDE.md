@@ -1,6 +1,6 @@
 # 동네로 운영 가이드
 
-> 최종 업데이트: 2026-05-14 (v0.54)  
+> 최종 업데이트: 2026-05-14 (v0.58)  
 > 운영자: kyungmh95 / kahn201130@gmail.com
 
 ---
@@ -53,6 +53,14 @@ GitHub Actions (crawl.yml, 매일 07시 KST)
 - 스크립트: `crawl_local.ps1` (크롤링 → last_crawl.txt 기록 → git push)
 - GitHub PAT가 remote URL에 포함되어 백그라운드 인증 가능
 - 로컬 크롤링 성공 시 당일 GitHub Actions는 스킵됨 (중복 방지)
+
+**크롤러 후처리 단계 (순서 중요):**
+1. 대전 구 보완 — wantedAuthNo 역매핑으로 고용24 location에서 구 추출
+2. _deduplicate() — wantedAuthNo → apply_link → title+company 3순위
+   - apply_link 고유 공고는 title 중복 체크 제외 (맘시터 등)
+   - SHARED_APPLY_LINKS (어르신일자리·부산일자리) — apply_link 중복 체크 제외
+3. 부적합 업체/키워드 필터
+4. 만료 제거 — 잡아바 Sheet API만 해당 (다른 출처는 소스에서 이미 처리)
 
 ### 3-2. 정보글 발행
 
@@ -155,6 +163,7 @@ Claude가 자동으로:
 - [ ] 네이버 블로그 6편 발행 (어드민 → 정보 글 탭 → 네이버 발행 준비 활용)
 - [ ] 네이버 서치어드바이저 RSS 등록 확인 (rss.blog.naver.com/kyungmh95.xml)
 - [ ] GitHub PAT 만료 전 갱신 및 `git remote set-url github` 재적용 (보안상 주기적 교체 권장)
+- [ ] Supabase `post_views` 테이블에 실제 조회수 누적 확인 (정보글 HTML 배포 완료)
 
 ---
 
