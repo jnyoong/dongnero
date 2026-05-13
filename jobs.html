@@ -1266,6 +1266,17 @@ if ('serviceWorker' in navigator) {
   // 프로모 카드에서 언제든 배너를 강제 오픈할 수 있도록 early return 전에 노출
   const banner     = document.getElementById('pwaBanner');
   const fab        = document.getElementById('notifyFab');
+  const _closeBtn  = document.getElementById('pwaBannerClose');
+
+  function dismissBannerGlobal() {
+    if (!banner) return;
+    banner.classList.remove('show');
+    if (fab) fab.style.bottom = '';
+    localStorage.setItem(DISMISS_KEY, Date.now() + DISMISS_DAYS * 86400000);
+  }
+  // X 버튼은 항상 동작 (플랫폼 무관)
+  if (_closeBtn) _closeBtn.addEventListener('click', dismissBannerGlobal);
+
   function showBanner(trigger) {
     if (!banner) return;
     localStorage.removeItem(DISMISS_KEY); // 프로모 카드 탭 시 dismiss 무시
@@ -1273,6 +1284,23 @@ if ('serviceWorker' in navigator) {
     if (fab) {
       const bannerH = banner.offsetHeight || 160;
       fab.style.bottom = (bannerH + 16) + 'px';
+    }
+    // 배너 열릴 때 플랫폼별 설치 안내 표시 (아직 아무것도 안 보이면 기본 안내 표시)
+    const iosStepsEl  = document.getElementById('pwaIosSteps');
+    const androidBtnEl = document.getElementById('pwaAndroidBtn');
+    const iosBtnEl    = document.getElementById('pwaIosBtn');
+    const anyVisible  = (iosStepsEl  && iosStepsEl.style.display  !== 'none') ||
+                        (androidBtnEl && androidBtnEl.style.display !== 'none') ||
+                        (iosBtnEl    && iosBtnEl.style.display    !== 'none');
+    if (!anyVisible && iosStepsEl) {
+      if (isIOS) {
+        iosStepsEl.style.display = 'block';
+      } else {
+        iosStepsEl.innerHTML =
+          '1️⃣ 주소창 오른쪽 메뉴 <strong>(⋮)</strong>를 탭하세요<br>' +
+          '2️⃣ <strong>\'홈 화면에 추가\'</strong> 또는 <strong>\'앱 설치\'</strong>를 선택하세요';
+        iosStepsEl.style.display = 'block';
+      }
     }
     if (typeof gtag === 'function') gtag('event', 'pwa_banner_show', { event_category: 'pwa', trigger: trigger || 'scroll' });
   }
@@ -1282,7 +1310,6 @@ if ('serviceWorker' in navigator) {
   const dismissed = localStorage.getItem(DISMISS_KEY);
   if (dismissed && Date.now() < +dismissed) return;
 
-  const closeBtn   = document.getElementById('pwaBannerClose');
   const androidBtn = document.getElementById('pwaAndroidBtn');
   const iosSteps   = document.getElementById('pwaIosSteps');
   let deferredPrompt = null;
@@ -1290,13 +1317,8 @@ if ('serviceWorker' in navigator) {
   function gaEvent(name, params) {
     if (typeof gtag === 'function') gtag('event', name, { event_category: 'pwa', ...params });
   }
-  function dismissBanner() {
-    banner.classList.remove('show');
-    localStorage.setItem(DISMISS_KEY, Date.now() + DISMISS_DAYS * 86400000);
-    if (fab) fab.style.bottom = '';
-  }
-
-  closeBtn.addEventListener('click', dismissBanner);
+  // dismissBanner = dismissBannerGlobal (위에서 이미 등록됨)
+  const dismissBanner = dismissBannerGlobal;
   if (hintBtn) hintBtn.addEventListener('click', () => showBanner('hint_bar'));
 
   function onPwaScroll() {
