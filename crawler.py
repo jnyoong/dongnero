@@ -1154,10 +1154,15 @@ def _deduplicate(jobs: list[dict]) -> tuple[list[dict], dict]:
             removed_counts[src] = removed_counts.get(src, 0) + 1
             continue
         # 3순위: (제목+회사) 동일
+        # apply_link가 고유한 공고는 title이 같아도 다른 공고 → 제거하지 않음
+        # (맘시터처럼 /parent/{user_id} 고유 URL을 가진 경우)
         key = (title, company)
         if title and key in seen_title_co:
-            removed_counts[src] = removed_counts.get(src, 0) + 1
-            continue
+            if link and link not in seen_links and link not in SHARED_APPLY_LINKS:
+                pass  # apply_link 고유 → 실제로 다른 공고
+            else:
+                removed_counts[src] = removed_counts.get(src, 0) + 1
+                continue
 
         if wanted: seen_wanted.add(wanted)
         if link:   seen_links.add(link)
@@ -1303,6 +1308,27 @@ def run_crawler():
         except Exception:
             pass
 
+    # ── 대전 구 보완: 고용24 공고의 location을 wantedAuthNo로 역매핑 ─────────────
+    # 대전일자리 공고 중 구 정보 없는 것을, 같은 wantedAuthNo를 가진 고용24 공고로 보완
+    work24_loc_map: dict[str, str] = {}
+    for j in all_jobs:
+        if j.get("source") == "고용24" and j.get("location"):
+            auth = _extract_wanted_no(j.get("apply_link", ""))
+            if auth:
+                work24_loc_map[auth] = j["location"]
+
+    DAEJEON_GU_SET = set(DAEJEON_GU)
+    for j in all_jobs:
+        if j.get("source") == "대전일자리":
+            loc = j.get("location", "")
+            if not any(g in loc for g in DAEJEON_GU_SET):
+                auth = _extract_wanted_no(j.get("apply_link", ""))
+                if auth and auth in work24_loc_map:
+                    matched = work24_loc_map[auth]
+                    gu = next((g for g in DAEJEON_GU_SET if g in matched), "")
+                    if gu:
+                        j["location"] = f"대전광역시 {gu}"
+
     total_collected = len(all_jobs)
     all_jobs, dedup_removed = _deduplicate(all_jobs)
     total_after_dedup = len(all_jobs)
@@ -1322,7 +1348,7 @@ def run_crawler():
             filtered_jobs.append(j)
     all_jobs = filtered_jobs
 
-    # 만료 제거: 출처별 카운트
+    # 만료 제거 (잡아바 Sheet API는 만료 공고를 보관하므로 필요)
     today_str = date.today().isoformat()
     filtered, expired_by_src = [], {}
     for job in all_jobs:
@@ -1398,8 +1424,7 @@ def run_crawler():
     _notify_windows(
         title="시니어 취업정보 업데이트 완료",
         body=(
-            f"새 공고 {len(filtered)}건 수집\n"
-            f"만료 {expired}건 삭제 | {updated_at}"
+            f"새 공고 {len(filtered)}건 수집 | {updated_at}"
         ),
     )
 
