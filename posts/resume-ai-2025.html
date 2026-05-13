@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYD0Q5NTPD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PYD0Q5NTPD');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI로 이력서 쓰는 법 — 컴퓨터 서툴러도 30분이면 완성됩니다 — 동네로</title>
+  <meta name="description" content=""이력서를 어떻게 써야 하나" 막막하셨죠? 뤼튼이나 ChatGPT에 내 상황을 말하면 바로 초안을 만들어 줍니다. 처음부터 끝까지 실제 예시와 함께 알려드릴게요." />
+  <meta name="naver-site-verification" content="90a8d7a74a69eefe477271e8edb985c9c385f316" />
+  <link rel="canonical" href="https://dongnero.kr/posts/resume-ai-2025.html" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+
+  <!-- OG / SNS -->
+  <meta property="og:type"        content="article" />
+  <meta property="og:title"       content="AI로 이력서 쓰는 법 — 컴퓨터 서툴러도 30분이면 완성됩니다" />
+  <meta property="og:description" content=""이력서를 어떻게 써야 하나" 막막하셨죠? 뤼튼이나 ChatGPT에 내 상황을 말하면 바로 초안을 만들어 줍니다. 처음부터 끝까지 실제 예시와 함께 알려드릴게요." />
+  <meta property="og:url"         content="https://dongnero.kr/posts/resume-ai-2025.html" />
+  <meta property="og:site_name"   content="동네로" />
+  <meta property="og:locale"      content="ko_KR" />
+  <meta property="article:published_time" content="2026-05-03T09:00:00+09:00" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #FFF9F4;
+      --surface: #FFFFFF;
+      --border:  #EDE5DC;
+      --text:    #1C1917;
+      --sec:     #6B6560;
+      --blue:    #2563EB;
+      --purple:  #7C3AED;
+      --radius:  14px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* 상단 네비게이션 */
+    .topbar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar-logo {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #FF6B35;
+      text-decoration: none;
+    }
+    .topbar-link {
+      font-size: .82rem;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* 본문 영역 */
+    .wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    /* 카테고리 + 날짜 */
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .post-cat {
+      font-size: .72rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      color: #fff;
+      background: #2563EB;
+    }
+    .post-date {
+      font-size: .78rem;
+      color: var(--sec);
+    }
+
+    /* 제목 */
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 900;
+      line-height: 1.4;
+      margin-bottom: 12px;
+      word-break: keep-all;
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 1.25rem; }
+    }
+
+    /* 요약 */
+    .post-summary {
+      font-size: .95rem;
+      color: var(--sec);
+      line-height: 1.8;
+      border-left: 3px solid #2563EB;
+      padding-left: 14px;
+      margin-bottom: 28px;
+    }
+
+    /* 본문 */
+    .post-body { font-size: .95rem; }
+    .post-body h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin: 28px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--border);
+    }
+    .post-body p  { margin-bottom: 14px; line-height: 1.85; }
+    .post-body ul { margin: 10px 0 14px 20px; }
+    .post-body li { margin-bottom: 6px; line-height: 1.8; }
+    .post-body strong { font-weight: 700; }
+    .post-body em { font-style: italic; color: var(--sec); }
+
+    /* 컴포넌트 클래스 (info.html과 동일) */
+    .post-tip {
+      background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 10px;
+      padding: 12px 14px; margin: 12px 0;
+      font-size: .88rem; line-height: 1.7; color: #1E40AF;
+    }
+    .post-example {
+      background: #F8F5FF; border: 1px solid #DDD6FE; border-radius: 10px;
+      padding: 14px 16px; margin: 12px 0;
+      font-size: .9rem; line-height: 1.7; color: var(--text);
+      font-style: italic;
+    }
+    .post-example-label {
+      font-size: .72rem; font-weight: 800; color: var(--purple);
+      letter-spacing: .5px; margin-bottom: 8px; font-style: normal;
+    }
+    .post-compare { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .post-compare-row {
+      display: flex; flex-direction: column; gap: 4px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 10px 12px;
+    }
+    .post-compare-before {
+      font-size: .88rem; color: #DC2626;
+      background: #FEF2F2; border-radius: 6px; padding: 6px 10px;
+    }
+    .post-compare-after {
+      font-size: .88rem; color: #15803D;
+      background: #F0FDF4; border-radius: 6px; padding: 6px 10px;
+    }
+
+    /* 하단 CTA */
+    .post-footer {
+      margin-top: 40px;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-align: center;
+    }
+    .post-footer p { font-size: .88rem; color: var(--sec); margin-bottom: 12px; }
+    .btn-primary {
+      display: inline-block;
+      background: #FF6B35;
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin: 4px;
+    }
+    .btn-secondary {
+      display: inline-block;
+      background: var(--surface);
+      color: var(--blue);
+      font-size: .9rem;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid #BFDBFE;
+      margin: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a class="topbar-logo" href="https://dongnero.kr/">동네로</a>
+  <a class="topbar-link" href="https://dongnero.kr/info.html">← 정보게시판 전체 보기</a>
+</nav>
+
+<div class="wrapper">
+  <div class="post-meta">
+    <span class="post-cat">취업 준비</span>
+    <span class="post-date">2026-05-03</span>
+  </div>
+
+  <h1>AI로 이력서 쓰는 법 — 컴퓨터 서툴러도 30분이면 완성됩니다</h1>
+  <p class="post-summary">"이력서를 어떻게 써야 하나" 막막하셨죠? 뤼튼이나 ChatGPT에 내 상황을 말하면 바로 초안을 만들어 줍니다. 처음부터 끝까지 실제 예시와 함께 알려드릴게요.</p>
+
+  <div class="post-body">
+    <p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+이력서를 쓰기 시작하면 하얀 화면 앞에서 멈추게 됩니다.<br>
+"경력이 단순한데 뭘 쓰지", "한 줄도 못 쓰겠어", "오래 쉬었는데 공백기를 어떻게 설명하나"…<br><br>
+그런데 요즘은 AI에게 말을 걸면 몇 분 안에 이력서 초안을 뚝딱 만들어 줍니다.<br>
+직접 타이핑하거나 양식을 찾아 헤맬 필요가 없어요. 스마트폰으로도 됩니다.
+</p>
+
+<div class="post-tip">
+  📌 이 글에서 배울 것:<br>
+  ① 무료로 쓸 수 있는 AI 도구 (스마트폰으로 OK)<br>
+  ② AI에게 정확히 어떻게 부탁하는지 (그대로 복붙 가능한 예시)<br>
+  ③ 완성된 이력서를 출력하는 방법
+</div>
+
+<h3>🤖 어떤 AI를 써야 하나요?</h3>
+<p>모두 무료이고, 카카오톡 계정으로 가입할 수 있어요. 셋 중 하나만 골라 시작하면 됩니다.</p>
+
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#F0F9FF;border-color:#BAE6FD;">
+    <div style="font-size:.8rem;font-weight:800;color:#0369A1;margin-bottom:6px;">① 뤼튼 (wrtn.ai) — 입문자에게 가장 추천</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.7;">
+      카카오톡 계정으로 1분 만에 가입. 한국어에 특화되어 자연스러운 문장을 써줍니다.<br>
+      앱 설치: 플레이스토어·앱스토어에서 "뤼튼" 검색
+    </div>
+  </div>
+  <div class="post-compare-row" style="background:#F0FDF4;border-color:#BBF7D0;">
+    <div style="font-size:.8rem;font-weight:800;color:#15803D;margin-bottom:6px;">② ChatGPT (chat.openai.com)</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.7;">
+      구글 계정으로 가입. 세계에서 가장 많이 쓰는 AI입니다.<br>
+      무료 버전으로도 이력서 작성에 충분합니다.
+    </div>
+  </div>
+</div>
+
+<h3>✏️ STEP 1 — 시작 전에 이것만 메모하세요 (5분)</h3>
+<p>AI가 좋은 이력서를 써주려면 내 정보를 알아야 합니다. 종이에 대충 적어두기만 해도 돼요.</p>
+
+<div class="post-example">
+  <div class="post-example-label">✍️ 메모할 내용 (이 양식 그대로 써보세요)</div>
+  나이·성별: 58세 여성<br>
+  거주지: 서울 노원구<br><br>
+  <strong>일한 경험:</strong><br>
+  - ○○마트 계산원 4년 (고객 응대, 재고 정리)<br>
+  - ○○어린이집 보조교사 5년 (아이들 식사·활동 보조)<br><br>
+  <strong>자격증:</strong> 요양보호사 2급 (2020년)<br>
+  <strong>지원하려는 곳:</strong> 편의점 파트타임<br>
+  <strong>일 가능한 시간:</strong> 평일 오전 9시~오후 2시
+</div>
+
+<div class="post-tip">
+  💡 <strong>경력이 없는 것 같다고 걱정 마세요.</strong><br>
+  가사 경력, 자녀 양육, 봉사활동, 부모님 돌봄 경험도 훌륭한 경력입니다.<br>
+  "20년간 3남매 키우며 살림한 경험"도 이력서에 쓸 수 있어요.
+</div>
+
+<h3>💬 STEP 2 — AI에게 이렇게 부탁하세요</h3>
+<p>뤼튼이나 ChatGPT를 열고 아래 내용을 그대로 복사해서 붙여넣은 다음, 내 정보로 바꿔 쓰세요.</p>
+
+<div class="post-example">
+  <div class="post-example-label">📋 AI에게 보낼 문장 (이것만 복붙하세요)</div>
+  나는 58세 여성입니다. 편의점 파트타임 지원용 이력서를 A4 1장으로 써주세요.<br><br>
+  [나의 경험]<br>
+  - ○○마트에서 4년 계산원 근무 (고객 응대, 재고 정리 담당)<br>
+  - ○○어린이집 보조교사 5년 (아이들 식사·활동 보조)<br><br>
+  [자격증] 요양보호사 2급<br>
+  [성격] 성실하고 책임감이 강하며 지각을 해본 적이 없어요<br>
+  [근무 희망] 평일 오전 9시~오후 2시<br><br>
+  자기소개 한 단락도 포함해 주세요. 고객을 대하는 경험이 많다는 점을 강조해줘요.
+</div>
+
+<p>잠시 기다리면 이력서 초안이 나옵니다. 읽어보고 마음에 안 드는 부분은 바로 이렇게 말해보세요.</p>
+
+<div class="post-example">
+  <div class="post-example-label">🔧 수정 요청 예시</div>
+  "자기소개 부분을 더 따뜻하고 친근한 느낌으로 바꿔줘요."<br>
+  "너무 딱딱하게 느껴지는 부분을 자연스럽게 다듬어줘요."<br>
+  "좀 더 짧게 줄여줘요. 군더더기 없이요."
+</div>
+
+<h3>🏆 STEP 3 — 지원하는 곳마다 살짝 맞춰보세요</h3>
+<p>같은 이력서를 여러 곳에 내는 것보다, 지원하는 곳에 맞게 조금씩 바꾸면 연락 받을 확률이 높아집니다.</p>
+
+<div class="post-compare">
+  <div class="post-compare-row">
+    <div class="post-compare-before">편의점·마트 지원</div>
+    <div class="post-compare-after" style="color:#374151;background:#F8F5FF;">"계산 업무 경험과 빠른 서비스를 강조해서 자기소개를 다시 써줘요."</div>
+  </div>
+  <div class="post-compare-row">
+    <div class="post-compare-before">학교 급식실·구내식당</div>
+    <div class="post-compare-after" style="color:#374151;background:#F8F5FF;">"위생 관념, 꼼꼼함, 체력적으로 건강한 점을 강조해줘요."</div>
+  </div>
+  <div class="post-compare-row">
+    <div class="post-compare-before">요양원·복지관</div>
+    <div class="post-compare-after" style="color:#374151;background:#F8F5FF;">"요양보호사 자격증과 어르신을 돕는 경험, 따뜻한 성품을 앞에 배치해줘요."</div>
+  </div>
+</div>
+
+<h3>👀 STEP 4 — 서명 전에 꼭 확인하세요</h3>
+<p>AI가 잘 써줘도 내가 한 번은 꼼꼼히 읽어봐야 합니다. 가끔 없는 내용을 지어내는 경우가 있어요.</p>
+<ul>
+  <li>✅ 내 이름, 연락처가 정확한가</li>
+  <li>✅ 일한 기간(년도)이 실제와 맞는가</li>
+  <li>✅ 자격증 이름과 급수가 정확한가</li>
+  <li>✅ 실제와 다른 내용은 없는가</li>
+</ul>
+
+<h3>🖨️ STEP 5 — 이력서 출력하기</h3>
+
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#F0F9FF;border-color:#BAE6FD;">
+    <div style="font-size:.8rem;font-weight:800;color:#0369A1;margin-bottom:4px;">편의점 무인 출력기</div>
+    <div style="font-size:.85rem;color:#374151;line-height:1.7;">GS25·CU·세븐일레븐에 있어요. AI 화면을 캡처해 사진으로 출력하거나, 파일로 저장해 USB로 가져가면 됩니다. 흑백 A4 한 장에 보통 100~150원.</div>
+  </div>
+  <div class="post-compare-row" style="background:#F0FDF4;border-color:#BBF7D0;">
+    <div style="font-size:.8rem;font-weight:800;color:#15803D;margin-bottom:4px;">주민센터·도서관</div>
+    <div style="font-size:.85rem;color:#374151;line-height:1.7;">동네 주민센터나 공공도서관에 무료 컴퓨터와 프린터가 있어요. 직원분께 도움 요청하면 친절히 도와줍니다.</div>
+  </div>
+  <div class="post-compare-row" style="background:#FFF7ED;border-color:#FED7AA;">
+    <div style="font-size:.8rem;font-weight:800;color:#C2410C;margin-bottom:4px;">이메일로 바로 제출</div>
+    <div style="font-size:.85rem;color:#374151;line-height:1.7;">요즘 많은 곳에서 이메일 지원도 받아요. AI에게 "이메일로 보낼 수 있는 깔끔한 형식으로 다시 정리해줘"라고 하면 됩니다.</div>
+  </div>
+</div>
+
+<div class="post-tip">
+  🎉 <strong>이력서는 완벽하지 않아도 됩니다.</strong><br>
+  성실하게 일하겠다는 마음이 담겨 있으면 충분해요. AI의 도움을 받아 첫 발을 떼어보세요.
+</div>
+  </div>
+
+  <div class="post-footer">
+    <p>동네로는 50대·60대 시니어·중장년을 위한 취업정보 플랫폼입니다.</p>
+    <a class="btn-primary"   href="https://dongnero.kr/jobs.html">채용공고 보러 가기 →</a>
+    <a class="btn-secondary" href="https://dongnero.kr/info.html">취업 정보 더 보기</a>
+  </div>
+</div>
+
+</body>
+</html>

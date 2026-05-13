@@ -2,6 +2,23 @@
 
 ---
 
+## [v0.52] 2026-05-14 — 정보게시판 정적 HTML 자동 빌드 (SEO)
+
+### build_posts.py (신규)
+- posts_data.js를 파싱해 `/posts/{id}.html` 정적 파일 자동 생성
+- 각 파일: title/description/canonical/og 메타태그 + GA + 네이버 인증 포함
+- post-tip/post-compare/post-example 등 info.html CSS 클래스 동일하게 적용
+- 하단 CTA: 채용공고 바로가기 + 정보게시판 전체보기 버튼
+
+### sitemap.xml
+- posts/ 6개 URL 자동 등재 (각 포스트 date 기준 lastmod)
+
+### .github/workflows/crawl.yml
+- 매일 크롤링 후 `python build_posts.py` 자동 실행
+- `git add`에 `posts/ sitemap.xml` 추가
+
+---
+
 ## [v0.51] 2026-05-14 — 정보게시판 글 6편 전면 재작성 (품질 개선)
 
 ### posts_data.js

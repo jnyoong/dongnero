@@ -44,12 +44,16 @@ jobs:
         if: steps.check_local.outputs.skip == 'false'
         run: python crawler.py
 
+      - name: 정보게시판 정적 HTML 빌드
+        if: steps.check_local.outputs.skip == 'false'
+        run: python build_posts.py
+
       - name: 변경사항 커밋 & 푸시
         if: steps.check_local.outputs.skip == 'false'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add jobs.json jobs_data.js excluded_data.js
+          git add jobs.json jobs_data.js excluded_data.js posts/ sitemap.xml
           git diff --cached --quiet || git commit -m "daily update $(TZ=Asia/Seoul date +'%Y-%m-%d')"
           git pull --rebase origin main
           git push
