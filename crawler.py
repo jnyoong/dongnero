@@ -1303,28 +1303,44 @@ def run_crawler():
         except Exception:
             pass
 
+    total_collected = len(all_jobs)
     all_jobs, dedup_removed = _deduplicate(all_jobs)
+    total_after_dedup = len(all_jobs)
 
     excluded_jobs = []
     filtered_jobs = []
+    # 부적합 필터: 출처별 카운트
+    excluded_by_src: dict[str, int] = {}
     for j in all_jobs:
         reason = _exclude_reason(j)
         if reason:
             j['_exclude_reason'] = reason
             excluded_jobs.append(j)
+            src = j.get("source", "기타")
+            excluded_by_src[src] = excluded_by_src.get(src, 0) + 1
         else:
             filtered_jobs.append(j)
     all_jobs = filtered_jobs
-    print(f"\n  부적합 업체 필터링: {len(excluded_jobs)}건 제외")
 
+    # 만료 제거: 출처별 카운트
     today_str = date.today().isoformat()
-    filtered, expired = [], 0
+    filtered, expired_by_src = [], {}
     for job in all_jobs:
         dl = job.get("deadline", "")
         if re.match(r"\d{4}-\d{2}-\d{2}", dl) and dl < today_str:
-            expired += 1
+            src = job.get("source", "기타")
+            expired_by_src[src] = expired_by_src.get(src, 0) + 1
             continue
         filtered.append(job)
+
+    # 단계별 통계 출력
+    total_raw = sum(source_counts.values())
+    print(f"\n  ── 후처리 통계 ──")
+    print(f"  수집 합계:      {total_raw:>6}건")
+    print(f"  중복 제거:     -{sum(dedup_removed.values()):>6}건  {dict(sorted(dedup_removed.items(), key=lambda x:-x[1]))}")
+    print(f"  부적합 필터:   -{len(excluded_jobs):>6}건  {excluded_by_src}")
+    print(f"  만료 제거:     -{sum(expired_by_src.values()):>6}건  {expired_by_src}")
+    print(f"  최종 저장:      {len(filtered):>6}건")
 
     def _sort_key(j: dict) -> str:
         dl = j.get("deadline", "")
