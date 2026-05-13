@@ -5,13 +5,13 @@
   제거하려면 jobs.html에서 `const PROMO_ENABLED = true` → `false` 로만 변경하면 됨. 코드 삭제 불필요.
 - **코드 변경이 있을 때마다 CHANGELOG.md 상단에 새 버전 항목을 추가하고 커밋·push한다.**
   - 버전 형식: `## [v숫자.숫자] YYYY-MM-DD — 한 줄 요약`
-  - 변경된 파일별 bullet 기록, 최신이 위 (현재 최신: **v0.50**)
+  - 변경된 파일별 bullet 기록, 최신이 위 (현재 최신: **v0.52**)
   - 사용자가 요청하지 않아도 작업 완료 시 자동으로 실행
 
 ### 세션 시작 시 자동 체크 (하루 1회)
 **매 새 대화 세션 시작 시 아래를 수행한다:**
 1. `posts_data.js`를 읽어 동네로 정보게시판 글 목록(id, title) 추출
-2. `https://rss.blog.naver.com/kahn2005.xml` 을 fetch해 네이버 블로그 발행 글 목록 확인
+2. `https://rss.blog.naver.com/kyungmh95.xml` 을 fetch해 네이버 블로그 발행 글 목록 확인
 3. 동네로 글 제목의 핵심 키워드(2개 이상)가 네이버 블로그 글 제목에 없으면 → **미발행** 으로 판단
 4. 미발행 글이 있으면 사용자에게 다음 형식으로 보고:
 
@@ -20,7 +20,7 @@
 아직 네이버 블로그에 올라가지 않은 동네로 정보글이 N편 있습니다:
 • [글 제목] (posts_data.js 등록일: YYYY-MM-DD)
 • ...
-네이버 블로그(https://blog.naver.com/kahn2005)에 발행해주세요.
+네이버 블로그(https://blog.naver.com/kyungmh95)에 발행해주세요.
 ```
 
 5. 모두 발행되어 있으면 조용히 넘어간다 (사용자에게 불필요한 메시지 없음)
@@ -29,34 +29,28 @@
 > RSS: https://rss.blog.naver.com/kyungmh95.xml
 > 동네로 정보글 → 네이버 블로그 발행 전략: 내용은 동일하되 도입부·마무리를 살짝 각색 (중복 패널티 방지)
 
-## 현재 진행 중인 프로젝트 전략 (2026-05-14 기준)
+## 정보게시판 글 발행 방식 (현재 채택)
 
-### 콘텐츠 SEO 전략 (진행 중)
-**목표**: 정보게시판 글이 네이버·구글 검색에 노출되도록 → 외부 유입 채널 확보
+### 새 글 발행 절차
+1. `posts_data.js`에 새 글 객체 추가 (id, category, categoryColor, title, summary, date, author, content)
+2. `python build_posts.py` 실행 → `/posts/{id}.html` 자동 생성 + `sitemap.xml` 업데이트
+3. `git add posts/ sitemap.xml posts_data.js && git commit && git push github main`
+4. 네이버 블로그(https://blog.naver.com/kyungmh95)에 각색 발행 (도입부·마무리 약간 변경)
 
-**채택한 방법:**
-1. **정적 HTML 자동 생성** — posts_data.js 글마다 `/posts/{id}.html` 파일 생성 (구글 색인용)
-   - 파일은 `/posts/` 폴더에만 저장 → 루트 디렉토리 오염 없음
-   - `build_posts.py` 스크립트 작성 예정 → crawl.yml에서 자동 실행
-   - sitemap.xml에 개별 포스트 URL 자동 등재
-2. **네이버 블로그 수동 발행** — 동일 내용을 살짝 각색해서 직접 올리기 (도입부·마무리 약간 변경)
-   - 블로그: https://blog.naver.com/kyungmh95 (새로 개설, 아직 글 없음)
-   - RSS: https://rss.blog.naver.com/kyungmh95.xml
+> GitHub Actions crawl.yml이 매일 실행 시 `build_posts.py`도 자동 실행 → 정적 HTML 최신 유지
 
-**미완료 작업:**
-- `build_posts.py` 스크립트 미구현 (블로그 개설 후 바로 작업 예정)
-- sitemap.xml `/posts/` URL 자동 추가 미구현
+### "새로운 정보글 오늘도 작성해줘" 요청 처리
+이 요청이 오면 **아래 원칙을 모두 반영**해서 글을 작성하고 즉시 발행한다:
+- AI 느낌 없는 자연스러운 한국어 (실제 시나리오, 사람 이름, 구체적 상황 활용)
+- 50~60대 시니어 관점의 공감형 도입부 (독자가 "내 얘기네"라고 느끼게)
+- 구체적인 대화 스크립트·체크리스트·예시 금액 포함
+- SEO 원칙: 제목에 검색 키워드 포함, meta description 80자 내 핵심 요약, h3 헤딩 구조화
+- 롱테일 키워드 전략: "50대 알바", "60대 재취업", "시니어 단기알바" 등 자연스럽게 삽입
+- 글 완성 후 `posts_data.js` 추가 → `build_posts.py` 실행 → 커밋·push까지 자동 완료
 
-### 알림톡 자동 발송 (진행 중)
-- notify.py 구현 완료, GitHub Actions crawl.yml에 연동
-- 카카오 알림톡 템플릿 2개 심사 요청 중 (아직 승인 전)
-- 승인 후 GitHub Secrets에 `KAKAO_TMPL_WITH_JOB`, `KAKAO_TMPL_NO_JOB` 추가 필요
-
-### 정보게시판 글 작성 원칙
-- AI 느낌 없이 자연스러운 한국어 (실제 시나리오·사람 이름 활용)
-- 50~60대 시니어 관점에서 공감형 도입부
-- 구체적인 대화 스크립트·체크리스트 포함
-- 새 글 발행 시 → 네이버 블로그에도 각색 발행 필요 (미발행 체크는 세션 시작 시 자동 수행)
+### 알림톡 자동 발송
+- `notify.py` 구현 완료, GitHub Actions `crawl.yml`에 연동
+- 카카오 알림톡 템플릿 심사 완료 후 GitHub Secrets에 `KAKAO_TMPL_WITH_JOB`, `KAKAO_TMPL_NO_JOB` 추가 필요
 
 ---
 
@@ -125,8 +119,8 @@ row3:    [검색창] (슬라이드다운)
 - 목록→상세 해시 라우팅(`#post-id`), 브라우저 뒤로가기 지원
 - 댓글: Supabase `post_comments` 테이블 (RLS 설정 완료)
   - 누구나 읽기/쓰기 가능, 500자 제한
-- 게시물 추가: `posts_data.js`에 객체 추가 후 커밋
-- 현재 게시물 3개: resume-ai-2025 / apply-parttime-2025 / speech-modern-2025
+- 게시물 추가: `posts_data.js`에 객체 추가 → `build_posts.py` 실행 → `/posts/{id}.html` 생성
+- 현재 게시물 6개: job-scam-2026 / labor-contract-2026 / senior-job-support-2026 / resume-ai-2025 / apply-parttime-2025 / speech-modern-2025
 
 ## Supabase
 - URL: `https://riomousxlyvwmembuhvc.supabase.co`

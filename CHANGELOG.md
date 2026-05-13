@@ -2,6 +2,36 @@
 
 ---
 
+## [v0.53] 2026-05-14 — 어드민 정보글 탭 복원 (posts_data.js 기반) + 구 AI 발행 방식 제거
+
+### admin-dongnero.html
+- "정보 글" 탭 재추가 — posts_data.js의 POSTS_DATA를 직접 읽어 표시 (Supabase 불필요)
+- 각 글마다 "네이버 발행 준비" 버튼: 제목/요약/본문 HTML 복사 + 렌더링 미리보기 모달
+- 네이버 블로그 3단계 포스팅 가이드 안내 (HTML 모드 붙여넣기, 각색 리마인더)
+- 구 Supabase info_posts 기반 탭·모달·JS 전체 제거
+- posts_data.js 스크립트 로드 추가
+
+### backend.py
+- SQLite 기반 초기 알림 API — Supabase 전환 후 미사용, 파일 삭제
+
+### crawler.py
+- `import os` 누락 수정 (BUSAN_API_KEY os.environ 참조 오류)
+
+### CLAUDE.md
+- 정보글 발행 방식 현행화 (posts_data.js + build_posts.py 절차 명시)
+- "새로운 정보글 오늘도 작성해줘" 요청 처리 원칙 추가
+- RSS URL 오류 수정 (kahn2005 → kyungmh95)
+- 버전 표기 v0.52, 게시물 6개로 업데이트
+
+### Supabase
+- info_posts 테이블 발행예정 글 전체 삭제 (구 방식 완전 정리)
+
+### 크롤링 (2026-05-14)
+- 총 5603건 수집 (만료 1090건 제외 → 4513건 저장)
+- 고용24 1000 / 알바천국 300 / 시니어로 130 / 서울일자리포털 1500 / 잡아바 3056 / 어르신일자리 45 / 맘시터 1000 / 대전일자리 707 / 부산일자리 18
+
+---
+
 ## [v0.52] 2026-05-14 — 정보게시판 정적 HTML 자동 빌드 (SEO)
 
 ### build_posts.py (신규)

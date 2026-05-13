@@ -94,25 +94,28 @@
     .btn-red:hover { background: #b91c1c; }
     .btn-purple { background: #7C3AED; color: #fff; }
     .btn-purple:hover { background: #6D28D9; }
+    .btn-naver { background: #03C75A; color: #fff; }
+    .btn-naver:hover { background: #02a84b; }
 
-    /* 정보글 미리보기 모달 */
-    #ipPreviewOverlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:2000; overflow-y:auto; padding:24px 16px 48px; }
-    #ipPreviewBox { max-width:600px; margin:0 auto; background:#fff; border-radius:16px; overflow:hidden; position:relative; }
-    #ipPreviewClose { position:absolute; top:12px; right:12px; background:#F3F4F6; border:none; border-radius:50%; width:34px; height:34px; font-size:1rem; cursor:pointer; z-index:1; }
-    #ipPreviewHero { padding:28px 20px 18px; border-bottom:1px solid #F3F4F6; }
-    .ip-badge { display:inline-block; padding:2px 10px; border-radius:20px; font-size:.8rem; font-weight:700; margin-bottom:12px; }
-    .ip-title { font-size:1.25rem; font-weight:800; line-height:1.4; margin-bottom:10px; color:#111827; }
-    .ip-meta  { font-size:.85rem; color:#6B7280; display:flex; gap:12px; flex-wrap:wrap; margin-bottom:10px; }
-    .ip-tags  { display:flex; gap:6px; flex-wrap:wrap; }
-    .ip-tag   { background:#EFF6FF; color:#2563EB; border-radius:20px; padding:2px 10px; font-size:.78rem; font-weight:700; }
-    #ipPreviewContent { padding:20px; font-size:.97rem; line-height:1.8; color:#111827; }
-    #ipPreviewContent h3 { font-size:1.05rem; font-weight:800; margin:24px 0 10px; padding-bottom:6px; border-bottom:2px solid #F3F4F6; }
-    #ipPreviewContent h3:first-child { margin-top:0; }
-    #ipPreviewContent p  { margin-bottom:12px; }
-    #ipPreviewContent ul { padding-left:20px; margin-bottom:12px; }
-    #ipPreviewContent li { margin-bottom:6px; }
-    #ipPreviewContent strong { font-weight:800; }
-    .ip-scheduled-banner { background:#FFF7ED; border-bottom:1px solid #FED7AA; padding:8px 20px; font-size:.82rem; color:#C2410C; font-weight:700; }
+    /* 정보글 네이버 복사 모달 */
+    #npOverlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:2000; overflow-y:auto; padding:24px 16px 48px; }
+    #npBox { max-width:680px; margin:0 auto; background:#fff; border-radius:16px; overflow:hidden; position:relative; }
+    #npClose { position:absolute; top:12px; right:12px; background:#F3F4F6; border:none; border-radius:50%; width:34px; height:34px; font-size:1rem; cursor:pointer; z-index:1; }
+    .np-header { padding:20px 20px 14px; border-bottom:1px solid #F3F4F6; }
+    .np-title { font-size:1.1rem; font-weight:800; color:#111827; margin-bottom:4px; word-break:keep-all; }
+    .np-meta { font-size:.82rem; color:#6B7280; }
+    .np-section { padding:14px 20px; border-bottom:1px solid #F3F4F6; }
+    .np-section-label { font-size:.75rem; font-weight:800; color:#6B7280; letter-spacing:.5px; margin-bottom:6px; display:flex; align-items:center; justify-content:space-between; }
+    .np-copy-btn { font-size:.75rem; font-weight:700; background:#EFF6FF; color:#2563EB; border:none; border-radius:6px; padding:3px 10px; cursor:pointer; }
+    .np-copy-btn:hover { background:#DBEAFE; }
+    .np-copy-btn.copied { background:#D1FAE5; color:#065F46; }
+    .np-text { background:#F9FAFB; border:1px solid #E5E7EB; border-radius:8px; padding:10px 12px; font-size:.88rem; line-height:1.7; max-height:180px; overflow-y:auto; white-space:pre-wrap; word-break:break-word; }
+    .np-html { background:#F9FAFB; border:1px solid #E5E7EB; border-radius:8px; padding:10px 12px; font-size:.8rem; font-family:monospace; max-height:180px; overflow-y:auto; white-space:pre-wrap; word-break:break-all; }
+    .np-preview { padding:10px 12px; background:#F9FAFB; border:1px solid #E5E7EB; border-radius:8px; font-size:.9rem; line-height:1.8; max-height:220px; overflow-y:auto; }
+    .np-footer { padding:14px 20px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .np-guide { background:#ECFDF5; border:1px solid #A7F3D0; border-radius:8px; padding:10px 14px; font-size:.82rem; color:#065F46; line-height:1.6; margin:0 20px 14px; }
+    .np-guide strong { font-weight:800; }
+
     input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; accent-color: #2563EB; }
     .badge-teal { background: #F0FDFA; color: #0F766E; }
     .wl-toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; padding: 10px 14px; background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 10px; }
@@ -151,7 +154,7 @@
     <div class="tab" data-tab="excluded">🚫 필터링 제외 <span id="tabExCount"></span></div>
     <div class="tab" data-tab="companyjobs">📝 기업공고 <span id="tabCjCount"></span></div>
     <div class="tab" data-tab="seekercards">💼 구직카드 <span id="tabScCount"></span></div>
-    <div class="tab" data-tab="infoposts">📝 정보 글 <span id="tabIpCount"></span></div>
+    <div class="tab" data-tab="infoposts">📰 정보 글 <span id="tabIpCount"></span></div>
   </div>
 
   <!-- 탭1: 공고 목록 -->
@@ -372,37 +375,72 @@
     <div style="margin-top:8px;font-size:.78rem;color:#9CA3AF" id="scRangeInfo"></div>
   </div>
 
-  <!-- 탭6: 정보 글 -->
+  <!-- 탭5: 정보 글 -->
   <div class="tab-panel" id="panel-infoposts">
     <div class="summary-row">
-      <div class="summary-chip"><strong id="ipTotal">-</strong>AI 생성 글</div>
+      <div class="summary-chip"><strong id="ipTotal">-</strong>정보 글</div>
     </div>
     <div class="table-wrap">
       <table>
         <thead><tr>
-          <th>#</th><th>카테고리</th><th>제목</th><th>부제목</th><th>발행상태</th><th>등록일</th><th>미리보기</th><th>삭제</th>
+          <th>#</th><th>카테고리</th><th>제목</th><th>날짜</th><th>네이버 블로그</th><th>미리보기</th>
         </tr></thead>
-        <tbody id="ipBody"><tr><td colspan="8" class="loading">불러오는 중…</td></tr></tbody>
+        <tbody id="ipBody"><tr><td colspan="6" class="loading">불러오는 중…</td></tr></tbody>
       </table>
     </div>
   </div>
 
 </div>
 
-<!-- 정보글 미리보기 모달 -->
-<div id="ipPreviewOverlay">
-  <div id="ipPreviewBox">
-    <button id="ipPreviewClose" onclick="document.getElementById('ipPreviewOverlay').style.display='none'">✕</button>
-    <div id="ipScheduledBanner" class="ip-scheduled-banner" style="display:none">📅 발행예정 글 미리보기 — 아직 공개되지 않았습니다</div>
-    <div id="ipPreviewHero"></div>
-    <div id="ipPreviewContent"></div>
+<!-- 네이버 블로그 복사 모달 -->
+<div id="npOverlay">
+  <div id="npBox">
+    <button id="npClose" onclick="document.getElementById('npOverlay').style.display='none'">✕</button>
+    <div class="np-header">
+      <div class="np-title" id="npTitle"></div>
+      <div class="np-meta" id="npMeta"></div>
+    </div>
+    <div class="np-guide">
+      <strong>네이버 블로그 포스팅 방법:</strong><br>
+      1. 아래 <strong>제목</strong>을 복사 → 네이버 블로그 새 글 제목에 붙여넣기<br>
+      2. <strong>본문 HTML</strong>을 복사 → 스마트에디터에서 <strong>HTML 모드(< > 아이콘)</strong> 전환 후 붙여넣기<br>
+      3. 도입부·마무리 1~2문장을 살짝 각색해서 발행 (중복 패널티 방지)
+    </div>
+    <div class="np-section">
+      <div class="np-section-label">
+        제목 <button class="np-copy-btn" onclick="npCopy('npCopyTitle', this)">복사</button>
+      </div>
+      <div class="np-text" id="npCopyTitle"></div>
+    </div>
+    <div class="np-section">
+      <div class="np-section-label">
+        요약 (meta description) <button class="np-copy-btn" onclick="npCopy('npCopySummary', this)">복사</button>
+      </div>
+      <div class="np-text" id="npCopySummary"></div>
+    </div>
+    <div class="np-section">
+      <div class="np-section-label">
+        본문 HTML <button class="np-copy-btn" onclick="npCopy('npCopyHtml', this)">복사</button>
+      </div>
+      <div class="np-html" id="npCopyHtml"></div>
+    </div>
+    <div class="np-section">
+      <div class="np-section-label">미리보기 (렌더링)</div>
+      <div class="np-preview" id="npPreview"></div>
+    </div>
+    <div class="np-footer">
+      <a class="btn btn-naver" href="https://blog.naver.com/kyungmh95/write" target="_blank">네이버 블로그 열기 →</a>
+      <button class="btn" style="background:#F3F4F6;color:#374151" onclick="document.getElementById('npOverlay').style.display='none'">닫기</button>
+    </div>
   </div>
 </div>
+
 
 <script src="whitelist_data.js"></script>
 <script src="manual_excluded.js"></script>
 <script src="jobs_data.js"></script>
 <script src="excluded_data.js"></script>
+<script src="posts_data.js"></script>
 <script>
 const SUPABASE_URL = 'https://riomousxlyvwmembuhvc.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
@@ -458,83 +496,80 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     tab.classList.add('active');
     document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
-    if (tab.dataset.tab === 'infoposts') loadInfoPosts();
+    if (tab.dataset.tab === 'infoposts') renderInfoPosts();
   });
 });
 
-/* ── 정보 글 (AI 생성) ── */
-let allInfoPosts = [];
-
-async function loadInfoPosts() {
-  document.getElementById('ipBody').innerHTML = '<tr><td colspan="8" class="loading">불러오는 중…</td></tr>';
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/info_posts?select=*&order=created_at.desc`, {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-    });
-    allInfoPosts = await res.json();
-    document.getElementById('ipTotal').textContent = allInfoPosts.length;
-    document.getElementById('tabIpCount').textContent = allInfoPosts.length ? `(${allInfoPosts.length})` : '';
-    if (!allInfoPosts.length) {
-      document.getElementById('ipBody').innerHTML = '<tr><td colspan="8" class="empty-msg">정보 글이 없습니다.</td></tr>';
-      return;
-    }
-    document.getElementById('ipBody').innerHTML = allInfoPosts.map((r, i) => {
-      const published = !!r.published_at;
-      const pubBadge  = published
-        ? `<span style="background:#D1FAE5;color:#065F46;padding:2px 8px;border-radius:20px;font-size:.78rem;font-weight:700">✅ 발행됨<br><span style="font-weight:400">${r.published_at.slice(0,10)}</span></span>`
-        : `<span style="background:#FFF7ED;color:#C2410C;padding:2px 8px;border-radius:20px;font-size:.78rem;font-weight:700">📅 발행예정</span>`;
-      return `<tr>
-        <td>${i + 1}</td>
-        <td><span style="background:${r.category_color}18;color:${r.category_color};padding:2px 8px;border-radius:20px;font-size:.8rem;font-weight:700">${r.category}</span></td>
-        <td style="max-width:220px;word-break:keep-all">${r.title}</td>
-        <td style="max-width:180px;color:#6B7280;font-size:.85rem">${r.summary || ''}</td>
-        <td style="white-space:nowrap">${pubBadge}</td>
-        <td style="white-space:nowrap">${(r.created_at||'').slice(0,10)}</td>
-        <td><button class="btn btn-purple" onclick="previewInfoPost('${r.id}')">👁 미리보기</button></td>
-        <td><button class="btn btn-red" onclick="deleteInfoPost('${r.id}')">🗑 삭제</button></td>
-      </tr>`;
-    }).join('');
-  } catch (e) {
-    document.getElementById('ipBody').innerHTML = `<tr><td colspan="8" class="empty-msg">불러오기 실패: ${e.message}</td></tr>`;
+/* ── 정보 글 (posts_data.js 기반) ── */
+function renderInfoPosts() {
+  const posts = (typeof POSTS_DATA !== 'undefined') ? POSTS_DATA : [];
+  document.getElementById('ipTotal').textContent = posts.length;
+  document.getElementById('tabIpCount').textContent = posts.length ? `(${posts.length})` : '';
+  if (!posts.length) {
+    document.getElementById('ipBody').innerHTML = '<tr><td colspan="6" class="empty-msg">posts_data.js에 글이 없습니다.</td></tr>';
+    return;
   }
+  document.getElementById('ipBody').innerHTML = posts.map((p, i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td><span style="background:${p.categoryColor}18;color:${p.categoryColor};padding:2px 8px;border-radius:20px;font-size:.8rem;font-weight:700">${p.category}</span></td>
+      <td style="max-width:240px;word-break:keep-all;font-weight:600">${p.title}</td>
+      <td style="white-space:nowrap;font-size:.85rem;color:#6B7280">${p.date}</td>
+      <td><button class="btn btn-naver" onclick="openNaverCopy(${i})">📝 네이버 발행 준비</button></td>
+      <td><button class="btn btn-purple" onclick="openPreview(${i})">👁 미리보기</button></td>
+    </tr>`).join('');
 }
 
-function previewInfoPost(id) {
-  const r = allInfoPosts.find(p => String(p.id) === String(id));
-  if (!r) return;
-  const published = !!r.published_at;
-  document.getElementById('ipScheduledBanner').style.display = published ? 'none' : 'block';
-  document.getElementById('ipPreviewHero').innerHTML = `
-    <span class="ip-badge" style="background:${r.category_color}18;color:${r.category_color}">${r.category}</span>
-    <div class="ip-title">${r.title}</div>
-    <div class="ip-meta">
-      <span>✍️ ${r.author || '동네로 AI'}</span>
-      <span>📅 ${published ? r.published_at.slice(0,10) : '발행 전'}</span>
-    </div>
-    ${(r.tags||[]).length ? `<div class="ip-tags">${(r.tags||[]).map(t=>`<span class="ip-tag">#${t}</span>`).join('')}</div>` : ''}
-  `;
-  document.getElementById('ipPreviewContent').innerHTML = r.content || '<p style="color:#9CA3AF">본문 없음</p>';
-  document.getElementById('ipPreviewOverlay').style.display = 'block';
-  document.getElementById('ipPreviewOverlay').scrollTop = 0;
+function openNaverCopy(idx) {
+  const posts = (typeof POSTS_DATA !== 'undefined') ? POSTS_DATA : [];
+  const p = posts[idx];
+  if (!p) return;
+  document.getElementById('npTitle').textContent = p.title;
+  document.getElementById('npMeta').textContent = `${p.category}  ·  ${p.date}  ·  ${p.author || '동네로'}`;
+  document.getElementById('npCopyTitle').textContent = p.title;
+  document.getElementById('npCopySummary').textContent = p.summary || '';
+  document.getElementById('npCopyHtml').textContent = p.content || '';
+  document.getElementById('npPreview').innerHTML = p.content || '';
+  document.getElementById('npOverlay').style.display = 'block';
+  document.getElementById('npOverlay').scrollTop = 0;
 }
 
-document.getElementById('ipPreviewOverlay').addEventListener('click', function(e) {
+function openPreview(idx) {
+  const posts = (typeof POSTS_DATA !== 'undefined') ? POSTS_DATA : [];
+  const p = posts[idx];
+  if (!p) return;
+  document.getElementById('npTitle').textContent = p.title;
+  document.getElementById('npMeta').textContent = `${p.category}  ·  ${p.date}  ·  ${p.author || '동네로'}`;
+  document.getElementById('npCopyTitle').textContent = p.title;
+  document.getElementById('npCopySummary').textContent = p.summary || '';
+  document.getElementById('npCopyHtml').textContent = p.content || '';
+  document.getElementById('npPreview').innerHTML = p.content || '';
+  document.getElementById('npOverlay').style.display = 'block';
+  document.getElementById('npOverlay').scrollTop = 0;
+}
+
+function npCopy(elemId, btn) {
+  const text = document.getElementById(elemId).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✅ 복사됨';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '✅ 복사됨';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+document.getElementById('npOverlay').addEventListener('click', function(e) {
   if (e.target === this) this.style.display = 'none';
 });
-
-async function deleteInfoPost(id) {
-  if (!confirm('이 정보 글을 삭제하시겠습니까?')) return;
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/info_posts?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-    });
-    if (!res.ok) throw new Error(res.status);
-    await loadInfoPosts();
-  } catch (e) {
-    alert('삭제 실패: ' + e.message);
-  }
-}
 
 /* ── 공고 데이터 로드 ── */
 function loadJobData() {
