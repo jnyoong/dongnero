@@ -664,9 +664,10 @@ function renderSourceMonitor(jobs) {
       prevLine = `<div style="font-size:.72rem;color:#9CA3AF;margin-top:3px">이전 데이터 없음</div>`;
     }
 
-    // 중복제거
-    const dedupLine = dedup > 0
-      ? `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">중복제거 ${dedup.toLocaleString()}건</div>`
+    // 중복제거 (dedup_removed 값이 있으면 정확한 수, 없으면 raw-final로 추정)
+    const dedupCount = dedup > 0 ? dedup : (raw - final > 0 ? raw - final : 0);
+    const dedupLine = dedupCount > 0
+      ? `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">중복·필터 제거 ${dedupCount.toLocaleString()}건</div>`
       : '';
 
     return `<div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px 12px;border-top:3px solid ${color}">

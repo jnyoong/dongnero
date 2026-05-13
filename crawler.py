@@ -953,6 +953,7 @@ def scrape_elder_jobs_sheet() -> list[dict]:
 DAEJEON_BASE = "https://www.jobdaejeon.or.kr"
 DAEJEON_LIST = DAEJEON_BASE + "/public/html/Business.do"
 DAEJEON_PAGES = 72
+DAEJEON_GU = ['동구', '중구', '서구', '유성구', '대덕구']
 
 def scrape_daejeon(page: int) -> list[dict]:
     sess = _session('daejeon')
@@ -992,8 +993,12 @@ def scrape_daejeon(page: int) -> list[dict]:
         deadline_m = re.search(r"(\d{4}-\d{2}-\d{2})", tds[-1].get_text() if len(tds) > 2 else "")
         deadline = deadline_m.group(1) if deadline_m else ""
         location_m = re.search(r"근무지\s*[:\|]\s*([^\|]+)", sub_text)
-        location = location_m.group(1).strip() if location_m else "대전"
-        if not location or location == "대전":
+        location = location_m.group(1).strip() if location_m else ""
+        # title·sub_text에서 구 이름 추출
+        gu = next((g for g in DAEJEON_GU if g in title or g in sub_text or g in location), "")
+        if gu:
+            location = f"대전광역시 {gu}"
+        else:
             location = "대전광역시"
         if not title:
             continue
