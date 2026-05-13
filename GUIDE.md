@@ -30,7 +30,7 @@
 ### 3-1. 크롤링 (매일 자동)
 
 ```
-GitHub Actions (crawl.yml, 매일 09시 KST)
+GitHub Actions (crawl.yml, 매일 07시 KST)
   └─ python crawler.py
        ├─ 고용24 (1,000건)
        ├─ 알바천국 (300건)
@@ -118,7 +118,7 @@ Claude가 자동으로:
 
 | 워크플로우 | 파일 | 실행 시간 |
 |------------|------|-----------|
-| 크롤링·배포·알림 | `crawl.yml` | 매일 09:00 KST (UTC 22:00) |
+| 크롤링·배포·알림 | `crawl.yml` | 매일 07:00 KST (UTC 22:00) |
 
 ---
 
