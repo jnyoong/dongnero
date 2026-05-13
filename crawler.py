@@ -46,6 +46,9 @@ WORK24_AUTH_KEY = "YOUR_AUTH_KEY_HERE"
 # 경기도 잡아바 API 키 (경기데이터드림에서 발급: https://data.gg.go.kr/portal/myPage/actKeyPage.do)
 JOBABA_API_KEY = "YOUR_JOBABA_KEY_HERE"
 
+# 부산광역시 공공부문 일자리 API 키 (data.go.kr — BusanJobOpnngInfoService)
+BUSAN_API_KEY = os.environ.get("BUSAN_API_KEY", "477070a91d041a640d00fc6c0c69ca4434f6ab30ed1993eb60c7a4a4c3fcd367")
+
 # ── 시니어 부적합 필터 ────────────────────────────────────────────────────────
 
 # 회사명에 포함 시 제외
@@ -1007,6 +1010,78 @@ def scrape_daejeon(page: int) -> list[dict]:
     return jobs
 
 
+# ── 부산광역시 공공부문 일자리 (data.go.kr BusanJobOpnngInfoService) ─────────────
+# HTTP only (HTTPS 401), numOfRows=100, 최대 5페이지 (API 응답 느림)
+# 합격자 발표·서류전형 결과 등 공고 아닌 항목은 필터로 제거
+
+BUSAN_API_URL   = "http://apis.data.go.kr/6260000/BusanJobOpnngInfoService/getJobOpnngInfo"
+BUSAN_API_PAGES = 5
+BUSAN_SITE_URL  = "https://www.busan.go.kr/nbhuman/index"
+
+_BUSAN_EXCLUDE_TITLE = [
+    "합격자", "불합격", "면접일정", "면접 일정", "발표일", "발표 공고",
+    "체력검정", "서류전형 합격", "최종합격", "임용", "임명예정",
+    "취소 공고", "연기 공고", "공고 취소",
+]
+
+def scrape_busan(page: int) -> list[dict]:
+    """부산광역시 공공부문 채용공고 — data.go.kr REST API (HTTP 전용)"""
+    today = date.today().isoformat()
+    cutoff = str(date.today().year - 1) + "-01-01"  # 최근 1년치만
+
+    try:
+        resp = requests.get(
+            BUSAN_API_URL,
+            params={"ServiceKey": BUSAN_API_KEY, "pageNo": page, "numOfRows": 100},
+            timeout=30,
+        )
+        resp.raise_for_status()
+    except Exception as e:
+        print(f"\n  [부산 API 오류] page={page} {e}")
+        return []
+
+    soup = BeautifulSoup(resp.content, "html.parser")
+    items = soup.find_all("item")
+
+    jobs = []
+    for it in items:
+        title   = (it.find("title")              and it.find("title").text              or "").strip()
+        agency  = (it.find("recruitagencyname")  and it.find("recruitagencyname").text  or "").strip()
+        region  = (it.find("workregiontxt")      and it.find("workregiontxt").text      or "").strip()
+        regdate = (it.find("regdate")            and it.find("regdate").text            or "")[:10]
+        end_dt  = (it.find("reqdate_e")          and it.find("reqdate_e").text          or "").strip()[:10]
+        emp_tp  = (it.find("workdate_nm")        and it.find("workdate_nm").text        or "").strip()
+        bunya   = (it.find("bunya")              and it.find("bunya").text              or "").strip()
+
+        if not title or not agency:
+            continue
+        # 최근 1년 이전 등록 공고 제외
+        if regdate and regdate < cutoff:
+            continue
+        # 마감일 있으면 오늘 이전 제외
+        if end_dt and end_dt < today:
+            continue
+        # 합격자 발표·공지류 제외
+        if any(kw in title for kw in _BUSAN_EXCLUDE_TITLE):
+            continue
+
+        location = f"부산 {region}" if region else "부산광역시"
+        desc = bunya if bunya else ""
+
+        jobs.append({
+            "title"      : title,
+            "company"    : agency,
+            "location"   : location,
+            "deadline"   : _normalize_date(end_dt) if end_dt else "",
+            "type"       : emp_tp,
+            "salary"     : "",
+            "description": desc,
+            "apply_link" : BUSAN_SITE_URL,
+            "source"     : "부산일자리",
+        })
+    return jobs
+
+
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
 def _normalize_date(raw: str) -> str:
@@ -1104,7 +1179,7 @@ def run_crawler():
     print(f"  실행 시각: {datetime.now(KST).strftime('%Y-%m-%d %H:%M:%S KST')}")
     print(f"  대상 연령: 50세 이상 ({BIRTH_YEAR_LIMIT}년 이전 출생)")
     mode_jb = "API 키 모드" if _is_jobaba_key_set() else "Sheet 모드(키 발급 전)"
-    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바({mode_jb}) / 어르신일자리(경기) / 맘시터 / 대전일자리")
+    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바({mode_jb}) / 어르신일자리(경기) / 맘시터 / 대전일자리 / 부산일자리")
     print("=" * 60)
 
     all_jobs: list[dict] = []
@@ -1188,10 +1263,17 @@ def run_crawler():
 
     # ── 9단계: 대전일자리정보망 ───────────────────────────────
     _sleep_source()
-    print(f"\n[9/9] 대전일자리정보망 (jobdaejeon.or.kr)")
+    print(f"\n[9/10] 대전일자리정보망 (jobdaejeon.or.kr)")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("대전일자리", scrape_daejeon, pages=DAEJEON_PAGES, stop_if_less=1))
     source_counts["대전일자리"] = len(all_jobs) - before
+
+    # ── 10단계: 부산광역시 공공부문 일자리 ────────────────────
+    _sleep_source()
+    print(f"\n[10/10] 부산광역시 공공부문 일자리 (data.go.kr API)")
+    before = len(all_jobs)
+    all_jobs.extend(_crawl_source("부산일자리", scrape_busan, pages=BUSAN_API_PAGES, stop_if_less=1))
+    source_counts["부산일자리"] = len(all_jobs) - before
 
     # ── 후처리 ────────────────────────────────────────────────
     all_jobs = _deduplicate(all_jobs)

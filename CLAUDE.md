@@ -38,7 +38,7 @@ git add <파일> && git commit -m "메시지" && git push github main
 ```
 push 실패(fetch first) 시: `git pull --rebase github main && git push github main`
 
-## 크롤링 출처 9개 (crawler.py)
+## 크롤링 출처 10개 (crawler.py)
 | 출처 | 방식 | 비고 |
 |------|------|------|
 | 고용24 | POST 스크래핑 (API키 없으면 웹) | birthToYY=1976 (50세↑), 전국 최신 1,000건 |
@@ -50,6 +50,7 @@ push 실패(fetch first) 시: `git pull --rebase github main && git push github 
 | 어르신일자리 | POST Sheet API | 경기, 모집중만 수집 |
 | 맘시터 | POST JSON API | `api.mom-sitter.com/public-web-api/v1/parents/search`, 인증불필요, 최대 1000건(100페이지×10) |
 | 대전일자리 | POST 스크래핑 | jobdaejeon.or.kr, 72페이지×10건≈710건, work24 중복은 wantedAuthNo로 제거 |
+| 부산일자리 | GET REST API | data.go.kr BusanJobOpnngInfoService, HTTP only(HTTPS 401), 5페이지×100건, 합격자발표 필터 |
 
 맘시터 apply_link: `https://www.mom-sitter.com/search/parent` (개별 /parent/{id}는 서버 404)
 
@@ -95,6 +96,7 @@ row3:    [검색창] (슬라이드다운)
 | 어르신일자리 | #15803D |
 | 맘시터 | #FF7F25 |
 | 대전일자리 | #B45309 |
+| 부산일자리 | #0369A1 |
 
 ## Google Analytics
 측정 ID: G-PYD0Q5NTPD (전체 HTML에 삽입)
