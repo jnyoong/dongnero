@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>동네로 — 시니어 취업 정보게시판</title>
+    <link>https://dongnero.kr/info.html</link>
+    <description>50대·60대 시니어·중장년을 위한 취업 정보. 이력서, 면접, 근로계약, 취업 지원 방법을 쉽게 설명합니다.</description>
+    <language>ko</language>
+    <lastBuildDate>Mon, 11 May 2026 09:00:00 +0900</lastBuildDate>
+    <atom:link href="https://dongnero.kr/rss.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title>취업 사기, 이런 공고는 조심하세요 — 시니어를 노리는 5가지 유형</title>
+      <link>https://dongnero.kr/info.html#job-scam-2026</link>
+      <guid isPermaLink="true">https://dongnero.kr/info.html#job-scam-2026</guid>
+      <description>"일단 교육비만 내면 바로 취업"… 이런 말에 혹하셨다면 잠깐 멈추세요. 중장년층을 노리는 취업 사기 유형과 의심 신호를 정리했습니다.</description>
+      <pubDate>Mon, 11 May 2026 09:00:00 +0900</pubDate>
+      <category>주의사항</category>
+    </item>
+
+    <item>
+      <title>근로계약서, 이것만 확인하면 됩니다 — 체크리스트 5가지</title>
+      <link>https://dongnero.kr/info.html#labor-contract-2026</link>
+      <guid isPermaLink="true">https://dongnero.kr/info.html#labor-contract-2026</guid>
+      <description>일 시작 전에 꼭 써야 하는 근로계약서. 어떤 내용을 확인해야 하는지, 왜 중요한지 쉽게 정리했습니다.</description>
+      <pubDate>Sat, 09 May 2026 09:00:00 +0900</pubDate>
+      <category>노무상식</category>
+    </item>
+
+    <item>
+      <title>무료로 취업 도움받는 방법 — 고용센터·시니어클럽 이용 가이드</title>
+      <link>https://dongnero.kr/info.html#senior-job-support-2026</link>
+      <guid isPermaLink="true">https://dongnero.kr/info.html#senior-job-support-2026</guid>
+      <description>정부에서 운영하는 무료 취업지원 서비스를 모르고 계신 분들이 많아요. 어디에 가서, 무엇을 도움받을 수 있는지 정리했습니다.</description>
+      <pubDate>Thu, 07 May 2026 09:00:00 +0900</pubDate>
+      <category>취업지원</category>
+    </item>
+
+    <item>
+      <title>AI로 이력서 제대로 쓰는 법 — 처음부터 끝까지 따라해 보세요</title>
+      <link>https://dongnero.kr/info.html#resume-ai-2025</link>
+      <guid isPermaLink="true">https://dongnero.kr/info.html#resume-ai-2025</guid>
+      <description>"이력서를 어떻게 써야 하나" 막막하셨죠? ChatGPT·뤼튼 같은 AI 챗봇에 내 경력을 말하면 깔끔한 이력서를 바로 만들어 줍니다. 컴퓨터가 서툴러도, 경력이 짧아도 전혀 문제없어요.</description>
+      <pubDate>Sun, 03 May 2026 09:00:00 +0900</pubDate>
+      <category>이력서</category>
+    </item>
+
+    <item>
+      <title>처음 알바 지원하시는 분께 — 단계별 완전정복</title>
+      <link>https://dongnero.kr/info.html#apply-parttime-2025</link>
+      <guid isPermaLink="true">https://dongnero.kr/info.html#apply-parttime-2025</guid>
+      <description>공고를 찾고, 전화하고, 면접 보는 전 과정을 쉽게 설명합니다. 처음이라 긴장되셔도 괜찮아요. 순서대로 따라하면 됩니다.</description>
+      <pubDate>Sun, 03 May 2026 09:00:00 +0900</pubDate>
+      <category>취업가이드</category>
+    </item>
+
+    <item>
+      <title>면접에서 손해 보는 말투 — 이렇게 바꿔보세요</title>
+      <link>https://dongnero.kr/info.html#speech-modern-2025</link>
+      <guid isPermaLink="true">https://dongnero.kr/info.html#speech-modern-2025</guid>
+      <description>본인도 모르게 쓰는 "나이 들어 보이는" 말투들이 있어요. 약간만 바꿔도 훨씬 신뢰감 있고 세련된 인상을 줄 수 있습니다.</description>
+      <pubDate>Sun, 03 May 2026 09:00:00 +0900</pubDate>
+      <category>면접</category>
+    </item>
+
+  </channel>
+</rss>

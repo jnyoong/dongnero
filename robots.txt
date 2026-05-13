@@ -3,3 +3,4 @@ Allow: /
 Disallow: /admin-dongnero.html
 
 Sitemap: https://dongnero.kr/sitemap.xml
+Sitemap: https://dongnero.kr/rss.xml
