@@ -1,6 +1,6 @@
 # 동네로 운영 가이드
 
-> 최종 업데이트: 2026-05-14 (v0.53)  
+> 최종 업데이트: 2026-05-14 (v0.54)  
 > 운영자: kyungmh95 / kahn201130@gmail.com
 
 ---
@@ -47,6 +47,12 @@ GitHub Actions (crawl.yml, 매일 07시 KST)
 ```
 
 로컬에서 수동 크롤링을 먼저 실행하면 Actions는 그날 스킵 (`last_crawl.txt` 날짜 체크).
+
+**로컬 자동 크롤링 (Windows 작업 스케줄러):**
+- 작업명: `동네로_크롤링` — 매일 07:00 KST 실행
+- 스크립트: `crawl_local.ps1` (크롤링 → last_crawl.txt 기록 → git push)
+- GitHub PAT가 remote URL에 포함되어 백그라운드 인증 가능
+- 로컬 크롤링 성공 시 당일 GitHub Actions는 스킵됨 (중복 방지)
 
 ### 3-2. 정보글 발행
 
@@ -148,6 +154,7 @@ Claude가 자동으로:
 - [ ] 카카오 알림톡 템플릿 승인 후 GitHub Secrets에 `KAKAO_TMPL_WITH_JOB`, `KAKAO_TMPL_NO_JOB` 추가
 - [ ] 네이버 블로그 6편 발행 (어드민 → 정보 글 탭 → 네이버 발행 준비 활용)
 - [ ] 네이버 서치어드바이저 RSS 등록 확인 (rss.blog.naver.com/kyungmh95.xml)
+- [ ] GitHub PAT 만료 전 갱신 및 `git remote set-url github` 재적용 (보안상 주기적 교체 권장)
 
 ---
 
@@ -172,9 +179,10 @@ dongnero/
 ├── crawler.py          크롤러 본체 (10개 출처)
 ├── build_posts.py      정보글 정적 HTML 빌더
 ├── notify.py           카카오 알림톡 발송
+├── crawl_local.ps1     로컬 크롤링·push 스크립트 (Windows 작업 스케줄러 연동)
 │
 ├── .github/workflows/
-│   └── crawl.yml       매일 크롤링·빌드·알림 자동화
+│   └── crawl.yml       매일 크롤링·빌드·알림 자동화 (07:00 KST)
 │
 ├── CHANGELOG.md        변경 이력 (코드 수정 시 항상 업데이트)
 └── GUIDE.md            이 파일 (운영 가이드)
