@@ -443,6 +443,7 @@
     .line-잡아바       { background: var(--c-jab); }
     .line-어르신일자리  { background: var(--c-eld); }
     .line-맘시터       { background: var(--c-mst); }
+    .line-대전일자리    { background: #B45309; }
 
     .card-inner { padding: 10px 14px; }
 
@@ -476,6 +477,7 @@
     .src-잡아바       { background: #F5F3FF; color: var(--c-jab); }
     .src-어르신일자리  { background: #F0FDF4; color: var(--c-eld); }
     .src-맘시터       { background: #FFF4EE; color: var(--c-mst); }
+    .src-대전일자리    { background: #FEF3C7; color: #B45309; }
 
     /* 제목 */
     .card-title {
@@ -1086,6 +1088,7 @@
         <option value="잡아바">잡아바</option>
         <option value="어르신일자리">어르신일자리</option>
         <option value="맘시터">맘시터</option>
+        <option value="대전일자리">대전일자리</option>
       </select>
       <select id="sortSelect" onchange="render()">
         <option value="deadline">마감순</option>
@@ -1142,7 +1145,7 @@
 <div id="js-sentinel"></div>
 
 <footer>
-  고용24 · 알바몬 · 알바천국 · 시니어로 · 서울일자리포털 · 잡아바(경기) · 어르신일자리(경기) · 맘시터 공개 정보를 수집·제공합니다.<br>
+  고용24 · 알바몬 · 알바천국 · 시니어로 · 서울일자리포털 · 잡아바(경기) · 어르신일자리(경기) · 맘시터 · 대전일자리 공개 정보를 수집·제공합니다.<br>
   실제 지원은 원문 공고 사이트에서 진행해 주세요.<br>
   운영자 문의: <a href="mailto:jun@dolight.co.kr" style="color:inherit">jun@dolight.co.kr</a>
   &nbsp;·&nbsp; <a href="privacy.html" style="color:inherit">개인정보 처리방침</a><br>
@@ -1687,8 +1690,8 @@ function loadData() {
 function buildHeaderStats(data) {
   const counts = data.source_counts || {};
   const total  = allJobs.length;
-  const srcList = ['고용24','알바몬','알바천국','시니어로','서울일자리포털','잡아바','어르신일자리','맘시터'];
-  const colors  = { '고용24':'#2563EB','알바몬':'#EA580C','알바천국':'#16A34A','시니어로':'#0891B2','서울일자리포털':'#0F766E','잡아바':'#7C3AED','어르신일자리':'#15803D','맘시터':'#FF7F25' };
+  const srcList = ['고용24','알바몬','알바천국','시니어로','서울일자리포털','잡아바','어르신일자리','맘시터','대전일자리'];
+  const colors  = { '고용24':'#2563EB','알바몬':'#EA580C','알바천국':'#16A34A','시니어로':'#0891B2','서울일자리포털':'#0F766E','잡아바':'#7C3AED','어르신일자리':'#15803D','맘시터':'#FF7F25','대전일자리':'#B45309' };
   let html = `<span class="stat-chip"><strong>${total}</strong>건 수집</span>`;
   srcList.forEach(src => {
     const cnt = counts[src];

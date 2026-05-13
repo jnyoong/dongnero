@@ -942,6 +942,71 @@ def scrape_elder_jobs_sheet() -> list[dict]:
     return jobs
 
 
+# ── 대전일자리정보망 (jobdaejeon.or.kr) ──────────────────────────────────────
+# POST 방식, 71페이지 × 10건 = 약 710건
+# 공고 본문은 work24.go.kr 연결 → _deduplicate에서 wantedAuthNo로 고용24 중복 제거
+
+DAEJEON_BASE = "https://www.jobdaejeon.or.kr"
+DAEJEON_LIST = DAEJEON_BASE + "/public/html/Business.do"
+DAEJEON_PAGES = 72
+
+def scrape_daejeon(page: int) -> list[dict]:
+    sess = _session('daejeon')
+    sess.headers.update({"Referer": DAEJEON_BASE + "/"})
+    try:
+        resp = sess.post(
+            DAEJEON_LIST,
+            data={
+                "pg": "/gabin/busiGuide/worknet.jsp",
+                "search": "Y", "id": "0",
+                "page": str(page),
+                "salTp": "", "minPay": "", "maxPay": "",
+                "education": "", "career": "",
+                "minCareerM": "", "maxCareerM": "",
+                "pref": "", "keyword": "",
+            },
+            timeout=20,
+        )
+        resp.raise_for_status()
+    except Exception as e:
+        print(f"\n  [대전 오류] page={page} {e}")
+        return []
+
+    soup = BeautifulSoup(resp.text, "html.parser")
+    jobs = []
+    for tr in soup.select("table tr"):
+        link_el = tr.select_one("a[href*=work24]")
+        if not link_el:
+            continue
+        tds = tr.select("td")
+        if len(tds) < 3:
+            continue
+        company  = tds[0].get_text(strip=True)
+        title    = link_el.get_text(strip=True)
+        link     = link_el["href"].strip()
+        sub_text = tds[1].get_text(" ", strip=True)
+        deadline_m = re.search(r"(\d{4}-\d{2}-\d{2})", tds[-1].get_text() if len(tds) > 2 else "")
+        deadline = deadline_m.group(1) if deadline_m else ""
+        location_m = re.search(r"근무지\s*[:\|]\s*([^\|]+)", sub_text)
+        location = location_m.group(1).strip() if location_m else "대전"
+        if not location or location == "대전":
+            location = "대전광역시"
+        if not title:
+            continue
+        jobs.append({
+            "title"      : title,
+            "company"    : company,
+            "location"   : location,
+            "deadline"   : _normalize_date(deadline),
+            "type"       : "",
+            "salary"     : "",
+            "description": "",
+            "apply_link" : link,
+            "source"     : "대전일자리",
+        })
+    return jobs
+
+
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
 def _normalize_date(raw: str) -> str:
@@ -977,13 +1042,37 @@ def _is_excluded(job: dict) -> bool:
     return bool(_exclude_reason(job))
 
 
+def _extract_wanted_no(url: str) -> str:
+    """work24.go.kr URL에서 wantedAuthNo 추출 — 출처 간 중복 감지용"""
+    m = re.search(r'wantedAuthNo=([A-Z0-9]+)', url or '')
+    return m.group(1) if m else ''
+
 def _deduplicate(jobs: list[dict]) -> list[dict]:
-    seen: set[tuple] = set()
+    seen_links: set[str] = set()
+    seen_wanted: set[str] = set()
+    seen_title_co: set[tuple] = set()
     unique = []
     for job in jobs:
-        key = (job["title"].strip().lower(), job["company"].strip().lower())
-        if key not in seen and job["title"]:
-            seen.add(key)
+        title   = (job.get("title")   or "").strip().lower()
+        company = (job.get("company") or "").strip().lower()
+        link    = (job.get("apply_link") or "").strip()
+        wanted  = _extract_wanted_no(link)
+
+        # 1순위: wantedAuthNo 동일 (고용24 ↔ 대전/서울포털 중복)
+        if wanted and wanted in seen_wanted:
+            continue
+        # 2순위: apply_link 완전 동일
+        if link and link in seen_links:
+            continue
+        # 3순위: (제목+회사) 동일
+        key = (title, company)
+        if title and key in seen_title_co:
+            continue
+
+        if wanted: seen_wanted.add(wanted)
+        if link:   seen_links.add(link)
+        if title:  seen_title_co.add(key)
+        if title:
             unique.append(job)
     return unique
 
@@ -1015,7 +1104,7 @@ def run_crawler():
     print(f"  실행 시각: {datetime.now(KST).strftime('%Y-%m-%d %H:%M:%S KST')}")
     print(f"  대상 연령: 50세 이상 ({BIRTH_YEAR_LIMIT}년 이전 출생)")
     mode_jb = "API 키 모드" if _is_jobaba_key_set() else "Sheet 모드(키 발급 전)"
-    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바({mode_jb}) / 어르신일자리(경기) / 맘시터")
+    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바({mode_jb}) / 어르신일자리(경기) / 맘시터 / 대전일자리")
     print("=" * 60)
 
     all_jobs: list[dict] = []
@@ -1092,10 +1181,17 @@ def run_crawler():
 
     # ── 8단계: 맘시터 베이비시터 구인공고 ────────────────────
     _sleep_source()
-    print(f"\n[8/8] 맘시터(mom-sitter.com) 베이비시터 구인공고")
+    print(f"\n[8/9] 맘시터(mom-sitter.com) 베이비시터 구인공고")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("맘시터", scrape_momsitter, pages=MOMSITTER_PAGES, stop_if_less=1))
     source_counts["맘시터"] = len(all_jobs) - before
+
+    # ── 9단계: 대전일자리정보망 ───────────────────────────────
+    _sleep_source()
+    print(f"\n[9/9] 대전일자리정보망 (jobdaejeon.or.kr)")
+    before = len(all_jobs)
+    all_jobs.extend(_crawl_source("대전일자리", scrape_daejeon, pages=DAEJEON_PAGES, stop_if_less=1))
+    source_counts["대전일자리"] = len(all_jobs) - before
 
     # ── 후처리 ────────────────────────────────────────────────
     all_jobs = _deduplicate(all_jobs)
