@@ -2,6 +2,84 @@
 
 ---
 
+## [v0.46] 2026-05-13 — 대전일자리 크롤러 추가 + 전체 출처 중복제거 개선
+
+### crawler.py
+- `scrape_daejeon()` 신규 추가 — jobdaejeon.or.kr POST 스크래핑 (72페이지 × 10건 ≈ 710건)
+- `_deduplicate()` 3단계 개선: wantedAuthNo(work24 URL 파라미터) → apply_link → (title+company) 순서
+  - 대전일자리 ↔ 고용24 같은 공고 wantedAuthNo로 자동 제거
+- `_extract_wanted_no()` 헬퍼 추가
+- 크롤링 단계: [8/8] → [9/9]
+
+### jobs.html
+- 대전일자리 색상·CSS 클래스 추가 (`#B45309` 갈색)
+- 출처 필터 드롭다운, 푸터 출처 목록에 대전일자리 추가
+
+### CLAUDE.md
+- 크롤링 출처 8개 → 9개로 업데이트
+- 중복 제거 로직 항목 추가
+
+---
+
+## [v0.45] 2026-05-13 — 잡아바 직종 필드 수집 + 알림톡 매칭 정확도 개선
+
+### crawler.py
+- 잡아바 공고에 `category` 필드 추가 (`RECRUT_FIELD_NM` — 채용직종 분류)
+
+### notify.py
+- `JOBABA_CATEGORY_MAP` 추가 — 잡아바 직종 분류 → desired_job 태그 매핑
+- `match_job_type()` 개선 — category 필드 우선 매칭 후 title 키워드 폴백
+- level2 구독자 알림 누락 버그 수정 — `is_active` 필터 제거 (is_active는 구직카드 공개 여부, 알림 수신 여부 아님)
+
+---
+
+## [v0.44] 2026-05-13 — 신규 일자리 알림톡 자동 발송 시스템
+
+### notify.py (신규)
+- 매일 크롤링 후 신규 공고 감지 → 활성 구독자(alert_level ≥ 2)와 지역·직종 매칭 → Solapi 카카오 알림톡 발송
+- Supabase `seen_jobs` 테이블로 전일 공고와 비교해 신규만 추출
+- `notify_sent_log` 테이블로 당일 중복 발송 방지
+- 신규 3건 미만이면 미발송 (스팸 방지)
+- 운영자에게 발송 완료 SMS 요약
+
+### .github/workflows/crawl.yml
+- 크롤링 후 `python notify.py` 자동 실행 단계 추가
+- GitHub Secrets 참조: SOLAPI_API_KEY, SOLAPI_API_SECRET, SUPABASE_URL, SUPABASE_KEY, OPERATOR_PHONE, KAKAO_PFID, KAKAO_TMPL_WITH_JOB, KAKAO_TMPL_NO_JOB, SENDER_NUMBER
+
+### Supabase (수동 실행 필요)
+- `seen_jobs` 테이블: apply_link(PK), title, location, source, first_seen
+- `notify_sent_log` 테이블: seeker_card_id + sent_date UNIQUE 제약
+
+---
+
+## [v0.43] 2026-05-13 — PWA 설치 버튼 개선 + manifest 동네로 업데이트
+
+### manifest.json
+- name/short_name `시니어취업` → `동네로`
+- PNG 아이콘 추가: `icon-192.png`(192×192), `icon-512.png`(512×512) — Android Chrome 설치 프롬프트 필수 조건
+- SVG만 있던 이전 설정 → PNG 우선 + SVG 폴백으로 변경
+- background_color `#F7F8FA` → `#FFF9F4`, theme_color `#2563EB` → `#FF6B35` (사이트 색상 통일)
+
+### jobs.html
+- PWA 배너 Android 설치 버튼: 즉시 표시 → `beforeinstallprompt` 실제 발화 후에만 표시
+- 미지원 브라우저(Firefox Android 등): 처음부터 수동 안내 노출
+
+---
+
+## [v0.42] 2026-05-13 — SEO 개선 (RSS 피드, sitemap lastmod, robots.txt)
+
+### rss.xml (신규)
+- 정보게시판 6개 글을 RSS 2.0 형식으로 제공
+- 네이버 서치어드바이저 RSS 제출용 (색인 속도 개선)
+
+### sitemap.xml
+- 각 URL에 `<lastmod>` 날짜 추가
+
+### robots.txt
+- `Sitemap: https://dongnero.kr/rss.xml` 라인 추가
+
+---
+
 ## [v0.41] 2026-05-09 — 어드민 구직카드 휴지통(소프트삭제) 기능
 
 ### admin-dongnero.html
