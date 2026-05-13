@@ -1299,8 +1299,20 @@ if ('serviceWorker' in navigator) {
       iosSteps.style.display = 'block';
     }
   } else {
-    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
-    androidBtn.style.display = 'block';
+    // 기본: 수동 안내 표시 (beforeinstallprompt 미지원 브라우저용)
+    iosSteps.innerHTML =
+      '1️⃣ 주소창 오른쪽 메뉴 <strong>(⋮)</strong>를 탭하세요<br>' +
+      '2️⃣ <strong>\'홈 화면에 추가\'</strong> 또는 <strong>\'앱 설치\'</strong>를 선택하세요';
+    iosSteps.style.display = 'block';
+
+    // Chrome/Edge/삼성인터넷: beforeinstallprompt 발화 시 버튼으로 교체
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      iosSteps.style.display = 'none';
+      androidBtn.style.display = 'block';
+    });
+
     androidBtn.addEventListener('click', () => {
       gaEvent('pwa_install_tap', { platform: 'android' });
       if (deferredPrompt) {
@@ -1311,13 +1323,8 @@ if ('serviceWorker' in navigator) {
             dismissBanner();
           }
           deferredPrompt = null;
+          androidBtn.style.display = 'none';
         });
-      } else {
-        androidBtn.style.display = 'none';
-        iosSteps.innerHTML =
-          '1️⃣ 주소창 오른쪽 메뉴 <strong>(⋮)</strong>를 탭하세요<br>' +
-          '2️⃣ <strong>\'홈 화면에 추가\'</strong> 또는 <strong>\'앱 설치\'</strong>를 선택하세요';
-        iosSteps.style.display = 'block';
       }
     });
   }
