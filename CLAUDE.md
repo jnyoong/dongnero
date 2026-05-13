@@ -29,6 +29,37 @@
 > RSS: https://rss.blog.naver.com/kyungmh95.xml
 > 동네로 정보글 → 네이버 블로그 발행 전략: 내용은 동일하되 도입부·마무리를 살짝 각색 (중복 패널티 방지)
 
+## 현재 진행 중인 프로젝트 전략 (2026-05-14 기준)
+
+### 콘텐츠 SEO 전략 (진행 중)
+**목표**: 정보게시판 글이 네이버·구글 검색에 노출되도록 → 외부 유입 채널 확보
+
+**채택한 방법:**
+1. **정적 HTML 자동 생성** — posts_data.js 글마다 `/posts/{id}.html` 파일 생성 (구글 색인용)
+   - 파일은 `/posts/` 폴더에만 저장 → 루트 디렉토리 오염 없음
+   - `build_posts.py` 스크립트 작성 예정 → crawl.yml에서 자동 실행
+   - sitemap.xml에 개별 포스트 URL 자동 등재
+2. **네이버 블로그 수동 발행** — 동일 내용을 살짝 각색해서 직접 올리기 (도입부·마무리 약간 변경)
+   - 블로그: https://blog.naver.com/kyungmh95 (새로 개설, 아직 글 없음)
+   - RSS: https://rss.blog.naver.com/kyungmh95.xml
+
+**미완료 작업:**
+- `build_posts.py` 스크립트 미구현 (블로그 개설 후 바로 작업 예정)
+- sitemap.xml `/posts/` URL 자동 추가 미구현
+
+### 알림톡 자동 발송 (진행 중)
+- notify.py 구현 완료, GitHub Actions crawl.yml에 연동
+- 카카오 알림톡 템플릿 2개 심사 요청 중 (아직 승인 전)
+- 승인 후 GitHub Secrets에 `KAKAO_TMPL_WITH_JOB`, `KAKAO_TMPL_NO_JOB` 추가 필요
+
+### 정보게시판 글 작성 원칙
+- AI 느낌 없이 자연스러운 한국어 (실제 시나리오·사람 이름 활용)
+- 50~60대 시니어 관점에서 공감형 도입부
+- 구체적인 대화 스크립트·체크리스트 포함
+- 새 글 발행 시 → 네이버 블로그에도 각색 발행 필요 (미발행 체크는 세션 시작 시 자동 수행)
+
+---
+
 스택: HTML/CSS/JS (빌드 없음) · GitHub → GitHub Pages 자동배포 · Supabase
 
 ## 호스팅 구조
