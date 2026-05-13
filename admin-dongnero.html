@@ -652,28 +652,27 @@ function renderSourceMonitor(jobs) {
     const dedup = dedupRm[src]    || 0;
     const color = SRC_COLORS[src] || '#6B7280';
 
-    // 이전 수집 건수와 비교
+    // 전회 대비 비교 (수집 건수 기준)
     let diffHtml = '';
     if (prev > 0) {
       const pct = Math.round((raw - prev) / prev * 100);
       const sign = pct > 0 ? '+' : '';
       const isWarn = Math.abs(pct) >= 30;
-      const style = isWarn ? 'color:#D97706;font-weight:700' : 'color:#6B7280';
-      diffHtml = `<div style="font-size:.72rem;${style}">${sign}${pct}% vs 전회(${prev}건)${isWarn ? ' ⚠️' : ''}</div>`;
-    } else {
-      diffHtml = `<div style="font-size:.72rem;color:#9CA3AF">이전 데이터 없음</div>`;
+      const style = isWarn ? 'color:#D97706;font-weight:700' : 'color:#9CA3AF';
+      diffHtml = `<span style="font-size:.7rem;${style}">${sign}${pct}%${isWarn ? ' ⚠️' : ''}</span>`;
     }
 
-    // 중복제거 정보
-    const dedupHtml = dedup > 0
-      ? `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">중복제거 ${dedup}건 → 최종 ${final}건</div>`
-      : `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">최종 ${final}건</div>`;
+    // 수집·중복제거 요약 (작게)
+    const subText = dedup > 0
+      ? `수집 ${raw}건, 중복제거 ${dedup}건`
+      : `수집 ${raw}건`;
 
     return `<div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px 12px;border-top:3px solid ${color}">
       <div style="font-size:.78rem;font-weight:700;color:${color};margin-bottom:4px">${src}</div>
-      <div style="font-size:1.3rem;font-weight:800;color:#111">${raw.toLocaleString()}건 수집</div>
-      ${diffHtml}
-      ${dedupHtml}
+      <div style="font-size:1.3rem;font-weight:800;color:#111;display:flex;align-items:baseline;gap:6px">
+        ${final.toLocaleString()}건 ${diffHtml}
+      </div>
+      <div style="font-size:.72rem;color:#9CA3AF;margin-top:3px">${subText}</div>
     </div>`;
   }).join('');
 }
