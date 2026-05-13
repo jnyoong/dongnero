@@ -213,7 +213,6 @@ def main():
         "select": "id,name,contact_phone,location_sido,location_gu,desired_job,alert_level",
         "alert_level": "gte.2",
         "contact_phone": "not.is.null",
-        "is_active": "neq.false",  # false가 아닌 것 (null, true 모두 포함)
     })
     print(f"[notify] 알림 대상 구독자: {len(subscribers)}명")
 
