@@ -25,7 +25,8 @@
 
 5. 모두 발행되어 있으면 조용히 넘어간다 (사용자에게 불필요한 메시지 없음)
 
-> 운영자 네이버 블로그: https://blog.naver.com/kahn2005
+> 운영자 네이버 블로그: https://blog.naver.com/kyungmh95
+> RSS: https://rss.blog.naver.com/kyungmh95.xml
 > 동네로 정보글 → 네이버 블로그 발행 전략: 내용은 동일하되 도입부·마무리를 살짝 각색 (중복 패널티 방지)
 
 스택: HTML/CSS/JS (빌드 없음) · GitHub → GitHub Pages 자동배포 · Supabase
