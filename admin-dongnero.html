@@ -162,6 +162,15 @@
       <div class="summary-chip warn"><strong id="mfCount">0</strong>수동 필터됨</div>
     </div>
 
+    <!-- 출처별 공고 수 모니터링 -->
+    <div id="sourceMonitor" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:14px 16px;margin-bottom:14px">
+      <div style="font-size:.85rem;font-weight:700;color:#374151;margin-bottom:10px">
+        📊 출처별 공고 현황
+        <span style="font-size:.75rem;font-weight:400;color:#6B7280;margin-left:6px">오늘 jobs.json 기준 — 큰 차이는 크롤링 이상 신호</span>
+      </div>
+      <div id="sourceMonitorGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px"></div>
+    </div>
+
     <!-- 수동 필터 툴바 -->
     <div class="mf-toolbar">
       <span id="mfCheckInfo">항목을 선택하면 필터 버튼이 활성화됩니다</span>
@@ -536,6 +545,7 @@ function loadJobData() {
     document.getElementById('tabJobCount').textContent = `(${allJobs.length.toLocaleString()})`;
     updateMfCount();
     renderJobs();
+    renderSourceMonitor(allJobs);
   }
   if (typeof EXCLUDED_DATA !== 'undefined' && EXCLUDED_DATA.updated_at) {
     allExcluded = EXCLUDED_DATA.jobs || [];
@@ -559,6 +569,59 @@ function srcBadge(src) {
 function typeBadge(t) {
   const map = { '정규직':'badge-green', '계약직':'badge-orange', '시간제':'badge-purple' };
   return t ? `<span class="badge ${map[t]||'badge-gray'}">${t}</span>` : '-';
+}
+
+const SRC_COLORS = {
+  '고용24':'#2563EB','알바몬':'#EA580C','알바천국':'#16A34A','시니어로':'#0891B2',
+  '서울일자리포털':'#0F766E','잡아바':'#7C3AED','어르신일자리':'#15803D',
+  '맘시터':'#FF7F25','대전일자리':'#B45309','부산일자리':'#0369A1'
+};
+
+function renderSourceMonitor(jobs) {
+  const counts = {};
+  jobs.forEach(j => { const s = j.source || '기타'; counts[s] = (counts[s] || 0) + 1; });
+
+  // Supabase seen_jobs에서 어제 건수 조회
+  const SB_URL = 'https://riomousxlyvwmembuhvc.supabase.co';
+  const SB_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
+  const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+  const yyStr = yesterday.toISOString().slice(0, 10);
+
+  fetch(`${SB_URL}/rest/v1/seen_jobs?select=source,first_seen&first_seen=eq.${yyStr}`, {
+    headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+  })
+  .then(r => r.ok ? r.json() : [])
+  .then(rows => {
+    const yCounts = {};
+    rows.forEach(r => { const s = r.source || '기타'; yCounts[s] = (yCounts[s] || 0) + 1; });
+    buildMonitorCards(counts, yCounts);
+  })
+  .catch(() => buildMonitorCards(counts, {}));
+}
+
+function buildMonitorCards(today, yesterday) {
+  const grid = document.getElementById('sourceMonitorGrid');
+  const allSrcs = [...new Set([...Object.keys(today), ...Object.keys(yesterday)])].sort();
+  grid.innerHTML = allSrcs.map(src => {
+    const t = today[src] || 0;
+    const y = yesterday[src] || 0;
+    const color = SRC_COLORS[src] || '#6B7280';
+    let diff = '', diffStyle = '';
+    if (y > 0) {
+      const pct = Math.round((t - y) / y * 100);
+      const sign = pct > 0 ? '+' : '';
+      const isWarn = Math.abs(pct) >= 30;
+      diffStyle = isWarn ? 'color:#D97706;font-weight:700' : 'color:#6B7280';
+      diff = `<div style="font-size:.72rem;${diffStyle}">${sign}${pct}% vs 어제(${y}건)${isWarn ? ' ⚠️' : ''}</div>`;
+    } else {
+      diff = `<div style="font-size:.72rem;color:#9CA3AF">어제 데이터 없음</div>`;
+    }
+    return `<div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px 12px;border-top:3px solid ${color}">
+      <div style="font-size:.78rem;font-weight:700;color:${color};margin-bottom:4px">${src}</div>
+      <div style="font-size:1.3rem;font-weight:800;color:#111">${t.toLocaleString()}건</div>
+      ${diff}
+    </div>`;
+  }).join('');
 }
 
 function renderJobs() {
