@@ -27,6 +27,7 @@ MIN_NEW_JOBS = 3   # 신규 공고 이 건수 미만이면 발송 안 함
 TODAY = date.today().isoformat()
 
 # ── 직종 키워드 매핑 ──────────────────────────────────────
+# 구독자 desired_job → 공고 title 키워드 매핑
 JOB_KEYWORDS = {
     "요양·돌봄":  ["요양", "돌봄", "보호사", "케어", "방문요양", "재가", "요양원"],
     "경비·보안":  ["경비", "보안", "시설경비", "아파트경비", "방범"],
@@ -39,6 +40,18 @@ JOB_KEYWORDS = {
     "판매·영업":  ["판매", "영업", "판촉", "매장", "점원", "판매원", "캐셔"],
     "시설·건설":  ["시설", "건설", "유지보수", "전기", "배관", "설비", "기술"],
     "의료·보건":  ["의료", "보건", "간호", "병원", "약", "간병", "의원"],
+}
+
+# 잡아바 RECRUT_FIELD_NM → desired_job 매핑 (category 필드 활용)
+JOBABA_CATEGORY_MAP = {
+    "미용ㆍ여행ㆍ숙박ㆍ음식ㆍ경비ㆍ청소직": ["경비·보안", "청소·미화", "조리·급식"],
+    "경영ㆍ사무ㆍ금융ㆍ보험직":           ["사무·행정"],
+    "교육ㆍ법률ㆍ사회복지ㆍ경찰ㆍ소방직 및 군인": ["교육·지도", "복지·상담"],
+    "보건ㆍ의료직":                      ["의료·보건", "요양·돌봄"],
+    "영업ㆍ판매ㆍ운전ㆍ운송직":           ["판매·영업"],
+    "설치ㆍ정비ㆍ생산직":                ["시설·건설", "농업·생산"],
+    "건설ㆍ채굴직":                      ["시설·건설"],
+    "농림어업직":                        ["농업·생산"],
 }
 
 
@@ -109,13 +122,19 @@ def match_location(job_location, sido, gu):
         return False
     return True
 
-def match_job_type(title, desired_job_str):
-    """desired_job 쉼표 구분 목록 중 하나라도 제목에 키워드 포함되면 매칭"""
+def match_job_type(title, desired_job_str, category=""):
+    """desired_job 쉼표 구분 목록 중 하나라도 제목 키워드 또는 잡아바 category 필드에 매칭"""
     if not desired_job_str:
         return True  # 직종 미지정이면 무조건 매칭
+    user_tags = [t.strip() for t in desired_job_str.split(",")]
+    # 잡아바 category 필드로 직접 매칭 (더 정확)
+    if category:
+        matched_tags = JOBABA_CATEGORY_MAP.get(category, [])
+        if any(tag in matched_tags for tag in user_tags):
+            return True
+    # 제목 키워드 매칭 (다른 출처 포함)
     title_lower = title.lower()
-    for job_tag in desired_job_str.split(","):
-        job_tag = job_tag.strip()
+    for job_tag in user_tags:
         keywords = JOB_KEYWORDS.get(job_tag, [job_tag])
         if any(kw in title_lower for kw in keywords):
             return True
@@ -130,7 +149,7 @@ def find_new_matching_jobs(new_jobs, subscriber):
     matched = [
         j for j in new_jobs
         if match_location(j.get("location", ""), sido, gu)
-        and match_job_type(j.get("title", ""), djob)
+        and match_job_type(j.get("title", ""), djob, j.get("category", ""))
     ]
     return matched, region_label
 

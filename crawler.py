@@ -726,6 +726,7 @@ def scrape_jobaba_sheet() -> list[dict]:
             emp_type = ""
         end_dt   = (item.get("RCPT_END_DE")       or "").strip()
         link     = (item.get("URL")               or "").strip()
+        category = (item.get("RECRUT_FIELD_NM")   or "").strip()
 
         jobs.append({
             "title"      : title,
@@ -736,6 +737,7 @@ def scrape_jobaba_sheet() -> list[dict]:
             "salary"     : salary,
             "description": "",
             "apply_link" : link,
+            "category"   : category,
             "source"     : "잡아바",
         })
 
