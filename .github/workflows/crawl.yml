@@ -53,3 +53,17 @@ jobs:
           git diff --cached --quiet || git commit -m "daily update $(TZ=Asia/Seoul date +'%Y-%m-%d')"
           git pull --rebase origin main
           git push
+
+      - name: 신규 일자리 알림 발송
+        if: steps.check_local.outputs.skip == 'false'
+        env:
+          SOLAPI_API_KEY:       ${{ secrets.SOLAPI_API_KEY }}
+          SOLAPI_API_SECRET:    ${{ secrets.SOLAPI_API_SECRET }}
+          SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY:         ${{ secrets.SUPABASE_KEY }}
+          OPERATOR_PHONE:       ${{ secrets.OPERATOR_PHONE }}
+          KAKAO_PFID:           ${{ secrets.KAKAO_PFID }}
+          KAKAO_TMPL_WITH_JOB:  ${{ secrets.KAKAO_TMPL_WITH_JOB }}
+          KAKAO_TMPL_NO_JOB:    ${{ secrets.KAKAO_TMPL_NO_JOB }}
+          SENDER_NUMBER:        ${{ secrets.SENDER_NUMBER }}
+        run: python notify.py
