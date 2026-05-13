@@ -1414,7 +1414,7 @@ def run_crawler():
         f.write(excluded_content)
 
     print("\n" + "=" * 60)
-    print(f"  수집 완료: {len(filtered)}건  (만료 제외: {expired}건)")
+    print(f"  수집 완료: {len(filtered)}건  (만료 제외: {sum(expired_by_src.values())}건)")
     print("  출처별 수집 현황:")
     for src, cnt in source_counts.items():
         print(f"    {src}: {cnt}건")
