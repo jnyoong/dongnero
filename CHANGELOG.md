@@ -2,6 +2,14 @@
 
 ---
 
+## [v0.59] 2026-05-15 — info.html 정보글 조회수 카운트 수정
+
+### info.html
+- `incrementViewCount` 함수 추가: 글 열람 시 Supabase `post_views` 테이블 조회수 증가
+- `openPost` 함수에서 `incrementViewCount(id)` 호출 (기존엔 어드민에서 읽기만 하고 쓰지 않았음)
+
+---
+
 ## [v0.58] 2026-05-14 — 맘시터 중복 제거 버그 수정 + 공고 수 대폭 증가 + PWA 배너 수정
 
 ### crawler.py

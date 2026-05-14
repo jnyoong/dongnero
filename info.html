@@ -544,6 +544,31 @@ function renderList() {
   `).join('');
 }
 
+/* ── 조회수 증가 ─────────────────────────────────────── */
+function incrementViewCount(postId) {
+  fetch(`${SUPABASE_URL}/rest/v1/post_views?post_id=eq.${encodeURIComponent(postId)}&select=post_id,view_count`, {
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
+  })
+  .then(r => r.json())
+  .then(rows => {
+    const newCount = rows.length > 0 ? rows[0].view_count + 1 : 1;
+    const method   = rows.length > 0 ? 'PATCH' : 'POST';
+    const url      = rows.length > 0
+      ? `${SUPABASE_URL}/rest/v1/post_views?post_id=eq.${encodeURIComponent(postId)}`
+      : `${SUPABASE_URL}/rest/v1/post_views`;
+    const body     = rows.length > 0
+      ? JSON.stringify({ view_count: newCount, updated_at: new Date().toISOString() })
+      : JSON.stringify({ post_id: postId, view_count: 1, updated_at: new Date().toISOString() });
+    return fetch(url, {
+      method,
+      headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`,
+                 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+      body
+    });
+  })
+  .catch(() => {});
+}
+
 /* ── 상세 열기 ─────────────────────────────────────── */
 function openPost(id) {
   const post = allPosts.find(p => String(p.id) === String(id));
@@ -580,6 +605,9 @@ function openPost(id) {
 
   // 해시 업데이트
   history.pushState({postId: id}, '', `#${id}`);
+
+  // 조회수 증가
+  incrementViewCount(id);
 }
 
 /* ── 뒤로가기 ──────────────────────────────────────── */
