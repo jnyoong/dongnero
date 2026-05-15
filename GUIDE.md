@@ -1,6 +1,6 @@
 # 동네로 운영 가이드
 
-> 최종 업데이트: 2026-05-15 (v0.59)  
+> 최종 업데이트: 2026-05-16 (v0.64)  
 > 운영자: kyungmh95 / kahn201130@gmail.com
 
 ---
@@ -111,6 +111,7 @@ jobs.html 프로모 카드 "알림 받기" 클릭
 | 기업공고 | 기업이 직접 등록한 공고 승인/반려 |
 | 구직카드 | 알림 신청자 구직카드 조회 |
 | **정보 글** | posts_data.js 기반 글 목록, 네이버 발행 준비 |
+| **📊 클릭 통계** | 공고 클릭수(총/오늘/7일), 출처별 비율, 재방문자 현황, 최근 클릭 목록 |
 
 ---
 
@@ -156,16 +157,20 @@ Claude가 자동으로:
 - `seeker_cards` — 구직카드
 - `seen_jobs` — 사용자 조회 이력
 - `notify_sent_log` — 알림 발송 로그
+- `job_clicks` — 공고 클릭 로그 (source, title, company, session_id, visitor_id)
+- `visitor_logs` — 방문자 로그 (visitor_id, visit_count) — 재방문 추적용
+- `post_views` — 정보글 조회수
 
 ---
 
 ## 8. 남은 할 일 (To-do)
 
 - [ ] 카카오 알림톡 템플릿 승인 후 GitHub Secrets에 `KAKAO_TMPL_WITH_JOB`, `KAKAO_TMPL_NO_JOB` 추가
-- [ ] 네이버 블로그 6편 발행 (어드민 → 정보 글 탭 → 네이버 발행 준비 활용)
+- [ ] 네이버 블로그 7편 발행 (어드민 → 정보 글 탭 → 네이버 발행 준비 활용)
+- [ ] Supabase에 `job_clicks`, `visitor_logs` 테이블 생성 필요 (SQL은 CHANGELOG v0.61~v0.63 참고)
 - [ ] 네이버 서치어드바이저 RSS 등록 확인 (rss.blog.naver.com/kyungmh95.xml)
 - [ ] GitHub PAT 만료 전 갱신 및 `git remote set-url github` 재적용 (보안상 주기적 교체 권장)
-- [ ] Supabase `post_views` 테이블에 실제 조회수 누적 확인 (정보글 HTML 배포 완료)
+- [ ] 당근 커뮤니티 홍보 시작 — 댓글 링크: `dongnero.kr?utm_source=daangn&utm_medium=community`
 
 ---
 
