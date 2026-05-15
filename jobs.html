@@ -1873,7 +1873,43 @@ function closeRegionSheet() {
   document.body.style.overflow = '';
 }
 
+function _addUtm(url, source) {
+  if (!url || url === '#') return url;
+  try {
+    const u = new URL(url);
+    u.searchParams.set('utm_source', 'dongnero');
+    u.searchParams.set('utm_medium', 'referral');
+    u.searchParams.set('utm_campaign', 'job_apply');
+    return u.toString();
+  } catch { return url; }
+}
+
+function openJobLink(url, source, title, company) {
+  if (typeof gtag === 'function') {
+    gtag('event', 'job_click', {
+      event_category: 'job',
+      job_source: source || '기타',
+      job_title: title || '',
+      job_company: company || ''
+    });
+  }
+  fetch(`${SB_URL}/rest/v1/job_clicks`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ source: source || '기타', title: title || '', company: company || '' })
+  }).catch(() => {});
+  window.open(_addUtm(url, source), '_blank', 'noopener');
+}
+
 function openMstPopup(location, title) {
+  if (typeof gtag === 'function') {
+    gtag('event', 'job_click', {
+      event_category: 'job',
+      job_source: '맘시터',
+      job_title: title || '',
+      job_company: ''
+    });
+  }
   const parts   = (location || '').trim().split(/\s+/);
   const locHint = parts.length >= 3 ? parts.slice(-2).join(' ') : (location || '');
   const titleHint = title.length > 14 ? title.slice(0, 14) + '…' : title;
@@ -2020,11 +2056,13 @@ function renderCard(job) {
   const lineClass  = `line-${job.source||'기타'}`;
   const badgeClass = `src-${job.source||'기타'}`;
 
-  const locAttr   = (job.location||'').replace(/'/g,"\\'");
-  const titleAttr = (job.title||'').replace(/'/g,"\\'");
+  const locAttr     = (job.location||'').replace(/'/g,"\\'");
+  const titleAttr   = (job.title||'').replace(/'/g,"\\'");
+  const companyAttr = (job.company||'').replace(/'/g,"\\'");
+  const sourceAttr  = (job.source||'').replace(/'/g,"\\'");
   const footBtn   = isMst
     ? `<button class="btn-view" onclick="openMstPopup('${locAttr}','${titleAttr}')">공고 보기 →</button>`
-    : `<a class="btn-view" href="${link}" target="_blank" rel="noopener">공고 보기 →</a>`;
+    : `<button class="btn-view" onclick="openJobLink('${link.replace(/'/g,"\\'")}','${sourceAttr}','${titleAttr}','${companyAttr}')">공고 보기 →</button>`;
 
   return `
   <div class="card">
