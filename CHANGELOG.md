@@ -2,6 +2,19 @@
 
 ---
 
+## [v0.61] 2026-05-15 — 공고 클릭 추적 (GA4 + Supabase + 어드민 통계)
+
+### jobs.html
+- `openJobLink()` 신규: GA4 `job_click` 이벤트 발송 (출처·공고명·업체명 파라미터)
+- 맘시터 공고 클릭 시에도 GA4 이벤트 추가
+- 외부 링크에 UTM 파라미터 자동 부착 (`utm_source=dongnero&utm_medium=referral&utm_campaign=job_apply`)
+- Supabase `job_clicks` 테이블에 클릭 로그 저장 (fire-and-forget)
+
+### admin-dongnero.html
+- 📊 클릭 통계 탭 추가: 총/오늘/7일 클릭수, 출처별 클릭 비율 바, 최근 100건 목록
+
+---
+
 ## [v0.60] 2026-05-15 — 크롤링 복구 + 중복 실행 충돌 방지
 
 ### 크롤링
