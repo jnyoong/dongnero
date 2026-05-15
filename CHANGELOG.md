@@ -2,6 +2,20 @@
 
 ---
 
+## [v0.63] 2026-05-16 — 재방문자 추적 (localStorage + 어드민 통계)
+
+### jobs.html
+- `_getVisitorId()`: localStorage 기반 영구 방문자 ID (브라우저 닫아도 유지)
+- `_trackVisit()`: 세션당 1회 Supabase `visitor_logs` 테이블에 방문 기록
+- `job_clicks` 로그에 `visitor_id` 포함 (클릭-방문 연계 분석 가능)
+- 페이지 로드 시 자동 호출
+
+### admin-dongnero.html
+- 📊 클릭 통계 탭: 재방문자 현황 섹션 추가
+  - 신규 방문 / 재방문 수 / 재방문율 / 평균 방문횟수
+
+---
+
 ## [v0.62] 2026-05-15 — 세션 ID 추가 (1인당 평균 클릭수 추적)
 
 ### jobs.html
