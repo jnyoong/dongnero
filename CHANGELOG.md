@@ -2,6 +2,17 @@
 
 ---
 
+## [v0.62] 2026-05-15 — 세션 ID 추가 (1인당 평균 클릭수 추적)
+
+### jobs.html
+- `_getSessionId()`: sessionStorage 기반 익명 세션 ID 자동 생성 (로그인 불필요)
+- Supabase `job_clicks` 로그에 `session_id` 포함
+
+### admin-dongnero.html
+- 📊 클릭 통계 탭: 순 세션 수 + 클릭/세션 평균 칩 추가
+
+---
+
 ## [v0.61] 2026-05-15 — 공고 클릭 추적 (GA4 + Supabase + 어드민 통계)
 
 ### jobs.html
