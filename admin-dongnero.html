@@ -383,6 +383,8 @@
       <div class="summary-chip"><strong id="csTotal">-</strong>총 클릭</div>
       <div class="summary-chip"><strong id="csToday">-</strong>오늘</div>
       <div class="summary-chip"><strong id="cs7d">-</strong>최근 7일</div>
+      <div class="summary-chip"><strong id="csSessions">-</strong>순 세션</div>
+      <div class="summary-chip"><strong id="csAvg">-</strong>클릭/세션</div>
     </div>
     <h3 style="margin:16px 0 8px;font-size:.95rem;color:#374151">출처별 클릭수</h3>
     <div class="table-wrap">
@@ -529,7 +531,7 @@ document.querySelectorAll('.tab').forEach(tab => {
 async function renderClickStats() {
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/job_clicks?select=source,title,company,clicked_at&order=clicked_at.desc&limit=2000`,
+      `${SUPABASE_URL}/rest/v1/job_clicks?select=source,title,company,clicked_at,session_id&order=clicked_at.desc&limit=2000`,
       { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
     );
     if (!res.ok) throw new Error(await res.text());
@@ -542,9 +544,14 @@ async function renderClickStats() {
     const todayRows = rows.filter(r => r.clicked_at.slice(0, 10) === today);
     const week7Rows = rows.filter(r => r.clicked_at >= ago7);
 
-    document.getElementById('csTotal').textContent = rows.length.toLocaleString();
-    document.getElementById('csToday').textContent = todayRows.length.toLocaleString();
-    document.getElementById('cs7d').textContent    = week7Rows.length.toLocaleString();
+    const sessions = new Set(rows.filter(r => r.session_id).map(r => r.session_id));
+    const avgClicks = sessions.size ? (rows.length / sessions.size).toFixed(1) : '-';
+
+    document.getElementById('csTotal').textContent    = rows.length.toLocaleString();
+    document.getElementById('csToday').textContent    = todayRows.length.toLocaleString();
+    document.getElementById('cs7d').textContent       = week7Rows.length.toLocaleString();
+    document.getElementById('csSessions').textContent = sessions.size.toLocaleString();
+    document.getElementById('csAvg').textContent      = avgClicks;
 
     // 출처별 집계
     const srcMap = {};
