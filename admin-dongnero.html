@@ -386,6 +386,13 @@
       <div class="summary-chip"><strong id="csSessions">-</strong>순 세션</div>
       <div class="summary-chip"><strong id="csAvg">-</strong>클릭/세션</div>
     </div>
+    <h3 style="margin:16px 0 8px;font-size:.95rem;color:#374151">재방문자 현황</h3>
+    <div class="summary-row">
+      <div class="summary-chip"><strong id="csNewVisitors">-</strong>신규 방문</div>
+      <div class="summary-chip"><strong id="csRetVisitors">-</strong>재방문</div>
+      <div class="summary-chip"><strong id="csRetRate">-</strong>재방문율</div>
+      <div class="summary-chip"><strong id="csAvgVisit">-</strong>평균 방문횟수</div>
+    </div>
     <h3 style="margin:16px 0 8px;font-size:.95rem;color:#374151">출처별 클릭수</h3>
     <div class="table-wrap">
       <table>
@@ -530,12 +537,16 @@ document.querySelectorAll('.tab').forEach(tab => {
 /* ── 클릭 통계 ── */
 async function renderClickStats() {
   try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/job_clicks?select=source,title,company,clicked_at,session_id&order=clicked_at.desc&limit=2000`,
-      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
-    );
-    if (!res.ok) throw new Error(await res.text());
-    const rows = await res.json();
+    const [clickRes, visitRes] = await Promise.all([
+      fetch(`${SUPABASE_URL}/rest/v1/job_clicks?select=source,title,company,clicked_at,session_id,visitor_id&order=clicked_at.desc&limit=2000`,
+        { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }),
+      fetch(`${SUPABASE_URL}/rest/v1/visitor_logs?select=visitor_id,visit_count,visited_at&order=visited_at.desc&limit=5000`,
+        { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } })
+    ]);
+    if (!clickRes.ok) throw new Error(await clickRes.text());
+    if (!visitRes.ok) throw new Error(await visitRes.text());
+    const rows  = await clickRes.json();
+    const visits = await visitRes.json();
 
     const now   = new Date();
     const today = now.toISOString().slice(0, 10);
@@ -547,11 +558,29 @@ async function renderClickStats() {
     const sessions = new Set(rows.filter(r => r.session_id).map(r => r.session_id));
     const avgClicks = sessions.size ? (rows.length / sessions.size).toFixed(1) : '-';
 
+    // 방문자 통계
+    const visitorMap = {};
+    visits.forEach(v => {
+      if (!visitorMap[v.visitor_id] || v.visit_count > visitorMap[v.visitor_id])
+        visitorMap[v.visitor_id] = v.visit_count;
+    });
+    const allVisitors  = Object.keys(visitorMap).length;
+    const newVisitors  = Object.values(visitorMap).filter(vc => vc === 1).length;
+    const retVisitors  = allVisitors - newVisitors;
+    const retRate      = allVisitors ? Math.round(retVisitors / allVisitors * 100) : 0;
+    const avgVisitCnt  = allVisitors ? (Object.values(visitorMap).reduce((a,b) => a+b, 0) / allVisitors).toFixed(1) : '-';
+
     document.getElementById('csTotal').textContent    = rows.length.toLocaleString();
     document.getElementById('csToday').textContent    = todayRows.length.toLocaleString();
     document.getElementById('cs7d').textContent       = week7Rows.length.toLocaleString();
     document.getElementById('csSessions').textContent = sessions.size.toLocaleString();
     document.getElementById('csAvg').textContent      = avgClicks;
+
+    // 방문자 칩 업데이트
+    document.getElementById('csNewVisitors').textContent = newVisitors.toLocaleString();
+    document.getElementById('csRetVisitors').textContent = retVisitors.toLocaleString();
+    document.getElementById('csRetRate').textContent     = retRate + '%';
+    document.getElementById('csAvgVisit').textContent    = avgVisitCnt;
 
     // 출처별 집계
     const srcMap = {};

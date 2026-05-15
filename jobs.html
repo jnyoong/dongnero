@@ -1882,6 +1882,28 @@ function _getSessionId() {
   return sid;
 }
 
+function _getVisitorId() {
+  let vid = localStorage.getItem('dnr_vid');
+  if (!vid) {
+    vid = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    localStorage.setItem('dnr_vid', vid);
+  }
+  return vid;
+}
+
+function _trackVisit() {
+  if (sessionStorage.getItem('dnr_visited')) return; // 같은 세션 중복 방지
+  sessionStorage.setItem('dnr_visited', '1');
+  const vid = _getVisitorId();
+  const vc  = parseInt(localStorage.getItem('dnr_vc') || '0') + 1;
+  localStorage.setItem('dnr_vc', String(vc));
+  fetch(`${SB_URL}/rest/v1/visitor_logs`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ visitor_id: vid, visit_count: vc })
+  }).catch(() => {});
+}
+
 function _addUtm(url, source) {
   if (!url || url === '#') return url;
   try {
@@ -1905,7 +1927,7 @@ function openJobLink(url, source, title, company) {
   fetch(`${SB_URL}/rest/v1/job_clicks`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Prefer': 'return=minimal' },
-    body: JSON.stringify({ source: source || '기타', title: title || '', company: company || '', session_id: _getSessionId() })
+    body: JSON.stringify({ source: source || '기타', title: title || '', company: company || '', session_id: _getSessionId(), visitor_id: _getVisitorId() })
   }).catch(() => {});
   window.open(_addUtm(url, source), '_blank', 'noopener');
 }
@@ -2284,6 +2306,7 @@ document.getElementById('rsheetOverlay').addEventListener('click', e => {
 });
 
 loadData();
+_trackVisit();
 
 /* #notify 해시로 진입 시 알림 모달 자동 오픈 */
 if (location.hash === '#notify') {
