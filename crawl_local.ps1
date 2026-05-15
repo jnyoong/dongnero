@@ -44,6 +44,26 @@ Log "crawler done"
 )
 Log "last_crawl.txt written: $today"
 
+# GitHub Actions가 이미 오늘 크롤링을 완료했는지 확인
+Log "GitHub 최신 상태 확인..."
+RunGit "fetch", "github", "main" | Out-Null
+
+$remoteDate = ""
+try {
+    $remoteJson = (& git show "github/main:jobs.json" 2>$null) -join "`n"
+    if ($remoteJson) {
+        $remoteDate = ($remoteJson | & python -c "import sys,json; d=json.load(sys.stdin); print(d.get('updated_at','')[:10])").Trim()
+    }
+} catch {}
+
+if ($remoteDate -eq $today) {
+    Log "GitHub에 오늘 데이터 있음 ($remoteDate). 로컬 결과 버리고 GitHub 버전으로 sync."
+    RunGit "pull", "--rebase", "github", "main" | Out-Null
+    Log "sync 완료. 로컬 크롤 스킵."
+    exit 0
+}
+
+# GitHub에 오늘 데이터 없음 → 로컬 크롤 결과를 push
 Log "staging..."
 git add jobs.json jobs_data.js excluded_data.js last_crawl.txt
 $hasChanges = (git diff --cached --quiet; $LASTEXITCODE -ne 0)
@@ -61,7 +81,7 @@ if ($LASTEXITCODE -ne 0) {
 Log "commit done"
 
 Log "pull --rebase..."
-$exitCode = RunGit "pull", "--rebase", "-X", "ours", "github", "main"
+$exitCode = RunGit "pull", "--rebase", "-X", "theirs", "github", "main"
 if ($exitCode -ne 0) {
     Log "pull --rebase failed (exit $exitCode). aborting rebase..."
     RunGit "rebase", "--abort" | Out-Null
