@@ -339,18 +339,17 @@
   <div class="tab-panel" id="panel-seekercards">
     <div class="summary-row">
       <div class="summary-chip"><strong id="scTotal">-</strong>전체</div>
-      <div class="summary-chip"><strong id="scDupTotal">0</strong>중복 제외</div>
+      <div class="summary-chip" id="scDupChip" onclick="toggleDupMode()" style="cursor:pointer" title="클릭하면 중복 항목만 표시"><strong id="scDupTotal">0</strong>중복 제외 🔍</div>
       <div class="summary-chip"><strong id="scLv1">0</strong>👀 정보보기</div>
       <div class="summary-chip"><strong id="scLv2">0</strong>🔔 알림받기</div>
       <div class="summary-chip badge-green"><strong id="scLv3">0</strong>💼 적극구직</div>
     </div>
-    <!-- 일별 신청 현황 -->
-    <div id="scDailyWrap" style="margin-bottom:16px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-        <strong style="font-size:.88rem;color:#374151">일별 알림신청 현황</strong>
-        <span style="font-size:.78rem;color:#9CA3AF">(중복 제외 기준)</span>
+    <!-- 일별 신청 현황 (최근 7일) -->
+    <div id="scDailyWrap" style="margin-bottom:14px;display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:.78rem;font-weight:700;color:#6B7280;margin-bottom:5px">최근 7일 신청 현황 <span style="font-weight:400">(중복 제외)</span></div>
+        <ul id="scDailyList" style="list-style:none;font-size:.82rem;line-height:1.9"></ul>
       </div>
-      <div id="scDailyTable" style="display:flex;flex-wrap:wrap;gap:6px"></div>
     </div>
     <div class="filter-bar">
       <select id="scLvFilter" onchange="renderSeekerCards()">
@@ -1199,57 +1198,70 @@ function _dedupKey(j) {
   return (n || p) ? `${n}||${p}` : null;
 }
 
-function _dedupedCards(cards) {
+// 중복 제거: {deduped, dupes} 반환
+function _splitDup(cards) {
   const seen = new Set();
-  return cards.filter(j => {
+  const deduped = [], dupes = [];
+  cards.forEach(j => {
     const key = _dedupKey(j);
-    if (!key) return true;          // 이름·전화 모두 없으면 그냥 포함
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
+    if (!key) { deduped.push(j); return; }
+    if (seen.has(key)) dupes.push(j);
+    else { seen.add(key); deduped.push(j); }
   });
+  return { deduped, dupes };
+}
+
+let scDupMode = false;
+
+function toggleDupMode() {
+  scDupMode = !scDupMode;
+  const chip = document.getElementById('scDupChip');
+  chip.style.background = scDupMode ? '#FEF3C7' : '';
+  chip.style.borderColor = scDupMode ? '#F59E0B' : '';
+  renderSeekerCards();
 }
 
 function updateScSummary() {
-  const deduped = _dedupedCards(allSeekerCards);
+  const { deduped, dupes } = _splitDup(allSeekerCards);
   document.getElementById('scTotal').textContent    = allSeekerCards.length;
-  document.getElementById('scDupTotal').textContent = allSeekerCards.length - deduped.length;
+  document.getElementById('scDupTotal').textContent = dupes.length;
   document.getElementById('tabScCount').textContent = `(${deduped.length})`;
   document.getElementById('scLv1').textContent = deduped.filter(j => (j.alert_level||2) === 1).length;
   document.getElementById('scLv2').textContent = deduped.filter(j => (j.alert_level||2) === 2).length;
   document.getElementById('scLv3').textContent = deduped.filter(j => (j.alert_level||2) === 3).length;
 
-  // 일별 신청 현황 (중복 제외 기준)
+  // 최근 7일 일별 신청 현황 (중복 제외 기준)
+  const today = new Date();
   const dayMap = {};
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today); d.setDate(d.getDate() - i);
+    dayMap[d.toISOString().slice(0, 10)] = 0;
+  }
   deduped.forEach(j => {
     const d = (j.created_at || '').slice(0, 10);
-    if (d) dayMap[d] = (dayMap[d] || 0) + 1;
+    if (d in dayMap) dayMap[d]++;
   });
-  const days = Object.keys(dayMap).sort().reverse();
-  document.getElementById('scDailyTable').innerHTML = days.length
-    ? days.map(d => {
-        const cnt = dayMap[d];
-        const bar = '▪'.repeat(Math.min(cnt, 20));
-        return `<div style="background:#fff;border:1px solid #E2E5EA;border-radius:8px;padding:8px 12px;font-size:.82rem;min-width:130px">
-          <div style="color:#6B7280;margin-bottom:2px">${d}</div>
-          <div style="display:flex;align-items:center;gap:6px">
-            <strong style="font-size:1.05rem;color:#2563EB">${cnt}명</strong>
-            <span style="color:#BFDBFE;letter-spacing:-1px">${bar}</span>
-          </div>
-        </div>`;
-      }).join('')
-    : '<span style="color:#9CA3AF;font-size:.82rem">데이터 없음</span>';
+  const ul = document.getElementById('scDailyList');
+  ul.innerHTML = Object.entries(dayMap).reverse().map(([d, cnt]) => {
+    const label = d.slice(5); // MM-DD
+    const bar = cnt > 0 ? `<span style="color:#93C5FD">${'●'.repeat(Math.min(cnt, 10))}</span>` : '';
+    return `<li style="display:flex;gap:8px;align-items:center">
+      <span style="color:#6B7280;min-width:36px">${label}</span>
+      <strong style="min-width:20px;text-align:right;color:${cnt>0?'#1D4ED8':'#9CA3AF'}">${cnt}</strong>명
+      ${bar}
+    </li>`;
+  }).join('');
 }
 
 function renderSeekerCards() {
   const kw  = document.getElementById('scSearch').value.trim().toLowerCase();
   const lv  = document.getElementById('scLvFilter').value;
   const rgn = document.getElementById('scRegionFilter').value;
+  const { deduped, dupes } = _splitDup(allSeekerCards);
 
-  // 중복 제거 먼저 적용 (이름+전화 동일 → 첫 번째만 유지)
-  const deduped = _dedupedCards(allSeekerCards);
-
-  const list = deduped.filter(j => {
+  // 중복 보기 모드면 dupes만, 아니면 deduped
+  const base = scDupMode ? dupes : deduped;
+  const list = base.filter(j => {
     if (lv  && String(j.alert_level||2) !== lv) return false;
     if (rgn && j.location_sido !== rgn) return false;
     if (kw  && !(
@@ -1260,7 +1272,9 @@ function renderSeekerCards() {
     return true;
   });
 
-  document.getElementById('scRangeInfo').textContent = `${list.length}건 표시 (중복 제외, 전체 ${allSeekerCards.length}건)`;
+  const modeLabel = scDupMode ? '중복 항목만' : '중복 제외';
+  document.getElementById('scRangeInfo').textContent =
+    `${list.length}건 표시 (${modeLabel}, 전체 ${allSeekerCards.length}건)`;
 
   if (!list.length) {
     document.getElementById('scBody').innerHTML = '<tr><td colspan="9" class="empty-msg">해당 구직카드가 없습니다.</td></tr>';
