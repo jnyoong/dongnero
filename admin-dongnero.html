@@ -338,11 +338,11 @@
   <!-- 탭5: 구직카드 -->
   <div class="tab-panel" id="panel-seekercards">
     <div class="summary-row">
-      <div class="summary-chip"><strong id="scTotal">-</strong>전체</div>
-      <div class="summary-chip" id="scDupChip" onclick="toggleDupMode()" style="cursor:pointer" title="클릭하면 중복 항목만 표시"><strong id="scDupTotal">0</strong>중복 제외 🔍</div>
-      <div class="summary-chip"><strong id="scLv1">0</strong>👀 정보보기</div>
-      <div class="summary-chip"><strong id="scLv2">0</strong>🔔 알림받기</div>
-      <div class="summary-chip badge-green"><strong id="scLv3">0</strong>💼 적극구직</div>
+      <div class="summary-chip" id="scChipAll" onclick="setScLvFilter('')"   style="cursor:pointer"><strong id="scTotal">-</strong>전체</div>
+      <div class="summary-chip" id="scDupChip" onclick="toggleDupMode()"     style="cursor:pointer" title="중복 항목만 표시"><strong id="scDupTotal">0</strong>중복 제외 🔍</div>
+      <div class="summary-chip" id="scChipLv1" onclick="setScLvFilter('1')"  style="cursor:pointer"><strong id="scLv1">0</strong>👀 정보보기</div>
+      <div class="summary-chip" id="scChipLv2" onclick="setScLvFilter('2')"  style="cursor:pointer"><strong id="scLv2">0</strong>🔔 알림받기</div>
+      <div class="summary-chip" id="scChipLv3" onclick="setScLvFilter('3')"  style="cursor:pointer"><strong id="scLv3">0</strong>💼 적극구직</div>
     </div>
     <!-- 일별 신청 현황 (최근 7일) -->
     <div id="scDailyWrap" style="margin-bottom:14px;display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap">
@@ -1231,11 +1231,34 @@ function _splitDup(cards) {
 
 let scDupMode = false;
 
+function _updateScChips() {
+  const lv = document.getElementById('scLvFilter').value;
+  const chipMap = { '': 'scChipAll', '1': 'scChipLv1', '2': 'scChipLv2', '3': 'scChipLv3' };
+  Object.entries(chipMap).forEach(([v, id]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const active = !scDupMode && v === lv;
+    el.style.background   = active ? '#2563EB' : '';
+    el.style.color        = active ? '#fff'     : '';
+    el.style.borderColor  = active ? '#2563EB'  : '';
+  });
+  const dup = document.getElementById('scDupChip');
+  dup.style.background  = scDupMode ? '#FEF3C7' : '';
+  dup.style.borderColor = scDupMode ? '#F59E0B' : '';
+  dup.style.color       = scDupMode ? '#92400E' : '';
+}
+
+function setScLvFilter(lv) {
+  scDupMode = false;
+  document.getElementById('scLvFilter').value = lv;
+  _updateScChips();
+  renderSeekerCards();
+}
+
 function toggleDupMode() {
   scDupMode = !scDupMode;
-  const chip = document.getElementById('scDupChip');
-  chip.style.background = scDupMode ? '#FEF3C7' : '';
-  chip.style.borderColor = scDupMode ? '#F59E0B' : '';
+  if (scDupMode) document.getElementById('scLvFilter').value = '';
+  _updateScChips();
   renderSeekerCards();
 }
 
@@ -1259,6 +1282,7 @@ function updateScSummary() {
     const d = (j.created_at || '').slice(0, 10);
     if (d in dayMap) dayMap[d]++;
   });
+  _updateScChips();
   const ul = document.getElementById('scDailyList');
   ul.innerHTML = Object.entries(dayMap).reverse().map(([d, cnt]) => {
     const label = d.slice(5); // MM-DD
