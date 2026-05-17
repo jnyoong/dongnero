@@ -459,103 +459,136 @@ def scrape_albacheon(page: int) -> list[dict]:
 
 
 # ── 시니어로 스크래핑 (seniorro.or.kr) ───────────────────────────────────────
+# 2026-05 리뉴얼: searchWork.do(HTML) → searchJobList.do(JSON API)
+# 지역별 조회 후 JOB_ID 기준 중복 제거
 
 SENIORRO_BASE = "https://www.seniorro.or.kr"
 
-def scrape_seniorro(page: int) -> list[dict]:
-    """
-    시니어로(seniorro.or.kr) 구인공고 스크래핑.
-    POST /noin/searchWork.do — pageIndex, pageUnit 파라미터.
-    SSL 인증서 오류 사이트이므로 verify=False 사용.
-    """
-    url = SENIORRO_BASE + "/noin/searchWork.do"
-    post_data = {
-        "pageIndex": str(page),
-        "pageUnit" : "30",
-        "align"    : "",
-    }
-    sess = _session('seniorro')
-    sess.headers.update({"Referer": SENIORRO_BASE + "/noin/main.do"})
-    for attempt in range(MAX_RETRIES):
+# 전국 지역 목록 수집용 키워드 (자동완성 API에 2글자 이상 필요)
+_SENIORRO_KEYWORDS = [
+    "서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종",
+    "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주",
+    "강남", "강북", "강서", "강동", "관악", "구로", "금천", "노원",
+    "도봉", "동대문", "동작", "마포", "서대문", "서초", "성동", "성북",
+    "송파", "양천", "영등포", "용산", "은평", "종로", "중랑",
+    "수원", "성남", "안양", "부천", "광명", "평택", "안산", "고양",
+    "과천", "의왕", "군포", "하남", "용인", "파주", "이천", "안성",
+    "김포", "화성", "여주", "양평", "동두천", "포천", "남양주",
+    "의정부", "구리", "연천", "가평", "양주", "시흥",
+    "창원", "진주", "통영", "사천", "김해", "밀양", "거제", "양산",
+    "함안", "창녕", "고성", "남해", "하동", "산청", "함양", "거창", "합천",
+    "포항", "경주", "김천", "안동", "구미", "영주", "영천", "상주", "문경",
+    "청송", "영양", "영덕", "청도", "고령", "성주", "칠곡", "예천", "봉화", "울진", "울릉",
+    "전주", "군산", "익산", "정읍", "남원", "김제", "완주", "진안", "무주", "장수", "임실", "순창", "고창", "부안",
+    "목포", "여수", "순천", "나주", "광양", "담양", "곡성", "구례", "고흥", "보성", "화순", "장흥", "강진", "해남", "영암", "무안", "함평", "영광", "장성", "완도", "진도", "신안",
+    "춘천", "원주", "강릉", "동해", "태백", "속초", "삼척", "홍천", "횡성", "영월", "평창", "정선", "철원", "화천", "양구", "인제", "고성", "양양",
+    "청주", "충주", "제천", "보은", "옥천", "영동", "증평", "진천", "괴산", "음성", "단양",
+    "천안", "공주", "보령", "아산", "서산", "논산", "계룡", "당진", "금산", "부여", "서천", "청양", "홍성", "예산", "태안",
+    "제주시", "서귀포",
+]
+
+def _seniorro_get_areas(sess) -> list[tuple[str, str]]:
+    """전국 지역 목록 수집 (areaNm, areaSgngNm) 쌍 반환"""
+    url = SENIORRO_BASE + "/noin/searchAreaList.do"
+    seen = set()
+    areas = []
+    for kw in _SENIORRO_KEYWORDS:
         try:
-            resp = sess.post(url, data=post_data, timeout=15, verify=False)
-            resp.raise_for_status()
-            break
-        except Exception as e:
-            if attempt < MAX_RETRIES - 1:
-                wait = 2 ** (attempt + 1) + random.uniform(0, 1)
-                time.sleep(wait)
-            else:
-                print(f"\n  [시니어로 오류] {e}")
-                return []
+            r = sess.post(url, json={"keyword": kw}, timeout=10, verify=False)
+            for item in r.json().get("list", []):
+                key = (item.get("areaNm", ""), item.get("areaSgngNm", ""))
+                if key not in seen and key[1]:
+                    seen.add(key)
+                    areas.append(key)
+        except Exception:
+            continue
+        time.sleep(0.2)
+    return areas
+
+def scrape_seniorro_all() -> list[dict]:
+    """
+    시니어로(seniorro.or.kr) 전국 공고 수집.
+    지역별 JSON API 조회 → JOB_ID 기준 중복 제거.
+    """
+    sess = _session('seniorro')
+    sess.headers.update({
+        "Referer"          : SENIORRO_BASE + "/noin/searchJob.do",
+        "X-Requested-With" : "XMLHttpRequest",
+        "Content-Type"     : "application/json; charset=utf-8",
+        "Accept"           : "application/json",
+    })
+    # 세션 쿠키 확보
     try:
-        resp.encoding = "utf-8"
-        soup = BeautifulSoup(resp.text, "html.parser")
+        sess.get(SENIORRO_BASE + "/noin/main.do",    timeout=10, verify=False)
+        sess.get(SENIORRO_BASE + "/noin/searchJob.do", timeout=10, verify=False)
+    except Exception:
+        pass
 
-        jobs = []
-        for li in soup.select("ul.board-list-item li"):
-            title_el      = li.select_one("div.info-tit > strong")
-            link_el       = li.select_one("div.info > a[href]")
-            region_spans  = li.select("div.info-stit span.region")
-            proc_el       = li.select_one("div.info-proc")
-            emp_spans     = li.select("div.info-stit span:not(.region)")
+    areas = _seniorro_get_areas(sess)
+    if not areas:
+        print("\n  [시니어로] 지역 목록 수집 실패")
+        return []
+    print(f"  지역 수: {len(areas)}개")
 
-            if not title_el:
+    url     = SENIORRO_BASE + "/noin/searchJobList.do"
+    seen_ids: set[str] = set()
+    all_jobs: list[dict] = []
+
+    for idx_a, (sido, sigun) in enumerate(areas):
+        payload = {
+            "sst01"         : sido,
+            "sst02"         : sigun,
+            "projTypeList"  : [],
+            "orderType"     : "i",
+            "currentPageNo" : 1,
+            "pageSize"      : 100,
+        }
+        for attempt in range(MAX_RETRIES):
+            try:
+                r = sess.post(url, json=payload, timeout=15, verify=False)
+                r.raise_for_status()
+                data = r.json()
+                break
+            except Exception as e:
+                if attempt < MAX_RETRIES - 1:
+                    time.sleep(2 ** (attempt + 1))
+                else:
+                    data = {}
+
+        for item in data.get("list") or []:
+            job_id = item.get("JOB_ID", "")
+            if not job_id or job_id in seen_ids:
                 continue
+            seen_ids.add(job_id)
 
-            # 회사명: "사업체명 : (주)xxx |" → 이름만 추출
-            company = ""
-            if region_spans:
-                raw = region_spans[0].get_text(strip=True)
-                m = re.search(r"사업체명\s*:\s*(.+?)(?:\s*\||\s*$)", raw)
-                if m:
-                    company = m.group(1).strip()
+            # 마감일 YYYYMMDD → YYYY-MM-DD
+            raw_dd = item.get("HMPG_NTC_END_DT") or item.get("TO_DD") or ""
+            deadline = _normalize_date(raw_dd) if re.match(r"\d{8}", raw_dd or "") else ""
 
-            # 지역: "지역 : 경기 양주시" → 지역만 추출
-            location = ""
-            if len(region_spans) > 1:
-                raw = region_spans[1].get_text(strip=True)
-                m = re.search(r"지역\s*:\s*(.+)", raw)
-                if m:
-                    location = m.group(1).strip()
+            # apply_link
+            link = (
+                f"{SENIORRO_BASE}/noin/jobDetail.do"
+                f"?jobId={job_id}"
+                f"&projType={item.get('PROJ_TYPE','')}"
+                f"&instnId={item.get('INSTN_ID','')}"
+            )
 
-            # 고용형태: "| 시간제일자리" → 텍스트만
-            emp_type = ""
-            for sp in emp_spans:
-                t = re.sub(r"^\s*\|\s*", "", sp.get_text(strip=True)).strip()
-                if t and ("일자리" in t or "근무" in t or "정규" in t or "계약" in t):
-                    emp_type = t
-                    break
-
-            # 마감일: "20260421 ~ 20260620" → 종료일(YYYY-MM-DD)
-            deadline = ""
-            if proc_el:
-                dates = re.findall(r"\d{8}", proc_el.get_text())
-                if len(dates) >= 2:
-                    deadline = _normalize_date(dates[1])
-                elif len(dates) == 1:
-                    deadline = _normalize_date(dates[0])
-
-            # 링크: work.go.kr 또는 사이트 내부 링크
-            href = link_el.get("href", "") if link_el else ""
-            link = href if href.startswith("http") else (
-                SENIORRO_BASE + href if href.startswith("/") else href)
-
-            jobs.append({
-                "title"      : title_el.get_text(strip=True),
-                "company"    : company,
-                "location"   : location,
+            all_jobs.append({
+                "title"      : item.get("RECRT_TITLE", "").strip(),
+                "company"    : item.get("INSTN_NM", "").strip(),
+                "location"   : item.get("WORK_PLC_NM", "").strip().replace("/", " "),
                 "deadline"   : deadline,
-                "type"       : emp_type,
+                "type"       : item.get("JOBCLS_NM", "").strip(),
                 "salary"     : "",
                 "description": "",
                 "apply_link" : link,
                 "source"     : "시니어로",
             })
-        return jobs
-    except Exception as e:
-        print(f"\n  [시니어로 오류] {e}")
-        return []
+
+        time.sleep(0.3)
+
+    print(f"  → 중복 제거 전 {len(all_jobs)}건 (지역 {len(areas)}개 조회)")
+    return all_jobs
 
 
 # ── 서울시 일자리포털 스크래핑 ────────────────────────────────────────────────
@@ -1244,9 +1277,9 @@ def run_crawler():
     _sleep_source()
 
     # ── 4단계: 시니어로 ──────────────────────────────────────
-    print("\n[4/8] 시니어로(seniorro.or.kr) 스크래핑")
+    print("\n[4/8] 시니어로(seniorro.or.kr) 스크래핑 (지역별 JSON API)")
     before = len(all_jobs)
-    all_jobs.extend(_crawl_source("시니어로", scrape_seniorro, pages=8, stop_if_less=30))
+    all_jobs.extend(scrape_seniorro_all())
     source_counts["시니어로"] = len(all_jobs) - before
     _sleep_source()
 

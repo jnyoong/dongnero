@@ -2,6 +2,13 @@
 
 ---
 
+## [v0.66] 2026-05-18 — 시니어로 크롤러 전면 재작성 (136건 → 969건)
+
+- `crawler.py`: 시니어로 수집 방식 변경
+  - 구: `searchWork.do` HTML 파싱 → 신: `searchJobList.do` JSON API
+  - 전국 267개 지역별 조회 + JOB_ID 기준 중복 제거
+  - `_seniorro_get_areas()` + `scrape_seniorro_all()` 함수로 교체
+
 ## [v0.65] 2026-05-18 — 정보글 추가: 퇴직 실업급여 신청 가이드
 
 - `posts_data.js`: 신규 글 추가 (id: unemployment-benefit-2026) — 실업급여 수급 조건·금액·신청 절차
