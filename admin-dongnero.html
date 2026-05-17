@@ -339,9 +339,18 @@
   <div class="tab-panel" id="panel-seekercards">
     <div class="summary-row">
       <div class="summary-chip"><strong id="scTotal">-</strong>전체</div>
+      <div class="summary-chip"><strong id="scDupTotal">0</strong>중복 제외</div>
       <div class="summary-chip"><strong id="scLv1">0</strong>👀 정보보기</div>
       <div class="summary-chip"><strong id="scLv2">0</strong>🔔 알림받기</div>
       <div class="summary-chip badge-green"><strong id="scLv3">0</strong>💼 적극구직</div>
+    </div>
+    <!-- 일별 신청 현황 -->
+    <div id="scDailyWrap" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <strong style="font-size:.88rem;color:#374151">일별 알림신청 현황</strong>
+        <span style="font-size:.78rem;color:#9CA3AF">(중복 제외 기준)</span>
+      </div>
+      <div id="scDailyTable" style="display:flex;flex-wrap:wrap;gap:6px"></div>
     </div>
     <div class="filter-bar">
       <select id="scLvFilter" onchange="renderSeekerCards()">
@@ -1184,12 +1193,52 @@ async function loadSeekerCards() {
   }
 }
 
+function _dedupKey(j) {
+  const n = (j.name || '').trim();
+  const p = (j.contact_phone || '').trim();
+  return (n || p) ? `${n}||${p}` : null;
+}
+
+function _dedupedCards(cards) {
+  const seen = new Set();
+  return cards.filter(j => {
+    const key = _dedupKey(j);
+    if (!key) return true;          // 이름·전화 모두 없으면 그냥 포함
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function updateScSummary() {
-  document.getElementById('scTotal').textContent = allSeekerCards.length;
-  document.getElementById('tabScCount').textContent = `(${allSeekerCards.length})`;
-  document.getElementById('scLv1').textContent = allSeekerCards.filter(j => (j.alert_level||2) === 1).length;
-  document.getElementById('scLv2').textContent = allSeekerCards.filter(j => (j.alert_level||2) === 2).length;
-  document.getElementById('scLv3').textContent = allSeekerCards.filter(j => (j.alert_level||2) === 3).length;
+  const deduped = _dedupedCards(allSeekerCards);
+  document.getElementById('scTotal').textContent    = allSeekerCards.length;
+  document.getElementById('scDupTotal').textContent = allSeekerCards.length - deduped.length;
+  document.getElementById('tabScCount').textContent = `(${deduped.length})`;
+  document.getElementById('scLv1').textContent = deduped.filter(j => (j.alert_level||2) === 1).length;
+  document.getElementById('scLv2').textContent = deduped.filter(j => (j.alert_level||2) === 2).length;
+  document.getElementById('scLv3').textContent = deduped.filter(j => (j.alert_level||2) === 3).length;
+
+  // 일별 신청 현황 (중복 제외 기준)
+  const dayMap = {};
+  deduped.forEach(j => {
+    const d = (j.created_at || '').slice(0, 10);
+    if (d) dayMap[d] = (dayMap[d] || 0) + 1;
+  });
+  const days = Object.keys(dayMap).sort().reverse();
+  document.getElementById('scDailyTable').innerHTML = days.length
+    ? days.map(d => {
+        const cnt = dayMap[d];
+        const bar = '▪'.repeat(Math.min(cnt, 20));
+        return `<div style="background:#fff;border:1px solid #E2E5EA;border-radius:8px;padding:8px 12px;font-size:.82rem;min-width:130px">
+          <div style="color:#6B7280;margin-bottom:2px">${d}</div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <strong style="font-size:1.05rem;color:#2563EB">${cnt}명</strong>
+            <span style="color:#BFDBFE;letter-spacing:-1px">${bar}</span>
+          </div>
+        </div>`;
+      }).join('')
+    : '<span style="color:#9CA3AF;font-size:.82rem">데이터 없음</span>';
 }
 
 function renderSeekerCards() {
@@ -1197,7 +1246,10 @@ function renderSeekerCards() {
   const lv  = document.getElementById('scLvFilter').value;
   const rgn = document.getElementById('scRegionFilter').value;
 
-  const list = allSeekerCards.filter(j => {
+  // 중복 제거 먼저 적용 (이름+전화 동일 → 첫 번째만 유지)
+  const deduped = _dedupedCards(allSeekerCards);
+
+  const list = deduped.filter(j => {
     if (lv  && String(j.alert_level||2) !== lv) return false;
     if (rgn && j.location_sido !== rgn) return false;
     if (kw  && !(
@@ -1208,7 +1260,7 @@ function renderSeekerCards() {
     return true;
   });
 
-  document.getElementById('scRangeInfo').textContent = `${list.length}건 표시`;
+  document.getElementById('scRangeInfo').textContent = `${list.length}건 표시 (중복 제외, 전체 ${allSeekerCards.length}건)`;
 
   if (!list.length) {
     document.getElementById('scBody').innerHTML = '<tr><td colspan="9" class="empty-msg">해당 구직카드가 없습니다.</td></tr>';
