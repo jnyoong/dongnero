@@ -1198,15 +1198,33 @@ function _dedupKey(j) {
   return (n || p) ? `${n}||${p}` : null;
 }
 
-// 중복 제거: {deduped, dupes} 반환
+// 데이터 충실도 점수 (채워진 필드 수 + alert_level 가중)
+function _cardScore(j) {
+  const fields = ['name','contact_phone','age_range','location_sido','location_gu','desired_job','memo'];
+  return fields.filter(f => j[f] && String(j[f]).trim()).length
+       + (j.alert_level || 0);  // 단계 높을수록 우선
+}
+
+// 중복 제거: 이름+전화 동일 그룹에서 데이터 가장 많은 항목을 대표로 선택
 function _splitDup(cards) {
-  const seen = new Set();
-  const deduped = [], dupes = [];
+  // 1) key별 그룹화
+  const groups = {};
+  const noKey  = [];
   cards.forEach(j => {
     const key = _dedupKey(j);
-    if (!key) { deduped.push(j); return; }
-    if (seen.has(key)) dupes.push(j);
-    else { seen.add(key); deduped.push(j); }
+    if (!key) { noKey.push(j); return; }
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(j);
+  });
+
+  const deduped = [...noKey];
+  const dupes   = [];
+  Object.values(groups).forEach(grp => {
+    if (grp.length === 1) { deduped.push(grp[0]); return; }
+    // 점수 높은 순 정렬 → 1위가 대표
+    grp.sort((a, b) => _cardScore(b) - _cardScore(a));
+    deduped.push(grp[0]);
+    dupes.push(...grp.slice(1));
   });
   return { deduped, dupes };
 }
