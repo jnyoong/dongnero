@@ -2,6 +2,12 @@
 
 ---
 
+## [v0.65] 2026-05-18 — 정보글 추가: 퇴직 실업급여 신청 가이드
+
+- `posts_data.js`: 신규 글 추가 (id: unemployment-benefit-2026) — 실업급여 수급 조건·금액·신청 절차
+- `posts/unemployment-benefit-2026.html`: build_posts.py로 자동 생성
+- `sitemap.xml`: 신규 URL 추가
+
 ## [v0.64] 2026-05-16 — 정보글 추가: 50대 첫 면접 완전 준비 가이드
 
 ### posts_data.js / posts/interview-senior-2026.html
