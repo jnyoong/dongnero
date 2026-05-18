@@ -2,6 +2,11 @@
 
 ---
 
+## [v0.77] 2026-05-19 — 봇 데이터 기준 수정 (jobs_data.js 동기화)
+
+- `telegram_bot.py` — /status·/jobs가 jobs_data.js(사이트 기준) 읽도록 수정, jobs.json 폴백 유지
+- `jobs.json` — jobs_data.js와 동기화 (git rebase 충돌로 인한 439건 불일치 해소)
+
 ## [v0.76] 2026-05-19 — 텔레그램 봇 버그 수정 3건
 
 - `start_bot.ps1` — Start-Process try/catch 추가, 연속 5회 즉시종료 시 자동재시작 중단 + 알림 (스팸 방지), UTF-8 BOM 인코딩 저장으로 PS5.1 파싱 문제 해결

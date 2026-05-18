@@ -5,7 +5,7 @@
 - Windows 작업 스케줄러로 PC 시작 시 자동 실행
 """
 
-import os, json, time, subprocess, sys, requests, logging
+import os, json, re, time, subprocess, sys, requests, logging
 from pathlib import Path
 from datetime import datetime
 
@@ -43,6 +43,21 @@ if not TOKEN or not CHAT_ID:
 ALLOWED_CHAT = str(CHAT_ID)
 
 
+def _load_jobs() -> dict:
+    """jobs_data.js(사이트 기준) 파싱, 실패 시 jobs.json 폴백"""
+    js_file = BASE / "jobs_data.js"
+    if js_file.exists():
+        try:
+            raw = js_file.read_text(encoding="utf-8")
+            raw = re.sub(r"^/\*.*?\*/\s*", "", raw, flags=re.DOTALL)
+            raw = re.sub(r"^var\s+JOBS_DATA\s*=\s*", "", raw.strip()).rstrip().rstrip(";")
+            return json.loads(raw)
+        except Exception:
+            pass
+    with open(BASE / "jobs.json", encoding="utf-8") as f:
+        return json.load(f)
+
+
 # ── 텔레그램 API ─────────────────────────────────────────────
 def send(text: str, parse_mode="Markdown"):
     try:
@@ -71,8 +86,7 @@ def get_updates(offset=0):
 def cmd_status():
     """마지막 크롤링 상태"""
     try:
-        with open(BASE / "jobs.json", encoding="utf-8") as f:
-            data = json.load(f)
+        data = _load_jobs()
         updated = data.get("updated_at", "알 수 없음")
         total   = data.get("total", 0)
         sc      = data.get("source_counts", {})
@@ -149,8 +163,7 @@ def cmd_subs():
 def cmd_jobs():
     """현재 총 공고 건수"""
     try:
-        with open(BASE / "jobs.json", encoding="utf-8") as f:
-            data = json.load(f)
+        data = _load_jobs()
         total   = data.get("total", 0)
         updated = data.get("updated_at", "-")
         sc      = data.get("source_counts", {})
