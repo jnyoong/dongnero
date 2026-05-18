@@ -1573,28 +1573,79 @@ def run_crawler():
     # ── 텔레그램 이상 알림 ────────────────────────────────────
     anomalies = {src: log for src, log in crawl_log.items()
                  if log.get("is_anomaly") or log.get("early_stop") or (log.get("errors"))}
-    if anomalies:
-        _send_telegram_alert(anomalies, len(filtered), updated_at)
+    _send_telegram_summary(
+        source_counts=source_counts,
+        prev_source_counts=_prev_for_alert,
+        crawl_log=crawl_log,
+        total=len(filtered),
+        updated_at=updated_at,
+    )
 
 
 # ── 텔레그램 알림 ─────────────────────────────────────────────────────────────
 
-def _send_telegram_alert(anomalies: dict, total: int, updated_at: str) -> None:
+def _send_telegram_summary(
+    source_counts: dict, prev_source_counts: dict,
+    crawl_log: dict, total: int, updated_at: str
+) -> None:
     token   = os.environ.get("TELEGRAM_BOT_TOKEN", "")
     chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
     if not token or not chat_id:
-        return  # 설정 안 됐으면 조용히 스킵
+        return
 
-    lines = [f"⚠️ *동네로 크롤링 이상 감지* ({updated_at})", f"총 수집: {total}건\n"]
-    for src, log in anomalies.items():
+    prev_total = sum(prev_source_counts.values())
+    total_diff = total - prev_total
+    total_sign = "+" if total_diff > 0 else ""
+    total_pct  = f" ({total_sign}{round(total_diff/prev_total*100)}%)" if prev_total else ""
+
+    lines = [
+        f"📊 *동네로 크롤링 완료*",
+        f"🕐 {updated_at}",
+        f"",
+        f"총 수집: *{total:,}건*{total_pct} (전일 {prev_total:,}건)",
+        f"",
+        f"*출처별 현황*",
+    ]
+
+    anomaly_lines = []
+    for src, cnt in source_counts.items():
+        prev = prev_source_counts.get(src, 0)
+        log  = crawl_log.get(src, {})
+
+        # 증감 표시
+        if prev:
+            diff = cnt - prev
+            sign = "+" if diff > 0 else ""
+            pct  = round(diff / prev * 100)
+            diff_str = f"  {sign}{diff}건 ({sign}{pct}%)"
+        else:
+            diff_str = "  (전일 없음)"
+
+        # 이상 여부 아이콘
         if log.get("errors"):
-            err = log["errors"][0]["error"][:80]
-            lines.append(f"🚨 *{src}* — 타임아웃 p{log['errors'][0]['page']}\n`{err}`")
+            icon = "🚨"
         elif log.get("early_stop"):
-            lines.append(f"⚠️ *{src}* — 조기종료 {log.get('pages_done')}/{log.get('pages_expected')}p")
-        reason = log.get("anomaly_reason", "")
-        if reason and "전회" in reason:
-            lines.append(f"📉 *{src}* — {reason}")
+            icon = "⚠️"
+        elif prev > 10 and cnt < prev * 0.6:
+            icon = "📉"
+        else:
+            icon = "•"
+
+        lines.append(f"{icon} {src}: {cnt:,}건{diff_str}")
+
+        # 이상 상세
+        if log.get("errors"):
+            e = log["errors"][0]
+            anomaly_lines.append(f"🚨 *{src}* 타임아웃 p{e['page']}: `{e['error'][:70]}`")
+        elif log.get("early_stop"):
+            anomaly_lines.append(f"⚠️ *{src}* 조기종료 {log.get('pages_done')}/{log.get('pages_expected')}p")
+        if prev > 10 and cnt < prev * 0.6:
+            anomaly_lines.append(f"📉 *{src}* 전일 {prev}건의 {round(cnt/prev*100)}% 수준")
+
+    if anomaly_lines:
+        lines += ["", "─────────────────", "⚠️ *이상 감지*"] + anomaly_lines
+    else:
+        lines += ["", "✅ 이상 없음"]
 
     text = "\n".join(lines)
     try:
@@ -1603,9 +1654,9 @@ def _send_telegram_alert(anomalies: dict, total: int, updated_at: str) -> None:
             json={"chat_id": chat_id, "text": text, "parse_mode": "Markdown"},
             timeout=10,
         )
-        print(f"  텔레그램 알림 발송 완료")
+        print("  텔레그램 요약 발송 완료")
     except Exception as e:
-        print(f"  텔레그램 알림 실패: {e}")
+        print(f"  텔레그램 발송 실패: {e}")
 
 
 # ── Windows 알림 ──────────────────────────────────────────────────────────────
