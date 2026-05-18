@@ -31,12 +31,9 @@ logging.basicConfig(
 TOKEN   = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
 
-CRAWL_COOLDOWN    = 1800  # 30분
-_last_crawl_time  = 0.0
-_BOT_START        = datetime.now()
-_last_subs_count  = -1    # 구직카드 수 변화 감지용 (-1 = 미초기화)
-_last_subs_check  = 0.0   # 마지막 체크 시각
-SUBS_CHECK_INTERVAL = 60  # 60초마다 폴링
+CRAWL_COOLDOWN = 1800  # 30분
+_last_crawl_time = 0.0
+_BOT_START = datetime.now()
 
 SUPABASE_URL = "https://riomousxlyvwmembuhvc.supabase.co"
 SUPABASE_KEY = "sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh"
@@ -384,58 +381,6 @@ COMMANDS = {
 }
 
 
-def _check_new_subs():
-    """구직카드 신규 알림 — 60초마다 폴링, 증가 감지 시 즉시 발송"""
-    global _last_subs_count, _last_subs_check
-    if time.time() - _last_subs_check < SUBS_CHECK_INTERVAL:
-        return
-    _last_subs_check = time.time()
-    try:
-        rows = _sb_rpc("admin_get_seeker_cards", {"p_pw": ADMIN_PW})
-        if not isinstance(rows, list):
-            return
-        # 중복제거
-        seen, deduped = set(), []
-        for x in rows:
-            key = (x.get("name", ""), x.get("phone", ""))
-            if key not in seen:
-                seen.add(key)
-                deduped.append(x)
-        count = len(deduped)
-
-        if _last_subs_count == -1:
-            # 최초 초기화 — 알림 없이 기준값만 저장
-            _last_subs_count = count
-            return
-
-        if count > _last_subs_count:
-            diff = count - _last_subs_count
-            # 신규 항목 찾기 (raw rows 기준 최신순)
-            new_rows = rows[-diff:] if diff <= len(rows) else rows
-            details  = []
-            for x in new_rows[:3]:  # 최대 3건 표시
-                name  = x.get("name", "?")
-                phone = (x.get("phone", "") or "")[-4:]  # 뒷 4자리만
-                lv    = x.get("alert_level") or 2
-                lv_label = {1: "👀정보보기", 2: "🔔알림받기", 3: "💼적극구직"}.get(lv, f"lv{lv}")
-                details.append(f"  • {name} (****{phone}) {lv_label}")
-
-            dup_raw  = len(rows) - count
-            dup_note = f"\n  ⚠️ 중복건 포함({dup_raw}건 제외)" if dup_raw > 0 else ""
-
-            send(
-                f"🔔 *구직카드 신규 {diff}건!*\n"
-                f"총 {_last_subs_count} → *{count}명*{dup_note}\n"
-                + "\n".join(details)
-            )
-            _last_subs_count = count
-        elif count < _last_subs_count:
-            # 삭제된 경우
-            _last_subs_count = count
-
-    except Exception as e:
-        logging.warning(f"subs check error: {e}")
-
 
 # ── 메인 루프 ────────────────────────────────────────────────
 def main():
@@ -447,7 +392,6 @@ def main():
         try:
             updates = get_updates(offset)
             backoff = 1
-            _check_new_subs()  # 구직카드 신규 알림 폴링
             for upd in updates:
                 offset  = upd["update_id"] + 1
                 msg     = upd.get("message", {})

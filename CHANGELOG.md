@@ -2,6 +2,13 @@
 
 ---
 
+## [v0.81] 2026-05-19 — 구직카드 신규 알림 Supabase Edge Function으로 이전
+
+- `supabase/functions/notify-new-seeker/index.ts` — Edge Function 신규: seeker_cards INSERT → 텔레그램 즉시 발송, 중복 자동 감지
+- Supabase DB 트리거 `on_seeker_cards_insert` 생성 (pg_net 기반)
+- `telegram_bot.py` — 60초 폴링 코드 전량 제거 (PC 꺼져도 알림 동작)
+- `.gitignore` — supabase 임시 파일 제외 추가
+
 ## [v0.80] 2026-05-19 — 텔레그램 봇 버그수정 + 구직카드 실시간 알림
 
 - `telegram_bot.py`:

@@ -3,3 +3,5 @@ dongnero-kakao-640.png
 crawl_log.txt
 .env.local
 __pycache__/
+supabase/.branches/
+supabase/.temp/
