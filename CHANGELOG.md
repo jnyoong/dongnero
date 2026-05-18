@@ -2,6 +2,12 @@
 
 ---
 
+## [v0.83] 2026-05-19 — 구직카드 알림 완전 수정 (3단계 근본 원인)
+
+- Supabase 트리거 `net.http_post()` body 타입 오류: `text` → `jsonb` 수정 (pg_net v0.20.0 실제 시그니처 반영)
+- Edge Function Telegram 메시지 Markdown → HTML 전환 (이름에 `_` 포함 시 400 오류 해소)
+- 전체 경로 검증 완료: INSERT → 트리거 → pg_net → Edge Function → Telegram
+
 ## [v0.82] 2026-05-19 — 구직카드 등록 오류 수정
 
 - Supabase `seeker_cards` INSERT RLS 정책 누락 → `anon_can_insert` 정책 추가 (폼 등록 정상화)
