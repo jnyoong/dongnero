@@ -31,9 +31,12 @@ logging.basicConfig(
 TOKEN   = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
 
-CRAWL_COOLDOWN = 1800  # 30분
-_last_crawl_time = 0.0
-_BOT_START = datetime.now()
+CRAWL_COOLDOWN    = 1800  # 30분
+_last_crawl_time  = 0.0
+_BOT_START        = datetime.now()
+_last_subs_count  = -1    # 구직카드 수 변화 감지용 (-1 = 미초기화)
+_last_subs_check  = 0.0   # 마지막 체크 시각
+SUBS_CHECK_INTERVAL = 60  # 60초마다 폴링
 
 SUPABASE_URL = "https://riomousxlyvwmembuhvc.supabase.co"
 SUPABASE_KEY = "sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh"
@@ -124,6 +127,8 @@ def cmd_status():
         prev    = data.get("prev_source_counts", {})
         dedup   = data.get("dedup_removed", {})
 
+        src_sum    = sum(sc.values())
+        cross_dedup = src_sum - total  # 출처간 중복 제거 수
         prev_total = sum(prev.values())
         diff  = total - prev_total
         sign  = "+" if diff >= 0 else ""
@@ -132,9 +137,10 @@ def cmd_status():
         lines = [
             f"📊 *동네로 크롤링 현황*",
             f"🕐 {updated[:16]}",
-            f"총 *{total:,}건* {sign}{diff:,}{pct}",
+            f"최종 *{total:,}건* {sign}{diff:,}{pct}",
+            f"(출처합계 {src_sum:,} - 중복제거 {cross_dedup:,})",
             "",
-            "*출처별 상세:*",
+            "*출처별:*",
         ]
 
         anomaly_srcs = []
@@ -207,53 +213,77 @@ def cmd_subs():
 
 
 def cmd_today():
-    """오늘 크롤링 완료 여부"""
+    """오늘 크롤링 완료 여부 — jobs_data.js 기준"""
     try:
-        today     = datetime.now().strftime("%Y-%m-%d")
-        last_file = BASE / "last_crawl.txt"
-        if last_file.exists():
-            last = last_file.read_text(encoding="utf-8").strip()
-            if last == today:
-                data = _load_jobs()
-                send(
-                    f"✅ *오늘 크롤링 완료*\n"
-                    f"날짜: {today}\n"
-                    f"완료: {data.get('updated_at','?')[:16]}\n"
-                    f"수집: {data.get('total',0):,}건"
-                )
-            else:
-                send(f"⏳ *오늘 크롤링 미완료*\n마지막 완료: {last}\n07:00 자동 실행 예정")
+        data    = _load_jobs()
+        updated = data.get("updated_at", "")   # "2026-05-18 21:23:33 KST"
+        updated_date = updated[:10]            # "2026-05-18"
+        today   = datetime.now().strftime("%Y-%m-%d")
+
+        if updated_date == today:
+            icon = "✅"
+            label = "오늘 크롤링 완료"
         else:
-            send("❓ 크롤링 기록 없음")
+            icon = "⏳"
+            label = "오늘 크롤링 미완료 (07:00 자동 예정)"
+
+        send(
+            f"{icon} *{label}*\n"
+            f"마지막 크롤링: {updated[:16]}\n"
+            f"수집 공고: {data.get('total',0):,}건"
+        )
     except Exception as e:
         send(f"❌ {e}")
 
 
 def cmd_clicks():
-    """오늘 공고 클릭 통계"""
+    """공고 클릭 통계 (오늘 KST + 어제)"""
     try:
-        today = datetime.now().strftime("%Y-%m-%d")
-        rows  = _sb_get(
+        from datetime import timezone, timedelta
+        KST = timezone(timedelta(hours=9))
+        now_kst       = datetime.now(KST)
+        today_str     = now_kst.strftime("%Y-%m-%d")
+        # KST 오늘 00:00 → UTC 변환 (KST = UTC+9)
+        today_utc_str = now_kst.replace(hour=0, minute=0, second=0, microsecond=0) \
+                            .astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
+        # 어제 KST 00:00 UTC
+        yest_utc_str  = (now_kst.replace(hour=0, minute=0, second=0, microsecond=0)
+                         - timedelta(days=1)).astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
+
+        rows = _sb_get(
             "job_clicks",
-            {"select": "source", "clicked_at": f"gte.{today}", "limit": "5000"},
+            {"select": "source,clicked_at", "clicked_at": f"gte.{yest_utc_str}",
+             "order": "clicked_at.desc", "limit": "5000"},
         )
         if not isinstance(rows, list):
             raise ValueError(str(rows))
 
-        total  = len(rows)
-        by_src: dict = {}
-        for x in rows:
-            s = x.get("source", "기타")
-            by_src[s] = by_src.get(s, 0) + 1
+        today_rows = [x for x in rows if x["clicked_at"] >= today_utc_str]
+        yest_rows  = [x for x in rows if x["clicked_at"] < today_utc_str]
 
-        top = sorted(by_src.items(), key=lambda x: -x[1])[:6]
-        top_str = "\n".join(f"  • {s}: {c}회" for s, c in top)
+        def src_summary(lst):
+            by_src: dict = {}
+            for x in lst:
+                s = x.get("source", "기타")
+                by_src[s] = by_src.get(s, 0) + 1
+            return sorted(by_src.items(), key=lambda x: -x[1])[:5]
 
-        send(
-            f"📈 *오늘 공고 클릭* ({today})\n"
-            f"총 *{total}회*\n\n"
-            f"출처별:\n{top_str}"
-        )
+        top_today = src_summary(today_rows)
+        top_yest  = src_summary(yest_rows)
+
+        lines = [f"📈 *공고 클릭 현황*"]
+        lines.append(f"\n오늘({today_str}): *{len(today_rows)}회*")
+        if top_today:
+            lines += [f"  • {s}: {c}" for s, c in top_today]
+        else:
+            lines.append("  (아직 클릭 없음)")
+
+        yest_str = (now_kst - timedelta(days=1)).strftime("%Y-%m-%d")
+        lines.append(f"\n어제({yest_str}): *{len(yest_rows)}회*")
+        if top_yest:
+            lines += [f"  • {s}: {c}" for s, c in top_yest]
+
+        send("\n".join(lines))
     except Exception as e:
         send(f"❌ 클릭 통계 실패: {e}")
 
@@ -287,17 +317,18 @@ def cmd_log():
 
 
 def cmd_error():
-    """최근 봇 에러 로그"""
+    """봇 Python 에러 로그 (bot.log) — 봇 프로세스 예외만 기록됨
+    크롤링 에러는 /log 로 확인"""
     log_file = BASE / "bot.log"
     if not log_file.exists():
-        send("✅ 에러 로그 없음")
+        send("✅ 봇 에러 없음 (bot.log 없음)")
         return
     lines  = log_file.read_text(encoding="utf-8", errors="replace").strip().splitlines()
     recent = [l for l in lines if l.strip()][-10:]
     if not recent:
-        send("✅ 에러 기록 없음")
+        send("✅ 봇 에러 기록 없음")
     else:
-        send("🔴 *최근 봇 에러*\n```\n" + "\n".join(recent) + "\n```")
+        send("🔴 *봇 Python 에러* (bot.log)\n크롤링 에러는 /log 확인\n```\n" + "\n".join(recent) + "\n```")
 
 
 def cmd_crawl():
@@ -353,6 +384,59 @@ COMMANDS = {
 }
 
 
+def _check_new_subs():
+    """구직카드 신규 알림 — 60초마다 폴링, 증가 감지 시 즉시 발송"""
+    global _last_subs_count, _last_subs_check
+    if time.time() - _last_subs_check < SUBS_CHECK_INTERVAL:
+        return
+    _last_subs_check = time.time()
+    try:
+        rows = _sb_rpc("admin_get_seeker_cards", {"p_pw": ADMIN_PW})
+        if not isinstance(rows, list):
+            return
+        # 중복제거
+        seen, deduped = set(), []
+        for x in rows:
+            key = (x.get("name", ""), x.get("phone", ""))
+            if key not in seen:
+                seen.add(key)
+                deduped.append(x)
+        count = len(deduped)
+
+        if _last_subs_count == -1:
+            # 최초 초기화 — 알림 없이 기준값만 저장
+            _last_subs_count = count
+            return
+
+        if count > _last_subs_count:
+            diff = count - _last_subs_count
+            # 신규 항목 찾기 (raw rows 기준 최신순)
+            new_rows = rows[-diff:] if diff <= len(rows) else rows
+            details  = []
+            for x in new_rows[:3]:  # 최대 3건 표시
+                name  = x.get("name", "?")
+                phone = (x.get("phone", "") or "")[-4:]  # 뒷 4자리만
+                lv    = x.get("alert_level") or 2
+                lv_label = {1: "👀정보보기", 2: "🔔알림받기", 3: "💼적극구직"}.get(lv, f"lv{lv}")
+                details.append(f"  • {name} (****{phone}) {lv_label}")
+
+            dup_raw  = len(rows) - count
+            dup_note = f"\n  ⚠️ 중복건 포함({dup_raw}건 제외)" if dup_raw > 0 else ""
+
+            send(
+                f"🔔 *구직카드 신규 {diff}건!*\n"
+                f"총 {_last_subs_count} → *{count}명*{dup_note}\n"
+                + "\n".join(details)
+            )
+            _last_subs_count = count
+        elif count < _last_subs_count:
+            # 삭제된 경우
+            _last_subs_count = count
+
+    except Exception as e:
+        logging.warning(f"subs check error: {e}")
+
+
 # ── 메인 루프 ────────────────────────────────────────────────
 def main():
     print(f"[{datetime.now():%H:%M:%S}] 동네로 봇 시작")
@@ -363,6 +447,7 @@ def main():
         try:
             updates = get_updates(offset)
             backoff = 1
+            _check_new_subs()  # 구직카드 신규 알림 폴링
             for upd in updates:
                 offset  = upd["update_id"] + 1
                 msg     = upd.get("message", {})
