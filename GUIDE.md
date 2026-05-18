@@ -1,6 +1,6 @@
 # 동네로 운영 가이드
 
-> 최종 업데이트: 2026-05-19 (v0.80)  
+> 최종 업데이트: 2026-05-19 (v0.86)  
 > 운영자: kyungmh95 / kahn201130@gmail.com
 
 ---
@@ -121,9 +121,12 @@ start_bot.ps1 — watchdog 무한루프
 | `/help` | 명령어 목록 |
 
 **자동 알림:**
-- 크롤링 시작 / 완료 / 실패 → 자동 발송
-- 구직카드 신규 가입 즉시 → 이름·전화뒷4자리·단계 발송 (60초 폴링)
+- 크롤링 시작 / 완료 / 실패 → 자동 발송 (로컬·Actions 모두)
+- 구직카드 신규 가입 즉시 → 이름·전화뒷4자리·단계 발송 (**Supabase Edge Function, PC 꺼져도 작동**)
 - 봇 프로세스 재시작 시 → 재시작 횟수·이유 발송
+
+**PC 꺼져도 살아있는 것:** 구직카드 신규 알림(Edge Function), 크롤링(GitHub Actions), 사이트 서비스(GitHub Pages)  
+**PC 켜야 작동:** 텔레그램 봇 명령어(/status 등)
 
 ---
 
@@ -138,6 +141,23 @@ start_bot.ps1 — watchdog 무한루프
 ```
 
 **어드민 → "정보 글" 탭**에서 글 목록 확인 + "네이버 발행 준비" 버튼으로 제목/요약/HTML 복사 가능.
+
+---
+
+### 3-3-1. 구직카드 신규 가입 즉시 알림 (Supabase Edge Function)
+
+```
+사용자가 구직카드 등록
+  → seeker_cards INSERT
+  → DB 트리거 on_seeker_cards_insert 발동
+  → pg_net.http_post → Edge Function notify-new-seeker 호출
+  → 텔레그램 "🔔 신규 구직카드 등록!" 즉시 발송
+      이름 / 전화번호 뒷4자리 / 단계(lv1~3) / 중복 여부
+```
+
+- Edge Function URL: `https://riomousxlyvwmembuhvc.supabase.co/functions/v1/notify-new-seeker`
+- pg_net v0.20.0, Supabase 서버에서 실행 → PC 꺼져도 100% 동작
+- 트리거에 `EXCEPTION WHEN OTHERS THEN RETURN NEW` 적용 → 알림 실패해도 등록은 항상 성공
 
 ---
 
@@ -201,7 +221,8 @@ Claude가 자동으로:
 **우선순위 메커니즘:**
 - 로컬 성공 → `last_crawl.txt` = 오늘 날짜로 기록 + push
 - GitHub Actions → `last_crawl.txt` 확인 → 오늘 날짜면 스킵
-- GitHub Actions notify 단계: 현재 비활성화 (`if: false`)
+- GitHub Actions: 시작·완료 텔레그램 알림 추가됨 (로컬과 동일 수준)
+- GitHub Actions notify 단계: 현재 비활성화 (`if: false`) — 카카오 Secrets 등록 후 활성화 필요
 
 **작업 스케줄러 설정 (동네로_크롤링):**
 - 실행 제한: 2시간 (변경 완료)
@@ -219,7 +240,8 @@ Claude가 자동으로:
 | 도메인 | https://dongnero.kr |
 | DB | Supabase (`riomousxlyvwmembuhvc`) |
 | 알림 API | Solapi (카카오 알림톡) — 검수 완료, Secrets 등록 필요 |
-| 텔레그램 봇 | @jnyoong_bot — watchdog 상시 운영, 구독자 실시간 알림 |
+| 텔레그램 봇 | @jnyoong_bot — watchdog 상시 운영, 명령어 8개, 구독자 실시간 알림 |
+| Supabase Edge Function | notify-new-seeker — 구직카드 INSERT 즉시 알림 (PC 무관) |
 | Analytics | Google Analytics G-PYD0Q5NTPD |
 | 네이버 블로그 | blog.naver.com/kyungmh95 |
 
@@ -237,8 +259,8 @@ Claude가 자동으로:
 ## 8. 남은 할 일 (To-do)
 
 - [ ] **카카오 알림톡 활성화**: GitHub Secrets에 `KAKAO_TMPL_WITH_JOB`, `KAKAO_TMPL_NO_JOB`, `KAKAO_PFID`, `SENDER_NUMBER`, `SOLAPI_API_KEY`, `SOLAPI_API_SECRET` 등록 → crawl.yml UI에서 notify 단계 `if: false` 제거
-- [ ] **GitHub Secrets 텔레그램**: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` 등록 (GitHub Actions 실행 시에도 텔레그램 받으려면)
-- [ ] **crawl.yml GitHub UI 수정** (PAT에 workflow scope 없어서 로컬 push 불가)
+- [x] ~~**GitHub Secrets 텔레그램**: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` 등록~~ **완료**
+- [x] ~~**crawl.yml GitHub UI 수정**~~ **완료** (workflow scope 추가 후 push)
 - [ ] **네이버 블로그 미발행 글 확인 후 발행**
 - [ ] **GitHub PAT 만료 전 갱신** 및 `git remote set-url github` 재적용
 - [ ] **당근 커뮤니티 홍보 시작** (메모.md에 홍보 문구 20개 보관 중)
@@ -271,8 +293,12 @@ dongnero/
 ├── build_posts.py        정보글 정적 HTML 빌더
 ├── notify.py             카카오 알림톡 발송 (현재 비활성화)
 ├── crawl_local.ps1       로컬 크롤링 (잠금·텔레그램·push 포함)
-├── telegram_bot.py       텔레그램 원격 제어 봇 (명령어 9개 + 자동알림)
-├── start_bot.ps1         봇 watchdog (자동재시작·중복방지·UTF-8 BOM)
+├── telegram_bot.py       텔레그램 원격 제어 봇 (명령어 8개 + 자동알림)
+├── start_bot.ps1         봇 watchdog (자동재시작·중복방지·Named Mutex)
+│
+├── supabase/
+│   └── functions/
+│       └── notify-new-seeker/index.ts   구직카드 신규 즉시 알림 Edge Function
 ├── .env.local            텔레그램 토큰·chat_id (gitignore됨)
 │
 ├── .github/workflows/
