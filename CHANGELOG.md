@@ -2,6 +2,11 @@
 
 ---
 
+## [v0.76] 2026-05-19 — 텔레그램 봇 버그 수정 3건
+
+- `start_bot.ps1` — Start-Process try/catch 추가, 연속 5회 즉시종료 시 자동재시작 중단 + 알림 (스팸 방지), UTF-8 BOM 인코딩 저장으로 PS5.1 파싱 문제 해결
+- `telegram_bot.py` — /subs Supabase 응답이 list가 아닐 경우 명시적 오류 처리 추가
+
 ## [v0.75] 2026-05-19 — 텔레그램 봇 보안·운영 강화 + watchdog 자동재시작
 
 - `telegram_bot.py` — `/crawl` 30분 쿨다운, 메인루프 지수 백오프 에러복구, `bot.log` 에러 파일 기록

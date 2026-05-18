@@ -129,6 +129,8 @@ def cmd_subs():
             timeout=10,
         )
         rows = r.json()
+        if not isinstance(rows, list):
+            raise ValueError(f"Supabase 오류: {rows}")
         total = len(rows)
         lv0 = sum(1 for x in rows if x.get("alert_level", 0) == 0)
         lv1 = sum(1 for x in rows if x.get("alert_level", 0) == 1)

@@ -1,4 +1,4 @@
-# dongnero telegram bot watchdog
+﻿# dongnero telegram bot watchdog
 $PYTHON   = "C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe"
 $WORK_DIR = $PSScriptRoot
 $SCRIPT   = Join-Path $PSScriptRoot "telegram_bot.py"
@@ -22,22 +22,34 @@ function SendTelegram([string]$text) {
 }
 
 $restartCount = 0
+$fastRestarts = 0
 
 while ($true) {
     $start = Get-Date
     Write-Output "[$($start.ToString('HH:mm:ss'))] bot start (restarts: $restartCount)"
 
-    $proc = Start-Process -FilePath $PYTHON -ArgumentList "`"$SCRIPT`"" `
-        -WorkingDirectory $WORK_DIR -WindowStyle Hidden -Wait -PassThru
-    $exitCode = if ($proc) { $proc.ExitCode } else { 1 }
-    $elapsed  = [int]((Get-Date) - $start).TotalSeconds
+    $exitCode = 1
+    try {
+        $proc     = Start-Process -FilePath $PYTHON -ArgumentList "`"$SCRIPT`"" `
+            -WorkingDirectory $WORK_DIR -WindowStyle Hidden -Wait -PassThru
+        $exitCode = if ($proc) { $proc.ExitCode } else { 1 }
+    } catch {
+        Write-Output "Start-Process error: $_"
+    }
 
+    $elapsed = [int]((Get-Date) - $start).TotalSeconds
     Write-Output "[$((Get-Date).ToString('HH:mm:ss'))] bot exit (code=$exitCode elapsed=${elapsed}s)"
 
-    if ($exitCode -ne 0 -or $elapsed -lt 5) {
+    if ($exitCode -ne 0 -or $elapsed -lt 10) {
         $restartCount++
-        $msg = "bot restart #${restartCount} | exit:${exitCode} | uptime:${elapsed}s"
-        SendTelegram $msg
+        $fastRestarts++
+        if ($fastRestarts -ge 5) {
+            SendTelegram "bot auto-restart stopped (5 fast exits) | check .env.local or python path"
+            exit 1
+        }
+        SendTelegram "bot restarted #${restartCount} | exit:${exitCode} | uptime:${elapsed}s"
+    } else {
+        $fastRestarts = 0
     }
 
     Start-Sleep -Seconds 10
