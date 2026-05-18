@@ -30,6 +30,17 @@ jobs:
             echo "로컬 크롤링 기록 없음 → Actions 크롤링 실행"
           fi
 
+      - name: 크롤링 시작 텔레그램 알림
+        if: steps.check_local.outputs.skip == 'false'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          TODAY=$(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M')
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d "{\"chat_id\":\"${TELEGRAM_CHAT_ID}\",\"text\":\"🔄 *[GitHub Actions] 크롤링 시작* (${TODAY} KST)\\n로컬 크롤링 없음 → Actions 대신 실행\",\"parse_mode\":\"Markdown\"}" || true
+
       - name: Python 설정
         if: steps.check_local.outputs.skip == 'false'
         uses: actions/setup-python@v5
@@ -42,6 +53,9 @@ jobs:
 
       - name: 크롤러 실행
         if: steps.check_local.outputs.skip == 'false'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python crawler.py
 
       - name: 정보게시판 정적 HTML 빌드
@@ -53,10 +67,21 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add jobs.json jobs_data.js excluded_data.js posts/ sitemap.xml
+          git add jobs.json jobs_data.js excluded_data.js posts/ sitemap.xml last_crawl.txt
           git diff --cached --quiet || git commit -m "daily update $(TZ=Asia/Seoul date +'%Y-%m-%d')"
           git pull --rebase origin main
           git push
+
+      - name: 배포 완료 텔레그램 알림
+        if: steps.check_local.outputs.skip == 'false'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          TODAY=$(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M')
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d "{\"chat_id\":\"${TELEGRAM_CHAT_ID}\",\"text\":\"✅ *[GitHub Actions] 배포 완료* (${TODAY} KST)\\njobs.json push → dongnero.kr 반영 중\",\"parse_mode\":\"Markdown\"}" || true
 
       - name: 신규 일자리 알림 발송
         if: steps.check_local.outputs.skip == 'false'

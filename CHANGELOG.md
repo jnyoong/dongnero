@@ -2,6 +2,13 @@
 
 ---
 
+## [v0.86] 2026-05-19 — GitHub Actions 텔레그램 알림 + Secrets 등록
+
+- `.github/workflows/crawl.yml` — 시작·완료 텔레그램 알림 단계 추가 (PC 꺼져있어도 Actions 크롤링 시 알림 수신)
+- `crawl.yml` — 크롤러 실행 단계에 TELEGRAM_BOT_TOKEN·TELEGRAM_CHAT_ID 환경변수 추가 (완료 요약 발송)
+- `crawl.yml` — last_crawl.txt도 커밋 대상에 포함
+- GitHub Secrets 등록: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+
 ## [v0.85] 2026-05-19 — /subs 오늘 신규 건수 + 중복제거 키 수정
 
 - `telegram_bot.py` — /subs: 오늘(KST) 신규 구직카드 N명 한 줄 추가
