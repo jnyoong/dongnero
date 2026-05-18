@@ -2,6 +2,14 @@
 
 ---
 
+## [v0.75] 2026-05-19 — 텔레그램 봇 보안·운영 강화 + watchdog 자동재시작
+
+- `telegram_bot.py` — `/crawl` 30분 쿨다운, 메인루프 지수 백오프 에러복구, `bot.log` 에러 파일 기록
+- `start_bot.ps1` — watchdog 무한루프: 봇 죽으면 10초 후 자동재시작 + 텔레그램 알림, 중복실행 방지
+- `crawl_local.ps1` — `crawl.lock` 동시실행 방지(60분 이내 중복 차단), `CleanExit` 함수로 락 파일 정리, `SendTelegram` ForEach-Object → foreach 전환
+- 작업 스케줄러 `dongnero_crawl` 신규 등록: WakeToRun 활성화(절전 해제 후 실행), 배터리 제한 해제, 실행제한 2시간
+- Windows 레지스트리 HKCU\Run에 `dongnero_telegram_bot` 등록 (PC 시작 시 봇 자동실행)
+
 ## [v0.74] 2026-05-19 — 파일 정리: 불필요 삭제 + 메모.md 통합
 
 - 삭제: `kakao-icon-export.html` / `.gitlab-ci.yml` / `crawl_log.txt` / `CRAWL_TARGETS.md` / `BM.md` / `당근커뮤니티_홍보문구.txt`
