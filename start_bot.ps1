@@ -1,4 +1,11 @@
 ﻿# dongnero telegram bot watchdog
+# Named mutex prevents multiple instances
+$mutex = New-Object System.Threading.Mutex($false, "DongneroTelegramBotWatchdog")
+if (-not $mutex.WaitOne(0)) {
+    Write-Output "watchdog already running — exit"
+    exit 0
+}
+
 $PYTHON   = "C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe"
 $WORK_DIR = $PSScriptRoot
 $SCRIPT   = Join-Path $PSScriptRoot "telegram_bot.py"
@@ -45,6 +52,7 @@ while ($true) {
         $fastRestarts++
         if ($fastRestarts -ge 5) {
             SendTelegram "bot auto-restart stopped (5 fast exits) | check .env.local or python path"
+            $mutex.ReleaseMutex()
             exit 1
         }
         SendTelegram "bot restarted #${restartCount} | exit:${exitCode} | uptime:${elapsed}s"

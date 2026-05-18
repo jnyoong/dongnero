@@ -2,6 +2,10 @@
 
 ---
 
+## [v0.78] 2026-05-19 — 텔레그램 봇 중복 실행 방지 (Named Mutex)
+
+- `start_bot.ps1` — Named Mutex 추가: 이미 실행 중이면 즉시 종료 (두 번 응답 현상 완전 차단)
+
 ## [v0.77] 2026-05-19 — 봇 데이터 기준 수정 (jobs_data.js 동기화)
 
 - `telegram_bot.py` — /status·/jobs가 jobs_data.js(사이트 기준) 읽도록 수정, jobs.json 폴백 유지
