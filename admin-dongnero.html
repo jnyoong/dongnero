@@ -819,10 +819,11 @@ function renderSourceMonitor(jobs) {
   const finalCounts = {};
   jobs.forEach(j => { const s = j.source || '기타'; finalCounts[s] = (finalCounts[s] || 0) + 1; });
 
-  // jobs.json에서 수집 건수, 이전 수집 건수, 중복제거 통계 로드
+  // jobs.json에서 수집 건수, 이전 수집 건수, 중복제거 통계, 크롤링 로그 로드
   const rawCounts  = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.source_counts)      || {};
   const prevCounts = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.prev_source_counts) || {};
   const dedupRm    = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.dedup_removed)      || {};
+  const crawlLog   = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.crawl_log)          || {};
 
   const grid = document.getElementById('sourceMonitorGrid');
   const allSrcs = [...new Set([...Object.keys(rawCounts), ...Object.keys(prevCounts)])].sort();
@@ -856,11 +857,24 @@ function renderSourceMonitor(jobs) {
       dedupLine = `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">수집 ${raw.toLocaleString()}건 중 ${totalRemoved.toLocaleString()}건 제거(만료·필터·중복 합산)</div>`;
     }
 
-    return `<div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px 12px;border-top:3px solid ${color}">
+    // 크롤링 이상 감지 배지
+    const log = crawlLog[src] || {};
+    let alertLine = '';
+    if (log.is_anomaly) {
+      alertLine = `<div style="margin-top:5px;padding:3px 7px;background:#FEF2F2;border:1px solid #FECACA;border-radius:5px;font-size:.72rem;color:#B91C1C;font-weight:700">🚨 이상 감지: ${log.anomaly_reason || ''}</div>`;
+    } else if (log.early_stop) {
+      alertLine = `<div style="margin-top:5px;padding:3px 7px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:5px;font-size:.72rem;color:#92400E">⚠️ ${log.anomaly_reason || '조기 종료'}</div>`;
+    } else if (log.errors && log.errors.length) {
+      alertLine = `<div style="margin-top:5px;padding:3px 7px;background:#FEF2F2;border:1px solid #FECACA;border-radius:5px;font-size:.72rem;color:#B91C1C">🚨 오류 ${log.errors.length}건: ${log.errors[0].error.slice(0,60)}</div>`;
+    }
+    const cardBorder = (log.is_anomaly || (log.errors && log.errors.length)) ? '1px solid #FCA5A5' : '1px solid #E5E7EB';
+
+    return `<div style="background:#fff;border:${cardBorder};border-radius:8px;padding:10px 12px;border-top:3px solid ${color}">
       <div style="font-size:.78rem;font-weight:700;color:${color};margin-bottom:4px">${src}</div>
       <div style="font-size:1.3rem;font-weight:800;color:#111">${final.toLocaleString()}건</div>
       ${prevLine}
       ${dedupLine}
+      ${alertLine}
     </div>`;
   }).join('');
 }

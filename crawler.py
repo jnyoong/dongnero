@@ -1211,18 +1211,33 @@ def _is_api_key_set() -> bool:
 
 # ── 메인 ──────────────────────────────────────────────────────────────────────
 
-def _crawl_source(name: str, fn, pages: int, stop_if_less: int = 0) -> list[dict]:
+def _crawl_source(name: str, fn, pages: int, stop_if_less: int = 0,
+                  crawl_log: dict | None = None) -> list[dict]:
     """페이지 반복 수집 + 자연스러운 대기를 묶어주는 헬퍼"""
     jobs_all: list[dict] = []
+    errors: list[dict] = []
+    pages_done = 0
     for page in range(1, pages + 1):
         print(f"  페이지 {page}/{pages} ...", end=" ", flush=True)
-        jobs = fn(page)
-        print(f"{len(jobs)}건")
-        jobs_all.extend(jobs)
-        if not jobs or (stop_if_less and len(jobs) < stop_if_less):
+        try:
+            jobs = fn(page)
+            print(f"{len(jobs)}건")
+            jobs_all.extend(jobs)
+            pages_done += 1
+            if not jobs or (stop_if_less and len(jobs) < stop_if_less):
+                break
+            if page < pages:
+                _sleep_page()
+        except Exception as e:
+            print(f"\n  [{name} 오류] page={page} {e}")
+            errors.append({"page": page, "error": str(e)[:150]})
             break
-        if page < pages:
-            _sleep_page()
+    if crawl_log is not None:
+        crawl_log[name] = {
+            "pages_done": pages_done,
+            "pages_expected": pages,
+            "errors": errors,
+        }
     return jobs_all
 
 
@@ -1237,6 +1252,17 @@ def run_crawler():
 
     all_jobs: list[dict] = []
     source_counts: dict[str, int] = {}
+    crawl_log: dict[str, dict] = {}
+
+    # 이전 source_counts를 미리 읽어 이상 감지에 활용
+    _prev_for_alert: dict[str, int] = {}
+    if OUTPUT_FILE.exists():
+        try:
+            _prev_for_alert = json.loads(
+                OUTPUT_FILE.read_text(encoding="utf-8")
+            ).get("source_counts", {})
+        except Exception:
+            pass
 
     # 개별 공고 URL이 없어 공통 사이트 URL을 apply_link로 사용하는 출처
     SHARED_APPLY_LINKS.update([ELDER_JOBS_LINK, BUSAN_SITE_URL])
@@ -1250,43 +1276,56 @@ def run_crawler():
         print(f"      birthToYY={BIRTH_YEAR_LIMIT} (50세 이상)")
         collect_fn = scrape_work24_web
 
+    _g24_errors: list[dict] = []
+    _g24_pages_done = 0
     for page in range(1, MAX_PAGES + 1):
         print(f"  페이지 {page}/{MAX_PAGES} ...", end=" ", flush=True)
-        jobs = collect_fn(page)
-        print(f"{len(jobs)}건")
-        all_jobs.extend(jobs)
-        if len(jobs) < ITEMS_PER_PAGE:
+        try:
+            jobs = collect_fn(page)
+            print(f"{len(jobs)}건")
+            all_jobs.extend(jobs)
+            _g24_pages_done += 1
+            if len(jobs) < ITEMS_PER_PAGE:
+                break
+            _sleep_page()
+        except Exception as e:
+            print(f"\n  [고용24 오류] page={page} {e}")
+            _g24_errors.append({"page": page, "error": str(e)[:150]})
             break
-        _sleep_page()
-
+    crawl_log["고용24"] = {"pages_done": _g24_pages_done, "pages_expected": MAX_PAGES, "errors": _g24_errors}
     source_counts["고용24"] = sum(1 for j in all_jobs if j["source"] == "고용24")
     _sleep_source()
 
     # ── 2단계: 알바몬 ────────────────────────────────────────
     print("\n[2/8] 알바몬 스크래핑")
     before = len(all_jobs)
-    all_jobs.extend(_crawl_source("알바몬", scrape_albamon, pages=4, stop_if_less=1))
+    all_jobs.extend(_crawl_source("알바몬", scrape_albamon, pages=4, stop_if_less=1, crawl_log=crawl_log))
     source_counts["알바몬"] = len(all_jobs) - before
     _sleep_source()
 
     # ── 3단계: 알바천국 ──────────────────────────────────────
     print("\n[3/8] 알바천국 스크래핑 (중장년 채용관)")
     before = len(all_jobs)
-    all_jobs.extend(_crawl_source("알바천국", scrape_albacheon, pages=6, stop_if_less=10))
+    all_jobs.extend(_crawl_source("알바천국", scrape_albacheon, pages=6, stop_if_less=10, crawl_log=crawl_log))
     source_counts["알바천국"] = len(all_jobs) - before
     _sleep_source()
 
     # ── 4단계: 시니어로 ──────────────────────────────────────
     print("\n[4/8] 시니어로(seniorro.or.kr) 스크래핑 (지역별 JSON API)")
     before = len(all_jobs)
-    all_jobs.extend(scrape_seniorro_all())
+    try:
+        all_jobs.extend(scrape_seniorro_all())
+        crawl_log["시니어로"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
+    except Exception as e:
+        print(f"\n  [시니어로 오류] {e}")
+        crawl_log["시니어로"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
     source_counts["시니어로"] = len(all_jobs) - before
     _sleep_source()
 
     # ── 5단계: 서울시 일자리포털 ─────────────────────────────
     print("\n[5/8] 서울시 일자리포털(job.seoul.go.kr) 스크래핑")
     before = len(all_jobs)
-    all_jobs.extend(_crawl_source("서울일자리포털", scrape_seoul_jobs, pages=15, stop_if_less=1))
+    all_jobs.extend(_crawl_source("서울일자리포털", scrape_seoul_jobs, pages=15, stop_if_less=1, crawl_log=crawl_log))
     source_counts["서울일자리포털"] = len(all_jobs) - before
 
     # ── 6단계: 경기도 잡아바 ──────────────────────────────────
@@ -1294,41 +1333,56 @@ def run_crawler():
     if _is_jobaba_key_set():
         print("\n[6/8] 경기도 잡아바 - API 키 모드")
         before = len(all_jobs)
-        all_jobs.extend(_fetch_jobaba_api_key_mode())
+        try:
+            all_jobs.extend(_fetch_jobaba_api_key_mode())
+            crawl_log["잡아바"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
+        except Exception as e:
+            print(f"\n  [잡아바 오류] {e}")
+            crawl_log["잡아바"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
         source_counts["잡아바"] = len(all_jobs) - before
     else:
         print("\n[6/8] 경기도 잡아바 - Sheet 모드 (키 발급 전 임시)")
         before = len(all_jobs)
-        jobs_jb = scrape_jobaba_sheet()
-        all_jobs.extend(jobs_jb)
+        try:
+            jobs_jb = scrape_jobaba_sheet()
+            all_jobs.extend(jobs_jb)
+            crawl_log["잡아바"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
+        except Exception as e:
+            print(f"\n  [잡아바 오류] {e}")
+            crawl_log["잡아바"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
         source_counts["잡아바"] = len(all_jobs) - before
 
     # ── 7단계: 경기도 어르신자립형일자리사업 ─────────────────
     _sleep_source()
     print("\n[7/8] 경기도 어르신자립형일자리사업 - Sheet 모드")
     before = len(all_jobs)
-    all_jobs.extend(scrape_elder_jobs_sheet())
+    try:
+        all_jobs.extend(scrape_elder_jobs_sheet())
+        crawl_log["어르신일자리"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
+    except Exception as e:
+        print(f"\n  [어르신일자리 오류] {e}")
+        crawl_log["어르신일자리"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
     source_counts["어르신일자리"] = len(all_jobs) - before
 
     # ── 8단계: 맘시터 베이비시터 구인공고 ────────────────────
     _sleep_source()
     print(f"\n[8/9] 맘시터(mom-sitter.com) 베이비시터 구인공고")
     before = len(all_jobs)
-    all_jobs.extend(_crawl_source("맘시터", scrape_momsitter, pages=MOMSITTER_PAGES, stop_if_less=1))
+    all_jobs.extend(_crawl_source("맘시터", scrape_momsitter, pages=MOMSITTER_PAGES, stop_if_less=1, crawl_log=crawl_log))
     source_counts["맘시터"] = len(all_jobs) - before
 
     # ── 9단계: 대전일자리정보망 ───────────────────────────────
     _sleep_source()
     print(f"\n[9/10] 대전일자리정보망 (jobdaejeon.or.kr)")
     before = len(all_jobs)
-    all_jobs.extend(_crawl_source("대전일자리", scrape_daejeon, pages=DAEJEON_PAGES, stop_if_less=1))
+    all_jobs.extend(_crawl_source("대전일자리", scrape_daejeon, pages=DAEJEON_PAGES, stop_if_less=1, crawl_log=crawl_log))
     source_counts["대전일자리"] = len(all_jobs) - before
 
     # ── 10단계: 부산광역시 공공부문 일자리 ────────────────────
     _sleep_source()
     print(f"\n[10/10] 부산광역시 공공부문 일자리 (data.go.kr API)")
     before = len(all_jobs)
-    all_jobs.extend(_crawl_source("부산일자리", scrape_busan, pages=BUSAN_API_PAGES, stop_if_less=1))
+    all_jobs.extend(_crawl_source("부산일자리", scrape_busan, pages=BUSAN_API_PAGES, stop_if_less=1, crawl_log=crawl_log))
     source_counts["부산일자리"] = len(all_jobs) - before
 
     # ── 후처리 ────────────────────────────────────────────────
@@ -1407,6 +1461,29 @@ def run_crawler():
 
     filtered.sort(key=_sort_key)
 
+    # ── 크롤링 이상 감지 ──────────────────────────────────────
+    for src, cnt in source_counts.items():
+        log = crawl_log.setdefault(src, {"pages_done": 1, "pages_expected": 1, "errors": []})
+        log["count"] = cnt
+        prev = _prev_for_alert.get(src, 0)
+        log["prev_count"] = prev
+        has_error      = bool(log.get("errors"))
+        early_stop     = log.get("pages_done", 1) < log.get("pages_expected", 1) and not has_error
+        low_count      = prev > 10 and cnt < prev * 0.6
+        log["early_stop"]  = early_stop
+        log["is_anomaly"]  = has_error or low_count
+        if log["is_anomaly"]:
+            reasons = []
+            if has_error:
+                reasons.append(f"오류 {len(log['errors'])}건")
+            if low_count:
+                reasons.append(f"전회 {prev}건 대비 {round(cnt/prev*100)}%")
+            log["anomaly_reason"] = " / ".join(reasons)
+            print(f"  ⚠️  [{src}] 이상 감지: {log['anomaly_reason']}")
+        elif early_stop:
+            log["anomaly_reason"] = f"페이지 {log['pages_done']}/{log['pages_expected']} 조기 종료"
+            print(f"  ⚠️  [{src}] 조기 종료: {log['anomaly_reason']}")
+
     # ── 업종 분류 (category2) ─────────────────────────────────
     try:
         from classify_jobs import classify as _classify_cat
@@ -1425,6 +1502,7 @@ def run_crawler():
         "source_counts"     : source_counts,
         "prev_source_counts": prev_source_counts,
         "dedup_removed"     : dedup_removed,
+        "crawl_log"         : crawl_log,
         "jobs"              : filtered,
     }
 
