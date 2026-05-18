@@ -1,6 +1,6 @@
 # 동네로 운영 가이드
 
-> 최종 업데이트: 2026-05-19 (v0.72)  
+> 최종 업데이트: 2026-05-19 (v0.80)  
 > 운영자: kyungmh95 / kahn201130@gmail.com
 
 ---
@@ -21,7 +21,7 @@
 | 정보게시판 | `/info.html` | 칼럼 목록·상세 + Supabase 댓글 |
 | 동네일자리 | `/local.html` | 시도·구 기반 필터 (`?sido=서울&gu=강남구`) |
 | 홈화면추가 | `/install.html` | PWA 설치 안내 |
-| **어드민** | `/admin-dongnero.html` | 공고 관리·필터·구직카드·정보글 확인 |
+| **어드민** | `/admin-dongnero.html` | 공고 관리·필터·구직카드·정보글·클릭통계 |
 
 ---
 
@@ -32,10 +32,11 @@
 **로컬 PC가 PRIMARY, GitHub Actions는 FALLBACK.**
 
 ```
-매일 07:00 — Windows 작업 스케줄러 (동네로_크롤링)
+매일 07:00 — Windows 작업 스케줄러 (동네로_크롤링, 실행제한 2시간)
     ↓
 crawl_local.ps1 실행
     │
+    ├─ crawl.lock 생성 (동시 실행 방지, 60분 이내 중복 차단)
     ├─ 텔레그램 🚀 "크롤링 시작" 발송
     │
     ├─ python crawler.py (~15~25분)
@@ -47,14 +48,16 @@ crawl_local.ps1 실행
     │       ├─ 잡아바       (최대 3,000건+)
     │       ├─ 어르신일자리  (경기, Sheet API)
     │       ├─ 맘시터       (최대 1,000건)
-    │       ├─ 대전일자리   (최대 710건)
+    │       ├─ 대전일자리   (최대 540건)
     │       └─ 부산일자리   (data.go.kr API)
     │       ↓
     │       이상 감지 (타임아웃·조기종료·전일 60%↓) → 1회 자동 재시도
     │       업종 자동 분류 (category2, 74개 카테고리, 95%+ 커버)
+    │       출처간 중복제거 → jobs.json + jobs_data.js 동시 저장 (항상 동기화)
     │       텔레그램 📊 크롤링 결과 요약 발송 (출처별 건수·증감·이상)
     │
     ├─ last_crawl.txt에 오늘 날짜 기록 (GitHub Actions 스킵 트리거)
+    ├─ crawl.lock 삭제
     │
     ├─ git commit + push → GitHub Pages 자동 배포 (dongnero.kr 반영)
     │       └─ 텔레그램 ✅ "GitHub 배포 완료" 발송
@@ -67,8 +70,7 @@ crawl_local.ps1 실행
 ```
 
 **텔레그램 봇:** @jnyoong_bot (chat_id: 8741560901)  
-**자격증명:** `.env.local` (gitignore됨, 로컬에만 존재)  
-**GitHub Secrets 미등록 시:** Actions 실행 중엔 텔레그램 미발송 (추후 등록 가능)
+**자격증명:** `.env.local` (gitignore됨, 로컬에만 존재)
 
 **크롤러 이상 감지 3종 (어드민 소스 모니터에서 확인):**
 - 🚨 **타임아웃** — 페이지 요청 중 연결 오류, 1회 자동 재시도 후 기록
@@ -77,12 +79,55 @@ crawl_local.ps1 실행
 
 **크롤러 후처리 단계 (순서 중요):**
 1. 대전 구 보완 — wantedAuthNo 역매핑으로 고용24 location에서 구 추출
-2. _deduplicate() — wantedAuthNo → apply_link → title+company 3순위
+2. `_deduplicate()` — wantedAuthNo → apply_link → title+company 3순위
 3. 부적합 업체/키워드 필터
 4. 만료 제거 — 잡아바 Sheet API만 해당
 5. 업종 분류 — classify_jobs.py, 74개 category2 필드 추가 (95.1% 분류)
 
-### 3-2. 정보글 발행
+**로컬 크롤링 문제 발생 시 점검 순서:**
+1. 텔레그램에서 `/today` 또는 `/status` 확인
+2. 텔레그램 `/log` 로 크롤 로그 확인
+3. 작업 스케줄러 확인: `schtasks /query /tn "동네로_크롤링" /fo LIST`
+4. 수동 실행: 프로젝트 폴더에서 `.\crawl_local.ps1`
+
+---
+
+### 3-2. 텔레그램 봇 원격 제어
+
+**폰에서 언제든 서비스 상태 확인·운영 가능.**
+
+```
+PC 시작 시 레지스트리(HKCU\Run) → start_bot.ps1 자동 시작 (Hidden)
+    ↓
+start_bot.ps1 — watchdog 무한루프
+    ├─ telegram_bot.py 실행 (Hidden)
+    ├─ 봇 종료 시 10초 후 자동재시작
+    ├─ 5회 연속 즉시종료 시 재시작 중단 + 텔레그램 경고
+    └─ Named Mutex로 중복 실행 완전 차단
+```
+
+**봇 명령어 전체:**
+
+| 명령어 | 설명 |
+|--------|------|
+| `/status` | 크롤링 출처별 건수·증감·중복제거·이상 (어드민 수준) |
+| `/today` | 오늘 크롤링 완료 여부 + 최종 수집건수 |
+| `/subs` | 구직카드 가입자 현황 (lv1 정보보기 / lv2 알림받기 / lv3 적극구직) |
+| `/clicks` | 오늘·어제 공고 클릭 수 + 출처별 순위 |
+| `/log` | 최근 크롤 로그 20줄 (crawl_log.txt) |
+| `/error` | 봇 Python 에러 10줄 (bot.log) |
+| `/uptime` | 봇 시작 시각 + 가동시간 |
+| `/crawl` | 크롤링 즉시 실행 (30분 쿨다운) |
+| `/help` | 명령어 목록 |
+
+**자동 알림:**
+- 크롤링 시작 / 완료 / 실패 → 자동 발송
+- 구직카드 신규 가입 즉시 → 이름·전화뒷4자리·단계 발송 (60초 폴링)
+- 봇 프로세스 재시작 시 → 재시작 횟수·이유 발송
+
+---
+
+### 3-3. 정보글 발행
 
 ```
 운영자가 posts_data.js에 글 객체 추가
@@ -94,28 +139,21 @@ crawl_local.ps1 실행
 
 **어드민 → "정보 글" 탭**에서 글 목록 확인 + "네이버 발행 준비" 버튼으로 제목/요약/HTML 복사 가능.
 
-### 3-3. 카카오 알림톡
+---
+
+### 3-4. 카카오 알림톡
 
 ```
 notify.py (매일 크롤링 후 자동 실행 — GitHub Actions)
-  └─ Supabase notify_signups에서 alert_level>=2 구독자 조회
+  └─ Supabase seeker_cards에서 alert_level=3 구독자 조회
   └─ 오늘 신규 공고 중 구독자 희망지역·직종 매칭
   └─ Solapi API로 카카오 알림톡 발송
        ├─ 직종 있음 → KAKAO_TMPL_WITH_JOB 템플릿
        └─ 직종 없음 → KAKAO_TMPL_NO_JOB 템플릿
 ```
 
-> ⚠️ **현재 상태**: 솔라피 검수 완료. GitHub Secrets에 `KAKAO_TMPL_WITH_JOB`, `KAKAO_TMPL_NO_JOB`, `KAKAO_PFID`, `SENDER_NUMBER`, `SOLAPI_API_KEY`, `SOLAPI_API_SECRET` 추가 필요.  
-> crawl.yml의 notify 단계는 현재 `if: false`로 비활성화 상태 (테스트 후 활성화 예정).
-
-### 3-4. 알림 신청 (사용자 흐름)
-
-```
-jobs.html 프로모 카드 "알림 받기" 클릭
-  └─ Supabase notify_signups 테이블에 저장
-       (phone, region, desired_job, alert_level, seeker_card_id)
-  └─ 이후 notify.py가 매칭해서 알림 발송
-```
+> ⚠️ **현재 상태**: 솔라피 검수 완료. GitHub Secrets 등록 후 crawl.yml notify 단계 활성화 필요.  
+> crawl.yml의 notify 단계는 현재 `if: false`로 비활성화 상태.
 
 ---
 
@@ -127,7 +165,7 @@ jobs.html 프로모 카드 "알림 받기" 클릭
 |----|------|
 | 공고 목록 | 전체 공고 확인, 업종(category2) 필터, 수동 필터 처리 |
 | 필터링 제외 | 자동 필터된 공고 확인, 화이트리스트 복원 |
-| 구직카드 | 알림 신청자 구직카드 조회 |
+| 구직카드 | 알림 신청자 구직카드 조회 (lv1/2/3 단계별, 중복제거 기준) |
 | **정보 글** | posts_data.js 기반 글 목록, 네이버 발행 준비 |
 | **📊 클릭 통계** | 공고 클릭수·출처별 비율·재방문자 현황 |
 
@@ -165,11 +203,10 @@ Claude가 자동으로:
 - GitHub Actions → `last_crawl.txt` 확인 → 오늘 날짜면 스킵
 - GitHub Actions notify 단계: 현재 비활성화 (`if: false`)
 
-**로컬 크롤링 문제 발생 시 점검 순서:**
-1. 텔레그램 메시지 확인 (07:00에 🚀 시작 메시지 왔는지)
-2. `crawl_log.txt` 확인 (프로젝트 폴더)
-3. 작업 스케줄러 확인: `schtasks /query /tn "동네로_크롤링" /fo LIST`
-4. 수동 실행: 프로젝트 폴더에서 `.\crawl_local.ps1`
+**작업 스케줄러 설정 (동네로_크롤링):**
+- 실행 제한: 2시간 (변경 완료)
+- 배터리 제한: 해제
+- 새 인스턴스 정책: 새 인스턴스 실행 안 함
 
 ---
 
@@ -182,14 +219,13 @@ Claude가 자동으로:
 | 도메인 | https://dongnero.kr |
 | DB | Supabase (`riomousxlyvwmembuhvc`) |
 | 알림 API | Solapi (카카오 알림톡) — 검수 완료, Secrets 등록 필요 |
-| 텔레그램 봇 | @jnyoong_bot (크롤링 시작·완료·이상 알림) |
+| 텔레그램 봇 | @jnyoong_bot — watchdog 상시 운영, 구독자 실시간 알림 |
 | Analytics | Google Analytics G-PYD0Q5NTPD |
 | 네이버 블로그 | blog.naver.com/kyungmh95 |
 
 **Supabase 테이블:**
-- `notify_signups` — 알림 신청자
+- `seeker_cards` — 구직카드 (lv1 정보보기 / lv2 알림받기 / lv3 적극구직)
 - `post_comments` — 정보글 댓글
-- `seeker_cards` — 구직카드
 - `seen_jobs` — 신규 공고 추적 (notify.py용)
 - `notify_sent_log` — 알림 발송 로그
 - `job_clicks` — 공고 클릭 로그
@@ -200,12 +236,12 @@ Claude가 자동으로:
 
 ## 8. 남은 할 일 (To-do)
 
-- [ ] 카카오 알림톡 GitHub Secrets 등록 (`KAKAO_TMPL_WITH_JOB`, `KAKAO_TMPL_NO_JOB`, `KAKAO_PFID`, `SENDER_NUMBER`, `SOLAPI_API_KEY`, `SOLAPI_API_SECRET`) 후 crawl.yml notify 단계 `if: false` → `if: steps.check_local.outputs.skip == 'false'` 로 복구
-- [ ] GitHub Secrets에 `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` 등록 (crawl.yml의 Actions 실행 시에도 텔레그램 받으려면)
-- [ ] crawl.yml GitHub UI에서 수정 (PAT에 workflow scope 없어서 로컬 push 불가)
-- [ ] 네이버 블로그 미발행 글 확인 후 발행
-- [ ] GitHub PAT 만료 전 갱신 및 `git remote set-url github` 재적용
-- [ ] 당근 커뮤니티 홍보 시작
+- [ ] **카카오 알림톡 활성화**: GitHub Secrets에 `KAKAO_TMPL_WITH_JOB`, `KAKAO_TMPL_NO_JOB`, `KAKAO_PFID`, `SENDER_NUMBER`, `SOLAPI_API_KEY`, `SOLAPI_API_SECRET` 등록 → crawl.yml UI에서 notify 단계 `if: false` 제거
+- [ ] **GitHub Secrets 텔레그램**: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` 등록 (GitHub Actions 실행 시에도 텔레그램 받으려면)
+- [ ] **crawl.yml GitHub UI 수정** (PAT에 workflow scope 없어서 로컬 push 불가)
+- [ ] **네이버 블로그 미발행 글 확인 후 발행**
+- [ ] **GitHub PAT 만료 전 갱신** 및 `git remote set-url github` 재적용
+- [ ] **당근 커뮤니티 홍보 시작** (메모.md에 홍보 문구 20개 보관 중)
 
 ---
 
@@ -218,27 +254,31 @@ dongnero/
 ├── info.html             정보게시판
 ├── local.html            동네 일자리
 ├── install.html          홈화면 추가 안내
-├── admin-dongnero.html   운영자 어드민
+├── admin-dongnero.html   운영자 어드민 (비번: dongnero2024)
 │
 ├── posts_data.js         정보글 원본 데이터 (운영자가 직접 편집)
 ├── posts/                정보글 정적 HTML (build_posts.py가 자동 생성)
-├── jobs.json             크롤링 결과 (crawl_log, category2 포함)
-├── jobs_data.js          jobs.json의 JS 버전
+├── jobs.json             크롤링 결과 (crawl_log, source_counts, category2 포함)
+├── jobs_data.js          jobs.json의 JS 버전 (사이트·봇의 실제 기준)
 ├── excluded_data.js      필터링된 공고
+├── whitelist_data.js     수동 화이트리스트
+├── manual_excluded.js    수동 필터 목록
 ├── last_crawl.txt        로컬 크롤링 날짜 (GitHub Actions 스킵 기준)
 ├── sitemap.xml           검색엔진 사이트맵
 │
-├── crawler.py            크롤러 본체 (10개 출처, 이상감지, 텔레그램 요약)
+├── crawler.py            크롤러 본체 (10개 출처, 이상감지, 분류, 텔레그램 요약)
 ├── classify_jobs.py      업종 자동 분류 (74개 카테고리, 95.1%)
 ├── build_posts.py        정보글 정적 HTML 빌더
-├── notify.py             카카오 알림톡 발송
-├── crawl_local.ps1       로컬 크롤링 스크립트 (텔레그램 시작·완료·실패 알림)
-├── setup_scheduler.ps1   Windows 작업 스케줄러 등록 (최초 1회)
-├── .env.local            텔레그램 토큰 등 로컬 환경변수 (gitignore됨)
+├── notify.py             카카오 알림톡 발송 (현재 비활성화)
+├── crawl_local.ps1       로컬 크롤링 (잠금·텔레그램·push 포함)
+├── telegram_bot.py       텔레그램 원격 제어 봇 (명령어 9개 + 자동알림)
+├── start_bot.ps1         봇 watchdog (자동재시작·중복방지·UTF-8 BOM)
+├── .env.local            텔레그램 토큰·chat_id (gitignore됨)
 │
 ├── .github/workflows/
 │   └── crawl.yml         매일 크롤링 자동화 (로컬 없을 때 Fallback)
 │
 ├── CHANGELOG.md          변경 이력 (코드 수정 시 항상 업데이트)
-└── GUIDE.md              이 파일 (운영 가이드)
+├── GUIDE.md              이 파일 (운영 가이드)
+└── 메모.md               수익화BM·AI전략·크롤링확장·홍보문구 (gitignore됨)
 ```
