@@ -19,7 +19,28 @@ function RunGit {
     return $LASTEXITCODE
 }
 
+# 텔레그램 알림 함수 (.env.local에서 토큰 로드)
+function SendTelegram($text) {
+    $envFile = Join-Path $PSScriptRoot ".env.local"
+    $token = ""; $chatId = ""
+    if (Test-Path $envFile) {
+        Get-Content $envFile -Encoding UTF8 | ForEach-Object {
+            if ($_ -match "^TELEGRAM_BOT_TOKEN=(.+)") { $token = $Matches[1].Trim() }
+            if ($_ -match "^TELEGRAM_CHAT_ID=(.+)")   { $chatId = $Matches[1].Trim() }
+        }
+    }
+    if ($token -and $chatId) {
+        try {
+            $body = @{ chat_id=$chatId; text=$text; parse_mode="Markdown" } | ConvertTo-Json -Compress
+            Invoke-RestMethod -Uri "https://api.telegram.org/bot$token/sendMessage" `
+                -Method Post -Body $body -ContentType "application/json; charset=utf-8" `
+                -TimeoutSec 10 | Out-Null
+        } catch { Log "telegram error: $_" }
+    }
+}
+
 Log "=== crawl start ($today) ==="
+SendTelegram "🚀 *동네로 크롤링 시작* ($today $((Get-Date).ToString('HH:mm')))`n10개 출처 수집 중... 15~25분 소요"
 
 # 이전 실행에서 rebase가 중단된 채 남아있으면 정리
 $rebaseHead = Join-Path $PSScriptRoot ".git\REBASE_HEAD"
@@ -32,6 +53,7 @@ if (Test-Path $rebaseHead) {
 python crawler.py
 if ($LASTEXITCODE -ne 0) {
     Log "crawler error (exit $LASTEXITCODE). abort."
+    SendTelegram "❌ *동네로 크롤링 실패* ($today)`ncrawler.py exit code: $LASTEXITCODE"
     exit 1
 }
 Log "crawler done"
@@ -92,7 +114,9 @@ Log "push..."
 $exitCode = RunGit "push", "github", "main"
 if ($exitCode -ne 0) {
     Log "push failed (exit $exitCode)."
+    SendTelegram "⚠️ *동네로 push 실패* ($today)`ngit push exit: $exitCode`n크롤링은 완료됐지만 GitHub 반영 안됨"
     exit 1
 }
 
 Log "deploy done: $today"
+SendTelegram "✅ *동네로 GitHub 배포 완료* ($today)`njobs.json push → dongnero.kr 반영 중"
