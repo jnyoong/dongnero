@@ -2,6 +2,12 @@
 
 ---
 
+## [v0.74] 2026-05-19 — 파일 정리: 불필요 삭제 + 메모.md 통합
+
+- 삭제: `kakao-icon-export.html` / `.gitlab-ci.yml` / `crawl_log.txt` / `CRAWL_TARGETS.md` / `BM.md` / `당근커뮤니티_홍보문구.txt`
+- 신규: `메모.md` — 수익화BM·AI경쟁우위·크롤링확장계획·당근홍보문구 통합
+- `.gitignore` 정리 (메모.md 추가, pycache 추가)
+
 ## [v0.73] 2026-05-19 — 크롤링 시작 텔레그램 알림 + GUIDE.md 전면 업데이트
 
 - `crawl_local.ps1` — 크롤링 시작·실패·GitHub push 성공/실패 텔레그램 알림 추가
