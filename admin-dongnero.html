@@ -85,6 +85,7 @@
     .loading   { text-align: center; padding: 48px; color: #6B7280; }
     .row-num   { color: #9CA3AF; font-size: .78rem; }
     .title-cell { max-width: 280px; }
+    .cat2-badge { display:inline-block; margin-top:3px; padding:1px 6px; border-radius:10px; font-size:.7rem; background:#EFF6FF; color:#1D4ED8; border:1px solid #BFDBFE; }
     .title-text { font-weight: 600; line-height: 1.35; }
     .company-text { font-size: .78rem; color: #6B7280; margin-top: 2px; }
     .reason-cell { color: #DC2626; font-size: .8rem; font-weight: 600; }
@@ -264,6 +265,9 @@
         <option value="">전체 상태</option>
         <option value="filtered">수동 필터됨만</option>
         <option value="normal">정상 공고만</option>
+      </select>
+      <select id="jobCat2" onchange="renderJobs()">
+        <option value="">업종 전체</option>
       </select>
     </div>
     <div class="table-wrap">
@@ -769,6 +773,14 @@ function loadJobData() {
     document.getElementById('jobUpdated').textContent = JOBS_DATA.updated_at || '-';
     document.getElementById('tabJobCount').textContent = `(${allJobs.length.toLocaleString()})`;
     updateMfCount();
+    // category2 드롭다운 자동 생성
+    const cats = [...new Set(allJobs.map(j => j.category2 || '기타'))].sort();
+    const sel = document.getElementById('jobCat2');
+    cats.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c;
+      sel.appendChild(opt);
+    });
     renderJobs();
     renderSourceMonitor(allJobs);
   }
@@ -858,11 +870,13 @@ function renderJobs() {
   const src     = document.getElementById('jobSource').value;
   const typ     = document.getElementById('jobType').value;
   const mfFilt  = document.getElementById('jobMfFilter').value;
+  const cat2    = document.getElementById('jobCat2').value;
   const filtered = mfLinks();
 
   let list = allJobs.filter(j => {
     if (src && j.source !== src) return false;
     if (typ && j.type !== typ) return false;
+    if (cat2 && (j.category2 || '기타') !== cat2) return false;
     if (kw && !(j.title + j.company + j.location).toLowerCase().includes(kw)) return false;
     const isMf = filtered.includes(j.apply_link);
     if (mfFilt === 'filtered' && !isMf) return false;
@@ -891,6 +905,7 @@ function renderJobs() {
       <td class="title-cell">
         <div class="title-text">${j.title}</div>
         <div class="company-text">${j.company || '-'}</div>
+        ${j.category2 ? `<span class="cat2-badge">${j.category2}</span>` : ''}
       </td>
       <td>${j.location || '-'}</td>
       <td>${typeBadge(j.type)}</td>

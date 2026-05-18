@@ -1407,6 +1407,16 @@ def run_crawler():
 
     filtered.sort(key=_sort_key)
 
+    # ── 업종 분류 (category2) ─────────────────────────────────
+    try:
+        from classify_jobs import classify as _classify_cat
+        for job in filtered:
+            job["category2"] = _classify_cat(
+                job.get("title", ""), job.get("source", ""), job.get("category", "")
+            )
+    except Exception:
+        pass  # 분류 실패해도 크롤링은 정상 저장
+
     # ── 저장 ──────────────────────────────────────────────────
     updated_at = datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S KST")
     output = {
