@@ -17,6 +17,16 @@ import random
 
 # Windows CP949 환경에서 em dash 등 유니코드 문자 출력 오류 방지
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+
+# .env.local 자동 로드 (로컬 전용 환경변수 — git에 올라가지 않음)
+_env_file = os.path.join(os.path.dirname(__file__), ".env.local")
+if os.path.exists(_env_file):
+    with open(_env_file, encoding="utf-8") as _f:
+        for _line in _f:
+            _line = _line.strip()
+            if _line and not _line.startswith("#") and "=" in _line:
+                _k, _v = _line.split("=", 1)
+                os.environ.setdefault(_k.strip(), _v.strip())
 import xml.etree.ElementTree as ET
 from datetime import datetime, date, timezone, timedelta
 
