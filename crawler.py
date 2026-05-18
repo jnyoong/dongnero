@@ -1229,9 +1229,21 @@ def _crawl_source(name: str, fn, pages: int, stop_if_less: int = 0,
             if page < pages:
                 _sleep_page()
         except Exception as e:
-            print(f"\n  [{name} 오류] page={page} {e}")
-            errors.append({"page": page, "error": str(e)[:150]})
-            break
+            print(f" [오류: {str(e)[:60]}] 1회 재시도...", end=" ", flush=True)
+            try:
+                import time as _t; _t.sleep(3)
+                jobs = fn(page)
+                print(f"{len(jobs)}건 (재시도 성공)")
+                jobs_all.extend(jobs)
+                pages_done += 1
+                if not jobs or (stop_if_less and len(jobs) < stop_if_less):
+                    break
+                if page < pages:
+                    _sleep_page()
+            except Exception as e2:
+                print(f"재시도 실패")
+                errors.append({"page": page, "error": str(e2)[:150]})
+                break
     if crawl_log is not None:
         crawl_log[name] = {
             "pages_done": pages_done,
@@ -1289,9 +1301,20 @@ def run_crawler():
                 break
             _sleep_page()
         except Exception as e:
-            print(f"\n  [고용24 오류] page={page} {e}")
-            _g24_errors.append({"page": page, "error": str(e)[:150]})
-            break
+            print(f" [오류] 1회 재시도...", end=" ", flush=True)
+            try:
+                import time as _t; _t.sleep(3)
+                jobs = collect_fn(page)
+                print(f"{len(jobs)}건 (재시도 성공)")
+                all_jobs.extend(jobs)
+                _g24_pages_done += 1
+                if len(jobs) < ITEMS_PER_PAGE:
+                    break
+                _sleep_page()
+            except Exception as e2:
+                print(f"재시도 실패")
+                _g24_errors.append({"page": page, "error": str(e2)[:150]})
+                break
     crawl_log["고용24"] = {"pages_done": _g24_pages_done, "pages_expected": MAX_PAGES, "errors": _g24_errors}
     source_counts["고용24"] = sum(1 for j in all_jobs if j["source"] == "고용24")
     _sleep_source()
@@ -1544,10 +1567,45 @@ def run_crawler():
 
     _notify_windows(
         title="시니어 취업정보 업데이트 완료",
-        body=(
-            f"새 공고 {len(filtered)}건 수집 | {updated_at}"
-        ),
+        body=f"새 공고 {len(filtered)}건 수집 | {updated_at}",
     )
+
+    # ── 텔레그램 이상 알림 ────────────────────────────────────
+    anomalies = {src: log for src, log in crawl_log.items()
+                 if log.get("is_anomaly") or log.get("early_stop") or (log.get("errors"))}
+    if anomalies:
+        _send_telegram_alert(anomalies, len(filtered), updated_at)
+
+
+# ── 텔레그램 알림 ─────────────────────────────────────────────────────────────
+
+def _send_telegram_alert(anomalies: dict, total: int, updated_at: str) -> None:
+    token   = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
+    if not token or not chat_id:
+        return  # 설정 안 됐으면 조용히 스킵
+
+    lines = [f"⚠️ *동네로 크롤링 이상 감지* ({updated_at})", f"총 수집: {total}건\n"]
+    for src, log in anomalies.items():
+        if log.get("errors"):
+            err = log["errors"][0]["error"][:80]
+            lines.append(f"🚨 *{src}* — 타임아웃 p{log['errors'][0]['page']}\n`{err}`")
+        elif log.get("early_stop"):
+            lines.append(f"⚠️ *{src}* — 조기종료 {log.get('pages_done')}/{log.get('pages_expected')}p")
+        reason = log.get("anomaly_reason", "")
+        if reason and "전회" in reason:
+            lines.append(f"📉 *{src}* — {reason}")
+
+    text = "\n".join(lines)
+    try:
+        requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            json={"chat_id": chat_id, "text": text, "parse_mode": "Markdown"},
+            timeout=10,
+        )
+        print(f"  텔레그램 알림 발송 완료")
+    except Exception as e:
+        print(f"  텔레그램 알림 실패: {e}")
 
 
 # ── Windows 알림 ──────────────────────────────────────────────────────────────

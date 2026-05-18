@@ -86,6 +86,10 @@
     .row-num   { color: #9CA3AF; font-size: .78rem; }
     .title-cell { max-width: 280px; }
     .cat2-badge { display:inline-block; margin-top:3px; padding:1px 6px; border-radius:10px; font-size:.7rem; background:#EFF6FF; color:#1D4ED8; border:1px solid #BFDBFE; }
+    .src-filter-btn { padding:3px 10px; border-radius:12px; border:1px solid #D1D5DB; background:#fff; font-size:.75rem; cursor:pointer; color:#374151; }
+    .src-filter-btn.active { background:#1E3A5F; color:#fff; border-color:#1E3A5F; font-weight:700; }
+    .src-filter-btn span { display:inline-block; background:#E5E7EB; color:#374151; border-radius:8px; padding:0 5px; font-size:.7rem; margin-left:3px; }
+    .src-filter-btn.active span { background:#ffffff44; color:#fff; }
     .title-text { font-weight: 600; line-height: 1.35; }
     .company-text { font-size: .78rem; color: #6B7280; margin-top: 2px; }
     .reason-cell { color: #DC2626; font-size: .8rem; font-weight: 600; }
@@ -222,9 +226,11 @@
 
     <!-- 출처별 공고 수 모니터링 -->
     <div id="sourceMonitor" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:14px 16px;margin-bottom:14px">
-      <div style="font-size:.85rem;font-weight:700;color:#374151;margin-bottom:10px">
-        📊 출처별 공고 현황
-        <span style="font-size:.75rem;font-weight:400;color:#6B7280;margin-left:6px">오늘 jobs.json 기준 — 큰 차이는 크롤링 이상 신호</span>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <span style="font-size:.85rem;font-weight:700;color:#374151">📊 출처별 공고 현황</span>
+        <button id="btnFilterTimeout"  onclick="toggleSrcFilter('timeout')"  class="src-filter-btn">타임아웃 <span id="cntTimeout">0</span></button>
+        <button id="btnFilterEarlyStop" onclick="toggleSrcFilter('early')"   class="src-filter-btn">조기종료 <span id="cntEarly">0</span></button>
+        <button id="btnFilterLow"      onclick="toggleSrcFilter('low')"      class="src-filter-btn">60%미만 <span id="cntLow">0</span></button>
       </div>
       <div id="sourceMonitorGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px"></div>
     </div>
@@ -814,69 +820,104 @@ const SRC_COLORS = {
   '맘시터':'#FF7F25','대전일자리':'#B45309','부산일자리':'#0369A1'
 };
 
+let _srcFilterMode = '';  // 'timeout' | 'early' | 'low' | ''
+let _crawlLogCache  = {};
+
+function toggleSrcFilter(mode) {
+  _srcFilterMode = _srcFilterMode === mode ? '' : mode;
+  ['timeout','early','low'].forEach(m => {
+    document.getElementById('btnFilter' + (m === 'timeout' ? 'Timeout' : m === 'early' ? 'EarlyStop' : 'Low'))
+      .classList.toggle('active', _srcFilterMode === m);
+  });
+  _renderSrcGrid();
+}
+
 function renderSourceMonitor(jobs) {
-  // 최종 공고 수 (중복제거·만료제거 후)
   const finalCounts = {};
   jobs.forEach(j => { const s = j.source || '기타'; finalCounts[s] = (finalCounts[s] || 0) + 1; });
+  _crawlLogCache = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.crawl_log) || {};
 
-  // jobs.json에서 수집 건수, 이전 수집 건수, 중복제거 통계, 크롤링 로그 로드
   const rawCounts  = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.source_counts)      || {};
   const prevCounts = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.prev_source_counts) || {};
   const dedupRm    = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.dedup_removed)      || {};
-  const crawlLog   = (typeof JOBS_DATA !== 'undefined' && JOBS_DATA.crawl_log)          || {};
 
-  const grid = document.getElementById('sourceMonitorGrid');
-  const allSrcs = [...new Set([...Object.keys(rawCounts), ...Object.keys(prevCounts)])].sort();
+  // 버튼 카운트 업데이트
+  let cntTimeout = 0, cntEarly = 0, cntLow = 0;
+  Object.values(_crawlLogCache).forEach(log => {
+    if (log.errors && log.errors.length)                                   cntTimeout++;
+    else if (log.early_stop)                                               cntEarly++;
+    if (log.prev_count > 10 && log.count < log.prev_count * 0.6)          cntLow++;
+  });
+  document.getElementById('cntTimeout').textContent = cntTimeout;
+  document.getElementById('cntEarly').textContent   = cntEarly;
+  document.getElementById('cntLow').textContent     = cntLow;
+  // 이상 있는 버튼 강조
+  ['Timeout','EarlyStop','Low'].forEach((k, i) => {
+    const cnt = [cntTimeout, cntEarly, cntLow][i];
+    const btn = document.getElementById('btnFilter' + k);
+    btn.style.borderColor = cnt > 0 ? '#EF4444' : '';
+    btn.querySelector('span').style.background = cnt > 0 ? '#FEE2E2' : '';
+    btn.querySelector('span').style.color = cnt > 0 ? '#B91C1C' : '';
+  });
 
-  grid.innerHTML = allSrcs.map(src => {
-    const raw   = rawCounts[src]  || 0;
-    const prev  = prevCounts[src] || 0;
+  // 데이터 캐시 (필터 재렌더링용)
+  window._smData = { finalCounts, rawCounts, prevCounts, dedupRm };
+  _renderSrcGrid();
+}
+
+function _renderSrcGrid() {
+  const { finalCounts, rawCounts, prevCounts, dedupRm } = window._smData || {};
+  if (!finalCounts) return;
+  const crawlLog = _crawlLogCache;
+  const allSrcs  = [...new Set([...Object.keys(rawCounts), ...Object.keys(prevCounts)])].sort();
+
+  const cards = allSrcs.map(src => {
+    const log   = crawlLog[src] || {};
+    const isTimeout  = !!(log.errors && log.errors.length);
+    const isEarly    = !!log.early_stop && !isTimeout;
+    const isLow      = log.prev_count > 10 && log.count < log.prev_count * 0.6;
+
+    if (_srcFilterMode === 'timeout'  && !isTimeout) return '';
+    if (_srcFilterMode === 'early'    && !isEarly)   return '';
+    if (_srcFilterMode === 'low'      && !isLow)     return '';
+
+    const raw   = rawCounts[src]   || 0;
+    const prev  = prevCounts[src]  || 0;
     const final = finalCounts[src] || 0;
-    const dedup = dedupRm[src]    || 0;
-    const color = SRC_COLORS[src] || '#6B7280';
+    const dedup = dedupRm[src]     || 0;
+    const color = SRC_COLORS[src]  || '#6B7280';
 
-    // 전회 대비 비교
-    let prevLine = '';
-    if (prev > 0) {
-      const pct = Math.round((final - prev) / prev * 100);
-      const sign = pct > 0 ? '+' : '';
-      const isWarn = Math.abs(pct) >= 30;
-      const col = isWarn ? '#D97706' : '#6B7280';
-      prevLine = `<div style="font-size:.72rem;color:${col};margin-top:3px${isWarn ? ';font-weight:700' : ''}">어제 ${prev.toLocaleString()}건 대비 ${sign}${pct}%${isWarn ? ' ⚠️' : ''}</div>`;
-    } else {
-      prevLine = `<div style="font-size:.72rem;color:#9CA3AF;margin-top:3px">이전 데이터 없음</div>`;
-    }
+    let prevLine = prev > 0
+      ? (() => {
+          const pct  = Math.round((final - prev) / prev * 100);
+          const sign = pct > 0 ? '+' : '';
+          return `<div style="font-size:.72rem;color:#6B7280;margin-top:3px">어제 ${prev.toLocaleString()}건 대비 ${sign}${pct}%</div>`;
+        })()
+      : `<div style="font-size:.72rem;color:#9CA3AF;margin-top:3px">이전 데이터 없음</div>`;
 
-    // 제거 건수: dedup_removed 있으면 중복만, 없으면 raw-final 전체(만료+필터+중복 합산)
     const totalRemoved = raw - final;
-    let dedupLine = '';
-    if (dedup > 0) {
-      const other = totalRemoved - dedup;
-      dedupLine = `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">중복 ${dedup.toLocaleString()}건 제거${other > 0 ? ` · 만료/필터 ${other.toLocaleString()}건` : ''}</div>`;
-    } else if (totalRemoved > 0) {
-      dedupLine = `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">수집 ${raw.toLocaleString()}건 중 ${totalRemoved.toLocaleString()}건 제거(만료·필터·중복 합산)</div>`;
-    }
+    let dedupLine = dedup > 0
+      ? `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">중복 ${dedup.toLocaleString()}건 제거${totalRemoved - dedup > 0 ? ` · 만료/필터 ${(totalRemoved-dedup).toLocaleString()}건` : ''}</div>`
+      : totalRemoved > 0
+        ? `<div style="font-size:.72rem;color:#9CA3AF;margin-top:2px">수집 ${raw.toLocaleString()}건 중 ${totalRemoved.toLocaleString()}건 제거</div>`
+        : '';
 
-    // 크롤링 이상 감지 배지
-    const log = crawlLog[src] || {};
     let alertLine = '';
-    if (log.is_anomaly) {
-      alertLine = `<div style="margin-top:5px;padding:3px 7px;background:#FEF2F2;border:1px solid #FECACA;border-radius:5px;font-size:.72rem;color:#B91C1C;font-weight:700">🚨 이상 감지: ${log.anomaly_reason || ''}</div>`;
-    } else if (log.early_stop) {
-      alertLine = `<div style="margin-top:5px;padding:3px 7px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:5px;font-size:.72rem;color:#92400E">⚠️ ${log.anomaly_reason || '조기 종료'}</div>`;
-    } else if (log.errors && log.errors.length) {
-      alertLine = `<div style="margin-top:5px;padding:3px 7px;background:#FEF2F2;border:1px solid #FECACA;border-radius:5px;font-size:.72rem;color:#B91C1C">🚨 오류 ${log.errors.length}건: ${log.errors[0].error.slice(0,60)}</div>`;
-    }
-    const cardBorder = (log.is_anomaly || (log.errors && log.errors.length)) ? '1px solid #FCA5A5' : '1px solid #E5E7EB';
+    if (isTimeout)
+      alertLine = `<div style="margin-top:5px;font-size:.72rem;color:#B91C1C">🚨 타임아웃 p${log.errors[0].page} — ${log.errors[0].error.slice(0,50)}</div>`;
+    else if (isEarly)
+      alertLine = `<div style="margin-top:5px;font-size:.72rem;color:#92400E">⚠️ 조기종료 ${log.pages_done}/${log.pages_expected}p</div>`;
+    if (isLow)
+      alertLine += `<div style="margin-top:3px;font-size:.72rem;color:#B91C1C">📉 ${log.count}건 (전회 ${log.prev_count}건의 ${Math.round(log.count/log.prev_count*100)}%)</div>`;
 
-    return `<div style="background:#fff;border:${cardBorder};border-radius:8px;padding:10px 12px;border-top:3px solid ${color}">
+    return `<div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px 12px;border-top:3px solid ${color}">
       <div style="font-size:.78rem;font-weight:700;color:${color};margin-bottom:4px">${src}</div>
       <div style="font-size:1.3rem;font-weight:800;color:#111">${final.toLocaleString()}건</div>
-      ${prevLine}
-      ${dedupLine}
-      ${alertLine}
+      ${prevLine}${dedupLine}${alertLine}
     </div>`;
-  }).join('');
+  });
+
+  document.getElementById('sourceMonitorGrid').innerHTML = cards.join('') || '<div style="color:#6B7280;font-size:.82rem;padding:8px">해당 없음</div>';
 }
 
 function renderJobs() {

@@ -2,6 +2,12 @@
 
 ---
 
+## [v0.71] 2026-05-19 — 크롤링 이상 감지 고도화 + 텔레그램 알림
+
+- `admin-dongnero.html` — 소스 모니터 3버튼 필터 (타임아웃/조기종료/60%미만), 카드 색 제거
+- `crawler.py` — 타임아웃 1회 재시도, 이상 감지 시 텔레그램 Bot 알림
+- `crawl.yml` — TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID 시크릿 연결
+
 ## [v0.70] 2026-05-19 — 크롤링 이상 감지 + 어드민 경고 표시
 
 - `crawler.py` — 출처별 에러·조기종료·건수 이상(전일 대비 60%↓) 감지, `crawl_log` jobs.json에 포함
