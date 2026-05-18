@@ -2,6 +2,18 @@
 
 ---
 
+## [v0.79] 2026-05-19 — 텔레그램 봇 명령어 전면 개편
+
+- `telegram_bot.py` 전체 개편:
+  - `/jobs` 제거
+  - `/status` — 출처별 증감·중복제거·이상 플래그 포함 어드민 수준 상세
+  - `/subs` — `admin_get_seeker_cards` RPC + p_pw 인증, 레벨 1/2/3 정확한 매핑 (기존 0명 오류 수정)
+  - `/today` 신규 — 오늘 크롤링 완료 여부 + 수집 건수
+  - `/clicks` 신규 — 오늘 공고 클릭 수 + 출처별 분포
+  - `/uptime` 신규 — 봇 시작시각 + 가동시간
+  - `/error` 신규 — bot.log 최근 에러 10줄
+  - `_sb_get()` / `_sb_rpc()` 공통 Supabase 헬퍼 추출
+
 ## [v0.78] 2026-05-19 — 텔레그램 봇 중복 실행 방지 (Named Mutex)
 
 - `start_bot.ps1` — Named Mutex 추가: 이미 실행 중이면 즉시 종료 (두 번 응답 현상 완전 차단)

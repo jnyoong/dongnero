@@ -2,7 +2,7 @@
 동네로 텔레그램 원격 제어 봇
 - PC 백그라운드에서 실행
 - 승인된 chat_id에서만 명령 수락
-- Windows 작업 스케줄러로 PC 시작 시 자동 실행
+- Windows 레지스트리 Run 키로 PC 시작 시 자동 실행
 """
 
 import os, json, re, time, subprocess, sys, requests, logging
@@ -33,8 +33,11 @@ CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
 
 CRAWL_COOLDOWN = 1800  # 30분
 _last_crawl_time = 0.0
+_BOT_START = datetime.now()
+
 SUPABASE_URL = "https://riomousxlyvwmembuhvc.supabase.co"
 SUPABASE_KEY = "sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh"
+ADMIN_PW     = "dongnero2024"
 
 if not TOKEN or not CHAT_ID:
     print("TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID 없음 — .env.local 확인")
@@ -43,6 +46,7 @@ if not TOKEN or not CHAT_ID:
 ALLOWED_CHAT = str(CHAT_ID)
 
 
+# ── 데이터 로더 ──────────────────────────────────────────────
 def _load_jobs() -> dict:
     """jobs_data.js(사이트 기준) 파싱, 실패 시 jobs.json 폴백"""
     js_file = BASE / "jobs_data.js"
@@ -56,6 +60,32 @@ def _load_jobs() -> dict:
             pass
     with open(BASE / "jobs.json", encoding="utf-8") as f:
         return json.load(f)
+
+
+def _sb_get(path: str, params: dict = None) -> list:
+    """Supabase REST GET"""
+    r = requests.get(
+        f"{SUPABASE_URL}/rest/v1/{path}",
+        headers={"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"},
+        params=params or {},
+        timeout=10,
+    )
+    return r.json()
+
+
+def _sb_rpc(fn: str, body: dict = None) -> object:
+    """Supabase RPC POST"""
+    r = requests.post(
+        f"{SUPABASE_URL}/rest/v1/rpc/{fn}",
+        headers={
+            "apikey": SUPABASE_KEY,
+            "Authorization": f"Bearer {SUPABASE_KEY}",
+            "Content-Type": "application/json",
+        },
+        json=body or {},
+        timeout=10,
+    )
+    return r.json()
 
 
 # ── 텔레그램 API ─────────────────────────────────────────────
@@ -84,94 +114,190 @@ def get_updates(offset=0):
 
 # ── 명령 처리 ────────────────────────────────────────────────
 def cmd_status():
-    """마지막 크롤링 상태"""
+    """크롤링 현황 — 어드민 수준 상세"""
     try:
-        data = _load_jobs()
-        updated = data.get("updated_at", "알 수 없음")
+        data    = _load_jobs()
+        updated = data.get("updated_at", "?")
         total   = data.get("total", 0)
         sc      = data.get("source_counts", {})
         cl      = data.get("crawl_log", {})
         prev    = data.get("prev_source_counts", {})
+        dedup   = data.get("dedup_removed", {})
 
         prev_total = sum(prev.values())
-        diff = total - prev_total
-        sign = "+" if diff >= 0 else ""
+        diff  = total - prev_total
+        sign  = "+" if diff >= 0 else ""
+        pct   = f" ({sign}{diff/prev_total*100:.1f}%)" if prev_total else ""
 
         lines = [
-            f"📊 *동네로 현황*",
-            f"🕐 {updated}",
-            f"총 공고: *{total:,}건* ({sign}{diff}건)",
+            f"📊 *동네로 크롤링 현황*",
+            f"🕐 {updated[:16]}",
+            f"총 *{total:,}건* {sign}{diff:,}{pct}",
             "",
-            "*출처별:*",
+            "*출처별 상세:*",
         ]
-        for src, cnt in sc.items():
-            p = prev.get(src, 0)
-            log = cl.get(src, {})
-            icon = "🚨" if log.get("errors") else ("⚠️" if log.get("early_stop") else "•")
-            d = f" ({'+' if cnt-p>=0 else ''}{cnt-p})" if p else ""
-            lines.append(f"{icon} {src}: {cnt:,}건{d}")
 
-        anomalies = [s for s, l in cl.items() if l.get("errors") or l.get("early_stop") or l.get("is_anomaly")]
-        if anomalies:
-            lines.append(f"\n⚠️ 이상: {', '.join(anomalies)}")
+        anomaly_srcs = []
+        for src, cnt in sc.items():
+            p   = prev.get(src, 0)
+            d   = cnt - p
+            dd  = dedup.get(src, 0)
+            log = cl.get(src, {})
+
+            # 상태 플래그
+            if log.get("errors"):
+                flag = "🚨"
+                anomaly_srcs.append(src)
+            elif log.get("timeout"):
+                flag = "⏱"
+                anomaly_srcs.append(src)
+            elif log.get("early_stop"):
+                flag = "⚠️"
+                anomaly_srcs.append(src)
+            elif log.get("is_anomaly"):
+                flag = "📉"
+                anomaly_srcs.append(src)
+            else:
+                flag = "✓"
+
+            diff_str = f"({'+' if d >= 0 else ''}{d:,})" if p else "(첫수집)"
+            dd_str   = f" │중복-{dd:,}" if dd else ""
+            lines.append(f"{flag} {src}: *{cnt:,}* {diff_str}{dd_str}")
+
+        lines.append("")
+        if anomaly_srcs:
+            lines.append(f"⚠️ 이상감지: {', '.join(anomaly_srcs)}")
         else:
-            lines.append("\n✅ 이상 없음")
+            lines.append("✅ 전 출처 정상")
 
         send("\n".join(lines))
     except Exception as e:
         send(f"❌ 상태 조회 실패: {e}")
 
 
+def cmd_subs():
+    """구직카드 현황"""
+    try:
+        rows = _sb_rpc("admin_get_seeker_cards", {"p_pw": ADMIN_PW})
+        if not isinstance(rows, list):
+            raise ValueError(f"응답 오류: {rows}")
+
+        # 어드민과 동일 중복제거: 이름+전화 기준
+        seen, deduped = set(), []
+        for x in rows:
+            key = (x.get("name", ""), x.get("phone", ""))
+            if key not in seen:
+                seen.add(key)
+                deduped.append(x)
+
+        total = len(deduped)
+        lv1 = sum(1 for x in deduped if (x.get("alert_level") or 2) == 1)
+        lv2 = sum(1 for x in deduped if (x.get("alert_level") or 2) == 2)
+        lv3 = sum(1 for x in deduped if (x.get("alert_level") or 2) == 3)
+
+        send(
+            f"👥 *구직카드 현황* (중복제외 기준)\n"
+            f"전체: *{total}명*\n\n"
+            f"👀 정보보기(lv1): {lv1}명\n"
+            f"🔔 알림받기(lv2): {lv2}명\n"
+            f"💼 적극구직(lv3): *{lv3}명* ← 알림톡 발송 대상"
+        )
+    except Exception as e:
+        send(f"❌ 구직카드 조회 실패: {e}")
+
+
+def cmd_today():
+    """오늘 크롤링 완료 여부"""
+    try:
+        today     = datetime.now().strftime("%Y-%m-%d")
+        last_file = BASE / "last_crawl.txt"
+        if last_file.exists():
+            last = last_file.read_text(encoding="utf-8").strip()
+            if last == today:
+                data = _load_jobs()
+                send(
+                    f"✅ *오늘 크롤링 완료*\n"
+                    f"날짜: {today}\n"
+                    f"완료: {data.get('updated_at','?')[:16]}\n"
+                    f"수집: {data.get('total',0):,}건"
+                )
+            else:
+                send(f"⏳ *오늘 크롤링 미완료*\n마지막 완료: {last}\n07:00 자동 실행 예정")
+        else:
+            send("❓ 크롤링 기록 없음")
+    except Exception as e:
+        send(f"❌ {e}")
+
+
+def cmd_clicks():
+    """오늘 공고 클릭 통계"""
+    try:
+        today = datetime.now().strftime("%Y-%m-%d")
+        rows  = _sb_get(
+            "job_clicks",
+            {"select": "source", "clicked_at": f"gte.{today}", "limit": "5000"},
+        )
+        if not isinstance(rows, list):
+            raise ValueError(str(rows))
+
+        total  = len(rows)
+        by_src: dict = {}
+        for x in rows:
+            s = x.get("source", "기타")
+            by_src[s] = by_src.get(s, 0) + 1
+
+        top = sorted(by_src.items(), key=lambda x: -x[1])[:6]
+        top_str = "\n".join(f"  • {s}: {c}회" for s, c in top)
+
+        send(
+            f"📈 *오늘 공고 클릭* ({today})\n"
+            f"총 *{total}회*\n\n"
+            f"출처별:\n{top_str}"
+        )
+    except Exception as e:
+        send(f"❌ 클릭 통계 실패: {e}")
+
+
+def cmd_uptime():
+    """봇 가동시간"""
+    elapsed = datetime.now() - _BOT_START
+    total_m = int(elapsed.total_seconds()) // 60
+    d, rem  = divmod(total_m, 1440)
+    h, m    = divmod(rem, 60)
+    parts   = []
+    if d: parts.append(f"{d}일")
+    if h: parts.append(f"{h}시간")
+    parts.append(f"{m}분")
+    send(
+        f"🤖 *봇 가동 현황*\n"
+        f"시작: {_BOT_START:%Y-%m-%d %H:%M}\n"
+        f"경과: {' '.join(parts)}"
+    )
+
+
 def cmd_log():
     """최근 크롤 로그"""
     log_file = BASE / "crawl_log.txt"
     if not log_file.exists():
-        send("📋 로그 파일 없음 (다음 크롤링 후 생성됩니다)")
+        send("📋 로그 파일 없음 (다음 크롤링 후 생성)")
         return
-    lines = log_file.read_text(encoding="utf-8", errors="replace").strip().splitlines()
+    lines  = log_file.read_text(encoding="utf-8", errors="replace").strip().splitlines()
     recent = lines[-20:] if len(lines) > 20 else lines
     send("📋 *최근 크롤 로그*\n```\n" + "\n".join(recent) + "\n```")
 
 
-def cmd_subs():
-    """알림 신청자 현황"""
-    try:
-        r = requests.get(
-            f"{SUPABASE_URL}/rest/v1/seeker_cards",
-            headers={"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"},
-            params={"select": "alert_level", "limit": "1000"},
-            timeout=10,
-        )
-        rows = r.json()
-        if not isinstance(rows, list):
-            raise ValueError(f"Supabase 오류: {rows}")
-        total = len(rows)
-        lv0 = sum(1 for x in rows if x.get("alert_level", 0) == 0)
-        lv1 = sum(1 for x in rows if x.get("alert_level", 0) == 1)
-        lv2 = sum(1 for x in rows if (x.get("alert_level", 0) or 0) >= 2)
-        send(
-            f"👥 *구직카드 현황*\n"
-            f"전체: {total}명\n"
-            f"• 정보보기(lv0): {lv0}명\n"
-            f"• 알림받기(lv1): {lv1}명\n"
-            f"• 적극구직(lv2+): {lv2}명 ← 알림톡 발송 대상"
-        )
-    except Exception as e:
-        send(f"❌ 구독자 조회 실패: {e}")
-
-
-def cmd_jobs():
-    """현재 총 공고 건수"""
-    try:
-        data = _load_jobs()
-        total   = data.get("total", 0)
-        updated = data.get("updated_at", "-")
-        sc      = data.get("source_counts", {})
-        top3    = sorted(sc.items(), key=lambda x: -x[1])[:3]
-        top_str = " / ".join(f"{s}:{c:,}" for s, c in top3)
-        send(f"💼 *공고 현황*\n총 {total:,}건 ({updated[:10]})\nTop3: {top_str}")
-    except Exception as e:
-        send(f"❌ 조회 실패: {e}")
+def cmd_error():
+    """최근 봇 에러 로그"""
+    log_file = BASE / "bot.log"
+    if not log_file.exists():
+        send("✅ 에러 로그 없음")
+        return
+    lines  = log_file.read_text(encoding="utf-8", errors="replace").strip().splitlines()
+    recent = [l for l in lines if l.strip()][-10:]
+    if not recent:
+        send("✅ 에러 기록 없음")
+    else:
+        send("🔴 *최근 봇 에러*\n```\n" + "\n".join(recent) + "\n```")
 
 
 def cmd_crawl():
@@ -180,10 +306,10 @@ def cmd_crawl():
     elapsed = time.time() - _last_crawl_time
     if elapsed < CRAWL_COOLDOWN:
         remaining = int((CRAWL_COOLDOWN - elapsed) / 60)
-        send(f"⏳ 마지막 크롤링에서 {remaining}분 더 기다려야 해요.\n(연속 실행 방지 — 30분 쿨다운)")
+        send(f"⏳ {remaining}분 후 실행 가능 (30분 쿨다운)")
         return
     _last_crawl_time = time.time()
-    send("🚀 크롤링 시작합니다... (15~25분 소요)\n완료되면 결과 알려드릴게요")
+    send("🚀 크롤링 시작... (15~25분 소요)\n완료 후 결과 알려드립니다")
     ps1 = BASE / "crawl_local.ps1"
     try:
         subprocess.Popen(
@@ -198,23 +324,32 @@ def cmd_crawl():
 def cmd_help():
     send(
         "🤖 *동네로 봇 명령어*\n\n"
-        "/status — 마지막 크롤링 상태·이상 감지\n"
-        "/jobs   — 현재 총 공고 건수\n"
-        "/subs   — 구직카드 구독자 현황\n"
+        "*현황*\n"
+        "/status — 크롤링 상세 현황 (어드민 수준)\n"
+        "/today  — 오늘 크롤링 완료 여부\n"
+        "/subs   — 구직카드 가입자 현황\n"
+        "/clicks — 오늘 공고 클릭 통계\n\n"
+        "*로그*\n"
         "/log    — 최근 크롤 로그\n"
+        "/error  — 최근 봇 에러\n"
+        "/uptime — 봇 가동시간\n\n"
+        "*운영*\n"
         "/crawl  — 크롤링 즉시 실행\n"
         "/help   — 명령어 목록"
     )
 
 
 COMMANDS = {
-    "/status": cmd_status,
-    "/jobs":   cmd_jobs,
-    "/subs":   cmd_subs,
-    "/log":    cmd_log,
-    "/crawl":  cmd_crawl,
-    "/help":   cmd_help,
-    "/start":  cmd_help,
+    "/status":  cmd_status,
+    "/today":   cmd_today,
+    "/subs":    cmd_subs,
+    "/clicks":  cmd_clicks,
+    "/log":     cmd_log,
+    "/error":   cmd_error,
+    "/uptime":  cmd_uptime,
+    "/crawl":   cmd_crawl,
+    "/help":    cmd_help,
+    "/start":   cmd_help,
 }
 
 
@@ -222,20 +357,20 @@ COMMANDS = {
 def main():
     print(f"[{datetime.now():%H:%M:%S}] 동네로 봇 시작")
     send("🟢 *동네로 봇 시작됨*\n/help 로 명령어 확인")
-    offset = 0
+    offset  = 0
     backoff = 1
     while True:
         try:
             updates = get_updates(offset)
-            backoff = 1  # 성공 시 백오프 초기화
+            backoff = 1
             for upd in updates:
-                offset = upd["update_id"] + 1
-                msg = upd.get("message", {})
+                offset  = upd["update_id"] + 1
+                msg     = upd.get("message", {})
                 chat_id = str(msg.get("chat", {}).get("id", ""))
-                text = msg.get("text", "").strip()
+                text    = msg.get("text", "").strip()
 
                 if chat_id != ALLOWED_CHAT:
-                    continue  # 승인된 사용자만
+                    continue
 
                 cmd = text.split()[0].lower() if text else ""
                 print(f"[{datetime.now():%H:%M:%S}] 명령: {text}")
@@ -252,7 +387,7 @@ def main():
             logging.error(f"main loop error: {e}", exc_info=True)
             print(f"[{datetime.now():%H:%M:%S}] 루프 오류: {e} — {backoff}초 후 재시도")
             time.sleep(backoff)
-            backoff = min(backoff * 2, 60)  # 최대 60초까지 지수 백오프
+            backoff = min(backoff * 2, 60)
 
 
 if __name__ == "__main__":
