@@ -2,6 +2,12 @@
 
 ---
 
+## [v0.82] 2026-05-19 — 구직카드 등록 오류 수정
+
+- Supabase `seeker_cards` INSERT RLS 정책 누락 → `anon_can_insert` 정책 추가 (폼 등록 정상화)
+- DB 트리거 오류 수정: pg_net 미활성화 상태에서 INSERT 전체 실패하던 문제 → pg_net 활성화, 트리거에 EXCEPTION 처리 추가
+- Edge Function `contact_phone` 컬럼명 오류 수정 (`rec.phone` → `rec.contact_phone`)
+
 ## [v0.81] 2026-05-19 — 구직카드 신규 알림 Supabase Edge Function으로 이전
 
 - `supabase/functions/notify-new-seeker/index.ts` — Edge Function 신규: seeker_cards INSERT → 텔레그램 즉시 발송, 중복 자동 감지

@@ -27,7 +27,7 @@ Deno.serve(async (req) => {
     if (!rec) return new Response("no record", { status: 200 });
 
     const name  = rec.name  || "?";
-    const phone = (rec.phone || "").slice(-4);
+    const phone = ((rec.contact_phone || rec.phone || "")).slice(-4);
     const lv    = rec.alert_level ?? 2;
     const lvLabel = LEVEL_LABEL[lv] ?? `lv${lv}`;
 
@@ -35,7 +35,7 @@ Deno.serve(async (req) => {
     let isDup = false;
     try {
       const res = await fetch(
-        `${SB_URL}/rest/v1/seeker_cards?name=eq.${encodeURIComponent(name)}&phone=eq.${encodeURIComponent(rec.phone ?? "")}&id=neq.${rec.id}&select=id&limit=1`,
+        `${SB_URL}/rest/v1/seeker_cards?name=eq.${encodeURIComponent(name)}&contact_phone=eq.${encodeURIComponent(rec.contact_phone ?? rec.phone ?? "")}&id=neq.${rec.id}&select=id&limit=1`,
         { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
       );
       const existing = await res.json();
