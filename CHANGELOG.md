@@ -2,6 +2,11 @@
 
 ---
 
+## [v0.85] 2026-05-19 — /subs 오늘 신규 건수 + 중복제거 키 수정
+
+- `telegram_bot.py` — /subs: 오늘(KST) 신규 구직카드 N명 한 줄 추가
+- `telegram_bot.py` — /subs 중복제거 키 오류 수정: `phone` → `contact_phone` (항상 빈값이라 이름만으로 중복제거되던 문제)
+
 ## [v0.84] 2026-05-19 — 어드민 날짜 UTC→KST 수정
 
 - `admin-dongnero.html` — 구직카드 최근 7일 신청현황: `toISOString()` UTC → KST (+9h) 변환 적용

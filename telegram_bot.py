@@ -181,14 +181,25 @@ def cmd_status():
 def cmd_subs():
     """구직카드 현황"""
     try:
+        from datetime import timezone, timedelta
+        KST = timezone(timedelta(hours=9))
+
+        def _kst_date(ts: str) -> str:
+            try:
+                from datetime import datetime
+                dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+                return dt.astimezone(KST).strftime("%Y-%m-%d")
+            except Exception:
+                return ts[:10]
+
         rows = _sb_rpc("admin_get_seeker_cards", {"p_pw": ADMIN_PW})
         if not isinstance(rows, list):
             raise ValueError(f"응답 오류: {rows}")
 
-        # 어드민과 동일 중복제거: 이름+전화 기준
+        # 어드민과 동일 중복제거: 이름+전화(contact_phone) 기준
         seen, deduped = set(), []
         for x in rows:
-            key = (x.get("name", ""), x.get("phone", ""))
+            key = (x.get("name", ""), x.get("contact_phone", ""))
             if key not in seen:
                 seen.add(key)
                 deduped.append(x)
@@ -198,9 +209,13 @@ def cmd_subs():
         lv2 = sum(1 for x in deduped if (x.get("alert_level") or 2) == 2)
         lv3 = sum(1 for x in deduped if (x.get("alert_level") or 2) == 3)
 
+        today_kst = datetime.now(KST).strftime("%Y-%m-%d")
+        today_cnt = sum(1 for x in deduped if _kst_date(x.get("created_at", "")) == today_kst)
+
         send(
             f"👥 *구직카드 현황* (중복제외 기준)\n"
-            f"전체: *{total}명*\n\n"
+            f"전체: *{total}명*\n"
+            f"오늘({today_kst[5:]}): *{today_cnt}명* 신규\n\n"
             f"👀 정보보기(lv1): {lv1}명\n"
             f"🔔 알림받기(lv2): {lv2}명\n"
             f"💼 적극구직(lv3): *{lv3}명* ← 알림톡 발송 대상"
