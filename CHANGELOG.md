@@ -2,6 +2,13 @@
 
 ---
 
+## [v0.84] 2026-05-19 — 어드민 날짜 UTC→KST 수정
+
+- `admin-dongnero.html` — 구직카드 최근 7일 신청현황: `toISOString()` UTC → KST (+9h) 변환 적용
+  - 오늘(5/19) KST이 5/18로 잘못 표시되던 문제 해소
+  - KST 자정 전후 등록 시 날짜 집계 오류 해소
+- `admin-dongnero.html` — 클릭통계 오늘 필터도 동일하게 KST 기준 적용
+
 ## [v0.83] 2026-05-19 — 구직카드 알림 완전 수정 (3단계 근본 원인)
 
 - Supabase 트리거 `net.http_post()` body 타입 오류: `text` → `jsonb` 수정 (pg_net v0.20.0 실제 시그니처 반영)
