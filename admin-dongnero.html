@@ -1322,16 +1322,10 @@ function _dedupKey(j) {
   return (n || p) ? `${n}||${p}` : null;
 }
 
-// 데이터 충실도 점수 (채워진 필드 수 + alert_level 가중)
-function _cardScore(j) {
-  const fields = ['name','contact_phone','age_range','location_sido','location_gu','desired_job','memo'];
-  return fields.filter(f => j[f] && String(j[f]).trim()).length
-       + (j.alert_level || 0);  // 단계 높을수록 우선
-}
-
-// 중복 제거: 이름+전화 동일 그룹에서 데이터 가장 많은 항목을 대표로 선택
+// 중복 제거: 이름+전화 동일 그룹에서 대표 선택 기준
+// 1순위: alert_level 높은 것 (단계 높을수록 우선)
+// 2순위(동점): created_at 오래된 것 (먼저 신청한 것이 대표 → 일별 신규 통계 보존)
 function _splitDup(cards) {
-  // 1) key별 그룹화
   const groups = {};
   const noKey  = [];
   cards.forEach(j => {
@@ -1345,8 +1339,12 @@ function _splitDup(cards) {
   const dupes   = [];
   Object.values(groups).forEach(grp => {
     if (grp.length === 1) { deduped.push(grp[0]); return; }
-    // 점수 높은 순 정렬 → 1위가 대표
-    grp.sort((a, b) => _cardScore(b) - _cardScore(a));
+    grp.sort((a, b) => {
+      const lvDiff = (b.alert_level || 0) - (a.alert_level || 0);
+      if (lvDiff !== 0) return lvDiff;
+      // 동점이면 먼저 신청한 것(오래된 created_at)이 대표
+      return new Date(a.created_at || 0) - new Date(b.created_at || 0);
+    });
     deduped.push(grp[0]);
     dupes.push(...grp.slice(1));
   });
