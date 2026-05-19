@@ -2,6 +2,12 @@
 
 ---
 
+## [v0.89] 2026-05-19 — 로컬 크롤링 후 알림톡 발송 추가
+
+- `crawl_local.ps1` — crawler.py 완료 직후 `.env.local` 전체 환경변수 로드 후 `notify.py` 실행
+- 기존: 로컬 크롤링 성공 시 GitHub Actions가 skip되어 notify.py가 실행 안 됨 → 구독자 알림 미발송 문제 수정
+- notify.py 실패해도 git push는 계속 진행됨
+
 ## [v0.88] 2026-05-19 — crawl_local.ps1 RunGit 버그 수정 (push 실패 근본 원인)
 
 - `crawl_local.ps1` — `RunGit` 함수 파라미터명 `$args`→`$gitArgs` 변경
