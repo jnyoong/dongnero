@@ -464,6 +464,13 @@
       <div class="summary-chip"><strong id="csRetRate">-</strong>재방문율</div>
       <div class="summary-chip"><strong id="csAvgVisit">-</strong>평균 방문횟수</div>
     </div>
+    <h3 style="margin:20px 0 8px;font-size:.95rem;color:#374151">날짜별 신규 / 재방문 (최근 7일)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>날짜</th><th>신규</th><th>재방문</th><th>합계</th></tr></thead>
+        <tbody id="csDailyBody"><tr><td colspan="4" class="loading">불러오는 중…</td></tr></tbody>
+      </table>
+    </div>
     <h3 style="margin:16px 0 8px;font-size:.95rem;color:#374151">출처별 클릭수</h3>
     <div class="table-wrap">
       <table>
@@ -653,6 +660,45 @@ async function renderClickStats() {
     document.getElementById('csRetVisitors').textContent = retVisitors.toLocaleString();
     document.getElementById('csRetRate').textContent     = retRate + '%';
     document.getElementById('csAvgVisit').textContent    = avgVisitCnt;
+
+    // 날짜별 신규 / 재방문 (최근 7일)
+    const firstVisitDate = {};
+    visits.forEach(v => {
+      if (!v.visited_at) return;
+      const d = _kst(v.visited_at);
+      if (!firstVisitDate[v.visitor_id] || d < firstVisitDate[v.visitor_id])
+        firstVisitDate[v.visitor_id] = d;
+    });
+    const dailyVisitors = {};
+    visits.forEach(v => {
+      if (!v.visited_at) return;
+      const d = _kst(v.visited_at);
+      if (!dailyVisitors[d]) dailyVisitors[d] = new Set();
+      dailyVisitors[d].add(v.visitor_id);
+    });
+    const days7 = Array.from({length: 7}, (_, i) => {
+      const d = new Date(now - (6 - i) * 86400000);
+      return _kst(d);
+    });
+    const isToday = d => d === today;
+    document.getElementById('csDailyBody').innerHTML = days7.map(date => {
+      const visitors = dailyVisitors[date] || new Set();
+      let newCnt = 0, retCnt = 0;
+      visitors.forEach(vid => {
+        if (firstVisitDate[vid] === date) newCnt++;
+        else retCnt++;
+      });
+      const total = visitors.size;
+      const isT = isToday(date);
+      const style = isT ? 'font-weight:700;background:#EFF6FF' : '';
+      const label = isT ? `${date} <span style="font-size:.75rem;color:#2563EB;font-weight:700">오늘</span>` : date;
+      return `<tr style="${style}">
+        <td>${label}</td>
+        <td style="color:#059669;font-weight:600">${newCnt}</td>
+        <td style="color:#2563EB;font-weight:600">${retCnt}</td>
+        <td>${total}</td>
+      </tr>`;
+    }).join('') || '<tr><td colspan="4" class="empty-msg">데이터 없음</td></tr>';
 
     // 출처별 집계
     const srcMap = {};
