@@ -4,6 +4,157 @@
  */
 var POSTS_DATA = [
   {
+    id: 'caregiving-license-2026',
+    category: '자격증·교육',
+    categoryColor: '#0891B2',
+    title: '요양보호사 자격증, 지금 따면 바로 취직됩니다 — 비용·기간·취업까지 현실 가이드',
+    summary: '자격증 없어도 신청 가능, 국비로 거의 무료, 합격률 90% 이상. 50~60대 취업 스펙 1순위인 요양보호사 자격증 취득 과정을 처음부터 끝까지 알려드립니다.',
+    date: '2026-05-19',
+    author: '동네로 운영팀',
+    tags: ['요양보호사', '자격증', '국비교육', '50대취업', '60대취업', '시니어취업'],
+    content: `
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+경기도 고양시에 사시는 이순희 씨(59세)는 작년 9월에 요양보호사 자격증을 땄습니다.<br>
+교육비는 국민내일배움카드로 해결했고, 수업 들은 지 4개월 만에 자격증이 나왔어요.<br>
+자격증이 나온 그 주에 바로 동네 방문요양센터에 연락했고, 3일 뒤부터 일을 시작했습니다.<br><br>
+<em>"이렇게 빨리 될 줄 몰랐어요. 나이 드신 분들 도와드리는 일이라 처음엔 내가 할 수 있을까 걱정했는데, 교육에서 다 가르쳐줘서 막상 해보니까 적성에도 맞더라고요."</em>
+</p>
+
+<div class="post-tip">
+  💡 요양보호사는 현재 우리나라에서 <strong>수요가 가장 많은 직종 중 하나</strong>입니다. 고령화가 빨라지면서 앞으로도 수요는 계속 늘어납니다. 자격증만 있으면 전국 어디서나 일자리를 찾을 수 있어요.
+</div>
+
+<h3>📋 요양보호사가 하는 일 — 구체적으로 어떤 일인가요?</h3>
+<p>어르신의 일상 생활을 곁에서 도와드리는 일입니다. 크게 두 가지 방식으로 일합니다.</p>
+
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#F0F9FF;border-color:#BAE6FD;">
+    <div style="font-size:.8rem;font-weight:800;color:#0369A1;margin-bottom:6px;">① 방문요양 (집으로 찾아가는 방식)</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.9;">
+      어르신 댁에 직접 방문해서 도움을 드려요.<br>
+      • 식사 준비·드시는 것 도움<br>
+      • 목욕·몸 씻기·옷 갈아입기 보조<br>
+      • 병원 동행, 산책 동행<br>
+      • 말벗, 인지 활동<br>
+      <strong>시간이 유연해서 오전·오후 원하는 시간대에 일할 수 있어요.</strong>
+    </div>
+  </div>
+  <div class="post-compare-row" style="background:#F0FDF4;border-color:#BBF7D0;">
+    <div style="font-size:.8rem;font-weight:800;color:#15803D;margin-bottom:6px;">② 요양원·시설 근무 (출퇴근 방식)</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.9;">
+      요양원, 주야간보호센터 같은 시설에 출퇴근하며 일해요.<br>
+      • 어르신 일상 케어 (식사·목욕·이동 보조)<br>
+      • 활동 프로그램 보조<br>
+      • 야간 당직 근무도 있음 (추가 수당)<br>
+      <strong>고정 출퇴근이라 급여가 안정적이에요.</strong>
+    </div>
+  </div>
+</div>
+
+<h3>✅ 자격증 따려면 뭐가 필요한가요?</h3>
+<p>조건이 거의 없습니다. 나이, 학력 제한이 따로 없어요. 아래 두 가지만 확인하면 됩니다.</p>
+
+<div class="post-example">
+  <div class="post-example-label">요양보호사 교육 신청 조건</div>
+  ✔ <strong>나이:</strong> 만 18세 이상이면 누구나 (사실상 제한 없음)<br>
+  ✔ <strong>학력:</strong> 학력 무관 (중졸, 고졸, 대졸 모두 가능)<br>
+  ✔ <strong>필요 서류:</strong> 신분증 + 건강검진 결과서(기관에서 안내해줌)<br><br>
+  ❌ 전공, 자격증, 경력 — 전혀 없어도 됩니다.
+</div>
+
+<h3>📅 교육 기간과 커리큘럼</h3>
+<p>총 240시간을 이수해야 합니다. 이론 80시간 + 실기 80시간 + 현장실습 80시간으로 구성됩니다.</p>
+
+<div class="post-example">
+  <div class="post-example-label">실제 교육 일정 예시 (주 3일 수업 기준)</div>
+  월·수·금 오전 10시~오후 3시 수업 → <strong>약 3~4개월</strong>이면 이수 완료<br>
+  주 5일 집중 수업 선택 시 → <strong>약 2개월</strong>에 이수 가능<br><br>
+  ✔ 출석 80% 이상 충족하면 수료<br>
+  ✔ 현장실습은 주로 근처 요양원에서 진행 (교육원이 연계해줌)
+</div>
+
+<h3>💰 교육비는 얼마나 드나요?</h3>
+<p>정가는 40~80만원 수준이지만, <strong>국민내일배움카드</strong>를 이용하면 거의 무료로 들을 수 있습니다.</p>
+
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#F0FDF4;border-color:#BBF7D0;">
+    <div style="font-size:.8rem;font-weight:800;color:#15803D;margin-bottom:6px;">국민내일배움카드란?</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.9;">
+      정부가 국민 누구에게나 발급해주는 직업훈련 지원 카드입니다.<br>
+      300~500만원의 훈련비를 지원받고, 그 범위 안에서 교육비를 카드로 결제하면 됩니다.<br><br>
+      대부분의 요양보호사 교육 과정이 지원 가능 목록에 포함되어 있어요.<br>
+      <strong>→ 교육비가 80만원이라도 실제 본인 부담은 10~20만원 수준으로 줄어드는 경우가 많습니다.</strong>
+    </div>
+  </div>
+</div>
+
+<div class="post-example">
+  <div class="post-example-label">국민내일배움카드 신청 방법</div>
+  <strong>1단계:</strong> HRD-Net (hrd.go.kr) 접속 → 회원가입<br>
+  <strong>2단계:</strong> "내일배움카드 신청" 클릭 → 온라인 신청 (또는 고용센터 방문)<br>
+  <strong>3단계:</strong> 카드 수령 (약 2~3주 소요)<br>
+  <strong>4단계:</strong> HRD-Net에서 요양보호사 교육 과정 검색 → 신청<br><br>
+  ☎ 상담: 고용노동부 고객상담센터 <strong>1350</strong> (무료, 평일 09:00~18:00)
+</div>
+
+<div class="post-tip">
+  💡 이미 실직 상태라면 "국민취업지원제도"와 함께 신청하면 훈련비 지원 + 월 최대 50만원 취업활동비도 받을 수 있어요. 고용센터에서 한 번에 안내받으세요.
+</div>
+
+<h3>📝 국가시험 — 얼마나 어렵나요?</h3>
+<p>합격률이 <strong>90% 이상</strong>입니다. 교육을 성실하게 이수했다면 대부분 합격합니다.</p>
+
+<div class="post-example">
+  <div class="post-example-label">시험 정보</div>
+  <strong>시행 기관:</strong> 한국보건의료인국가시험원 (국시원, kuksiwon.or.kr)<br>
+  <strong>시험 횟수:</strong> 연 6회 (약 2개월에 1회)<br>
+  <strong>시험 과목:</strong> 요양보호론 (필기 35문제 + 실기 45문제, 총 80문제)<br>
+  <strong>합격 기준:</strong> 필기·실기 각각 60% 이상 (36점·27점 이상)<br>
+  <strong>시험 시간:</strong> 70분<br><br>
+  ✔ 교육 이수 후 국시원 홈페이지에서 직접 접수<br>
+  ✔ 응시료: 약 3~4만원
+</div>
+
+<h3>💼 자격증 따고 나면 — 취업이 얼마나 빠를까요?</h3>
+<p>자격증 발급 직후부터 바로 구직이 가능합니다. 요양원이나 방문요양센터는 항상 인력이 부족해서 자격증만 있으면 대기가 거의 없습니다.</p>
+
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#FFF7ED;border-color:#FED7AA;">
+    <div style="font-size:.8rem;font-weight:800;color:#C2410C;margin-bottom:6px;">방문요양 급여 (2026년 기준)</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.9;">
+      시급: <strong>11,000~13,000원</strong> 수준<br>
+      월 2~4시간 × 10~15명 어르신 담당 → 월 수입 80~150만원<br>
+      이동 시간 포함 여부는 센터마다 다름<br>
+      <strong>출퇴근 자유 / 파트타임 가능 / 집 근처에서 일 가능</strong>
+    </div>
+  </div>
+  <div class="post-compare-row" style="background:#F0F9FF;border-color:#BAE6FD;">
+    <div style="font-size:.8rem;font-weight:800;color:#0369A1;margin-bottom:6px;">요양원·주야간보호센터 급여</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.9;">
+      월 200~240만원 (주 40시간 기준)<br>
+      야간 추가 수당 별도<br>
+      4대보험 가입, 퇴직금 적용<br>
+      <strong>고정 수입 / 안정적 환경 / 경력 쌓기에 유리</strong>
+    </div>
+  </div>
+</div>
+
+<h3>🔍 일자리 찾는 방법</h3>
+<ul>
+  <li><strong>동네로 (dongnero.kr)</strong> — 요양·돌봄 카테고리에서 내 동네 공고 검색</li>
+  <li><strong>복지로 (bokjiro.go.kr)</strong> — "요양보호사 구인" 검색</li>
+  <li><strong>시니어클럽</strong> — 자격증 보유자 우선 배치하는 경우 많음</li>
+  <li><strong>직접 방문</strong> — 동네 방문요양센터에 자격증 들고 직접 찾아가도 됩니다. 10곳 중 7곳은 바로 면접을 봅니다.</li>
+</ul>
+
+<div class="post-tip">
+  📌 <strong>요양보호사 자격증 취득 한 줄 요약</strong><br>
+  국민내일배움카드 신청 → 교육 이수(3~4개월) → 국가시험 응시 → 합격 → 즉시 취업<br><br>
+  지금 당장 시작하면 <strong>올 가을부터 일할 수 있습니다.</strong> 고용센터 ☎ 1350에 전화해서 "요양보호사 자격증 취득 지원 받고 싶다"고 하면 다음 단계를 안내받을 수 있어요.
+</div>
+`
+  },
+  {
     id: 'unemployment-benefit-2026',
     category: '생활 지원',
     categoryColor: '#0F766E',

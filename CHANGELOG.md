@@ -2,6 +2,13 @@
 
 ---
 
+## [v0.99] 2026-05-19 — 정보게시판 9번째 글 추가 (요양보호사 자격증)
+
+- `posts_data.js` — `caregiving-license-2026` 글 추가 (카테고리: 자격증·교육)
+  - 국민내일배움카드 무료 수강, 240시간 커리큘럼, 국가시험 90%+ 합격률, 취업 급여 비교
+- `posts/caregiving-license-2026.html` — build_posts.py로 자동 생성
+- `sitemap.xml` — 새 글 URL 추가
+
 ## [v0.98] 2026-05-19 — notify_sent_log bigint 버그 우회 + 어드민 카드 기준 설명
 
 - `notify.py` — `already_sent_today` / `log_sent`를 phone 기준으로 변경
