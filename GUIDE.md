@@ -1,6 +1,6 @@
 # 동네로 운영 가이드
 
-> 최종 업데이트: 2026-05-19 (v0.86)  
+> 최종 업데이트: 2026-05-20 (v0.87)  
 > 운영자: kyungmh95 / kahn201130@gmail.com
 
 ---
@@ -261,9 +261,14 @@ Claude가 자동으로:
 - [ ] **카카오 알림톡 활성화**: GitHub Secrets에 `KAKAO_TMPL_WITH_JOB`, `KAKAO_TMPL_NO_JOB`, `KAKAO_PFID`, `SENDER_NUMBER`, `SOLAPI_API_KEY`, `SOLAPI_API_SECRET` 등록 → crawl.yml UI에서 notify 단계 `if: false` 제거
 - [x] ~~**GitHub Secrets 텔레그램**: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` 등록~~ **완료**
 - [x] ~~**crawl.yml GitHub UI 수정**~~ **완료** (workflow scope 추가 후 push)
-- [ ] **네이버 블로그 미발행 글 확인 후 발행**
+- [ ] **네이버 블로그 미발행 글 확인 후 발행** (정보글 9편 → 블로그 발행 필요)
 - [ ] **GitHub PAT 만료 전 갱신** 및 `git remote set-url github` 재적용
 - [ ] **당근 커뮤니티 홍보 시작** (메모.md에 홍보 문구 20개 보관 중)
+- [ ] **쓰레드(Threads) 홍보 시작**: 타겟 = 30~40대 자녀, 반말 톤, 부모님 공감 훅으로 공유 유도
+  - 추천 포맷: 공감형(부모님 상황 묘사 + 링크) / 정보형(자격증·지원법 요약) / 감성형
+  - 계정 전략: 브랜드 계정보다 **운영자 개인 계정**이 알고리즘 탐 잘 받음
+  - 업로드 시간: 점심(12~13시) / 퇴근 후(21~22시), 주 2~3회
+  - 해시태그: `#시니어일자리` `#부모님` `#재취업` `#50대알바`
 
 ---
 
