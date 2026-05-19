@@ -2,6 +2,11 @@
 
 ---
 
+## [v0.88] 2026-05-19 — crawl_local.ps1 RunGit 버그 수정 (push 실패 근본 원인)
+
+- `crawl_local.ps1` — `RunGit` 함수 파라미터명 `$args`→`$gitArgs` 변경
+- 원인: `$args`는 PowerShell 예약 자동변수라 `@args` splatting이 항상 빈 값으로 git 호출됨 → fetch·pull·push 모두 무인자 실행 → 크롤링 후 push 항상 실패하던 버그
+
 ## [v0.87] 2026-05-19 — crawl_local.ps1 UTF-8 BOM 수정 (로컬 07:00 크롤링 복구)
 
 - `crawl_local.ps1` — UTF-8 BOM 없이 저장되어 PowerShell 5.1이 ANSI로 읽어 한글 parse error 발생 → BOM 추가로 수정
