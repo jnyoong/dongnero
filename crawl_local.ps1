@@ -1,4 +1,4 @@
-# dongnero local crawl & auto-deploy
+﻿# dongnero local crawl & auto-deploy
 # Usage: .\crawl_local.ps1
 
 Set-Location $PSScriptRoot
