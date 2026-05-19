@@ -23,7 +23,7 @@ TEMPLATE_ID_WITH_JOB = os.environ.get("KAKAO_TMPL_WITH_JOB", "") # 직종 있는
 TEMPLATE_ID_NO_JOB   = os.environ.get("KAKAO_TMPL_NO_JOB", "")   # 직종 없는 템플릿
 SENDER_NUMBER        = os.environ.get("SENDER_NUMBER", "")        # 발신 등록 번호
 
-MIN_NEW_JOBS = 3   # 신규 공고 이 건수 미만이면 발송 안 함
+MIN_NEW_JOBS = 1   # 신규 공고 이 건수 미만이면 발송 안 함
 TODAY = date.today().isoformat()
 
 # ── 직종 키워드 매핑 ──────────────────────────────────────
