@@ -144,14 +144,15 @@ def find_new_matching_jobs(new_jobs, subscriber):
     sido = (subscriber.get("location_sido") or "").strip()
     gu   = (subscriber.get("location_gu")   or "").strip()
     djob = subscriber.get("desired_job") or ""
-    region_label = f"{sido} {gu}".strip() if gu else sido
+    region_label = f"{sido} {gu}".strip() if gu else sido  # 로그용 (강남구 포함)
 
     matched = [
         j for j in new_jobs
         if match_location(j.get("location", ""), sido, gu)
         and match_job_type(j.get("title", ""), djob, j.get("category", ""))
     ]
-    return matched, region_label
+    # sido: 템플릿 #{region} 및 URL 파라미터용 (jobs.html은 시도 단위만 인식)
+    return matched, sido, region_label
 
 
 # ── 이미 오늘 발송했는지 확인 ─────────────────────────────
@@ -246,29 +247,26 @@ def main():
             skip_count += 1
             continue
 
-        matched, region_label = find_new_matching_jobs(new_jobs, sub)
+        matched, sido_region, region_label = find_new_matching_jobs(new_jobs, sub)
         count = len(matched)
 
         if count < MIN_NEW_JOBS:
             continue  # 3건 미만 → 미발송
 
-        name    = (sub.get("name") or "고객").strip()
         djob    = sub.get("desired_job") or ""
         phone   = sub.get("contact_phone")
 
         if djob and TEMPLATE_ID_WITH_JOB:
             tmpl_id = TEMPLATE_ID_WITH_JOB
             variables = {
-                "#{name}":     name,
-                "#{region}":   region_label or "전국",
+                "#{region}":   sido_region or "전국",
                 "#{job_type}": djob,
                 "#{count}":    str(count),
             }
         elif TEMPLATE_ID_NO_JOB:
             tmpl_id = TEMPLATE_ID_NO_JOB
             variables = {
-                "#{name}":   name,
-                "#{region}": region_label or "전국",
+                "#{region}": sido_region or "전국",
                 "#{count}":  str(count),
             }
         else:
@@ -279,7 +277,7 @@ def main():
         if status in (200, 201):
             log_sent(sub_id, count, region_label)
             sent_count += 1
-            print(f"  [OK] {name} / {region_label} / {djob or '직종미지정'} / {count}건 → {phone}")
+            print(f"  [OK] {region_label} / {djob or '직종미지정'} / {count}건 → {phone}")
         else:
             print(f"  [ERR] {phone} → {status} {resp[:100]}")
 
