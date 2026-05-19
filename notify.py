@@ -256,13 +256,31 @@ def main():
     save_new_jobs(new_jobs)
 
     # 2. 활성 구독자 조회 (alert_level >= 2, 전화번호 있음, 삭제되지 않음)
-    subscribers = sb_get("seeker_cards", {
-        "select": "id,name,contact_phone,location_sido,location_gu,desired_job,alert_level",
+    subscribers_raw = sb_get("seeker_cards", {
+        "select": "id,name,contact_phone,location_sido,location_gu,desired_job,alert_level,created_at",
         "alert_level": "gte.2",
         "contact_phone": "not.is.null",
         "deleted_at": "is.null",
     })
-    print(f"[notify] 알림 대상 구독자: {len(subscribers)}명")
+    # 전화번호 중복 제거 — 어드민과 동일 기준: alert_level 높은 것 우선, 동점이면 created_at 오래된 것
+    _phone_map = {}
+    for sub in subscribers_raw:
+        phone = normalize_phone(sub.get("contact_phone") or "")
+        if not phone:
+            continue
+        if phone not in _phone_map:
+            _phone_map[phone] = sub
+        else:
+            existing = _phone_map[phone]
+            ex_lv = existing.get("alert_level") or 0
+            su_lv = sub.get("alert_level") or 0
+            if su_lv > ex_lv:
+                _phone_map[phone] = sub
+            elif su_lv == ex_lv:
+                if (sub.get("created_at") or "") < (existing.get("created_at") or ""):
+                    _phone_map[phone] = sub
+    subscribers = list(_phone_map.values())
+    print(f"[notify] 알림 대상 구독자: {len(subscribers)}명 (전화번호 중복 제거, 원본 {len(subscribers_raw)}건)")
 
     sent_count = 0
     skip_count = 0
