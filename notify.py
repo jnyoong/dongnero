@@ -151,8 +151,9 @@ def find_new_matching_jobs(new_jobs, subscriber):
         if match_location(j.get("location", ""), sido, gu)
         and match_job_type(j.get("title", ""), djob, j.get("category", ""))
     ]
-    # sido: 템플릿 #{region} 및 URL 파라미터용 (jobs.html은 시도 단위만 인식)
-    return matched, sido, region_label
+    # url_region: 템플릿 #{region} 및 URL 파라미터용 — gu 있으면 gu 우선, 없으면 sido
+    url_region = gu if gu else sido
+    return matched, url_region, region_label
 
 
 # ── 이미 오늘 발송했는지 확인 ─────────────────────────────

@@ -1681,7 +1681,13 @@ function parseSal(s) {
 const _urlParams   = new URLSearchParams(location.search);
 const _urlRegion   = _urlParams.get('region')   || '전체';
 const _urlDistrict = _urlParams.get('district')  || '';
-let allJobs = [], activeRegion = _urlRegion, activeDistrict = _urlDistrict;
+// 시도 레이블 집합 (REGION_MAP 값과 동일)
+const SIDO_LABELS  = new Set(['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주']);
+// region 파라미터가 구·시(district) 단위인 경우 (알림톡 버튼 등에서 진입)
+const _isDistrictParam = _urlRegion !== '전체' && !SIDO_LABELS.has(_urlRegion);
+let allJobs = [];
+let activeRegion   = _isDistrictParam ? '전체'    : _urlRegion;
+let activeDistrict = _isDistrictParam ? _urlRegion : _urlDistrict;
 let showMomsitter = true;
 
 const PAGE_SIZE = 50;
@@ -1798,14 +1804,17 @@ function buildHeaderStats(data) {
 function updateRegionLabel() {
   const el = document.getElementById('regionLabel');
   const base = allJobs.filter(j => showMomsitter || j.source !== '맘시터');
-  if (activeRegion === '전체') {
-    el.textContent = '';
-  } else if (activeDistrict) {
-    const cnt = base.filter(j => j._region === activeRegion && (j.location||'').includes(activeDistrict)).length;
+  if (activeDistrict) {
+    const cnt = base.filter(j =>
+      (activeRegion === '전체' || j._region === activeRegion) &&
+      (j.location||'').includes(activeDistrict)
+    ).length;
     el.textContent = `${cnt}건`;
-  } else {
+  } else if (activeRegion !== '전체') {
     const cnt = base.filter(j => j._region === activeRegion).length;
     el.textContent = `${cnt}건`;
+  } else {
+    el.textContent = '';
   }
 }
 
@@ -1832,7 +1841,7 @@ function openRegionSheet() {
   const btnLabel = document.getElementById('rsheetBtnAllLabel');
   const grid     = document.getElementById('rsheetGrid');
 
-  if (_urlRegion !== '전체') {
+  if (!_isDistrictParam && _urlRegion !== '전체') {
     const dists = DISTRICTS[_urlRegion] || [];
     const regionJobs = allJobs.filter(j => j._region === _urlRegion);
     const dc = {};
