@@ -1491,7 +1491,7 @@ function renderSeekerCards() {
       (j.contact_phone||'')
     ).toLowerCase().includes(kw)) return false;
     return true;
-  });
+  }).sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 
   const modeLabel = scDupMode ? '중복 항목만' : '중복 제외';
   document.getElementById('scRangeInfo').textContent =
