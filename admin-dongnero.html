@@ -469,11 +469,11 @@
       <div class="summary-chip"><strong id="csRetRate">-</strong>재방문율</div>
       <div class="summary-chip"><strong id="csAvgVisit">-</strong>평균 방문횟수</div>
     </div>
-    <h3 style="margin:20px 0 8px;font-size:.95rem;color:#374151">날짜별 신규 / 재방문 (최근 7일)</h3>
+    <h3 style="margin:20px 0 8px;font-size:.95rem;color:#374151">날짜별 신규 / 재방문 / 알림신청 (최근 7일)</h3>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>날짜</th><th>신규</th><th>재방문</th><th>합계</th></tr></thead>
-        <tbody id="csDailyBody"><tr><td colspan="4" class="loading">불러오는 중…</td></tr></tbody>
+        <thead><tr><th>날짜</th><th style="color:#059669">신규방문</th><th style="color:#2563EB">재방문</th><th>방문합계</th><th style="color:#7C3AED">알림신청</th></tr></thead>
+        <tbody id="csDailyBody"><tr><td colspan="5" class="loading">불러오는 중…</td></tr></tbody>
       </table>
     </div>
     <h3 style="margin:16px 0 8px;font-size:.95rem;color:#374151">출처별 클릭수</h3>
@@ -666,7 +666,7 @@ async function renderClickStats() {
     document.getElementById('csRetRate').textContent     = retRate + '%';
     document.getElementById('csAvgVisit').textContent    = avgVisitCnt;
 
-    // 날짜별 신규 / 재방문 (최근 7일)
+    // 날짜별 신규 / 재방문 / 알림신청 (최근 7일)
     const firstVisitDate = {};
     visits.forEach(v => {
       if (!v.visited_at) return;
@@ -681,6 +681,14 @@ async function renderClickStats() {
       if (!dailyVisitors[d]) dailyVisitors[d] = new Set();
       dailyVisitors[d].add(v.visitor_id);
     });
+    // 날짜별 알림신청 수 (중복 제외 기준, created_at KST)
+    const { deduped: scDeduped } = _splitDup(allSeekerCards);
+    const dailySignups = {};
+    scDeduped.forEach(j => {
+      if (!j.created_at) return;
+      const d = _kst(j.created_at);
+      dailySignups[d] = (dailySignups[d] || 0) + 1;
+    });
     const days7 = Array.from({length: 7}, (_, i) => {
       const d = new Date(now - (6 - i) * 86400000);
       return _kst(d);
@@ -694,6 +702,7 @@ async function renderClickStats() {
         else retCnt++;
       });
       const total = visitors.size;
+      const signups = dailySignups[date] || 0;
       const isT = isToday(date);
       const style = isT ? 'font-weight:700;background:#EFF6FF' : '';
       const label = isT ? `${date} <span style="font-size:.75rem;color:#2563EB;font-weight:700">오늘</span>` : date;
@@ -702,8 +711,9 @@ async function renderClickStats() {
         <td style="color:#059669;font-weight:600">${newCnt}</td>
         <td style="color:#2563EB;font-weight:600">${retCnt}</td>
         <td>${total}</td>
+        <td style="color:#7C3AED;font-weight:600">${signups > 0 ? signups : '-'}</td>
       </tr>`;
-    }).join('') || '<tr><td colspan="4" class="empty-msg">데이터 없음</td></tr>';
+    }).join('') || '<tr><td colspan="5" class="empty-msg">데이터 없음</td></tr>';
 
     // 출처별 집계
     const srcMap = {};
