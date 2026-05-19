@@ -2,6 +2,11 @@
 
 ---
 
+## [v0.90] 2026-05-19 — notify.py 알림톡 버그 2건 수정
+
+- `notify.py` — `#{region}` 값을 `sido`(시도)만 사용하도록 수정 (기존 `sido+gu` → jobs.html URL 필터 `?region=` 과 불일치로 공고 0건 표시 문제)
+- `notify.py` — `#{name}` 변수 제거 (템플릿에 없는 변수 → Solapi 오류 방지)
+
 ## [v0.89] 2026-05-19 — 로컬 크롤링 후 알림톡 발송 추가
 
 - `crawl_local.ps1` — crawler.py 완료 직후 `.env.local` 전체 환경변수 로드 후 `notify.py` 실행
