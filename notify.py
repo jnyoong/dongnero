@@ -154,16 +154,32 @@ def find_new_matching_jobs(new_jobs, subscriber):
     sido = (subscriber.get("location_sido") or "").strip()
     gu   = (subscriber.get("location_gu")   or "").strip()
     djob = subscriber.get("desired_job") or ""
-    region_label = f"{sido} {gu}".strip() if gu else sido  # 로그용 (강남구 포함)
+    region_label = f"{sido} {gu}".strip() if gu else sido
+    url_region   = gu if gu else sido
 
-    matched = [
-        j for j in new_jobs
-        if match_location(j.get("location", ""), sido, gu)
-        and match_job_type(j.get("title", ""), djob, j.get("category", ""))
-    ]
-    # url_region: 템플릿 #{region} 및 URL 파라미터용 — gu 있으면 gu 우선, 없으면 sido
-    url_region = gu if gu else sido
-    return matched, url_region, region_label
+    # 지역 필터만 적용한 전체 신규 공고
+    regional = [j for j in new_jobs if match_location(j.get("location", ""), sido, gu)]
+
+    if not djob:
+        # 직종 미지정 → 지역 전체, "다양한 직종"
+        return regional, url_region, region_label, "다양한 직종"
+
+    mapped = get_mapped_tags(djob)
+
+    if not mapped:
+        # 케이스2: 직접입력만 → 지역 전체, "다양한 직종"
+        return regional, url_region, region_label, "다양한 직종"
+
+    # 표준 직종으로 필터
+    matched = [j for j in regional
+               if match_job_type(j.get("title", ""), djob, j.get("category", ""))]
+
+    if matched:
+        # 정상: 표준 직종 매칭 공고 있음
+        return matched, url_region, region_label, ", ".join(mapped)
+
+    # 케이스1 폴백: 표준 직종 공고 0건 → 지역 전체, "다양한 직종"
+    return regional, url_region, region_label, "다양한 직종"
 
 
 # ── 이미 오늘 발송했는지 확인 ─────────────────────────────
@@ -259,37 +275,30 @@ def main():
             skip_count += 1
             continue
 
-        matched, sido_region, region_label = find_new_matching_jobs(new_jobs, sub)
+        matched, sido_region, region_label, job_type_label = find_new_matching_jobs(new_jobs, sub)
         count = len(matched)
 
         if count < MIN_NEW_JOBS:
-            continue  # 3건 미만 → 미발송
+            continue
 
-        djob    = sub.get("desired_job") or ""
-        phone   = sub.get("contact_phone")
+        phone = sub.get("contact_phone")
 
-        if djob and TEMPLATE_ID_WITH_JOB:
-            tmpl_id = TEMPLATE_ID_WITH_JOB
-            variables = {
-                "#{region}":   sido_region or "전국",
-                "#{job_type}": djob,
-                "#{count}":    str(count),
-            }
-        elif TEMPLATE_ID_NO_JOB:
-            tmpl_id = TEMPLATE_ID_NO_JOB
-            variables = {
-                "#{region}": sido_region or "전국",
-                "#{count}":  str(count),
-            }
-        else:
+        if not TEMPLATE_ID_WITH_JOB:
             print(f"  [SKIP] 템플릿 ID 미설정 — {phone}")
             continue
+
+        tmpl_id = TEMPLATE_ID_WITH_JOB
+        variables = {
+            "#{region}":   sido_region or "전국",
+            "#{job_type}": job_type_label,
+            "#{count}":    str(count),
+        }
 
         status, resp = send_alimtalk(phone, tmpl_id, variables)
         if status in (200, 201):
             log_sent(sub_id, count, region_label)
             sent_count += 1
-            print(f"  [OK] {region_label} / {djob or '직종미지정'} / {count}건 → {phone}")
+            print(f"  [OK] {region_label} / {job_type_label} / {count}건 → {phone}")
         else:
             print(f"  [ERR] {phone} → {status} {resp[:100]}")
 
