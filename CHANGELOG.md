@@ -2,6 +2,11 @@
 
 ---
 
+## [v0.92] 2026-05-19 — 알림톡 발송 정책 확정 + SUPABASE service_role key 적용
+
+- `.env.local` — SUPABASE_KEY를 service_role(secret) key로 교체 (anon key는 RLS로 seeker_cards 조회 불가)
+- 알림 발송 정책 확정: **alert_level 2·3단계만 발송, 1단계(정보만 볼게요) 제외** (notify.py 기존 `gte.2` 조건과 일치, 변경 없음)
+
 ## [v0.91] 2026-05-19 — 알림톡 구 단위 지역 필터 지원
 
 - `notify.py` — `#{region}` 값을 gu 우선(없으면 sido)으로 변경 (예: 강남구, 수원시)
