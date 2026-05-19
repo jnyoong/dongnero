@@ -1,9 +1,9 @@
-name: 매일 07시 크롤링 & 배포
+name: 매일 08시30분 크롤링 & 배포
 
 on:
   schedule:
-    # 한국시간 07:00 = UTC 22:00 (전날)
-    - cron: '0 22 * * *'
+    # 한국시간 08:30 = UTC 23:30 (전날)
+    - cron: '30 23 * * *'
   workflow_dispatch:  # 수동 실행 버튼
 
 permissions:

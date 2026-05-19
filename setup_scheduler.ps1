@@ -13,7 +13,7 @@ $action = New-ScheduledTaskAction `
     -Argument "-WindowStyle Hidden -ExecutionPolicy Bypass -File "$scriptPath"" `
     -WorkingDirectory $PSScriptRoot
 
-$trigger  = New-ScheduledTaskTrigger -Daily -At "07:00"
+$trigger  = New-ScheduledTaskTrigger -Daily -At "08:30"
 $settings = New-ScheduledTaskSettingsSet `
     -RunOnlyIfNetworkAvailable `
     -StartWhenAvailable `
@@ -25,7 +25,7 @@ Register-ScheduledTask `
     -Action $action `
     -Trigger $trigger `
     -Settings $settings `
-    -Description "dongnero daily crawl 07:00" `
+    -Description "dongnero daily crawl 08:30" `
     -RunLevel Highest | Out-Null
 
 Write-Host "OK: $taskName registered (daily 07:00)"

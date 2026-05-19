@@ -32,7 +32,7 @@
 **로컬 PC가 PRIMARY, GitHub Actions는 FALLBACK.**
 
 ```
-매일 07:00 — Windows 작업 스케줄러 (동네로_크롤링, 실행제한 2시간)
+매일 08:30 — Windows 작업 스케줄러 (동네로_크롤링, 실행제한 2시간)
     ↓
 crawl_local.ps1 실행
     │
@@ -64,7 +64,7 @@ crawl_local.ps1 실행
     │
     └─ 실패 시 텔레그램 ❌ "크롤링 실패" 발송
 
-같은 날 GitHub Actions (UTC 22:00 = KST 07:00) 실행 시
+같은 날 GitHub Actions (UTC 23:30 = KST 08:30) 실행 시
     → last_crawl.txt = 오늘 날짜 → 스킵 (로컬 우선)
     → 오늘 날짜 아님 (PC 꺼져있었음) → Actions가 직접 크롤링 실행
 ```
@@ -215,8 +215,8 @@ Claude가 자동으로:
 
 | 주체 | 방식 | 시간 | 역할 |
 |------|------|------|------|
-| **로컬 PC (Primary)** | Windows 작업 스케줄러 `동네로_크롤링` | 매일 07:00 KST | crawl_local.ps1 → crawler.py → push |
-| GitHub Actions (Fallback) | crawl.yml | 매일 07:00 KST (UTC 22:00) | 로컬 안 됐을 때만 실행 |
+| **로컬 PC (Primary)** | Windows 작업 스케줄러 `동네로_크롤링` | 매일 08:30 KST | crawl_local.ps1 → crawler.py → push |
+| GitHub Actions (Fallback) | crawl.yml | 매일 08:30 KST (UTC 23:30) | 로컬 안 됐을 때만 실행 |
 
 **우선순위 메커니즘:**
 - 로컬 성공 → `last_crawl.txt` = 오늘 날짜로 기록 + push

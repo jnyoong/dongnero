@@ -237,7 +237,7 @@ def cmd_today():
             label = "오늘 크롤링 완료"
         else:
             icon = "⏳"
-            label = "오늘 크롤링 미완료 (07:00 자동 예정)"
+            label = "오늘 크롤링 미완료 (08:30 자동 예정)"
 
         send(
             f"{icon} *{label}*\n"
