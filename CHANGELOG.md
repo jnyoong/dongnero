@@ -2,6 +2,14 @@
 
 ---
 
+## [v0.98] 2026-05-19 — notify_sent_log bigint 버그 우회 + 어드민 카드 기준 설명
+
+- `notify.py` — `already_sent_today` / `log_sent`를 phone 기준으로 변경
+  - 원인: `notify_sent_log.seeker_card_id`가 bigint이나 `seeker_cards.id`는 uuid → 타입 불일치 400 오류
+  - 우회: phone 번호를 region 컬럼에 `PHONE:01012341234` 형태로 저장, 조회도 동일 방식
+  - 오류 발생 시 except로 잡아 notify.py 전체 중단 방지
+- `admin-dongnero.html` — 재방문자 현황 카드에 "전체 누적 기준" vs 날짜별 테이블 차이 설명 추가
+
 ## [v0.97] 2026-05-19 — notify.py 전화번호 중복 발송 방지
 
 - `notify.py` — 전화번호 기준 중복 제거 추가 (alert_level↑ → oldest created_at 순)
