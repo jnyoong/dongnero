@@ -2,6 +2,12 @@
 
 ---
 
+## [v0.91] 2026-05-19 — 알림톡 구 단위 지역 필터 지원
+
+- `notify.py` — `#{region}` 값을 gu 우선(없으면 sido)으로 변경 (예: 강남구, 수원시)
+- `jobs.html` — `?region=강남구` 같은 구·시 단위 URL 진입 처리 추가 (`SIDO_LABELS`로 판별 후 activeDistrict로 전환)
+- `jobs.html` — `updateRegionUI()` 개선 — activeRegion이 전체여도 activeDistrict 있으면 건수 표시
+
 ## [v0.90] 2026-05-19 — notify.py 알림톡 버그 2건 수정
 
 - `notify.py` — `#{region}` 값을 `sido`(시도)만 사용하도록 수정 (기존 `sido+gu` → jobs.html URL 필터 `?region=` 과 불일치로 공고 0건 표시 문제)
