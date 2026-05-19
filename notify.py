@@ -122,20 +122,30 @@ def match_location(job_location, sido, gu):
         return False
     return True
 
-def match_job_type(title, desired_job_str, category=""):
-    """desired_job 쉼표 구분 목록 중 하나라도 제목 키워드 또는 잡아바 category 필드에 매칭"""
+def get_mapped_tags(desired_job_str):
+    """desired_job에서 표준 직종(JOB_KEYWORDS 키)만 추출. 없으면 빈 리스트."""
     if not desired_job_str:
-        return True  # 직종 미지정이면 무조건 매칭
-    user_tags = [t.strip() for t in desired_job_str.split(",")]
-    # 잡아바 category 필드로 직접 매칭 (더 정확)
+        return []
+    return [t.strip() for t in desired_job_str.split(",") if t.strip() in JOB_KEYWORDS]
+
+def match_job_type(title, desired_job_str, category=""):
+    """
+    케이스1: 표준 직종 + 직접입력 혼재 → 표준 직종만 기준으로 매칭
+    케이스2: 표준 직종 없이 직접입력만 → 직종 무관 전체 매칭 (True 반환)
+    """
+    if not desired_job_str:
+        return True  # 직종 미지정 → 전체 매칭
+    mapped = get_mapped_tags(desired_job_str)
+    if not mapped:
+        return True  # 케이스2: 매핑되는 표준 직종 없음 → 지역 전체 매칭
+    # 케이스1 or 표준 직종만: 매핑된 것들 중 하나라도 매칭되면 OK
     if category:
         matched_tags = JOBABA_CATEGORY_MAP.get(category, [])
-        if any(tag in matched_tags for tag in user_tags):
+        if any(tag in matched_tags for tag in mapped):
             return True
-    # 제목 키워드 매칭 (다른 출처 포함)
     title_lower = title.lower()
-    for job_tag in user_tags:
-        keywords = JOB_KEYWORDS.get(job_tag, [job_tag])
+    for job_tag in mapped:
+        keywords = JOB_KEYWORDS.get(job_tag, [])
         if any(kw in title_lower for kw in keywords):
             return True
     return False
@@ -229,11 +239,12 @@ def main():
     # 신규 공고 seen_jobs에 저장
     save_new_jobs(new_jobs)
 
-    # 2. 활성 구독자 조회 (alert_level >= 2, 전화번호 있음)
+    # 2. 활성 구독자 조회 (alert_level >= 2, 전화번호 있음, 삭제되지 않음)
     subscribers = sb_get("seeker_cards", {
         "select": "id,name,contact_phone,location_sido,location_gu,desired_job,alert_level",
         "alert_level": "gte.2",
         "contact_phone": "not.is.null",
+        "deleted_at": "is.null",
     })
     print(f"[notify] 알림 대상 구독자: {len(subscribers)}명")
 
