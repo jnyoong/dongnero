@@ -1337,18 +1337,27 @@ function _splitDup(cards) {
 
   const deduped = [...noKey];
   const dupes   = [];
+  const dupInfo = {};  // 대표 id → { dupCount }
+  const dupeOf  = {};  // 중복 id → { repName, repDate, reason }
+
   Object.values(groups).forEach(grp => {
     if (grp.length === 1) { deduped.push(grp[0]); return; }
     grp.sort((a, b) => {
       const lvDiff = (b.alert_level || 0) - (a.alert_level || 0);
       if (lvDiff !== 0) return lvDiff;
-      // 동점이면 먼저 신청한 것(오래된 created_at)이 대표
       return new Date(a.created_at || 0) - new Date(b.created_at || 0);
     });
-    deduped.push(grp[0]);
-    dupes.push(...grp.slice(1));
+    const rep = grp[0];
+    deduped.push(rep);
+    dupInfo[rep.id] = { dupCount: grp.length - 1 };
+    const repDt = rep.created_at ? (() => { const d = new Date(rep.created_at); return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; })() : '-';
+    grp.slice(1).forEach(d => {
+      const reason = (d.alert_level || 0) > (rep.alert_level || 0) ? '단계낮음' : '먼저신청';
+      dupeOf[d.id] = { repName: rep.name || '(이름없음)', repDate: repDt, reason };
+      dupes.push(d);
+    });
   });
-  return { deduped, dupes };
+  return { deduped, dupes, dupInfo, dupeOf };
 }
 
 let scDupMode = false;
@@ -1423,7 +1432,7 @@ function renderSeekerCards() {
   const kw  = document.getElementById('scSearch').value.trim().toLowerCase();
   const lv  = document.getElementById('scLvFilter').value;
   const rgn = document.getElementById('scRegionFilter').value;
-  const { deduped, dupes } = _splitDup(allSeekerCards);
+  const { deduped, dupes, dupInfo, dupeOf } = _splitDup(allSeekerCards);
 
   // 중복 보기 모드면 dupes만, 아니면 deduped
   const base = scDupMode ? dupes : deduped;
@@ -1454,9 +1463,15 @@ function renderSeekerCards() {
     const lvi  = j.alert_level || 2;
     const lvcf = SC_LEVEL[lvi] || SC_LEVEL[2];
     const lvBadge = `<span class="badge ${lvcf.cls}">${lvcf.icon} ${lvcf.label}</span>`;
+    const dupBadge = dupInfo[j.id]
+      ? `<span style="display:inline-block;margin-left:5px;font-size:.7rem;font-weight:700;background:#FEF3C7;color:#92400E;border:1px solid #FCD34D;border-radius:4px;padding:1px 5px">🔁 중복 ${dupInfo[j.id].dupCount}건</span>`
+      : '';
+    const dupeOfInfo = dupeOf[j.id]
+      ? `<div style="font-size:.72rem;color:#6B7280;margin-top:3px">↳ 대표: <strong>${dupeOf[j.id].repName}</strong> (${dupeOf[j.id].repDate} 신청) · <span style="color:#DC2626">${dupeOf[j.id].reason === '먼저신청' ? '대표가 먼저 신청' : '대표가 단계 높음'}</span></div>`
+      : '';
     const nameCell = j.name
-      ? `<strong>${j.name}</strong>`
-      : `<span style="color:#9CA3AF">미입력</span>`;
+      ? `<div><strong>${j.name}</strong>${dupBadge}${dupeOfInfo}</div>`
+      : `<div><span style="color:#9CA3AF">미입력</span>${dupBadge}${dupeOfInfo}</div>`;
     const phoneCell = j.contact_phone
       ? `<a href="tel:${j.contact_phone}" style="color:#2563EB">${j.contact_phone}</a>`
       : `<span style="color:#9CA3AF">-</span>`;
