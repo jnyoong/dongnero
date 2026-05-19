@@ -183,22 +183,30 @@ def find_new_matching_jobs(new_jobs, subscriber):
 
 
 # ── 이미 오늘 발송했는지 확인 ─────────────────────────────
-def already_sent_today(seeker_id):
-    rows = sb_get("notify_sent_log", {
-        "select": "id",
-        "seeker_card_id": f"eq.{seeker_id}",
-        "sent_date": f"eq.{TODAY}",
-        "limit": "1",
-    })
-    return len(rows) > 0
+# notify_sent_log.seeker_card_id가 bigint라 uuid 비교 불가 (버그)
+# → phone을 region 필드에 저장해 중복 체크 (스키마 변경 없이 우회)
+def already_sent_today(phone: str) -> bool:
+    try:
+        rows = sb_get("notify_sent_log", {
+            "select": "id",
+            "region": f"eq.PHONE:{phone}",
+            "sent_date": f"eq.{TODAY}",
+            "limit": "1",
+        })
+        return len(rows) > 0
+    except Exception as e:
+        print(f"  [WARN] already_sent_today 오류 (스킵): {e}")
+        return False
 
-def log_sent(seeker_id, count, region):
-    sb_post("notify_sent_log", {
-        "seeker_card_id": seeker_id,
-        "sent_date": TODAY,
-        "job_count": count,
-        "region": region,
-    })
+def log_sent(phone: str, count: int, region_label: str):
+    try:
+        sb_post("notify_sent_log", {
+            "sent_date": TODAY,
+            "job_count": count,
+            "region": f"PHONE:{phone}",   # 전화번호를 키로 저장 (중복 방지용)
+        })
+    except Exception as e:
+        print(f"  [WARN] log_sent 오류 (무시): {e}")
 
 
 # ── Solapi 알림톡 발송 ────────────────────────────────────
@@ -286,10 +294,13 @@ def main():
     skip_count = 0
 
     for sub in subscribers:
-        sub_id = sub["id"]
+        phone = normalize_phone(sub.get("contact_phone") or "")
+        if not phone:
+            skip_count += 1
+            continue
 
-        # 오늘 이미 발송했으면 스킵
-        if already_sent_today(sub_id):
+        # 오늘 이미 발송했으면 스킵 (phone 기준)
+        if already_sent_today(phone):
             skip_count += 1
             continue
 
@@ -298,8 +309,6 @@ def main():
 
         if count < MIN_NEW_JOBS:
             continue
-
-        phone = sub.get("contact_phone")
 
         if not TEMPLATE_ID_WITH_JOB:
             print(f"  [SKIP] 템플릿 ID 미설정 — {phone}")
@@ -312,9 +321,9 @@ def main():
             "#{count}":    str(count),
         }
 
-        status, resp = send_alimtalk(phone, tmpl_id, variables)
+        status, resp = send_alimtalk(normalize_phone(phone), tmpl_id, variables)
         if status in (200, 201):
-            log_sent(sub_id, count, region_label)
+            log_sent(phone, count, region_label)
             sent_count += 1
             print(f"  [OK] {region_label} / {job_type_label} / {count}건 → {phone}")
         else:
