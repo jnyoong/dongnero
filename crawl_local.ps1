@@ -14,8 +14,8 @@ function Log($msg) {
 }
 
 function RunGit {
-    param([string[]]$args)
-    $result = & git @args 2>&1
+    param([string[]]$gitArgs)
+    $result = & git @gitArgs 2>&1
     $result | ForEach-Object { Log "  git> $_" }
     return $LASTEXITCODE
 }
