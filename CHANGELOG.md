@@ -2,6 +2,11 @@
 
 ---
 
+## [v0.93] 2026-05-19 — 알림톡 발송 기준 1건으로 완화
+
+- `notify.py` — `MIN_NEW_JOBS` 3→1 (신규 공고 1건만 있어도 발송)
+- 발송 정책 최종 확정: alert_level 2·3단계, 하루 1회, 신규 1건 이상, 지역별 개인화
+
 ## [v0.92] 2026-05-19 — 알림톡 발송 정책 확정 + SUPABASE service_role key 적용
 
 - `.env.local` — SUPABASE_KEY를 service_role(secret) key로 교체 (anon key는 RLS로 seeker_cards 조회 불가)
