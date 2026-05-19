@@ -76,6 +76,24 @@ if ($LASTEXITCODE -ne 0) {
 }
 Log "crawler done"
 
+# ── 알림톡 발송 ──────────────────────────────────────────────
+# .env.local 전체 환경변수 로드 (SOLAPI, SUPABASE 등)
+$envFile2 = Join-Path $PSScriptRoot ".env.local"
+if (Test-Path $envFile2) {
+    foreach ($line in (Get-Content $envFile2 -Encoding UTF8)) {
+        if ($line -match "^([^#=\s][^=]*)=(.*)$") {
+            [System.Environment]::SetEnvironmentVariable($Matches[1].Trim(), $Matches[2].Trim(), "Process")
+        }
+    }
+}
+Log "notify.py 실행..."
+python notify.py
+if ($LASTEXITCODE -ne 0) {
+    Log "notify.py 오류 (exit $LASTEXITCODE) — 크롤링 및 배포는 계속 진행"
+} else {
+    Log "notify.py 완료"
+}
+
 # PS 5.1 compatible: write date without BOM
 [System.IO.File]::WriteAllText(
     (Join-Path $PSScriptRoot "last_crawl.txt"),
