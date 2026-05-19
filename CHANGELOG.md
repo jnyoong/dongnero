@@ -2,6 +2,11 @@
 
 ---
 
+## [v0.87] 2026-05-19 — crawl_local.ps1 UTF-8 BOM 수정 (로컬 07:00 크롤링 복구)
+
+- `crawl_local.ps1` — UTF-8 BOM 없이 저장되어 PowerShell 5.1이 ANSI로 읽어 한글 parse error 발생 → BOM 추가로 수정
+- 증상: `동네로_크롤링` 작업 스케줄러 태스크가 매일 07:00 실행되나 exit code 1로 즉시 실패 (log·lock 파일도 생성 안 됨)
+
 ## [v0.86] 2026-05-19 — GitHub Actions 텔레그램 알림 + Secrets 등록
 
 - `.github/workflows/crawl.yml` — 시작·완료 텔레그램 알림 단계 추가 (PC 꺼져있어도 Actions 크롤링 시 알림 수신)
