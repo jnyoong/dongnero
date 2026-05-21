@@ -198,12 +198,13 @@ def already_sent_today(phone: str) -> bool:
         print(f"  [WARN] already_sent_today 오류 (스킵): {e}")
         return False
 
-def log_sent(phone: str, count: int, region_label: str):
+def log_sent(phone: str, count: int, region_label: str, seeker_card_id=None):
     try:
         sb_post("notify_sent_log", {
             "sent_date": TODAY,
             "job_count": count,
-            "region": f"PHONE:{phone}",   # 전화번호를 키로 저장 (중복 방지용)
+            "region": f"PHONE:{phone}",
+            "seeker_card_id": 0,  # 컬럼이 bigint NOT NULL이나 seeker_cards.id는 UUID — 0으로 우회
         })
     except Exception as e:
         print(f"  [WARN] log_sent 오류 (무시): {e}")
@@ -212,7 +213,7 @@ def log_sent(phone: str, count: int, region_label: str):
 # ── Solapi 알림톡 발송 ────────────────────────────────────
 def _solapi_auth_header():
     dt = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    salt = base64.b64encode(os.urandom(16)).decode()
+    salt = os.urandom(16).hex()
     sig  = hmac.new(
         SOLAPI_API_SECRET.encode(),
         f"{dt}{salt}".encode(),
@@ -244,9 +245,20 @@ def send_alimtalk(to_phone, template_id, variables: dict):
     return r.status_code, r.text
 
 
+NOTIFY_DATE_FILE = "last_notify_date.txt"
+
+
 # ── 메인 ─────────────────────────────────────────────────
 def main():
     print(f"[notify] 시작 — {TODAY}")
+
+    # 오늘 이미 발송 완료 여부 확인 (중복 발송 방지)
+    if os.path.exists(NOTIFY_DATE_FILE):
+        with open(NOTIFY_DATE_FILE) as f:
+            last_date = f.read().strip()
+        if last_date == TODAY:
+            print(f"[notify] 오늘({TODAY}) 이미 발송 완료 기록 있음 — 종료")
+            return
 
     # 1. 오늘 jobs 로드 + 신규 감지
     all_jobs = load_jobs()
@@ -323,7 +335,7 @@ def main():
 
         status, resp = send_alimtalk(normalize_phone(phone), tmpl_id, variables)
         if status in (200, 201):
-            log_sent(phone, count, region_label)
+            log_sent(phone, count, region_label, seeker_card_id=sub.get("id"))
             sent_count += 1
             print(f"  [OK] {region_label} / {job_type_label} / {count}건 → {phone}")
         else:
@@ -332,6 +344,10 @@ def main():
         time.sleep(0.1)  # API 호출 간격
 
     print(f"\n[notify] 완료 — 발송 {sent_count}명 / 스킵(중복) {skip_count}명")
+
+    # 오늘 발송 완료 기록 (재실행 방지)
+    with open(NOTIFY_DATE_FILE, "w") as f:
+        f.write(TODAY)
 
     # 운영자 요약 알림 (Solapi SMS 단문)
     if OPERATOR_PHONE and (sent_count > 0):

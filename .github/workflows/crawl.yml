@@ -67,7 +67,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add jobs.json jobs_data.js excluded_data.js posts/ sitemap.xml last_crawl.txt
+          git add jobs.json jobs_data.js excluded_data.js posts/ sitemap.xml last_crawl.txt last_notify_date.txt
           git diff --cached --quiet || git commit -m "daily update $(TZ=Asia/Seoul date +'%Y-%m-%d')"
           git pull --rebase origin main
           git push
