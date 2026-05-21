@@ -2,6 +2,13 @@
 
 ---
 
+## [v1.00] 2026-05-21 — 알림톡 중복 발송 방지
+
+- `notify.py`: `last_notify_date.txt` 파일 가드 추가 — 오늘 이미 발송 완료 기록 있으면 즉시 종료
+- `notify.py`: `log_sent` 수정 — `seeker_card_id=0` 전달로 NOT NULL 오류 해결, `already_sent_today` 정상 작동
+- `notify.py`: Solapi 서명 salt를 hex 문자열로 변경 (base64 특수문자 제거)
+- `.github/workflows/crawl.yml`: `last_notify_date.txt` 커밋 대상에 추가
+
 ## [v0.99] 2026-05-19 — 정보게시판 9번째 글 추가 (요양보호사 자격증)
 
 - `posts_data.js` — `caregiving-license-2026` 글 추가 (카테고리: 자격증·교육)
