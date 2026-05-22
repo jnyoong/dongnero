@@ -87,9 +87,15 @@ def load_jobs():
     return [j for j in jobs if j.get("apply_link")]
 
 def get_seen_links():
-    """Supabase seen_jobs 테이블에서 기존 링크 집합 반환"""
-    rows = sb_get("seen_jobs", {"select": "apply_link"})
-    return {r["apply_link"] for r in rows}
+    """Supabase seen_jobs 테이블에서 기존 링크 집합 반환 (전체 페이지네이션)"""
+    all_rows, offset, limit = [], 0, 1000
+    while True:
+        batch = sb_get("seen_jobs", {"select": "apply_link", "limit": limit, "offset": offset})
+        all_rows.extend(batch)
+        if len(batch) < limit:
+            break
+        offset += limit
+    return {r["apply_link"] for r in all_rows}
 
 def save_new_jobs(new_jobs):
     """신규 공고를 seen_jobs에 저장"""
@@ -254,7 +260,7 @@ def main():
 
     # 오늘 이미 발송 완료 여부 확인 (중복 발송 방지)
     if os.path.exists(NOTIFY_DATE_FILE):
-        with open(NOTIFY_DATE_FILE) as f:
+        with open(NOTIFY_DATE_FILE, encoding='utf-8-sig') as f:
             last_date = f.read().strip()
         if last_date == TODAY:
             print(f"[notify] 오늘({TODAY}) 이미 발송 완료 기록 있음 — 종료")
@@ -346,7 +352,7 @@ def main():
     print(f"\n[notify] 완료 — 발송 {sent_count}명 / 스킵(중복) {skip_count}명")
 
     # 오늘 발송 완료 기록 (재실행 방지)
-    with open(NOTIFY_DATE_FILE, "w") as f:
+    with open(NOTIFY_DATE_FILE, "w", encoding='utf-8') as f:
         f.write(TODAY)
 
     # 운영자 요약 알림 (Solapi SMS 단문)
