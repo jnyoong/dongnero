@@ -2,6 +2,13 @@
 
 ---
 
+## [v1.02] 2026-05-22 — 정보글 10번째 추가 + GUIDE.md 업데이트
+
+- `posts_data.js`: 10번째 글 추가 — 단기알바 4대보험 안내 (insurance-parttime-2026)
+- `posts/insurance-parttime-2026.html`: 정적 HTML 생성
+- `sitemap.xml`: 신규 URL 추가
+- `GUIDE.md`: 카카오 알림톡 활성화 상태 반영, last_notify_date.txt 추가, v1.01 업데이트
+
 ## [v1.01] 2026-05-22 — notify.py 안정화
 
 - `notify.py`: `get_seen_links()` 페이지네이션 추가 — 전체 seen_jobs 정확히 비교 (기존: 1,000건 고정 → 오류)

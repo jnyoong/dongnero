@@ -982,5 +982,127 @@ var POSTS_DATA = [
   🌟 자신감은 타고나는 게 아닙니다. 연습하면 생깁니다. 3번만 소리 내어 읽어도 달라집니다.
 </div>
     `
+  },
+
+  {
+    id: 'insurance-parttime-2026',
+    category: '급여·보험',
+    categoryColor: '#059669',
+    title: '단기알바도 4대보험 들어야 하나요? — 시니어가 꼭 알아야 할 보험 상식',
+    summary: '퇴직 후 처음 알바를 시작했는데 월급에서 생각보다 많이 빠져서 놀라셨나요? 4대보험이 언제 적용되고 얼마나 내는지, 알면 덜 당황합니다.',
+    date: '2026-05-22',
+    author: '동네로 운영팀',
+    tags: ['4대보험', '건강보험', '알바', '급여', '시니어'],
+    content: `
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+박순자 씨(58세)는 마트 계산원 파트타임을 시작했어요.<br>
+첫 월급날, 통장을 보고 눈을 비볐습니다.<br><br>
+"분명 시급 12,000원이라고 했는데… 왜 이렇게 적게 들어왔지?"<br><br>
+급여명세서를 보니 건강보험, 국민연금, 고용보험 항목이 줄줄이 빠져 있었어요.<br>
+"이게 다 뭐야, 설명도 없이…"<br><br>
+처음 일을 시작하시는 분들이 가장 많이 놀라는 순간이 바로 이때입니다. 미리 알면 전혀 당황할 일이 없어요.
+</p>
+
+<h3>4대보험이 뭔가요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+직장에 다니면 회사와 직원이 함께 부담하는 4가지 사회보험이에요.
+</p>
+
+<div style="background:#F0FDF4;border-left:4px solid #059669;padding:16px 20px;border-radius:8px;margin:20px 0;">
+  <strong>4대보험 한눈에 보기</strong><br><br>
+  🏥 <strong>건강보험</strong> — 병원비 지원. 보수월액의 약 3.545% (직원 부담)<br>
+  👴 <strong>국민연금</strong> — 나중에 연금으로 돌려받음. 보수월액의 4.5%<br>
+  💼 <strong>고용보험</strong> — 실직 시 실업급여 재원. 보수월액의 0.9%<br>
+  🦺 <strong>산재보험</strong> — 업무상 다쳤을 때. <strong>100% 회사 부담</strong> (직원은 0원)
+</div>
+
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+즉 월급에서 실제로 빠지는 건 건강보험 + 국민연금 + 고용보험, 이렇게 세 가지예요.
+</p>
+
+<h3>단기알바, 시간제 일도 적용되나요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+많이들 "단기니까 보험 없겠지"라고 생각하시는데, 기준은 기간이 아니라 <strong>근무 시간</strong>이에요.
+</p>
+
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:20px;margin:20px 0;">
+  <strong>📋 4대보험 적용 기준</strong><br><br>
+  <table style="width:100%;border-collapse:collapse;font-size:.95rem;">
+    <tr style="background:#E2E8F0;">
+      <th style="padding:10px;text-align:left;border-radius:4px;">구분</th>
+      <th style="padding:10px;text-align:left;">적용 여부</th>
+    </tr>
+    <tr style="border-bottom:1px solid #E2E8F0;">
+      <td style="padding:10px;"><strong>주 15시간 미만</strong> 단기·일용직</td>
+      <td style="padding:10px;color:#DC2626;">국민연금·건강보험 적용 제외</td>
+    </tr>
+    <tr style="border-bottom:1px solid #E2E8F0;">
+      <td style="padding:10px;"><strong>주 15시간 이상</strong> 시간제</td>
+      <td style="padding:10px;color:#059669;">4대보험 전부 적용</td>
+    </tr>
+    <tr>
+      <td style="padding:10px;"><strong>일용직</strong> (하루 단위 계약)</td>
+      <td style="padding:10px;">고용·산재보험만 적용 (건강·연금 제외)</td>
+    </tr>
+  </table>
+</div>
+
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+마트 파트타임, 학교 급식 보조, 요양원 시간제처럼 <strong>주 15시간 넘게 일하면 4대보험이 붙어요.</strong><br>
+반대로 주 15시간 미만이면 고용보험·산재보험만 들어요.
+</p>
+
+<h3>실제로 얼마나 빠지나요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+월 200만 원 받는다고 가정하면 이렇게 됩니다.
+</p>
+
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:20px;margin:20px 0;">
+  <strong>💰 월 200만 원 기준 공제액 예시</strong><br><br>
+  건강보험: 약 71,000원<br>
+  장기요양보험 (건강보험의 12.95%): 약 9,000원<br>
+  국민연금: 약 90,000원<br>
+  고용보험: 약 18,000원<br>
+  <hr style="margin:10px 0;border-color:#E2E8F0;">
+  <strong>합계 약 188,000원 공제 → 실수령 약 1,812,000원</strong>
+</div>
+
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+많아 보이지만, 이 중 국민연금(9만 원)은 나중에 연금으로 돌려받는 돈이에요.<br>
+병원을 자주 다니신다면 건강보험은 오히려 훨씬 이득이고요.
+</p>
+
+<h3>이미 지역가입자인데 또 내야 하나요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+퇴직 후 지역가입자로 건강보험을 직접 내고 계신 분들이 많으세요.<br>
+취업하면 <strong>직장가입자로 자동 전환</strong>돼서 지역가입 보험료가 없어져요.<br><br>
+그리고 직장가입 보험료는 회사가 절반을 내줘서, 보통 지역가입보다 <strong>더 적게 내는 경우가 많아요.</strong><br>
+오히려 유리할 수 있다는 뜻입니다.
+</p>
+
+<div class="post-tip">
+  💡 퇴직 후 건강보험료가 갑자기 올라서 부담이셨다면, 취업하면 직장가입자로 전환되어 보험료가 줄어드는 경우가 많습니다. 일하는 게 보험료 면에서도 유리할 수 있어요.
+</div>
+
+<h3>국민연금은 계속 내야 하나요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+60세 미만이시면 직장 들어가면 다시 납부 대상이 돼요.<br>
+60세 이후면 국민연금 납부 의무는 없고, 원하면 임의계속가입으로 더 낼 수 있어요 (연금액이 늘어납니다).
+</p>
+
+<h3>체크리스트</h3>
+<div style="background:#F0FDF4;border-radius:10px;padding:20px;margin:20px 0;">
+  ✅ 주 15시간 이상 일하면 4대보험 적용<br>
+  ✅ 산재보험은 직원이 1원도 안 냄 (회사 전액 부담)<br>
+  ✅ 직장 들어가면 지역가입 건강보험은 자동 종료<br>
+  ✅ 국민연금은 60세 미만이면 자동 적용, 60세 이후엔 선택<br>
+  ✅ 4대보험 가입 여부는 계약 전에 사업주에게 확인하면 됨
+</div>
+
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+"왜 이렇게 떼가냐"고 억울하셨던 분들, 이제 조금 이해가 되셨으면 해요.<br>
+내가 낸 돈이 결국 내 노후와 건강을 위한 돈이기도 하니까요.
+</p>
+    `
   }
 ];

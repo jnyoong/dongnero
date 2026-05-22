@@ -1,6 +1,6 @@
 # 동네로 운영 가이드
 
-> 최종 업데이트: 2026-05-20 (v0.87)  
+> 최종 업데이트: 2026-05-22 (v1.01)  
 > 운영자: kyungmh95 / kahn201130@gmail.com
 
 ---
@@ -164,16 +164,25 @@ start_bot.ps1 — watchdog 무한루프
 ### 3-4. 카카오 알림톡
 
 ```
-notify.py (매일 크롤링 후 자동 실행 — GitHub Actions)
-  └─ Supabase seeker_cards에서 alert_level=3 구독자 조회
-  └─ 오늘 신규 공고 중 구독자 희망지역·직종 매칭
-  └─ Solapi API로 카카오 알림톡 발송
-       ├─ 직종 있음 → KAKAO_TMPL_WITH_JOB 템플릿
-       └─ 직종 없음 → KAKAO_TMPL_NO_JOB 템플릿
+notify.py (매일 크롤링 후 자동 실행)
+  ├─ 로컬: crawl_local.ps1 → crawler.py 완료 후 notify.py 자동 호출
+  └─ GitHub Actions: crawl.yml 마지막 단계에서 자동 실행
+
+  notify.py 흐름:
+  └─ last_notify_date.txt 확인 → 오늘 이미 발송했으면 즉시 종료 (중복 방지)
+  └─ jobs.json 로드 → seen_jobs 전체 비교 (페이지네이션, 정확한 신규 감지)
+  └─ seeker_cards에서 alert_level>=2 구독자 조회 (전화번호 중복 제거)
+  └─ 구독자별 희망지역·직종 매칭
+  └─ Solapi API로 카카오 알림톡 발송 (직종 있음/없음 동일 템플릿)
+  └─ 발송 완료 시 last_notify_date.txt에 오늘 날짜 기록
 ```
 
-> ⚠️ **현재 상태**: 솔라피 검수 완료. GitHub Secrets 등록 후 crawl.yml notify 단계 활성화 필요.  
-> crawl.yml의 notify 단계는 현재 `if: false`로 비활성화 상태.
+**중복 방지 2중 구조:**
+1. `last_notify_date.txt` — 오늘 날짜 기록 시 즉시 종료 (파일 기반, 1차 방어)
+2. `notify_sent_log` DB — 전화번호별 발송 기록, `already_sent_today()` 체크 (2차 방어)
+
+**구독자 기준:** alert_level 2(알림받기) + 3(적극구직), 전화번호 중복 제거 후 실 발송  
+**어드민 표시 인원(이름+전화 기준)과 notify.py 발송 인원(전화 기준) 3명 차이는 정상**
 
 ---
 
@@ -222,7 +231,7 @@ Claude가 자동으로:
 - 로컬 성공 → `last_crawl.txt` = 오늘 날짜로 기록 + push
 - GitHub Actions → `last_crawl.txt` 확인 → 오늘 날짜면 스킵
 - GitHub Actions: 시작·완료 텔레그램 알림 추가됨 (로컬과 동일 수준)
-- GitHub Actions notify 단계: 현재 비활성화 (`if: false`) — 카카오 Secrets 등록 후 활성화 필요
+- GitHub Actions notify 단계: **활성화됨** — .env.local Secrets 등록 완료, 정상 발송 중
 
 **작업 스케줄러 설정 (동네로_크롤링):**
 - 실행 제한: 2시간 (변경 완료)
@@ -239,7 +248,7 @@ Claude가 자동으로:
 | 배포 | GitHub Pages (push 즉시 자동 반영) |
 | 도메인 | https://dongnero.kr |
 | DB | Supabase (`riomousxlyvwmembuhvc`) |
-| 알림 API | Solapi (카카오 알림톡) — 검수 완료, Secrets 등록 필요 |
+| 알림 API | Solapi (카카오 알림톡) — 검수 완료, **정상 발송 중** (로컬·Actions 모두) |
 | 텔레그램 봇 | @jnyoong_bot — watchdog 상시 운영, 명령어 8개, 구독자 실시간 알림 |
 | Supabase Edge Function | notify-new-seeker — 구직카드 INSERT 즉시 알림 (PC 무관) |
 | Analytics | Google Analytics G-PYD0Q5NTPD |
@@ -258,7 +267,7 @@ Claude가 자동으로:
 
 ## 8. 남은 할 일 (To-do)
 
-- [ ] **카카오 알림톡 활성화**: GitHub Secrets에 `KAKAO_TMPL_WITH_JOB`, `KAKAO_TMPL_NO_JOB`, `KAKAO_PFID`, `SENDER_NUMBER`, `SOLAPI_API_KEY`, `SOLAPI_API_SECRET` 등록 → crawl.yml UI에서 notify 단계 `if: false` 제거
+- [x] ~~**카카오 알림톡 활성화**~~ **완료** — .env.local에 Secrets 보유, 로컬·Actions 모두 정상 발송 중
 - [x] ~~**GitHub Secrets 텔레그램**: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` 등록~~ **완료**
 - [x] ~~**crawl.yml GitHub UI 수정**~~ **완료** (workflow scope 추가 후 push)
 - [ ] **네이버 블로그 미발행 글 확인 후 발행** (정보글 9편 → 블로그 발행 필요)
@@ -291,12 +300,13 @@ dongnero/
 ├── whitelist_data.js     수동 화이트리스트
 ├── manual_excluded.js    수동 필터 목록
 ├── last_crawl.txt        로컬 크롤링 날짜 (GitHub Actions 스킵 기준)
+├── last_notify_date.txt  알림톡 발송 날짜 (당일 중복 발송 방지)
 ├── sitemap.xml           검색엔진 사이트맵
 │
 ├── crawler.py            크롤러 본체 (10개 출처, 이상감지, 분류, 텔레그램 요약)
 ├── classify_jobs.py      업종 자동 분류 (74개 카테고리, 95.1%)
 ├── build_posts.py        정보글 정적 HTML 빌더
-├── notify.py             카카오 알림톡 발송 (현재 비활성화)
+├── notify.py             카카오 알림톡 발송 (로컬·Actions 자동 실행, 중복 방지 포함)
 ├── crawl_local.ps1       로컬 크롤링 (잠금·텔레그램·push 포함)
 ├── telegram_bot.py       텔레그램 원격 제어 봇 (명령어 8개 + 자동알림)
 ├── start_bot.ps1         봇 watchdog (자동재시작·중복방지·Named Mutex)
