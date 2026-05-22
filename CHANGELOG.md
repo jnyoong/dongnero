@@ -2,6 +2,11 @@
 
 ---
 
+## [v1.01] 2026-05-22 — notify.py 안정화
+
+- `notify.py`: `get_seen_links()` 페이지네이션 추가 — 전체 seen_jobs 정확히 비교 (기존: 1,000건 고정 → 오류)
+- `notify.py`: `last_notify_date.txt` 인코딩 수정 (`utf-8-sig` 읽기 / `utf-8` 쓰기, BOM 오류 해결)
+
 ## [v1.00] 2026-05-21 — 알림톡 중복 발송 방지
 
 - `notify.py`: `last_notify_date.txt` 파일 가드 추가 — 오늘 이미 발송 완료 기록 있으면 즉시 종료
