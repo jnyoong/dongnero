@@ -122,7 +122,7 @@ if ($remoteDate -eq $today) {
 
 # ── Git push ─────────────────────────────────────────────────
 Log "staging..."
-git add jobs.json jobs_data.js excluded_data.js last_crawl.txt
+git add jobs.json jobs_data.js excluded_data.js last_crawl.txt last_notify_date.txt
 git diff --cached --quiet
 $hasChanges = ($LASTEXITCODE -ne 0)
 
