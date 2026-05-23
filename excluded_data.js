@@ -1,8 +1,20 @@
-/* 자동 생성 — 필터링 제외 목록 / 2026-05-23 08:58:44 KST */
+/* 자동 생성 — 필터링 제외 목록 / 2026-05-24 08:57:47 KST */
 var EXCLUDED_DATA = {
-  "updated_at": "2026-05-23 08:58:44 KST",
-  "total": 382,
+  "updated_at": "2026-05-24 08:57:47 KST",
+  "total": 390,
   "jobs": [
+    {
+      "title": "[BIOADDLAB] 프론트엔드 & 홈페이지 개발자 채용",
+      "company": "바이오애드랩(주)",
+      "location": "서울 강남구",
+      "deadline": "2026-06-21",
+      "type": "",
+      "salary": "회사내규에 따름",
+      "description": "신입/경력1년 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53971107&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24",
+      "_exclude_reason": "키워드: 개발자"
+    },
     {
       "title": "성수역 소재 퍼포먼스 마케팅대행사 퍼포먼스 마케팅 AE",
       "company": "파워에이치알",
@@ -40,6 +52,30 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "키워드: 퍼포먼스 마케팅"
     },
     {
+      "title": "커피빈 8H 슈퍼바이저 채용 (여의도지역)",
+      "company": "(주)커피빈코리아",
+      "location": "서울 영등포구",
+      "deadline": "2026-06-22",
+      "type": "",
+      "salary": "월급 240 만원 ~ 240 만원",
+      "description": "경력무관 학력무관",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53976210&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24",
+      "_exclude_reason": "업체명: 커피빈"
+    },
+    {
+      "title": "(주)영재컴퓨터 영상 편집자,촬영작가 모집",
+      "company": "(주)영재컴퓨터",
+      "location": "서울 강서구",
+      "deadline": "2026-06-22",
+      "type": "",
+      "salary": "연봉 2,800 만원 ~ 2,800 만원",
+      "description": "경력무관 고졸",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=53976233&infoTypeCd=CSI&infoTypeGroup=tb_workinfogubun",
+      "source": "고용24",
+      "_exclude_reason": "키워드: 영상 편집"
+    },
+    {
       "title": "응용소프트웨어 개발자 정규직 채용",
       "company": "(주)아이시스테크놀러지",
       "location": "서울특별시 영등포구 영등포로",
@@ -52,88 +88,124 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "키워드: 개발자"
     },
     {
-      "title": "컴포즈커피 나주혁신한빛로점 평일오전(8:30-10:30)",
-      "company": "컴포즈커피 나주혁신한빛로점",
-      "location": "전남 나주시 빛가람동",
+      "title": "컴포즈커피 일산차병원점  주말 직원 모집합니다.",
+      "company": "컴포즈커피 일산차병원점",
+      "location": "경기 고양시 일산동구",
       "deadline": "상시모집",
       "type": "시간제",
       "salary": "시급 10,320원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116549551",
+      "apply_link": "https://www.albamon.com/jobs/detail/116698819",
       "source": "알바몬",
       "_exclude_reason": "업체명: 컴포즈"
     },
     {
-      "title": "주말(토,일) 미들(12시~16시30분) 2명 구합니다.",
-      "company": "컴포즈커피 전주에코3블럭점",
-      "location": "전북 전주시 덕진구 송천동2가",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116653190",
-      "source": "알바몬",
-      "_exclude_reason": "업체명: 컴포즈"
-    },
-    {
-      "title": "컴포즈커피(동작도서관점) 월수금(마감)경력자구인",
-      "company": "컴포즈커피 동작도서관점",
-      "location": "서울 동작구",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116573314",
-      "source": "알바몬",
-      "_exclude_reason": "업체명: 컴포즈"
-    },
-    {
-      "title": "★노브랜드버거 이마트울산점★ 매니저 및 아르바이트 대모집",
-      "company": "노브랜드버거 이마트울산점",
-      "location": "울산 중구 유곡동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116728387",
-      "source": "알바몬",
-      "_exclude_reason": "업체명: 노브랜드버거"
-    },
-    {
-      "title": "[직영점] 투썸플레이스 월급제 사원 (캡틴) 모집",
-      "company": "투썸플레이스 디지털미디어시티역점",
-      "location": "서울 마포구 상암동",
-      "deadline": "2026-05-26",
-      "type": "시간제",
-      "salary": "월급 2,500,000원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116698745",
-      "source": "알바몬",
-      "_exclude_reason": "업체명: 투썸플레이스"
-    },
-    {
-      "title": "노브랜드버거 부산서면점 월화수 마감조 모집",
-      "company": "노브랜드버거 부산서면점",
-      "location": "부산 부산진구 부전동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116728383",
-      "source": "알바몬",
-      "_exclude_reason": "업체명: 노브랜드버거"
-    },
-    {
-      "title": "[직영점] 투썸플레이스 강북구청점 주말(토,일)마감 스탭 채용",
-      "company": "투썸플레이스 강북구청점",
-      "location": "서울 강북구",
+      "title": "[직영점] 투썸플레이스 명동L7점 미들 스탭 채용",
+      "company": "투썸플레이스 명동L7점",
+      "location": "서울 중구",
       "deadline": "상시모집",
       "type": "시간제",
       "salary": "시급 10,400원",
       "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116732045",
+      "apply_link": "https://www.albamon.com/jobs/detail/116645457",
       "source": "알바몬",
       "_exclude_reason": "업체명: 투썸플레이스"
+    },
+    {
+      "title": "컴포즈커피 주말 근무자 모집합니다 (진주초전푸르지오점)",
+      "company": "컴포즈커피 진주초전푸르지오점",
+      "location": "경남 진주시",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,320원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116545797",
+      "source": "알바몬",
+      "_exclude_reason": "업체명: 컴포즈"
+    },
+    {
+      "title": "컴포즈커피 구리수택점 평일마감 아르바이트 모집합니다",
+      "company": "컴포즈커피 구리수택점",
+      "location": "경기 구리시",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,320원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116642331",
+      "source": "알바몬",
+      "_exclude_reason": "업체명: 컴포즈"
+    },
+    {
+      "title": "컴포즈커피 청라제일풍경채점 주말 마감 채용",
+      "company": "컴포즈커피 청라제일풍경채점",
+      "location": "인천 서구 청라동",
+      "deadline": "2026-05-30",
+      "type": "시간제",
+      "salary": "시급 10,320원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116791924",
+      "source": "알바몬",
+      "_exclude_reason": "업체명: 컴포즈"
+    },
+    {
+      "title": "★컴포즈커피 광주대촌오네뜨점 평일(목,금) 주말(토)18~22시 알바모집",
+      "company": "컴포즈커피 광주대촌오네뜨점",
+      "location": "광주 전체",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,320원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116665578",
+      "source": "알바몬",
+      "_exclude_reason": "업체명: 컴포즈"
+    },
+    {
+      "title": "컴포즈커피신당역점 평일미들,주말오픈,미들 급급급구",
+      "company": "컴포즈커피 신당역점",
+      "location": "서울 중구 신당동",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,320원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116783391",
+      "source": "알바몬",
+      "_exclude_reason": "업체명: 컴포즈"
+    },
+    {
+      "title": "[직영점/마감 홀청소X] 투썸플레이스 양재매헌역점 스탭(STAFF) 채용",
+      "company": "투썸플레이스 양재매헌역점",
+      "location": "서울 서초구 양재동",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,400원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116524715",
+      "source": "알바몬",
+      "_exclude_reason": "업체명: 투썸플레이스"
+    },
+    {
+      "title": "컴포즈커피 각화주공점 주말미들",
+      "company": "컴포즈커피 광주각화주공점",
+      "location": "광주 북구 각화동",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,320원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116765030",
+      "source": "알바몬",
+      "_exclude_reason": "업체명: 컴포즈"
+    },
+    {
+      "title": "컴포즈커피 길음롯데캐슬클라시아점 월,화 마감 구인",
+      "company": "컴포즈커피 길음롯데캐슬클라시아점",
+      "location": "서울 성북구",
+      "deadline": "상시모집",
+      "type": "시간제",
+      "salary": "시급 10,320원",
+      "description": "",
+      "apply_link": "https://www.albamon.com/jobs/detail/116671827",
+      "source": "알바몬",
+      "_exclude_reason": "업체명: 컴포즈"
     },
     {
       "title": "[직영] 투썸플레이스 서여의도점 스탭 모집",
@@ -148,30 +220,6 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "업체명: 투썸플레이스"
     },
     {
-      "title": "미들or마감 구함~",
-      "company": "컴포즈커피 광주방림삼거리점",
-      "location": "광주 남구 방림동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,320원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116495249",
-      "source": "알바몬",
-      "_exclude_reason": "업체명: 컴포즈"
-    },
-    {
-      "title": "[ 컴포즈수내양지마을점 ] 평일오픈 / 마감",
-      "company": "컴포즈커피 수내양지마을점",
-      "location": "경기 성남시 분당구 수내동",
-      "deadline": "2026-05-30",
-      "type": "시간제",
-      "salary": "시급 10,500원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116609451",
-      "source": "알바몬",
-      "_exclude_reason": "업체명: 컴포즈"
-    },
-    {
       "title": "컴포즈커피 정직원모집",
       "company": "컴포즈커피 상왕십리역점",
       "location": "서울 성동구 하왕십리동",
@@ -182,18 +230,6 @@ var EXCLUDED_DATA = {
       "apply_link": "https://www.albamon.com/jobs/detail/116686841",
       "source": "알바몬",
       "_exclude_reason": "업체명: 컴포즈"
-    },
-    {
-      "title": "[직영] 투썸플레이스 두타몰점 평일 미들 STAFF 채용",
-      "company": "투썸플레이스 두타몰점",
-      "location": "서울 전체",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,400원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116486161",
-      "source": "알바몬",
-      "_exclude_reason": "업체명: 투썸플레이스"
     },
     {
       "title": "[NBB 고속터미널직영점] 버거 굽다 flex 해버림(주말마감)",
@@ -316,18 +352,6 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "업체명: 컴포즈"
     },
     {
-      "title": "노브랜드버거 청라수변공원점 알바 모집합니다",
-      "company": "노브랜드버거 청라수변공원점",
-      "location": "인천 서구 청라동",
-      "deadline": "상시모집",
-      "type": "시간제",
-      "salary": "시급 10,500원",
-      "description": "",
-      "apply_link": "https://www.albamon.com/jobs/detail/116597335",
-      "source": "알바몬",
-      "_exclude_reason": "업체명: 노브랜드버거"
-    },
-    {
       "title": "★컴포즈커피 용인SK원삼점★ 평일 주4회 근무자 구인",
       "company": "컴포즈커피 용인SK원삼점",
       "location": "경기 용인시 처인구 원삼면",
@@ -362,6 +386,30 @@ var EXCLUDED_DATA = {
       "apply_link": "https://www.albamon.com/jobs/detail/116780617",
       "source": "알바몬",
       "_exclude_reason": "업체명: 투썸플레이스"
+    },
+    {
+      "title": "[부산 부산진구] 맥도날드 부산범전DT점에서 크루 모집",
+      "company": "맥도날드 부산 범전 DT점",
+      "location": "부산 부산진구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144382430&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 맥도날드"
+    },
+    {
+      "title": "[할리스] 직영점 정규직 바리스타 모집 (구미금오산DI점)",
+      "company": "할리스커피 구미금오산점",
+      "location": "경북 구미시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "월급 2409167",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144379941&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 할리스"
     },
     {
       "title": "커피빈[여의도 IFC몰]점 평일(목,금)미들 스탭 채용",
@@ -448,6 +496,18 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "업체명: 롯데리아"
     },
     {
+      "title": "버거킹 암사역점에서 알바생 모집합니다. ( 평일 마감/주말 마감 )",
+      "company": "버거킹 암사역점",
+      "location": "서울 강동구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144390055&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 버거킹"
+    },
+    {
       "title": "롯데리아 마산호계점 아르바이트 모집",
       "company": "롯데리아 마산호계",
       "location": "경남 창원시 마산회원구",
@@ -460,18 +520,6 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "업체명: 롯데리아"
     },
     {
-      "title": "[맥도날드 여주DT점] 여주DT점과 함께 일할 크루님 모십니다.",
-      "company": "맥도날드 여주DT점",
-      "location": "경기 여주시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144066236&listmenucd=SENIOR",
-      "source": "알바천국",
-      "_exclude_reason": "업체명: 맥도날드"
-    },
-    {
       "title": "월~금 마감 스텝 모십니다",
       "company": "투썸플레이스 월평선사점",
       "location": "대전 전체",
@@ -482,18 +530,6 @@ var EXCLUDED_DATA = {
       "apply_link": "https://www.alba.co.kr/job/Detail?adid=144344854&listmenucd=SENIOR",
       "source": "알바천국",
       "_exclude_reason": "업체명: 투썸플레이스"
-    },
-    {
-      "title": "[맥도날드덕소점]알바 처음이라도 OK 같이 웃으며 일해요",
-      "company": "맥도날드 덕소점",
-      "location": "경기 남양주시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144243054&listmenucd=SENIOR",
-      "source": "알바천국",
-      "_exclude_reason": "업체명: 맥도날드"
     },
     {
       "title": "(인센+교통비 지급) 롯데리아 인천공항T1 A/S서편점에서 일하실분",
@@ -544,16 +580,16 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "업체명: 맥도날드"
     },
     {
-      "title": "세븐일레븐 히든클리프호텔점 평일 마감조(14시~23시) 구인",
-      "company": "세븐일레븐 제주히든클리프점",
-      "location": "제주 서귀포시",
+      "title": "버거킹 암사역점에서 알바생 모집합니다. ( 평일 마감/주말 마감 )",
+      "company": "버거킹 암사역점",
+      "location": "서울 강동구",
       "deadline": "",
       "type": "시간제",
-      "salary": "월급 2166666",
+      "salary": "시급 10320",
       "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144293130&listmenucd=SENIOR",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144390049&listmenucd=SENIOR",
       "source": "알바천국",
-      "_exclude_reason": "업체명: 세븐일레븐"
+      "_exclude_reason": "업체명: 버거킹"
     },
     {
       "title": "[부천북부역점] 평일 및 주말 풀타임 근무자 모집합니다.",
@@ -576,18 +612,6 @@ var EXCLUDED_DATA = {
       "salary": "시급 10320",
       "description": "",
       "apply_link": "https://www.alba.co.kr/job/Detail?adid=144221492&listmenucd=SENIOR",
-      "source": "알바천국",
-      "_exclude_reason": "업체명: 롯데리아"
-    },
-    {
-      "title": "문경시청점 롯데리아 평일,주말 마감 아르바이트 구합니다.(주부사원님 환영)",
-      "company": "롯데리아 문경시청",
-      "location": "경북 문경시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144059034&listmenucd=SENIOR",
       "source": "알바천국",
       "_exclude_reason": "업체명: 롯데리아"
     },
@@ -628,6 +652,18 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "업체명: 롯데리아"
     },
     {
+      "title": "버거킹 암사역점에서 알바생 모집합니다. ( 평일 마감/주말 마감 )",
+      "company": "버거킹 암사역점",
+      "location": "서울 강동구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144390047&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 버거킹"
+    },
+    {
       "title": "투썸플레이스 음성공장 디저트 생산 시급제 스탭 모집 (정규직 전환가능)",
       "company": "투썸플레이스(주)",
       "location": "충북 진천군",
@@ -662,6 +698,114 @@ var EXCLUDED_DATA = {
       "apply_link": "https://www.alba.co.kr/job/Detail?adid=144281627&listmenucd=SENIOR",
       "source": "알바천국",
       "_exclude_reason": "업체명: 투썸플레이스"
+    },
+    {
+      "title": "[스타벅스] 제주협재점 바리스타 모집",
+      "company": "스타벅스 제주협재",
+      "location": "제주 제주시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 11250",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144393175&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 스타벅스"
+    },
+    {
+      "title": "[KFC신림역] 함께일할 정직원/파트너 모집합니다.(심야포함)",
+      "company": "KFC 신림역",
+      "location": "서울 관악구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144393170&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: kfc"
+    },
+    {
+      "title": "직영롯데리아 울산터미널점에서 아르바이트 모집해요",
+      "company": "롯데리아 울산터미날점",
+      "location": "울산 남구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144393167&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 롯데리아"
+    },
+    {
+      "title": "맥도날드 충남보령DT점과 함께할 크루 모집합니다",
+      "company": "맥도날드 충남 보령 DT점",
+      "location": "충남 보령시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144390038&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 맥도날드"
+    },
+    {
+      "title": "맥도날드 용인동백DT 전 시간대 크루 모집 (평일 오픈 우대)",
+      "company": "맥도날드 용인 동백 DT점",
+      "location": "경기 용인시 기흥구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144388262&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 맥도날드"
+    },
+    {
+      "title": "맥도날드 광주용봉 DT점 오프닝, 미드 , 나이트 크루 모집합니다.",
+      "company": "맥도날드 용봉 DT점",
+      "location": "광주 전체",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144388260&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 맥도날드"
+    },
+    {
+      "title": "투썸 수완대로DT점 스텝 주말 마감(토일) 모집(경력직우대)",
+      "company": "투썸플레이스 수완대로 DT점",
+      "location": "광주 광산구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144385311&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 투썸플레이스"
+    },
+    {
+      "title": "[버거킹 경기도 양평점] 평일+주말 아르바이트 모집합니다.",
+      "company": "버거킹 경기양평점(S)",
+      "location": "경기 양평군",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144385304&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 버거킹"
+    },
+    {
+      "title": "맥도날드 구리수택점에서 크루를 모집합니다.",
+      "company": "맥도날드 구리수택",
+      "location": "경기 구리시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144382128&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 맥도날드"
     },
     {
       "title": "평일 오전 주2일 스텝 모집합니다(6개월이상 근무가능한분)",
@@ -808,18 +952,6 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "업체명: 스타벅스"
     },
     {
-      "title": "세븐일레븐 중랑동성점 편의점 ＇평일 오후 ＇ 모집합니다.",
-      "company": "세븐일레븐 중랑동성점",
-      "location": "서울 중랑구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144344621&listmenucd=SENIOR",
-      "source": "알바천국",
-      "_exclude_reason": "업체명: 세븐일레븐"
-    },
-    {
       "title": "(면목역kfc) 아르바이트 모집합니다.",
       "company": "KFC KFC면목역",
       "location": "서울 중랑구",
@@ -926,18 +1058,6 @@ var EXCLUDED_DATA = {
       "apply_link": "https://www.alba.co.kr/job/Detail?adid=144297506&listmenucd=SENIOR",
       "source": "알바천국",
       "_exclude_reason": "업체명: 투썸플레이스"
-    },
-    {
-      "title": "커피빈 종로센트로폴리스점 평일 월,화,수 마감 스탭 채용",
-      "company": "(주)커피빈코리아",
-      "location": "서울 전체",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144287225&listmenucd=SENIOR",
-      "source": "알바천국",
-      "_exclude_reason": "업체명: 커피빈"
     },
     {
       "title": "맥도날드 야탑뉴코아점 함께 성장할 크루 모집합니다 즐겁게 일하고싶은분 환영",
@@ -1120,18 +1240,6 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "업체명: 투썸플레이스"
     },
     {
-      "title": "[롯데광주수완아울렛] 크리스피크림 토,일 마감타임 아르바이트 모집",
-      "company": "크리스피크림도넛 롯데광주수완아울렛점",
-      "location": "광주 광산구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144093347&listmenucd=SENIOR",
-      "source": "알바천국",
-      "_exclude_reason": "업체명: 크리스피크림"
-    },
-    {
       "title": "[강남구,선릉,성동구] 맥도날드 선릉점 오전 야간아르바이트 모집합니다.",
       "company": "맥도날드 선릉점",
       "location": "서울 강남구",
@@ -1264,18 +1372,6 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "업체명: 롯데리아"
     },
     {
-      "title": "롯데리아 과천과학관점 평일주말 주부환영",
-      "company": "롯데리아 인덕원역점",
-      "location": "경기 과천시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144379909&listmenucd=SENIOR",
-      "source": "알바천국",
-      "_exclude_reason": "업체명: 롯데리아"
-    },
-    {
       "title": "투썸플레이스 국립중앙박물관카페점 경력직 단기 아르바이트 모집",
       "company": "투썸플레이스 국립중앙박물관3점",
       "location": "서울 용산구",
@@ -1322,18 +1418,6 @@ var EXCLUDED_DATA = {
       "apply_link": "https://www.alba.co.kr/job/Detail?adid=144302976&listmenucd=SENIOR",
       "source": "알바천국",
       "_exclude_reason": "업체명: 맥도날드"
-    },
-    {
-      "title": "투썸플레이스 울산태화강역점 주말 마감(토, 일) 스탭 모집합니다",
-      "company": "투썸플레이스 울산태화강역점",
-      "location": "울산 남구",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 11000",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144250088&listmenucd=SENIOR",
-      "source": "알바천국",
-      "_exclude_reason": "업체명: 투썸플레이스"
     },
     {
       "title": "맥도날드 진해자은DT점과 함께 근무 할 야간 그릴 고정 구합니다.",
@@ -1432,18 +1516,6 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "업체명: 버거킹"
     },
     {
-      "title": "롯데리아 시흥제일점에서 오전/오후 아르바이트 모집합니다.",
-      "company": "롯데리아 시흥제일점",
-      "location": "경기 시흥시",
-      "deadline": "",
-      "type": "시간제",
-      "salary": "시급 10320",
-      "description": "",
-      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144056048&listmenucd=SENIOR",
-      "source": "알바천국",
-      "_exclude_reason": "업체명: 롯데리아"
-    },
-    {
       "title": "커피빈 원주혁신도시점 4H 슈퍼바이저 채용",
       "company": "커피빈코리아",
       "location": "강원 원주시",
@@ -1454,6 +1526,18 @@ var EXCLUDED_DATA = {
       "apply_link": "https://www.alba.co.kr/job/Detail?adid=144333882&listmenucd=SENIOR",
       "source": "알바천국",
       "_exclude_reason": "업체명: 커피빈"
+    },
+    {
+      "title": "맥도날드 구리수택점에서 크루를 모집합니다.",
+      "company": "맥도날드 구리수택",
+      "location": "경기 구리시",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144382091&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: 맥도날드"
     },
     {
       "title": "맥도날드 진해자은DT점과 함께 근무 할 야간 그릴 고정 구합니다.",
@@ -1468,6 +1552,18 @@ var EXCLUDED_DATA = {
       "_exclude_reason": "업체명: 맥도날드"
     },
     {
+      "title": "[더밸류] 웨이터,주방,바텐더 직원/알바 모집합니다 / 면접시 교통비 지급",
+      "company": "(주)에이팀글로벌 더벨류바",
+      "location": "서울 관악구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 40000",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144036939&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "키워드: 바텐더"
+    },
+    {
       "title": "스타벅스 오창호수공원점 바리스타 모집",
       "company": "스타벅스 오창호수공원",
       "location": "충북 청주시 청원구",
@@ -1478,6 +1574,18 @@ var EXCLUDED_DATA = {
       "apply_link": "https://www.alba.co.kr/job/Detail?adid=144328885&listmenucd=SENIOR",
       "source": "알바천국",
       "_exclude_reason": "업체명: 스타벅스"
+    },
+    {
+      "title": "[KFC신림역] 함께일할 정직원/파트너 모집합니다.(심야포함)",
+      "company": "KFC 신림역",
+      "location": "서울 관악구",
+      "deadline": "",
+      "type": "시간제",
+      "salary": "시급 10320",
+      "description": "",
+      "apply_link": "https://www.alba.co.kr/job/Detail?adid=144393156&listmenucd=SENIOR",
+      "source": "알바천국",
+      "_exclude_reason": "업체명: kfc"
     },
     {
       "title": "스타벅스 울산정자비치DT점 바리스타 모집",
@@ -4104,18 +4212,6 @@ var EXCLUDED_DATA = {
       "salary": "",
       "description": "",
       "apply_link": "https://www.seniorro.or.kr/noin/jobDetail.do?jobId=2026-060991&projType=E&instnId=0002528",
-      "source": "시니어로",
-      "_exclude_reason": "키워드: 인턴십"
-    },
-    {
-      "title": "-제조업(자동차 내장부품) -오리엔테이션, 시니어인턴십 안내 자체실시\n-시니어인턴십 3개월 운영 후 계속고용 계획",
-      "company": "시니어잡네트워크센터(민간)",
-      "location": "충청남도 아산시",
-      "deadline": "2026-05-23",
-      "type": "",
-      "salary": "",
-      "description": "",
-      "apply_link": "https://www.seniorro.or.kr/noin/jobDetail.do?jobId=2026-092409&projType=E&instnId=0405084",
       "source": "시니어로",
       "_exclude_reason": "키워드: 인턴십"
     },
