@@ -1,6 +1,6 @@
 # 동네로 운영 가이드
 
-> 최종 업데이트: 2026-05-22 (v1.01)  
+> 최종 업데이트: 2026-05-23 (v1.03)  
 > 운영자: kyungmh95 / kahn201130@gmail.com
 
 ---
@@ -169,6 +169,7 @@ notify.py (매일 크롤링 후 자동 실행)
   └─ GitHub Actions: crawl.yml 마지막 단계에서 자동 실행
 
   notify.py 흐름:
+  └─ 주말(토·일) 체크 → 주말이면 즉시 종료 (seen_jobs 저장도 건너뜀)
   └─ last_notify_date.txt 확인 → 오늘 이미 발송했으면 즉시 종료 (중복 방지)
   └─ jobs.json 로드 → seen_jobs 전체 비교 (페이지네이션, 정확한 신규 감지)
   └─ seeker_cards에서 alert_level>=2 구독자 조회 (전화번호 중복 제거)
@@ -176,6 +177,10 @@ notify.py (매일 크롤링 후 자동 실행)
   └─ Solapi API로 카카오 알림톡 발송 (직종 있음/없음 동일 템플릿)
   └─ 발송 완료 시 last_notify_date.txt에 오늘 날짜 기록
 ```
+
+**발송 제한:**
+- **평일(월~금)만 발송** — 주말(토·일)은 seen_jobs 저장 없이 즉시 종료
+  → 주말 크롤링 공고는 seen_jobs에 남지 않아 월요일에 "신규"로 처리되어 알림 발송됨
 
 **중복 방지 2중 구조:**
 1. `last_notify_date.txt` — 오늘 날짜 기록 시 즉시 종료 (파일 기반, 1차 방어)
@@ -232,6 +237,7 @@ Claude가 자동으로:
 - GitHub Actions → `last_crawl.txt` 확인 → 오늘 날짜면 스킵
 - GitHub Actions: 시작·완료 텔레그램 알림 추가됨 (로컬과 동일 수준)
 - GitHub Actions notify 단계: **활성화됨** — .env.local Secrets 등록 완료, 정상 발송 중
+- **알림 발송 요일: 평일(월~금)만** — 주말은 crawl_local.ps1·crawl.yml·notify.py 3단에서 스킵
 
 **작업 스케줄러 설정 (동네로_크롤링):**
 - 실행 제한: 2시간 (변경 완료)
