@@ -86,12 +86,19 @@ if (Test-Path $envFile2) {
         }
     }
 }
-Log "notify.py 실행..."
-python notify.py
-if ($LASTEXITCODE -ne 0) {
-    Log "notify.py 오류 (exit $LASTEXITCODE) — 크롤링 및 배포는 계속 진행"
+
+# 주말 체크 — 평일(월~금)만 알림톡 발송
+$dayOfWeek = (Get-Date).DayOfWeek  # Sunday=0, Saturday=6
+if ($dayOfWeek -eq 'Saturday' -or $dayOfWeek -eq 'Sunday') {
+    Log "주말($dayOfWeek) — 알림톡 발송 스킵 (평일만 발송)"
 } else {
-    Log "notify.py 완료"
+    Log "notify.py 실행..."
+    python notify.py
+    if ($LASTEXITCODE -ne 0) {
+        Log "notify.py 오류 (exit $LASTEXITCODE) — 크롤링 및 배포는 계속 진행"
+    } else {
+        Log "notify.py 완료"
+    }
 }
 
 # PS 5.1 compatible: write date without BOM

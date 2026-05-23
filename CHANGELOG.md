@@ -2,6 +2,12 @@
 
 ---
 
+## [v1.03] 2026-05-23 — 알림톡 주말 발송 제한 (평일만 발송)
+
+- `notify.py`: `timedelta` 임포트 추가, `KST` 타임존 상수 추가, `main()` 시작부에 주말 체크 로직 추가 (토·일이면 즉시 리턴)
+- `crawl_local.ps1`: 로컬 실행 시에도 주말이면 `notify.py` 호출 자체를 스킵
+- `.github/workflows/crawl.yml`: `평일 여부 확인` 스텝 추가, `신규 일자리 알림 발송` 스텝 조건에 `is_weekday == 'true'` 추가
+
 ## [v1.02] 2026-05-22 — 정보글 10번째 추가 + GUIDE.md 업데이트
 
 - `posts_data.js`: 10번째 글 추가 — 단기알바 4대보험 안내 (insurance-parttime-2026)

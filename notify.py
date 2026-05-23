@@ -7,7 +7,7 @@
 """
 
 import json, os, sys, hashlib, hmac, time, base64
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timezone, timedelta
 import requests
 
 # ── 환경변수 ─────────────────────────────────────────────
@@ -25,6 +25,9 @@ SENDER_NUMBER        = os.environ.get("SENDER_NUMBER", "")        # 발신 등�
 
 MIN_NEW_JOBS = 1   # 신규 공고 이 건수 미만이면 발송 안 함
 TODAY = date.today().isoformat()
+
+# ── KST 시간대 ────────────────────────────────────────────
+KST = timezone(timedelta(hours=9))
 
 # ── 직종 키워드 매핑 ──────────────────────────────────────
 # 구독자 desired_job → 공고 title 키워드 매핑
@@ -257,6 +260,13 @@ NOTIFY_DATE_FILE = "last_notify_date.txt"
 # ── 메인 ─────────────────────────────────────────────────
 def main():
     print(f"[notify] 시작 — {TODAY}")
+
+    # ── 주말 체크 (평일만 발송) ────────────────────────────
+    kst_now = datetime.now(KST)
+    if kst_now.weekday() >= 5:  # 5=토요일, 6=일요일
+        day_kr = ["월", "화", "수", "목", "금", "토", "일"][kst_now.weekday()]
+        print(f"[notify] 주말({day_kr}요일, {kst_now.strftime('%Y-%m-%d')}) — 알림 발송 스킵 (평일만 발송)")
+        return
 
     # 오늘 이미 발송 완료 여부 확인 (중복 발송 방지)
     if os.path.exists(NOTIFY_DATE_FILE):

@@ -83,8 +83,22 @@ jobs:
             -H "Content-Type: application/json" \
             -d "{\"chat_id\":\"${TELEGRAM_CHAT_ID}\",\"text\":\"✅ *[GitHub Actions] 배포 완료* (${TODAY} KST)\\njobs.json push → dongnero.kr 반영 중\",\"parse_mode\":\"Markdown\"}" || true
 
-      - name: 신규 일자리 알림 발송
+      - name: 평일 여부 확인 (KST 기준)
+        id: check_weekday
         if: steps.check_local.outputs.skip == 'false'
+        run: |
+          # KST 기준 요일 확인 (1=월 ~ 7=일, 6·7이면 주말)
+          DAY=$(TZ='Asia/Seoul' date +'%u')
+          if [ "$DAY" -le 5 ]; then
+            echo "is_weekday=true" >> $GITHUB_OUTPUT
+            echo "평일($DAY) — 알림 발송 예정"
+          else
+            echo "is_weekday=false" >> $GITHUB_OUTPUT
+            echo "주말($DAY) — 알림 발송 스킵"
+          fi
+
+      - name: 신규 일자리 알림 발송
+        if: steps.check_local.outputs.skip == 'false' && steps.check_weekday.outputs.is_weekday == 'true'
         env:
           SOLAPI_API_KEY:       ${{ secrets.SOLAPI_API_KEY }}
           SOLAPI_API_SECRET:    ${{ secrets.SOLAPI_API_SECRET }}
