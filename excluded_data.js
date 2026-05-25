@@ -1,7 +1,7 @@
-/* 자동 생성 — 필터링 제외 목록 / 2026-05-25 15:13:56 KST */
+/* 자동 생성 — crawl_daejeon_patch.py 대전패치 / 2026-05-25 15:55:40 KST */
 var EXCLUDED_DATA = {
-  "updated_at": "2026-05-25 15:13:56 KST",
-  "total": 407,
+  "updated_at": "2026-05-25 15:55:40 KST",
+  "total": 413,
   "jobs": [
     {
       "title": "[신입] 퍼포먼스 마케터 (마케팅 에이전시)",
@@ -4912,6 +4912,78 @@ var EXCLUDED_DATA = {
       "category": "",
       "source": "잡아바",
       "_exclude_reason": "키워드: 백엔드"
+    },
+    {
+      "title": "항법 센서 관련 SW/HW 개발자",
+      "company": "주식회사 에이알엔텍(ARNtek)",
+      "location": "대전광역시 유성구",
+      "deadline": "",
+      "type": "",
+      "salary": "월급 220만원 ~ 300만원",
+      "description": "",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K170052605110007&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "대전일자리",
+      "_exclude_reason": "키워드: 개발자"
+    },
+    {
+      "title": "JAVA 개발자 채용(경력 및 신입)",
+      "company": "주식회사아이티웍스",
+      "location": "대전광역시 유성구",
+      "deadline": "",
+      "type": "",
+      "salary": "연봉 2800만원 ~ 3500만원",
+      "description": "",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K170052605080013&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "대전일자리",
+      "_exclude_reason": "키워드: 개발자"
+    },
+    {
+      "title": "쿠팡 대전1센터 현장계약직 모집공고",
+      "company": "쿠팡풀필먼트서비스 유한회사(Coupang Fulfillment Services Ltd.)",
+      "location": "대전광역시 동구",
+      "deadline": "",
+      "type": "",
+      "salary": "월급 237만원 ~ 283만원",
+      "description": "",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KEC0352604270001&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "대전일자리",
+      "_exclude_reason": "키워드: llm"
+    },
+    {
+      "title": "[대전일자리지원센터] ㈜지오넷_웹퍼블리셔 모집",
+      "company": "(주)지오넷",
+      "location": "대전광역시 유성구",
+      "deadline": "",
+      "type": "",
+      "salary": "연봉 2800만원 ~ 3000만원",
+      "description": "",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJ20712604240001&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "대전일자리",
+      "_exclude_reason": "키워드: 웹퍼블리셔"
+    },
+    {
+      "title": "쿠팡 대전1신선센터 (주간조, 오후조) 현장계약직...",
+      "company": "쿠팡풀필먼트서비스 유한회사(Coupang Fulfillment Services Ltd.)",
+      "location": "대전광역시 동구",
+      "deadline": "",
+      "type": "",
+      "salary": "월급 237만원 ~ 283만원",
+      "description": "",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KJ20712604150001&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "대전일자리",
+      "_exclude_reason": "키워드: llm"
+    },
+    {
+      "title": "CFS 쿠팡 대전 신선센터 현장 계약직 채용 [★...",
+      "company": "쿠팡풀필먼트서비스 유한회사(Coupang Fulfillment Services Ltd.)",
+      "location": "대전광역시 동구",
+      "deadline": "",
+      "type": "",
+      "salary": "월급 237만원 ~ 283만원",
+      "description": "",
+      "apply_link": "https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=KF10902604140004&infoTypeCd=VALIDATION&infoTypeGroup=tb_workinfoworknet",
+      "source": "대전일자리",
+      "_exclude_reason": "키워드: llm"
     }
   ],
   "filter_config": {
