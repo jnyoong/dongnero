@@ -1699,7 +1699,7 @@ const PROMO_ENABLED  = true;
 const PROMO_INTERVAL = 10;   // 공고 N개마다 프로모 1개 삽입
 let _promoJobCount  = 0;     // renderJobs() 호출 시 초기화
 let _promoLastType  = -1;    // 연속 동일 타입 방지
-let _promoPostIndex = 0;     // 정보게시판 글 순환 인덱스 (renderJobs 시 초기화)
+let _promoPostIndex = -1;    // 정보게시판 직전 글 인덱스 (중복 방지용, -1=초기값)
 
 function _promoNextType() {
   const notifyDone = !!localStorage.getItem('notify_registered_v3');
@@ -1730,12 +1730,14 @@ function _buildPromoCard() {
       <div style="font-size:.78rem;font-weight:700;color:#EA580C;margin-top:8px">알림 신청하기 →</div>
     </div>`;
   }
-  // type 2: 정보게시판 — 조회수 높은 순(= posts_data.js 순서, 최신/인기 우선) 순환
+  // type 2: 정보게시판 — 매번 랜덤 글 선택 (직전 글 중복 방지)
   const posts = (typeof POSTS_DATA !== 'undefined' && POSTS_DATA.length) ? POSTS_DATA
     : [{id:'resume-ai-2025', category:'이력서', categoryColor:'#2563EB',
         title:'AI로 이력서 쓰는 법', summary:'ChatGPT로 이력서를 만들어보세요.'}];
-  const post = posts[_promoPostIndex % posts.length];
-  _promoPostIndex++;
+  let _idx = Math.floor(Math.random() * posts.length);
+  if (posts.length > 1 && _idx === _promoPostIndex) _idx = (_idx + 1) % posts.length;
+  _promoPostIndex = _idx;
+  const post = posts[_idx];
   const catColor = post.categoryColor || '#6B7280';
   return `<div class="promo-card" onclick="location.href='info.html#${post.id}'" style="${base}background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1.5px solid #BBF7D0;">
     <div style="font-size:.72rem;font-weight:700;color:#16A34A;margin-bottom:4px">📰 취업 정보 게시판</div>
@@ -2248,7 +2250,7 @@ function render() {
 
   // 기존 Observer 해제 & 그리드 초기화
   if (_scrollObserver) { _scrollObserver.disconnect(); _scrollObserver = null; }
-  _promoJobCount = 0; _promoLastType = -1; _promoPostIndex = 0;
+  _promoJobCount = 0; _promoLastType = -1; _promoPostIndex = -1;
   const grid = document.getElementById('jobGrid');
   grid.innerHTML = '';
   document.getElementById('js-sentinel').textContent = '';
