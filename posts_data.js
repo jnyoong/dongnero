@@ -4,6 +4,157 @@
  */
 var POSTS_DATA = [
   {
+    id: 'severance-pay-2026',
+    category: '급여·보험',
+    categoryColor: '#059669',
+    title: '퇴직금, 얼마나 받을 수 있나요? — 계산법부터 못 받았을 때 대처법까지',
+    summary: '"나는 1년 안 됐으니까 퇴직금 없겠지"라고 포기하는 분들이 많아요. 정확한 기준과 계산법, 안 줄 때 신고 방법까지 처음부터 알려드립니다.',
+    date: '2026-05-27',
+    author: '동네로 운영팀',
+    tags: ['퇴직금', '퇴직급여', '50대퇴직', '임금체불', '고용보험'],
+    content: `
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+충북 청주에 사시는 이정숙 씨(59세)는 4년 다닌 요양원을 그만뒀습니다.<br>
+퇴직 후 한 달이 지나도 퇴직금이 들어오지 않았어요.<br>
+원장님께 여쭤봤더니 이런 말이 돌아왔습니다.<br><br>
+<em>"파트타임이잖아요. 퇴직금은 정직원한테만 나와요."</em><br><br>
+이정숙 씨는 그 말을 듣고 "그런가 보다" 하고 넘어가려 했어요.<br>
+그런데 딸이 고용노동부에 전화해 알아보니, 파트타임이어도 조건만 맞으면 퇴직금을 받을 수 있다는 답변이 왔습니다.<br>
+결국 이정숙 씨는 4년치 퇴직금 약 480만 원을 받았어요.
+</p>
+
+<div class="post-tip" style="background:#FEF2F2;border-color:#FECACA;">
+  ⚠️ <strong>"파트타임이라서 없대요", "3개월 수습이라서 안 된대요"</strong> — 이런 말들이 사실인 경우도 있고, 거짓말인 경우도 있습니다. 내 상황이 어디에 해당하는지, 아래에서 정확히 확인하세요.
+</div>
+
+<h3>✅ 퇴직금 받을 수 있는 조건 — 딱 두 가지입니다</h3>
+
+<div class="post-example">
+  <div class="post-example-label">퇴직금 수급 조건</div>
+  <strong>① 같은 사업장에서 1년 이상 계속 근무</strong><br>
+  계약이 중간에 끊겼다가 이어졌어도, 실질적으로 같은 사업장에서 계속 일했다면 합산할 수 있는 경우가 있어요.<br><br>
+  <strong>② 주 평균 근무시간이 15시간 이상</strong><br>
+  파트타임, 시간제 근로자도 주 15시간 이상이면 해당됩니다. 고용 형태(정규직·계약직·시간제)와 무관해요.
+</div>
+
+<div class="post-tip">
+  💡 <strong>이것만 기억하세요:</strong> 정규직이냐 아르바이트냐가 아닌, "1년 이상 + 주 15시간 이상"이 기준입니다. 조건을 모두 충족한다면 사업주는 반드시 퇴직금을 지급해야 합니다.
+</div>
+
+<h3>❌ 이런 경우는 퇴직금이 없습니다</h3>
+
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#FEF2F2;border-color:#FECACA;">
+    <div style="font-size:.8rem;font-weight:800;color:#DC2626;margin-bottom:6px;">퇴직금 해당 없는 경우</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.9;">
+      • 근속 기간이 1년 미만인 경우 (11개월 29일도 해당 없음)<br>
+      • 주 평균 15시간 미만 근무 (예: 주 2일 × 4시간 = 8시간)<br>
+      • 사업주의 직계가족인 경우 (부모님 가게에서 함께 일하는 경우 등)<br>
+      • 퇴직연금(DC형)에 가입된 경우 — 이땐 연금 계좌로 적립됨
+    </div>
+  </div>
+</div>
+
+<h3>💰 퇴직금은 얼마나 받나요? — 계산법</h3>
+<p>퇴직금은 <strong>"1일 평균임금 × 30일 × (근속연수)"</strong>로 계산합니다. 복잡해 보이지만 예시로 보면 이해하기 쉬워요.</p>
+
+<div class="post-example">
+  <div class="post-example-label">📊 퇴직금 계산 예시</div>
+  <strong>상황:</strong> 시급 12,000원으로 주 5일·하루 4시간 근무, 2년 근속<br><br>
+  <strong>1단계 — 3개월 평균임금 계산</strong><br>
+  월 급여 = 시급 12,000원 × 4시간 × 22일 + 주휴수당 ≈ 1,152,000원<br>
+  3개월 합산 ÷ 90일 = <strong>1일 평균임금 약 38,400원</strong><br><br>
+  <strong>2단계 — 퇴직금 계산</strong><br>
+  38,400원 × 30일 × 2년 = <strong>약 2,304,000원</strong><br><br>
+  ✅ 주휴수당, 연장근로수당도 평균임금에 포함됩니다.
+</div>
+
+<div class="post-tip">
+  📱 <strong>직접 계산하기 어려우면:</strong><br>
+  고용노동부 퇴직금계산기 → work24.go.kr 접속 → "퇴직금 계산기" 검색<br>
+  월급, 근무기간 넣으면 자동으로 계산해줍니다.
+</div>
+
+<h3>📋 언제, 어떻게 받나요?</h3>
+
+<div class="post-example">
+  <div class="post-example-label">퇴직금 지급 기준</div>
+  <strong>지급 시기:</strong> 퇴직일로부터 <strong>14일 이내</strong>에 지급해야 합니다.<br>
+  (당사자 간 합의가 있으면 연장 가능하지만, 합의 없이 늦추면 법 위반)<br><br>
+  <strong>지급 방법:</strong> 은행 계좌로 이체하거나, 퇴직연금(IRP 계좌)으로 이전<br><br>
+  <strong>세금:</strong> 퇴직금에는 퇴직소득세가 붙지만, 근속연수가 길수록 공제가 커서 실제 세금은 적어요.<br>
+  (근속 10년 이하라면 대부분 세금이 거의 없거나 아주 적습니다)
+</div>
+
+<h3>🚨 퇴직금을 안 줄 때 — 단계별 대처법</h3>
+<p>퇴직 후 14일이 지났는데도 퇴직금이 들어오지 않거나, 사업주가 "없다"고 한다면 아래 순서대로 움직이세요.</p>
+
+<div class="post-example">
+  <div class="post-example-label">대처 순서</div>
+  <strong>1단계 — 문자·카톡으로 내용증명 남기기</strong><br>
+  사업주에게 이렇게 문자를 보내세요.<br>
+  <em>"안녕하세요. ○○○입니다. 퇴직일로부터 14일이 지났는데 아직 퇴직금을 받지 못했습니다. 빠른 처리 부탁드립니다."</em><br>
+  → 문자로 남겨두면 나중에 증거가 됩니다.<br><br>
+  <strong>2단계 — 고용노동부 고객상담센터 전화</strong><br>
+  ☎ <strong>1350</strong> (무료, 평일 09:00~18:00)<br>
+  "퇴직금을 못 받고 있는데 어떻게 해야 하나요?"라고 하면 됩니다. 신고 방법을 안내받을 수 있어요.<br><br>
+  <strong>3단계 — 진정서 접수</strong><br>
+  고용노동부 홈페이지(moel.go.kr) 또는 가까운 지방고용노동청에 직접 방문해 진정서를 제출합니다.<br>
+  사업주에게 조사가 들어가고, 대부분 이 단계에서 해결됩니다.
+</div>
+
+<div class="post-tip" style="background:#FEF2F2;border-color:#FECACA;">
+  ⚠️ <strong>신고 기한:</strong> 퇴직일로부터 <strong>3년 안에</strong> 신고해야 합니다. 3년이 지나면 청구권이 소멸되니 미루지 마세요.
+</div>
+
+<h3>📂 미리 챙겨두면 좋은 증거 자료</h3>
+<p>퇴직금 분쟁이 생겼을 때 아래 자료가 있으면 훨씬 유리합니다. 일하는 동안 틈틈이 모아두세요.</p>
+
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#F0FDF4;border-color:#BBF7D0;">
+    <div style="font-size:.8rem;font-weight:800;color:#15803D;margin-bottom:6px;">챙겨두면 좋은 것들</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.9;">
+      ✔ <strong>근로계약서</strong> (가장 중요. 없다면 사업주에게 재발급 요청)<br>
+      ✔ <strong>급여명세서 또는 통장 입금 내역</strong> (근무 기간·급여 입증용)<br>
+      ✔ <strong>출퇴근 기록</strong> (사진, 문자, 앱 기록 등 무엇이든)<br>
+      ✔ <strong>사업주와 나눈 문자·카카오톡 내용</strong><br>
+      ✔ <strong>4대보험 가입 확인서</strong> — 국민건강보험공단 앱에서 조회 가능
+    </div>
+  </div>
+</div>
+
+<h3>❓ 자주 묻는 질문</h3>
+
+<div class="post-compare">
+  <div class="post-compare-row" style="background:#F0F9FF;border-color:#BAE6FD;">
+    <div style="font-size:.8rem;font-weight:800;color:#0369A1;margin-bottom:4px;">Q. 계약직인데 퇴직금 받을 수 있나요?</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.9;">
+      네. 계약직도 조건(1년 이상, 주 15시간 이상)을 충족하면 받을 수 있어요. 계약 갱신을 반복해서 실질적으로 1년이 넘었다면 청구할 수 있는 경우가 많아요.
+    </div>
+  </div>
+  <div class="post-compare-row" style="background:#FFF7ED;border-color:#FED7AA;">
+    <div style="font-size:.8rem;font-weight:800;color:#C2410C;margin-bottom:4px;">Q. 자진 퇴사해도 퇴직금 받을 수 있나요?</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.9;">
+      네. 퇴직금은 퇴직 이유와 무관합니다. 본인이 그만뒀든, 권고사직이든, 계약 만료든 조건만 맞으면 무조건 받을 수 있어요.
+    </div>
+  </div>
+  <div class="post-compare-row" style="background:#F0FDF4;border-color:#BBF7D0;">
+    <div style="font-size:.8rem;font-weight:800;color:#15803D;margin-bottom:4px;">Q. 사업주가 "나중에 줄게요"라고 하면?</div>
+    <div style="font-size:.88rem;color:#374151;line-height:1.9;">
+      법적으로는 퇴직 후 14일 이내 지급 의무가 있어요. "나중에"는 당사자 합의 시에만 가능하고, 합의 내용을 문서로 남겨두세요. 기한을 너무 길게 미루면 지연이자도 청구할 수 있습니다.
+    </div>
+  </div>
+</div>
+
+<div class="post-tip">
+  🛡️ <strong>퇴직금은 근로기준법으로 보장된 권리입니다.</strong><br>
+  "사이가 나빠질까봐", "나중에 일자리 소개 받을까봐" 포기하는 분들이 많은데, 받을 것은 받으셔야 합니다.<br><br>
+  상담·신고: 고용노동부 ☎ 1350 (무료, 평일 09:00~18:00)<br>
+  온라인 신고: 고용노동부(moel.go.kr) → 민원마당 → 임금체불 진정
+</div>
+`
+  },
+  {
     id: 'caregiving-license-2026',
     category: '자격증·교육',
     categoryColor: '#0891B2',
