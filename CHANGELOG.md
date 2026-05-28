@@ -2,6 +2,21 @@
 
 ---
 
+## [v1.08] 2026-05-28 — 신규 공공 소스 4개 통합 (14개 출처)
+
+- `crawler.py`: 신규 소스 4개 추가 (10개 → 14개 출처)
+  - 나라일터 (gojobs.go.kr): 공무직·임기제·기간제, POST HTML, SSL verify=False
+  - 클린아이 잡플러스 (job.cleaneye.go.kr): 지방공기업, AJAX JSON API, 모집중 전수 수집
+  - 인천일자리포털 (incheon.go.kr/job): GET HTML, srchStatus=ING 진행중만
+  - 경기도 공공일자리 (data.gg.go.kr): Sheet API, 잡아바와 다른 데이터셋
+  - `collect_narajilter()`, `collect_cleaneye()`, `collect_incheon()`, `collect_gg_public()` 함수 추가
+  - `NARAJILTER_EXCLUDE`, `GG_PUBLIC_EXCLUDE` 필터 추가
+  - `_extract_location_from_name()` 헬퍼 추가 (기관명→시도 추출, 없으면 "전국")
+  - `SHARED_APPLY_LINKS`에 `CLEANEYE_MAIN` 추가
+  - run_crawler 단계 레이블 [X/10] → [X/14]
+- `jobs.html`: 4개 신규 소스 색상 추가 (line-/src- CSS + colors 상수)
+  - 나라일터: #4F46E5 / 클린아이: #0284C7 / 인천일자리: #7C3AED / 경기공공일자리: #D97706
+
 ## [v1.07] 2026-05-28 — 성장 전략 채널 6개 추가 (채널 8~13)
 
 - `GROWTH_STRATEGY.md`: 채널 8~13 신규 추가

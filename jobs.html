@@ -453,6 +453,10 @@
     .line-맘시터       { background: var(--c-mst); }
     .line-대전일자리    { background: #B45309; }
     .line-부산일자리    { background: #0369A1; }
+    .line-나라일터      { background: #4F46E5; }
+    .line-클린아이      { background: #0284C7; }
+    .line-인천일자리    { background: #7C3AED; }
+    .line-경기공공일자리 { background: #D97706; }
 
     .card-inner { padding: 10px 14px; }
 
@@ -488,6 +492,10 @@
     .src-맘시터       { background: #FFF4EE; color: var(--c-mst); }
     .src-대전일자리    { background: #FEF3C7; color: #B45309; }
     .src-부산일자리    { background: #E0F2FE; color: #0369A1; }
+    .src-나라일터      { background: #EEF2FF; color: #4F46E5; }
+    .src-클린아이      { background: #E0F2FE; color: #0284C7; }
+    .src-인천일자리    { background: #F5F3FF; color: #7C3AED; }
+    .src-경기공공일자리 { background: #FFFBEB; color: #D97706; }
 
     /* 제목 */
     .card-title {
@@ -1789,7 +1797,7 @@ function buildHeaderStats(data) {
   const counts = data.source_counts || {};
   const total  = allJobs.length;
   const srcList = ['고용24','알바몬','알바천국','시니어로','서울일자리포털','잡아바','어르신일자리','맘시터','대전일자리','부산일자리'];
-  const colors  = { '고용24':'#2563EB','알바몬':'#EA580C','알바천국':'#16A34A','시니어로':'#0891B2','서울일자리포털':'#0F766E','잡아바':'#7C3AED','어르신일자리':'#15803D','맘시터':'#FF7F25','대전일자리':'#B45309','부산일자리':'#0369A1' };
+  const colors  = { '고용24':'#2563EB','알바몬':'#EA580C','알바천국':'#16A34A','시니어로':'#0891B2','서울일자리포털':'#0F766E','잡아바':'#7C3AED','어르신일자리':'#15803D','맘시터':'#FF7F25','대전일자리':'#B45309','부산일자리':'#0369A1','나라일터':'#4F46E5','클린아이':'#0284C7','인천일자리':'#7C3AED','경기공공일자리':'#D97706' };
   let html = `<span class="stat-chip"><strong>${total}</strong>건 수집</span>`;
   srcList.forEach(src => {
     const cnt = counts[src];
