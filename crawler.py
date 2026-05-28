@@ -209,19 +209,6 @@ def _sleep_source():
     """출처 전환 시 충분한 대기"""
     time.sleep(random.uniform(SOURCE_DELAY_MIN, SOURCE_DELAY_MAX))
 
-_SIDO_KEYWORDS = [
-    "서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종",
-    "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주",
-]
-
-def _extract_location_from_name(name: str) -> str:
-    """기관명에서 시도 힌트 추출. 없으면 '전국' (중앙부처·전국단위 공고)."""
-    for sido in _SIDO_KEYWORDS:
-        if sido in name:
-            return sido
-    return "전국"
-
-
 # ── 고용24 오픈API 모드 ────────────────────────────────────────────────────────
 
 def _xml_text(elem: ET.Element, tag: str) -> str:
@@ -1141,391 +1128,10 @@ def scrape_busan(page: int) -> list[dict]:
     return jobs
 
 
-# ─── 11. 나라일터 (gojobs.go.kr) ──────────────────────────────────────────────
-# 중앙부처·공공기관 공무직·임기제·기간제 채용공고
-
-NARAJILTER_EXCLUDE = [
-    "합격자 발표", "합격자 공고", "합격자 명단", "합격자)",
-    "최종합격", "최종 합격", "합격자 공지", "합격자 안내",
-    "불합격", "면접일정 안내", "면접 일정",
-    "2차 시험", "필기시험", "필기 시험", "체력검정",
-    "취소 공고", "연기 공고", "시험 취소",
-    "임용 공고", "임용예정",
-]
-
-NARAJILTER_BASE  = "https://gojobs.go.kr"
-NARAJILTER_LIST  = NARAJILTER_BASE + "/apmList.do"
-NARAJILTER_VIEW  = NARAJILTER_BASE + "/apmView.do"
-NARAJILTER_PAGES = 30  # 최대 300건
-
-
-def collect_narajilter() -> list[dict]:
-    """나라일터 — POST 스크래핑, SSL verify=False, 합격자/취소 제외"""
-    print("\n[나라일터] 공무직·임기제·기간제 수집 시작")
-    today = date.today().isoformat()
-
-    sess = requests.Session()
-    sess.headers.update({
-        **HEADERS,
-        "Referer": NARAJILTER_LIST + "?menuNo=401&mngrMenuYn=N&selMenuNo=400&upperMenuNo=",
-    })
-    try:
-        sess.get(
-            NARAJILTER_LIST + "?menuNo=401&mngrMenuYn=N&selMenuNo=400&upperMenuNo=",
-            verify=False, timeout=15
-        )
-    except Exception:
-        pass
-
-    all_jobs: list[dict] = []
-    for page in range(1, NARAJILTER_PAGES + 1):
-        print(f"  페이지 {page}/{NARAJILTER_PAGES} ...", end=" ", flush=True)
-        try:
-            resp = sess.post(
-                NARAJILTER_LIST,
-                data={
-                    "menuNo"         : "401",
-                    "mngrMenuYn"     : "N",
-                    "selMenuNo"      : "400",
-                    "upperMenuNo"    : "",
-                    "searchJobsecode": "020",   # 일반채용(공무직·임기제 등)
-                    "pageIndex"      : str(page),
-                    "prgl"           : "apmList",
-                    "empmnsn"        : "0",
-                },
-                verify=False,
-                timeout=20,
-            )
-            resp.raise_for_status()
-        except Exception as e:
-            print(f"[오류: {str(e)[:60]}]")
-            break
-
-        soup = BeautifulSoup(resp.text, "html.parser")
-        rows = soup.select("table tbody tr")
-        jobs = []
-        for row in rows:
-            tds = row.find_all("td")
-            if len(tds) < 5:
-                continue
-            title_el = tds[1].find("a")
-            if not title_el:
-                continue
-            title = title_el.get_text(strip=True)
-            href  = title_el.get("href", "")
-            m = re.search(r"fn_apmView\('[^']*',\s*'(\d+)'\)", href)
-            empmnsn    = m.group(1) if m else ""
-            apply_link = f"{NARAJILTER_VIEW}?empmnsn={empmnsn}&menuNo=401" if empmnsn else NARAJILTER_LIST
-
-            company  = tds[2].get_text(strip=True)
-            deadline = tds[4].get_text(strip=True)
-            norm_dl  = _normalize_date(deadline)
-
-            if len(title) < 6:
-                continue
-            if any(kw in title for kw in NARAJILTER_EXCLUDE):
-                continue
-            if re.match(r'\d{4}-\d{2}-\d{2}', norm_dl) and norm_dl < today:
-                continue
-            if _is_excluded({"title": title, "company": company}):
-                continue
-
-            location = _extract_location_from_name(company)
-
-            jobs.append({
-                "title"      : title,
-                "company"    : company,
-                "location"   : location,
-                "deadline"   : norm_dl,
-                "type"       : "공무직·임기제",
-                "salary"     : "",
-                "description": "",
-                "apply_link" : apply_link,
-                "source"     : "나라일터",
-            })
-
-        print(f"{len(jobs)}건")
-        all_jobs.extend(jobs)
-        if len(jobs) < 5:
-            print("  → 공고 소진, 종료")
-            break
-        _sleep_page()
-
-    print(f"  → 나라일터 소계: {len(all_jobs)}건")
-    return all_jobs
-
-
-# ─── 12. 클린아이 잡플러스 (job.cleaneye.go.kr) ───────────────────────────────
-# 지방공기업 채용 — AJAX JSON API
-
-CLEANEYE_BASE = "https://job.cleaneye.go.kr"
-CLEANEYE_LIST = CLEANEYE_BASE + "/user/selectYpRecruitment.do"
-CLEANEYE_MAIN = CLEANEYE_BASE + "/user/ypRecruitment.do"
-
-_CLEANEYE_EMP_TYPE = {
-    "703001": "정규직",
-    "703002": "무기계약직",
-    "703003": "기간제",
-    "703004": "시간제",
-    "703005": "아르바이트",
-}
-
-
-def collect_cleaneye() -> list[dict]:
-    """클린아이 잡플러스 — 모집중(status=709001) AJAX API 전수 수집"""
-    print("\n[클린아이 잡플러스] 지방공기업 모집중 공고 수집")
-    today = date.today().isoformat()
-
-    sess = requests.Session()
-    sess.headers.update({
-        **HEADERS,
-        "Referer"         : CLEANEYE_MAIN,
-        "X-Requested-With": "XMLHttpRequest",
-        "Content-Type"    : "application/x-www-form-urlencoded; charset=UTF-8",
-    })
-    try:
-        sess.get(CLEANEYE_MAIN, timeout=15)
-        time.sleep(1)
-    except Exception:
-        pass
-
-    all_items: list[dict] = []
-    page = 1
-    while True:
-        try:
-            resp = sess.post(
-                CLEANEYE_LIST,
-                data={"pageIndex": str(page), "pageUnit": "10", "status": "709001"},
-                timeout=20,
-            )
-            resp.raise_for_status()
-            data = resp.json()
-        except Exception as e:
-            print(f"  [클린아이 오류] page={page}: {e}")
-            break
-
-        items = data.get("list", [])
-        total = data.get("cnt", 0)
-        all_items.extend(items)
-        total_pages = (total + 9) // 10
-        print(f"  페이지 {page}/{total_pages} ... {len(items)}건 (총 {total}건)")
-
-        if page >= total_pages or not items:
-            break
-        page += 1
-        _sleep_page()
-
-    jobs: list[dict] = []
-    for item in all_items:
-        title   = (item.get("entTitle") or "").strip()
-        company = (item.get("entName")  or "").strip()
-        if not title:
-            continue
-
-        pub_end = (item.get("pubEndDate") or "").strip()
-        norm_dl = _normalize_date(pub_end) if pub_end else ""
-        if re.match(r'\d{4}-\d{2}-\d{2}', norm_dl) and norm_dl < today:
-            continue
-
-        local_name = (item.get("localName") or "").strip()
-        location   = local_name if local_name else _extract_location_from_name(company)
-        emp_type   = _CLEANEYE_EMP_TYPE.get(item.get("employGb", ""), "")
-
-        ypEntId    = item.get("ypEntId", "")
-        entSeq     = item.get("entSeq", "")
-        apply_link = f"{CLEANEYE_MAIN}#recruit_{ypEntId}_{entSeq}"
-
-        if _is_excluded({"title": title, "company": company}):
-            continue
-
-        jobs.append({
-            "title"      : title,
-            "company"    : company,
-            "location"   : location,
-            "deadline"   : norm_dl,
-            "type"       : emp_type,
-            "salary"     : "",
-            "description": "",
-            "apply_link" : apply_link,
-            "source"     : "클린아이",
-        })
-
-    print(f"  → 클린아이 소계: {len(jobs)}건")
-    return jobs
-
-
-# ─── 13. 인천일자리포털 (incheon.go.kr/job) ───────────────────────────────────
-# 인천시 공공일자리 — GET HTML, srchStatus=ING (진행중만)
-
-INCHEON_BASE  = "https://www.incheon.go.kr"
-INCHEON_LIST  = INCHEON_BASE + "/job/JOB010201"
-INCHEON_PAGES = 30   # 최대 600건
-
-
-def collect_incheon() -> list[dict]:
-    """인천일자리포털 — GET 스크래핑, 진행중 공고만 (srchStatus=ING)"""
-    print("\n[인천일자리포털] 공공일자리 수집 시작 (진행중만)")
-
-    sess = requests.Session()
-    sess.headers.update({**HEADERS, "Referer": INCHEON_LIST})
-
-    all_jobs: list[dict] = []
-    for page in range(1, INCHEON_PAGES + 1):
-        print(f"  페이지 {page}/{INCHEON_PAGES} ...", end=" ", flush=True)
-        try:
-            resp = sess.get(
-                f"{INCHEON_LIST}?srchStatus=ING&curPage={page}",
-                timeout=20,
-            )
-            resp.raise_for_status()
-            resp.encoding = "utf-8"
-        except Exception as e:
-            print(f"[오류: {str(e)[:50]}]")
-            break
-
-        soup = BeautifulSoup(resp.text, "html.parser")
-        rows = soup.select("table tbody tr")
-        jobs = []
-        for row in rows:
-            tds = row.find_all("td")
-            if len(tds) < 7:
-                continue
-            title_el = tds[1].find("a")
-            if not title_el:
-                continue
-            title = title_el.get_text(strip=True)
-            href  = title_el.get("href", "")
-            apply_link = (INCHEON_BASE + href) if href.startswith("/") else href
-            deadline   = tds[5].get_text(strip=True)
-            norm_dl    = _normalize_date(deadline)
-
-            if _is_excluded({"title": title, "company": "인천시"}):
-                continue
-
-            jobs.append({
-                "title"      : title,
-                "company"    : "",
-                "location"   : "인천",
-                "deadline"   : norm_dl,
-                "type"       : "",
-                "salary"     : "",
-                "description": "",
-                "apply_link" : apply_link,
-                "source"     : "인천일자리",
-            })
-
-        print(f"{len(jobs)}건")
-        all_jobs.extend(jobs)
-        if len(jobs) < 5:
-            print("  → 공고 소진, 종료")
-            break
-        _sleep_page()
-
-    print(f"  → 인천일자리 소계: {len(all_jobs)}건")
-    return all_jobs
-
-
-# ─── 14. 경기도 공공일자리 (data.gg.go.kr Sheet API) ──────────────────────────
-# 경기도 공공기관 직접 채용 — 잡아바와 완전히 다른 데이터셋 (infId 다름)
-
-GG_PUBLIC_EXCLUDE = [
-    "공개경쟁임용시험", "경력경쟁임용시험", "지방공무원 공개", "지방공무원 경력",
-    "임용시험 시행계획", "임용시험 공고", "합격자 발표", "합격자 공고",
-    "면접시험", "필기시험", "체력검정",
-]
-
-GG_PUBLIC_INF_ID  = "VAFPYPI2D6NZ5H6KKAI629495055"
-GG_PUBLIC_INF_SEQ = "1"
-GG_PUBLIC_SHEET   = "https://data.gg.go.kr/portal/data/sheet/searchSheetData.do"
-GG_PUBLIC_LINK    = (
-    "https://data.gg.go.kr/portal/data/service/selectServicePage.do"
-    f"?infId={GG_PUBLIC_INF_ID}&infSeq={GG_PUBLIC_INF_SEQ}"
-)
-
-
-def collect_gg_public() -> list[dict]:
-    """경기도 공공일자리 — Sheet API 수집 (공무원시험 공고 제외)"""
-    print("\n[경기도 공공일자리] Sheet API 수집 시작")
-    today = date.today().isoformat()
-
-    sess = requests.Session()
-    sess.headers.update({
-        **HEADERS,
-        "Referer"     : GG_PUBLIC_LINK,
-        "AJAX"        : "true",
-        "Content-Type": "application/x-www-form-urlencoded",
-    })
-
-    all_items: list[dict] = []
-    page = 1
-    while True:
-        try:
-            resp = sess.post(
-                GG_PUBLIC_SHEET,
-                data={
-                    "rows"  : "1000",
-                    "infId" : GG_PUBLIC_INF_ID,
-                    "infSeq": GG_PUBLIC_INF_SEQ,
-                    "page"  : str(page),
-                },
-                timeout=20,
-            )
-            resp.raise_for_status()
-            result = resp.json()
-        except Exception as e:
-            print(f"  [경기도공공일자리 오류] page={page}: {e}")
-            break
-
-        items = result.get("data", [])
-        total_pages = int(result.get("pages", 1))
-        all_items.extend(items)
-        print(f"  페이지 {page}/{total_pages} ... {len(items)}건")
-
-        if page >= total_pages:
-            break
-        page += 1
-        _sleep_page()
-
-    jobs: list[dict] = []
-    for item in all_items:
-        title   = (item.get("PBLANC_TITLE") or "").strip()
-        company = (item.get("INST_NM") or "").strip()
-        end_dt  = (item.get("RECRUT_END_DE") or "").strip()
-        link    = (item.get("DETAIL_PAGE_URL") or GG_PUBLIC_LINK).strip()
-
-        if not title:
-            continue
-        norm_dl = _normalize_date(end_dt) if end_dt else ""
-        if re.match(r'\d{4}-\d{2}-\d{2}', norm_dl) and norm_dl < today:
-            continue
-        if any(kw in title for kw in GG_PUBLIC_EXCLUDE):
-            continue
-        if _is_excluded({"title": title, "company": company}):
-            continue
-
-        # 지역: [파주시] 패턴 추출 → 없으면 경기도
-        loc_m    = re.search(r'\[([^\]]+)\]', title)
-        location = loc_m.group(1) if loc_m else "경기도"
-
-        jobs.append({
-            "title"      : title,
-            "company"    : company,
-            "location"   : location,
-            "deadline"   : norm_dl,
-            "type"       : "공공일자리",
-            "salary"     : "",
-            "description": "",
-            "apply_link" : link,
-            "source"     : "경기공공일자리",
-        })
-
-    print(f"  → 경기도공공일자리 소계: {len(jobs)}건")
-    return jobs
-
 
 # 여러 공고가 같은 apply_link를 공유하는 출처는 링크 중복 체크에서 제외
-# (어르신일자리·부산일자리·클린아이는 개별 공고 URL이 없어 공통/앵커 URL 사용)
-SHARED_APPLY_LINKS: set[str] = set()  # run_crawler에서 ELDER_JOBS_LINK, BUSAN_SITE_URL, CLEANEYE_MAIN 추가
+# (어르신일자리·부산일자리는 개별 공고 URL이 없어 공통 사이트 URL을 사용)
+SHARED_APPLY_LINKS: set[str] = set()  # run_crawler에서 ELDER_JOBS_LINK, BUSAN_SITE_URL 추가
 
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
@@ -1663,8 +1269,7 @@ def run_crawler():
     print(f"  실행 시각: {datetime.now(KST).strftime('%Y-%m-%d %H:%M:%S KST')}")
     print(f"  대상 연령: 50세 이상 ({BIRTH_YEAR_LIMIT}년 이전 출생)")
     mode_jb = "API 키 모드" if _is_jobaba_key_set() else "Sheet 모드(키 발급 전)"
-    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바({mode_jb}) / 어르신일자리(경기)")
-    print(f"        맘시터 / 대전일자리 / 부산일자리 / 나라일터 / 클린아이 / 인천일자리 / 경기공공일자리")
+    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바({mode_jb}) / 어르신일자리(경기) / 맘시터 / 대전일자리 / 부산일자리")
     print("=" * 60)
 
     all_jobs: list[dict] = []
@@ -1682,14 +1287,14 @@ def run_crawler():
             pass
 
     # 개별 공고 URL이 없어 공통 사이트 URL을 apply_link로 사용하는 출처
-    SHARED_APPLY_LINKS.update([ELDER_JOBS_LINK, BUSAN_SITE_URL, CLEANEYE_MAIN])
+    SHARED_APPLY_LINKS.update([ELDER_JOBS_LINK, BUSAN_SITE_URL])
 
     # ── 1단계: 고용24 ────────────────────────────────────────
     if _is_api_key_set():
-        print("\n[1/14] 고용24 오픈API 모드")
+        print("\n[1/10] 고용24 오픈API 모드")
         collect_fn = fetch_work24_api
     else:
-        print("\n[1/14] 고용24 웹 스크래핑 모드")
+        print("\n[1/10] 고용24 웹 스크래핑 모드")
         print(f"      birthToYY={BIRTH_YEAR_LIMIT} (50세 이상)")
         collect_fn = scrape_work24_web
 
@@ -1725,21 +1330,21 @@ def run_crawler():
     _sleep_source()
 
     # ── 2단계: 알바몬 ────────────────────────────────────────
-    print("\n[2/14] 알바몬 스크래핑")
+    print("\n[2/10] 알바몬 스크래핑")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("알바몬", scrape_albamon, pages=4, stop_if_less=1, crawl_log=crawl_log))
     source_counts["알바몬"] = len(all_jobs) - before
     _sleep_source()
 
     # ── 3단계: 알바천국 ──────────────────────────────────────
-    print("\n[3/14] 알바천국 스크래핑 (중장년 채용관)")
+    print("\n[3/10] 알바천국 스크래핑 (중장년 채용관)")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("알바천국", scrape_albacheon, pages=6, stop_if_less=10, crawl_log=crawl_log))
     source_counts["알바천국"] = len(all_jobs) - before
     _sleep_source()
 
     # ── 4단계: 시니어로 ──────────────────────────────────────
-    print("\n[4/14] 시니어로(seniorro.or.kr) 스크래핑 (지역별 JSON API)")
+    print("\n[4/10] 시니어로(seniorro.or.kr) 스크래핑 (지역별 JSON API)")
     before = len(all_jobs)
     try:
         all_jobs.extend(scrape_seniorro_all())
@@ -1751,7 +1356,7 @@ def run_crawler():
     _sleep_source()
 
     # ── 5단계: 서울시 일자리포털 ─────────────────────────────
-    print("\n[5/14] 서울시 일자리포털(job.seoul.go.kr) 스크래핑")
+    print("\n[5/10] 서울시 일자리포털(job.seoul.go.kr) 스크래핑")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("서울일자리포털", scrape_seoul_jobs, pages=15, stop_if_less=1, crawl_log=crawl_log))
     source_counts["서울일자리포털"] = len(all_jobs) - before
@@ -1759,7 +1364,7 @@ def run_crawler():
     # ── 6단계: 경기도 잡아바 ──────────────────────────────────
     _sleep_source()
     if _is_jobaba_key_set():
-        print("\n[6/14] 경기도 잡아바 - API 키 모드")
+        print("\n[6/10] 경기도 잡아바 - API 키 모드")
         before = len(all_jobs)
         try:
             all_jobs.extend(_fetch_jobaba_api_key_mode())
@@ -1769,7 +1374,7 @@ def run_crawler():
             crawl_log["잡아바"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
         source_counts["잡아바"] = len(all_jobs) - before
     else:
-        print("\n[6/14] 경기도 잡아바 - Sheet 모드 (키 발급 전 임시)")
+        print("\n[6/10] 경기도 잡아바 - Sheet 모드 (키 발급 전 임시)")
         before = len(all_jobs)
         try:
             jobs_jb = scrape_jobaba_sheet()
@@ -1782,7 +1387,7 @@ def run_crawler():
 
     # ── 7단계: 경기도 어르신자립형일자리사업 ─────────────────
     _sleep_source()
-    print("\n[7/14] 경기도 어르신자립형일자리사업 - Sheet 모드")
+    print("\n[7/10] 경기도 어르신자립형일자리사업 - Sheet 모드")
     before = len(all_jobs)
     try:
         all_jobs.extend(scrape_elder_jobs_sheet())
@@ -1794,72 +1399,24 @@ def run_crawler():
 
     # ── 8단계: 맘시터 베이비시터 구인공고 ────────────────────
     _sleep_source()
-    print(f"\n[8/14] 맘시터(mom-sitter.com) 베이비시터 구인공고")
+    print(f"\n[8/10] 맘시터(mom-sitter.com) 베이비시터 구인공고")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("맘시터", scrape_momsitter, pages=MOMSITTER_PAGES, stop_if_less=1, crawl_log=crawl_log))
     source_counts["맘시터"] = len(all_jobs) - before
 
     # ── 9단계: 대전일자리정보망 ───────────────────────────────
     _sleep_source()
-    print(f"\n[9/14] 대전일자리정보망 (jobdaejeon.or.kr)")
+    print(f"\n[9/10] 대전일자리정보망 (jobdaejeon.or.kr)")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("대전일자리", scrape_daejeon, pages=DAEJEON_PAGES, stop_if_less=1, crawl_log=crawl_log))
     source_counts["대전일자리"] = len(all_jobs) - before
 
     # ── 10단계: 부산광역시 공공부문 일자리 ────────────────────
     _sleep_source()
-    print(f"\n[10/14] 부산광역시 공공부문 일자리 (data.go.kr API)")
+    print(f"\n[10/10] 부산광역시 공공부문 일자리 (data.go.kr API)")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("부산일자리", scrape_busan, pages=BUSAN_API_PAGES, stop_if_less=1, crawl_log=crawl_log))
     source_counts["부산일자리"] = len(all_jobs) - before
-
-    # ── 11단계: 나라일터 (공무직·임기제·기간제) ──────────────
-    _sleep_source()
-    print(f"\n[11/14] 나라일터(gojobs.go.kr) 공무직·임기제·기간제")
-    before = len(all_jobs)
-    try:
-        all_jobs.extend(collect_narajilter())
-        crawl_log["나라일터"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
-    except Exception as e:
-        print(f"\n  [나라일터 오류] {e}")
-        crawl_log["나라일터"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
-    source_counts["나라일터"] = len(all_jobs) - before
-
-    # ── 12단계: 클린아이 잡플러스 (지방공기업) ───────────────
-    _sleep_source()
-    print(f"\n[12/14] 클린아이 잡플러스(job.cleaneye.go.kr) 지방공기업")
-    before = len(all_jobs)
-    try:
-        all_jobs.extend(collect_cleaneye())
-        crawl_log["클린아이"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
-    except Exception as e:
-        print(f"\n  [클린아이 오류] {e}")
-        crawl_log["클린아이"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
-    source_counts["클린아이"] = len(all_jobs) - before
-
-    # ── 13단계: 인천일자리포털 ───────────────────────────────
-    _sleep_source()
-    print(f"\n[13/14] 인천일자리포털(incheon.go.kr/job) 진행중 공고")
-    before = len(all_jobs)
-    try:
-        all_jobs.extend(collect_incheon())
-        crawl_log["인천일자리"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
-    except Exception as e:
-        print(f"\n  [인천일자리 오류] {e}")
-        crawl_log["인천일자리"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
-    source_counts["인천일자리"] = len(all_jobs) - before
-
-    # ── 14단계: 경기도 공공일자리 ───────────────────────────
-    _sleep_source()
-    print(f"\n[14/14] 경기도 공공일자리(data.gg.go.kr) Sheet API")
-    before = len(all_jobs)
-    try:
-        all_jobs.extend(collect_gg_public())
-        crawl_log["경기공공일자리"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
-    except Exception as e:
-        print(f"\n  [경기도공공일자리 오류] {e}")
-        crawl_log["경기공공일자리"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
-    source_counts["경기공공일자리"] = len(all_jobs) - before
 
     # ── 후처리 ────────────────────────────────────────────────
     # 이전 source_counts 읽어서 prev로 보존 (어드민 어제 비교용)
