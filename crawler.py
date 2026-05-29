@@ -1170,7 +1170,7 @@ def scrape_busan(page: int) -> list[dict]:
         resp = requests.get(
             BUSAN_API_URL,
             params={"ServiceKey": BUSAN_API_KEY, "pageNo": page, "numOfRows": 100},
-            timeout=30,
+            timeout=60,
         )
         resp.raise_for_status()
     except Exception as e:
@@ -1612,7 +1612,7 @@ def run_crawler():
     _sleep_source()
     print(f"\n[10/11] 부산광역시 공공부문 일자리 (data.go.kr API)")
     before = len(all_jobs)
-    all_jobs.extend(_crawl_source("부산일자리", scrape_busan, pages=BUSAN_API_PAGES, stop_if_less=1, crawl_log=crawl_log))
+    all_jobs.extend(_crawl_source("부산일자리", scrape_busan, pages=BUSAN_API_PAGES, stop_if_less=0, crawl_log=crawl_log))
     source_counts["부산일자리"] = len(all_jobs) - before
 
     # ── 11단계: 사람인 시니어·중장년 채용 ────────────────────
