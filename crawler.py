@@ -998,7 +998,9 @@ DAEJEON_PAGES = 72
 DAEJEON_GU = ['동구', '중구', '서구', '유성구', '대덕구']
 
 def scrape_daejeon(page: int) -> list[dict]:
-    sess = _session('daejeon')
+    # JSESSIONID가 다음 페이지 요청을 막으므로 매 페이지 새 세션 사용
+    sess = requests.Session()
+    sess.headers.update(HEADERS)
     sess.headers.update({"Referer": DAEJEON_BASE + "/"})
     try:
         resp = sess.post(
