@@ -2,6 +2,18 @@
 
 ---
 
+## [v1.11] 2026-05-29 — 잡아바·어르신일자리 OpenAPI 공식 키 전환
+
+- `crawler.py`: 잡아바·어르신일자리 경기데이터드림 Sheet API → openapi.gg.go.kr OpenAPI로 전환
+  - JOBABA_API_KEY / ELDER_JOBS_API_KEY 상수 추가 (환경변수 fallback 포함)
+  - 잡아바: `_fetch_jobaba_api_key_mode()` URL 수정 `openapi.gg.go.kr/GGJOBABARECRUSTM`, pSize=1000 페이지네이션
+  - 어르신일자리: `scrape_elder_jobs_openapi()` 신규 함수, `openapi.gg.go.kr/Oldpsnslfjobbiz`, STATE_DIV_NM==모집중 필터
+  - run_crawler step 6/7 Sheet 분기 제거, OpenAPI 모드만 사용
+  - INFO-200 처리 (유효 키 but 데이터 없음 = 서버 마이그레이션 중)
+- 배경: data.gg.go.kr 플랫폼 연계 통합(2026-05-28~29) 기간 중 Sheet API 전체 중단 → OpenAPI 마이그레이션 완료
+
+---
+
 ## [v1.10] 2026-05-29 — 대전일자리 JSESSIONID 버그 수정
 
 - `crawler.py`: `scrape_daejeon()` 매 페이지 새 세션 생성으로 수정

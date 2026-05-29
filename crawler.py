@@ -54,8 +54,11 @@ OUTPUT_FILE = Path(__file__).parent / "jobs.json"
 
 WORK24_AUTH_KEY = "YOUR_AUTH_KEY_HERE"
 
-# 경기도 잡아바 API 키 (경기데이터드림에서 발급: https://data.gg.go.kr/portal/myPage/actKeyPage.do)
-JOBABA_API_KEY = "YOUR_JOBABA_KEY_HERE"
+# 경기도 잡아바 API 키 (경기데이터드림 openapi.gg.go.kr/GGJOBABARECRUSTM)
+JOBABA_API_KEY = os.environ.get("JOBABA_API_KEY", "72c9659f9ea3464f8b5f646cd2c3a18c")
+
+# 경기도 어르신자립형일자리 API 키 (경기데이터드림 openapi.gg.go.kr/Oldpsnslfjobbiz)
+ELDER_JOBS_API_KEY = os.environ.get("ELDER_JOBS_API_KEY", "56812348dd114c2a8c9ca9a271e97d46")
 
 # 부산광역시 공공부문 일자리 API 키 (data.go.kr — BusanJobOpnngInfoService)
 BUSAN_API_KEY = os.environ.get("BUSAN_API_KEY", "477070a91d041a640d00fc6c0c69ca4434f6ab30ed1993eb60c7a4a4c3fcd367")
@@ -791,45 +794,66 @@ def scrape_jobaba_sheet() -> list[dict]:
 
 
 def _fetch_jobaba_api_key_mode() -> list[dict]:
-    """경기도 잡아바 — 공식 API 키 모드 (키 발급 후 활성화)
-    현재 openapi.gg.go.kr 엔드포인트 확인 중 — 키 입력 시 이 함수로 자동 전환됨."""
-    params = {
-        "KEY"   : JOBABA_API_KEY,
-        "Type"  : "json",
-        "pIndex": "1",
-        "pSize" : "100",
-    }
-    try:
-        resp = requests.get(
-            "https://openapi.gg.go.kr/JOBABARecrtInfo",
-            params=params, headers=HEADERS, timeout=15,
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        root = next(
-            (v for v in data.values() if isinstance(v, list)),
-            []
-        )
-        jobs = []
-        for item in root:
-            title = (item.get("PBANC_CONT") or item.get("recrtPlcNm") or "").strip()
-            if not title:
-                continue
-            jobs.append({
-                "title"      : title,
-                "company"    : (item.get("ENTRPRS_NM") or item.get("cmpnyNm") or "").strip(),
-                "location"   : (item.get("WORK_REGION_CONT") or item.get("workAddr") or "").strip(),
-                "deadline"   : _normalize_date(item.get("RCPT_END_DE") or item.get("recrtEndDt") or ""),
-                "type"       : (item.get("PBANC_FORM_DIV") or "").strip(),
-                "salary"     : (item.get("SALARY_COND") or "").strip(),
-                "description": "",
-                "apply_link" : (item.get("URL") or item.get("recrtUrl") or "").strip(),
-                "source"     : "잡아바",
-            })
-        return jobs
-    except Exception as e:
-        print(f"\n  [잡아바 API 키 모드 오류] {e} — Sheet 모드로 폴백")
-        return scrape_jobaba_sheet()
+    """경기도 잡아바 — openapi.gg.go.kr/GGJOBABARECRUSTM (공식 API 키 모드)"""
+    jobs = []
+    page = 1
+    total_pages = 1
+    while page <= total_pages:
+        params = {
+            "KEY"   : JOBABA_API_KEY,
+            "Type"  : "json",
+            "pIndex": str(page),
+            "pSize" : "1000",
+        }
+        try:
+            resp = requests.get(
+                "https://openapi.gg.go.kr/GGJOBABARECRUSTM",
+                params=params, headers=HEADERS, timeout=30,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            code = data.get("RESULT", {}).get("CODE", "")
+            if code == "INFO-200":
+                # 데이터 없음 (공고 없거나 API 미갱신) — 정상 빈 응답
+                break
+            root = next((v for v in data.values() if isinstance(v, list)), [])
+            if not root:
+                break
+            total_count = int(data.get("list_total_count", len(root)))
+            total_pages = (total_count + 999) // 1000
+            for item in root:
+                title = (item.get("PBANC_CONT") or "").strip()
+                if not title:
+                    continue
+                emp_type_raw = (item.get("PBANC_FORM_DIV") or "").strip()
+                if "시간제" in emp_type_raw or "단시간" in emp_type_raw:
+                    emp_type = "시간제"
+                elif "정함이 없는" in emp_type_raw:
+                    emp_type = "정규직"
+                elif "정함이 있는" in emp_type_raw or "계약" in emp_type_raw:
+                    emp_type = "계약직"
+                else:
+                    emp_type = emp_type_raw
+                jobs.append({
+                    "title"      : title,
+                    "company"    : (item.get("ENTRPRS_NM") or "").strip(),
+                    "location"   : (item.get("WORK_REGION_CONT") or "").strip(),
+                    "deadline"   : _normalize_date(item.get("RCPT_END_DE") or ""),
+                    "type"       : emp_type,
+                    "salary"     : (item.get("SALARY_COND") or "").strip(),
+                    "description": (item.get("RECRUT_FIELD_NM") or "").strip(),
+                    "apply_link" : (item.get("URL") or "").strip(),
+                    "source"     : "잡아바",
+                })
+            print(f"  페이지 {page}/{total_pages} ... {len(root)}건", flush=True)
+            if page >= total_pages:
+                break
+            page += 1
+            _sleep_page()
+        except Exception as e:
+            print(f"\n  [잡아바 API 오류] page={page} {e}")
+            break
+    return jobs
 
 
 # ── 맘시터 (mom-sitter.com) 베이비시터 구인공고 ───────────────────────────────
@@ -902,8 +926,9 @@ def scrape_momsitter(page: int) -> list[dict]:
         return []
 
 
-# ── 경기도 어르신자립형일자리사업 (경기데이터드림 Sheet API) ────────────────────
-# 데이터: https://data.gg.go.kr/portal/data/service/selectServicePage.do?infId=AXMYYE3KRB83S1MRYS0Z21195052&infSeq=1
+# ── 경기도 어르신자립형일자리사업 ──────────────────────────────────────────────
+# OpenAPI: https://openapi.gg.go.kr/Oldpsnslfjobbiz  (키: ELDER_JOBS_API_KEY)
+# Sheet API(구): data.gg.go.kr infId=AXMYYE3KRB83S1MRYS0Z21195052 → 현재 인증 필요로 비활성
 
 ELDER_JOBS_INF_ID  = "AXMYYE3KRB83S1MRYS0Z21195052"
 ELDER_JOBS_INF_SEQ = "1"
@@ -911,6 +936,70 @@ ELDER_JOBS_LINK    = (
     "https://data.gg.go.kr/portal/data/service/selectServicePage.do"
     f"?infId={ELDER_JOBS_INF_ID}&infSeq={ELDER_JOBS_INF_SEQ}"
 )
+
+def _is_elder_jobs_key_set() -> bool:
+    return ELDER_JOBS_API_KEY not in ("", "YOUR_ELDER_JOBS_KEY_HERE")
+
+def scrape_elder_jobs_openapi() -> list[dict]:
+    """경기도 어르신자립형일자리 — openapi.gg.go.kr/Oldpsnslfjobbiz"""
+    jobs = []
+    page = 1
+    total_pages = 1
+    while page <= total_pages:
+        params = {
+            "KEY"   : ELDER_JOBS_API_KEY,
+            "Type"  : "json",
+            "pIndex": str(page),
+            "pSize" : "1000",
+        }
+        try:
+            resp = requests.get(
+                "https://openapi.gg.go.kr/Oldpsnslfjobbiz",
+                params=params, headers=HEADERS, timeout=30,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            code = data.get("RESULT", {}).get("CODE", "")
+            if code == "INFO-200":
+                break  # 데이터 없음 (연간 사업 비모집기간 등)
+            root = next((v for v in data.values() if isinstance(v, list)), [])
+            if not root:
+                break
+            total_count = int(data.get("list_total_count", len(root)))
+            total_pages = (total_count + 999) // 1000
+            for item in root:
+                if (item.get("STATE_DIV_NM") or "").strip() != "모집중":
+                    continue
+                sigun  = (item.get("SIGUN_NM")      or "").strip()
+                inst   = (item.get("OPERT_INST_NM") or item.get("ENTRPS_NM") or "").strip()
+                job_tp = (item.get("JOB_TYPE")      or "").strip()
+                wage   = (item.get("WAGE_INFO")     or "").strip()
+                end_de = (item.get("END_DE")        or "").strip()
+                cnt    = item.get("RECRUT_PSNNUM", "")
+                title   = f"어르신자립형일자리 [{sigun}]" if sigun else "어르신자립형일자리"
+                desc = f"모집인원 {cnt}명" if cnt else ""
+                if job_tp and job_tp.lower() != "all":
+                    desc = f"{job_tp} · {desc}".strip(" ·")
+                jobs.append({
+                    "title"      : title,
+                    "company"    : inst,
+                    "location"   : f"경기 {sigun}" if sigun else "경기도",
+                    "deadline"   : _normalize_date(end_de),
+                    "type"       : "어르신일자리",
+                    "salary"     : wage,
+                    "description": desc,
+                    "apply_link" : ELDER_JOBS_LINK,
+                    "source"     : "어르신일자리",
+                })
+            print(f"  페이지 {page}/{total_pages} ... {len(root)}건", flush=True)
+            if page >= total_pages:
+                break
+            page += 1
+            _sleep_page()
+        except Exception as e:
+            print(f"\n  [어르신일자리 API 오류] page={page} {e}")
+            break
+    return jobs
 
 def scrape_elder_jobs_sheet() -> list[dict]:
     """경기도 어르신자립형일자리사업 — Sheet API (인증 불필요)"""
@@ -1270,8 +1359,7 @@ def run_crawler():
     print("  시니어 취업정보 크롤러")
     print(f"  실행 시각: {datetime.now(KST).strftime('%Y-%m-%d %H:%M:%S KST')}")
     print(f"  대상 연령: 50세 이상 ({BIRTH_YEAR_LIMIT}년 이전 출생)")
-    mode_jb = "API 키 모드" if _is_jobaba_key_set() else "Sheet 모드(키 발급 전)"
-    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바({mode_jb}) / 어르신일자리(경기) / 맘시터 / 대전일자리 / 부산일자리")
+    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바(OpenAPI) / 어르신일자리(OpenAPI) / 맘시터 / 대전일자리 / 부산일자리")
     print("=" * 60)
 
     all_jobs: list[dict] = []
@@ -1365,34 +1453,22 @@ def run_crawler():
 
     # ── 6단계: 경기도 잡아바 ──────────────────────────────────
     _sleep_source()
-    if _is_jobaba_key_set():
-        print("\n[6/10] 경기도 잡아바 - API 키 모드")
-        before = len(all_jobs)
-        try:
-            all_jobs.extend(_fetch_jobaba_api_key_mode())
-            crawl_log["잡아바"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
-        except Exception as e:
-            print(f"\n  [잡아바 오류] {e}")
-            crawl_log["잡아바"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
-        source_counts["잡아바"] = len(all_jobs) - before
-    else:
-        print("\n[6/10] 경기도 잡아바 - Sheet 모드 (키 발급 전 임시)")
-        before = len(all_jobs)
-        try:
-            jobs_jb = scrape_jobaba_sheet()
-            all_jobs.extend(jobs_jb)
-            crawl_log["잡아바"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
-        except Exception as e:
-            print(f"\n  [잡아바 오류] {e}")
-            crawl_log["잡아바"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
-        source_counts["잡아바"] = len(all_jobs) - before
+    print("\n[6/10] 경기도 잡아바 - OpenAPI 모드 (openapi.gg.go.kr/GGJOBABARECRUSTM)")
+    before = len(all_jobs)
+    try:
+        all_jobs.extend(_fetch_jobaba_api_key_mode())
+        crawl_log["잡아바"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
+    except Exception as e:
+        print(f"\n  [잡아바 오류] {e}")
+        crawl_log["잡아바"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
+    source_counts["잡아바"] = len(all_jobs) - before
 
     # ── 7단계: 경기도 어르신자립형일자리사업 ─────────────────
     _sleep_source()
-    print("\n[7/10] 경기도 어르신자립형일자리사업 - Sheet 모드")
+    print("\n[7/10] 경기도 어르신자립형일자리사업 - OpenAPI 모드")
     before = len(all_jobs)
     try:
-        all_jobs.extend(scrape_elder_jobs_sheet())
+        all_jobs.extend(scrape_elder_jobs_openapi())
         crawl_log["어르신일자리"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
     except Exception as e:
         print(f"\n  [어르신일자리 오류] {e}")
