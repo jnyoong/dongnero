@@ -1244,6 +1244,7 @@
 <script src="whitelist_data.js"></script>
 <script src="manual_excluded.js"></script>
 <script src="jobs_data.js"></script>
+<script src="posts_data.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () =>
@@ -1702,7 +1703,7 @@ const PROMO_ENABLED  = true;
 const PROMO_INTERVAL = 10;   // 공고 N개마다 프로모 1개 삽입
 let _promoJobCount  = 0;     // renderJobs() 호출 시 초기화
 let _promoLastType  = -1;    // 연속 동일 타입 방지
-let _promoPostIndex = -1;    // 정보게시판 직전 글 인덱스 (중복 방지용, -1=초기값)
+let _promoPostQueue = [];    // 셔플된 정보글 인덱스 큐 — 전체 순회 후 재셔플
 
 function _promoNextType() {
   const notifyDone = !!localStorage.getItem('notify_registered_v3');
@@ -1733,14 +1734,19 @@ function _buildPromoCard() {
       <div style="font-size:.78rem;font-weight:700;color:#EA580C;margin-top:8px">알림 신청하기 →</div>
     </div>`;
   }
-  // type 2: 정보게시판 — 매번 랜덤 글 선택 (직전 글 중복 방지)
+  // type 2: 정보게시판 — 셔플 큐 방식 (전체 글을 한 바퀴씩 돌고 재셔플)
   const posts = (typeof POSTS_DATA !== 'undefined' && POSTS_DATA.length) ? POSTS_DATA
     : [{id:'resume-ai-2025', category:'이력서', categoryColor:'#2563EB',
         title:'AI로 이력서 쓰는 법', summary:'ChatGPT로 이력서를 만들어보세요.'}];
-  let _idx = Math.floor(Math.random() * posts.length);
-  if (posts.length > 1 && _idx === _promoPostIndex) _idx = (_idx + 1) % posts.length;
-  _promoPostIndex = _idx;
-  const post = posts[_idx];
+  if (_promoPostQueue.length === 0) {
+    const idxArr = posts.map((_, i) => i);
+    for (let i = idxArr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [idxArr[i], idxArr[j]] = [idxArr[j], idxArr[i]];
+    }
+    _promoPostQueue = idxArr;
+  }
+  const post = posts[_promoPostQueue.shift()];
   const catColor = post.categoryColor || '#6B7280';
   return `<div class="promo-card" onclick="location.href='info.html#${post.id}'" style="${base}background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1.5px solid #BBF7D0;">
     <div style="font-size:.72rem;font-weight:700;color:#16A34A;margin-bottom:4px">📰 취업 정보 게시판</div>
@@ -2253,7 +2259,7 @@ function render() {
 
   // 기존 Observer 해제 & 그리드 초기화
   if (_scrollObserver) { _scrollObserver.disconnect(); _scrollObserver = null; }
-  _promoJobCount = 0; _promoLastType = -1; _promoPostIndex = -1;
+  _promoJobCount = 0; _promoLastType = -1;
   const grid = document.getElementById('jobGrid');
   grid.innerHTML = '';
   document.getElementById('js-sentinel').textContent = '';
