@@ -1220,6 +1220,125 @@ def scrape_busan(page: int) -> list[dict]:
 
 
 
+# ── 사람인 (saramin.co.kr) 중장년·시니어 채용공고 ────────────────────────────
+# 키워드 "시니어" / "중장년" 검색 결과 수집
+# 공고 링크: /zf_user/jobs/relay/view?rec_idx={id}
+
+SARAMIN_BASE   = "https://www.saramin.co.kr"
+SARAMIN_SEARCH = SARAMIN_BASE + "/zf_user/search"
+SARAMIN_PAGES  = 5   # 키워드당 5페이지 × 40건 = 최대 400건
+
+_SARAMIN_KEYWORDS = ["시니어", "중장년"]
+
+def scrape_saramin() -> list[dict]:
+    """사람인 — 시니어·중장년 키워드 검색 결과 수집"""
+    sess = _session('saramin')
+    sess.headers.update({
+        "Referer"        : SARAMIN_BASE + "/",
+        "Accept-Language": "ko-KR,ko;q=0.9",
+    })
+
+    seen_ids: set[str] = set()
+    all_jobs: list[dict] = []
+    total_raw = 0
+
+    for keyword in _SARAMIN_KEYWORDS:
+        for page in range(1, SARAMIN_PAGES + 1):
+            params = {
+                "searchType"       : "search",
+                "search_done"      : "y",
+                "searchword"       : keyword,
+                "recruitPage"      : str(page),
+                "recruitSort"      : "relation",
+                "recruitPageCount" : "40",
+                "company_cd"       : "0,1,2,3,4,5,6,7,9,10",
+            }
+            for attempt in range(MAX_RETRIES):
+                try:
+                    resp = sess.get(SARAMIN_SEARCH, params=params, timeout=20)
+                    resp.raise_for_status()
+                    resp.encoding = "utf-8"
+                    break
+                except Exception as e:
+                    if attempt < MAX_RETRIES - 1:
+                        time.sleep(2 ** (attempt + 1))
+                    else:
+                        print(f"\n  [사람인 오류] keyword={keyword} page={page} {e}")
+                        resp = None
+                        break
+            if resp is None:
+                break
+
+            from bs4 import BeautifulSoup as _BS
+            soup = _BS(resp.text, "html.parser")
+            cards = soup.select(".item_recruit")
+            if not cards:
+                break
+
+            page_count = 0
+            for card in cards:
+                title_el   = card.select_one(".job_tit a")
+                company_el = card.select_one(".corp_name a")
+                if not title_el:
+                    continue
+
+                href = title_el.get("href", "")
+                m = re.search(r"rec_idx=(\d+)", href)
+                rec_idx = m.group(1) if m else ""
+                if not rec_idx or rec_idx in seen_ids:
+                    continue
+                seen_ids.add(rec_idx)
+
+                link = f"{SARAMIN_BASE}/zf_user/jobs/relay/view?rec_idx={rec_idx}" if rec_idx else ""
+
+                # job_condition span: 지역/경력/학력/고용형태/급여가 순서 없이 섞여 있음
+                cond_texts = [s.get_text(strip=True) for s in card.select(".job_condition span")]
+
+                location = ""
+                emp_type = ""
+                salary   = ""
+                for ct in cond_texts:
+                    if re.search(r"(서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충|전|경남|경북|제주|전국)", ct):
+                        location = ct
+                    elif any(k in ct for k in ("정규직", "계약직", "시간제", "파트", "아르바이트", "프리랜서", "인턴")):
+                        emp_type = ct
+                    elif re.search(r"[\d,]+\s*(만원|원)", ct):
+                        salary = ct
+
+                # 마감일: ".job_date .date" → "~ 06/27(금)" 형태
+                deadline = ""
+                dl_el = card.select_one(".job_date .date")
+                if dl_el:
+                    dl_text = dl_el.get_text(strip=True)
+                    dm = re.search(r"(\d{2})/(\d{2})", dl_text)
+                    if dm:
+                        yr = date.today().year
+                        deadline = f"{yr}-{dm.group(1)}-{dm.group(2)}"
+
+                all_jobs.append({
+                    "title"      : title_el.get_text(strip=True),
+                    "company"    : company_el.get_text(strip=True) if company_el else "",
+                    "location"   : location,
+                    "deadline"   : deadline,
+                    "type"       : emp_type,
+                    "salary"     : salary,
+                    "description": "",
+                    "apply_link" : link,
+                    "source"     : "사람인",
+                })
+                page_count += 1
+
+            total_raw += page_count
+            print(f"  [{keyword}] 페이지 {page}/{SARAMIN_PAGES} ... {page_count}건", flush=True)
+            if page_count < 20:
+                break
+            _sleep_page()
+        _sleep_source()
+
+    print(f"  → 키워드 합계 {total_raw}건, 중복 제거 후 {len(all_jobs)}건")
+    return all_jobs
+
+
 # 여러 공고가 같은 apply_link를 공유하는 출처는 링크 중복 체크에서 제외
 # (어르신일자리·부산일자리는 개별 공고 URL이 없어 공통 사이트 URL을 사용)
 SHARED_APPLY_LINKS: set[str] = set()  # run_crawler에서 ELDER_JOBS_LINK, BUSAN_SITE_URL 추가
@@ -1359,7 +1478,7 @@ def run_crawler():
     print("  시니어 취업정보 크롤러")
     print(f"  실행 시각: {datetime.now(KST).strftime('%Y-%m-%d %H:%M:%S KST')}")
     print(f"  대상 연령: 50세 이상 ({BIRTH_YEAR_LIMIT}년 이전 출생)")
-    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바(OpenAPI) / 어르신일자리(OpenAPI) / 맘시터 / 대전일자리 / 부산일자리")
+    print(f"  출처: 고용24 / 알바몬 / 알바천국 / 시니어로 / 서울일자리포털 / 잡아바(OpenAPI) / 어르신일자리(OpenAPI) / 맘시터 / 대전일자리 / 부산일자리 / 사람인")
     print("=" * 60)
 
     all_jobs: list[dict] = []
@@ -1381,10 +1500,10 @@ def run_crawler():
 
     # ── 1단계: 고용24 ────────────────────────────────────────
     if _is_api_key_set():
-        print("\n[1/10] 고용24 오픈API 모드")
+        print("\n[1/11] 고용24 오픈API 모드")
         collect_fn = fetch_work24_api
     else:
-        print("\n[1/10] 고용24 웹 스크래핑 모드")
+        print("\n[1/11] 고용24 웹 스크래핑 모드")
         print(f"      birthToYY={BIRTH_YEAR_LIMIT} (50세 이상)")
         collect_fn = scrape_work24_web
 
@@ -1420,21 +1539,21 @@ def run_crawler():
     _sleep_source()
 
     # ── 2단계: 알바몬 ────────────────────────────────────────
-    print("\n[2/10] 알바몬 스크래핑")
+    print("\n[2/11] 알바몬 스크래핑")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("알바몬", scrape_albamon, pages=4, stop_if_less=1, crawl_log=crawl_log))
     source_counts["알바몬"] = len(all_jobs) - before
     _sleep_source()
 
     # ── 3단계: 알바천국 ──────────────────────────────────────
-    print("\n[3/10] 알바천국 스크래핑 (중장년 채용관)")
+    print("\n[3/11] 알바천국 스크래핑 (중장년 채용관)")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("알바천국", scrape_albacheon, pages=6, stop_if_less=10, crawl_log=crawl_log))
     source_counts["알바천국"] = len(all_jobs) - before
     _sleep_source()
 
     # ── 4단계: 시니어로 ──────────────────────────────────────
-    print("\n[4/10] 시니어로(seniorro.or.kr) 스크래핑 (지역별 JSON API)")
+    print("\n[4/11] 시니어로(seniorro.or.kr) 스크래핑 (지역별 JSON API)")
     before = len(all_jobs)
     try:
         all_jobs.extend(scrape_seniorro_all())
@@ -1446,14 +1565,14 @@ def run_crawler():
     _sleep_source()
 
     # ── 5단계: 서울시 일자리포털 ─────────────────────────────
-    print("\n[5/10] 서울시 일자리포털(job.seoul.go.kr) 스크래핑")
+    print("\n[5/11] 서울시 일자리포털(job.seoul.go.kr) 스크래핑")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("서울일자리포털", scrape_seoul_jobs, pages=15, stop_if_less=1, crawl_log=crawl_log))
     source_counts["서울일자리포털"] = len(all_jobs) - before
 
     # ── 6단계: 경기도 잡아바 ──────────────────────────────────
     _sleep_source()
-    print("\n[6/10] 경기도 잡아바 - OpenAPI 모드 (openapi.gg.go.kr/GGJOBABARECRUSTM)")
+    print("\n[6/11] 경기도 잡아바 - OpenAPI 모드 (openapi.gg.go.kr/GGJOBABARECRUSTM)")
     before = len(all_jobs)
     try:
         all_jobs.extend(_fetch_jobaba_api_key_mode())
@@ -1465,7 +1584,7 @@ def run_crawler():
 
     # ── 7단계: 경기도 어르신자립형일자리사업 ─────────────────
     _sleep_source()
-    print("\n[7/10] 경기도 어르신자립형일자리사업 - OpenAPI 모드")
+    print("\n[7/11] 경기도 어르신자립형일자리사업 - OpenAPI 모드")
     before = len(all_jobs)
     try:
         all_jobs.extend(scrape_elder_jobs_openapi())
@@ -1477,24 +1596,36 @@ def run_crawler():
 
     # ── 8단계: 맘시터 베이비시터 구인공고 ────────────────────
     _sleep_source()
-    print(f"\n[8/10] 맘시터(mom-sitter.com) 베이비시터 구인공고")
+    print(f"\n[8/11] 맘시터(mom-sitter.com) 베이비시터 구인공고")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("맘시터", scrape_momsitter, pages=MOMSITTER_PAGES, stop_if_less=1, crawl_log=crawl_log))
     source_counts["맘시터"] = len(all_jobs) - before
 
     # ── 9단계: 대전일자리정보망 ───────────────────────────────
     _sleep_source()
-    print(f"\n[9/10] 대전일자리정보망 (jobdaejeon.or.kr)")
+    print(f"\n[9/11] 대전일자리정보망 (jobdaejeon.or.kr)")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("대전일자리", scrape_daejeon, pages=DAEJEON_PAGES, stop_if_less=1, crawl_log=crawl_log))
     source_counts["대전일자리"] = len(all_jobs) - before
 
     # ── 10단계: 부산광역시 공공부문 일자리 ────────────────────
     _sleep_source()
-    print(f"\n[10/10] 부산광역시 공공부문 일자리 (data.go.kr API)")
+    print(f"\n[10/11] 부산광역시 공공부문 일자리 (data.go.kr API)")
     before = len(all_jobs)
     all_jobs.extend(_crawl_source("부산일자리", scrape_busan, pages=BUSAN_API_PAGES, stop_if_less=1, crawl_log=crawl_log))
     source_counts["부산일자리"] = len(all_jobs) - before
+
+    # ── 11단계: 사람인 시니어·중장년 채용 ────────────────────
+    _sleep_source()
+    print(f"\n[11/11] 사람인(saramin.co.kr) 시니어·중장년 채용")
+    before = len(all_jobs)
+    try:
+        all_jobs.extend(scrape_saramin())
+        crawl_log["사람인"] = {"pages_done": 1, "pages_expected": 1, "errors": []}
+    except Exception as e:
+        print(f"\n  [사람인 오류] {e}")
+        crawl_log["사람인"] = {"pages_done": 0, "pages_expected": 1, "errors": [{"page": 1, "error": str(e)[:150]}]}
+    source_counts["사람인"] = len(all_jobs) - before
 
     # ── 후처리 ────────────────────────────────────────────────
     # 이전 source_counts 읽어서 prev로 보존 (어드민 어제 비교용)

@@ -2,6 +2,20 @@
 
 ---
 
+## [v1.12] 2026-05-30 — 사람인 크롤링 소스 추가 + 정보글 3건 발행
+
+- `crawler.py`: 사람인(saramin.co.kr) 시니어·중장년 채용공고 크롤러 추가 (11번째 소스)
+  - `scrape_saramin()` 함수 신규 구현 — 키워드 "시니어"·"중장년" 각 5페이지×40건 수집
+  - 고용형태·급여·지역·마감일 파싱, rec_idx 기반 중복 제거
+  - run_crawler step 11/11 추가, 전체 출처 카운트 10→11
+- `jobs.html`: 사람인 소스 색상 추가 (`#E60012`), srcList·colors 객체 업데이트
+- `CLAUDE.md`: 소스 색상 테이블에 사람인 추가
+- `posts_data.js` + `posts/`: 정보게시판 글 3건 신규 발행
+  - `friendly-industry-2026` — 50대를 반기는 업종 7가지 (시니어 친화 직종)
+  - `senior-reemployment-reality-2026` — 50대 재취업 솔직한 현실과 통한 방법 3가지
+  - `restart-after-crisis-2026` — 전세사기·폐업 후 재기 실전 안내
+- 배경: 경기데이터드림 마이데이터 복지정보 API 접근 불가 (Sheet API 전체 차단) → 접근 가능한 사람인으로 대체
+
 ## [v1.11] 2026-05-29 — 잡아바·어르신일자리 OpenAPI 공식 키 전환
 
 - `crawler.py`: 잡아바·어르신일자리 경기데이터드림 Sheet API → openapi.gg.go.kr OpenAPI로 전환
