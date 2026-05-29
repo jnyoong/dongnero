@@ -101,17 +101,17 @@ push 실패(fetch first) 시: `git pull --rebase github main && git push github 
 ## 크롤링 출처 11개 (crawler.py)
 | 출처 | 방식 | 비고 |
 |------|------|------|
-| 고용24 | POST 스크래핑 (API키 없으면 웹) | birthToYY=1976 (50세↑), 전국 최신 1,000건 |
-| 알바몬 | GET + `__NEXT_DATA__` 파싱 | 시니어 키워드 검색 |
-| 알바천국 | GET HTML 파싱 | 중장년 채용관 |
-| 시니어로 | POST 스크래핑 | SSL verify=False |
-| 서울일자리포털 | POST AJAX | region=11000 |
+| 고용24 | POST 스크래핑 (API키 없으면 웹) | birthToYY=1976 (50세↑), 100p×20건 = 최대 **2,000건** |
+| 알바몬 | GET + `__NEXT_DATA__` 파싱 | 시니어 키워드 검색, 15p×20건 = 최대 **300건** |
+| 알바천국 | GET HTML 파싱 | 중장년 채용관, 6p×50건 = 최대 **300건** |
+| 시니어로 | POST 스크래핑 | SSL verify=False, pageSize=200, 최대 **~2,000건** |
+| 서울일자리포털 | POST AJAX | region=11000, 30p×100건 = 최대 **3,000건** |
 | 잡아바 | OpenAPI | openapi.gg.go.kr/GGJOBABARECRUSTM, JOBABA_API_KEY, pSize=1000 |
 | 어르신일자리 | OpenAPI | openapi.gg.go.kr/Oldpsnslfjobbiz, ELDER_JOBS_API_KEY, 모집중 필터 |
-| 맘시터 | POST JSON API | `api.mom-sitter.com/public-web-api/v1/parents/search`, 인증불필요, 최대 1000건(100페이지×10) |
-| 대전일자리 | POST 스크래핑 | jobdaejeon.or.kr, 72페이지×10건≈710건, work24 중복은 wantedAuthNo로 제거 |
-| 부산일자리 | GET REST API | data.go.kr BusanJobOpnngInfoService, HTTP only(HTTPS 401), 5페이지×100건, 합격자발표 필터 |
-| 사람인 | GET HTML 파싱 | 키워드 "시니어"·"중장년" 각 5페이지×40건, rec_idx 중복제거 |
+| 맘시터 | POST JSON API | `api.mom-sitter.com/public-web-api/v1/parents/search`, 200p×10건 = 최대 **2,000건** |
+| 대전일자리 | POST 스크래핑 | jobdaejeon.or.kr, 100p×10건 = 최대 **1,000건**, work24 중복은 wantedAuthNo로 제거 |
+| 부산일자리 | GET REST API | data.go.kr BusanJobOpnngInfoService, HTTP only, 10p×100건 = 최대 **1,000건** |
+| 사람인 | GET HTML 파싱 | 키워드 "시니어"·"중장년" 각 13p×40건 = 최대 **~1,000건** |
 
 맘시터 apply_link: `https://www.mom-sitter.com/search/parent` (개별 /parent/{id}는 서버 404)
 

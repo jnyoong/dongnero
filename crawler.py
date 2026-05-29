@@ -168,7 +168,7 @@ REQUEST_DELAY       = 3.0   # 페이지 간 기본 대기(초)
 REQUEST_JITTER      = 2.0   # 랜덤 추가 대기 최대값
 SOURCE_DELAY_MIN    = 5.0   # 출처 전환 최소 대기
 SOURCE_DELAY_MAX    = 10.0  # 출처 전환 최대 대기
-MAX_PAGES           = 50
+MAX_PAGES           = 100
 ITEMS_PER_PAGE      = 20
 MAX_RETRIES         = 3
 
@@ -553,7 +553,7 @@ def scrape_seniorro_all() -> list[dict]:
             "projTypeList"  : [],
             "orderType"     : "i",
             "currentPageNo" : 1,
-            "pageSize"      : 100,
+            "pageSize"      : 200,
         }
         for attempt in range(MAX_RETRIES):
             try:
@@ -863,7 +863,7 @@ def _fetch_jobaba_api_key_mode() -> list[dict]:
 
 MOMSITTER_SITE   = "https://www.mom-sitter.com"
 MOMSITTER_API    = "https://api.mom-sitter.com/public-web-api/v1/parents/search"
-MOMSITTER_PAGES  = 100  # 최대 1000건 (페이지당 10건, 최신순)
+MOMSITTER_PAGES  = 200  # 최대 2000건 (페이지당 10건, 최신순)
 
 
 def scrape_momsitter(page: int) -> list[dict]:
@@ -1083,7 +1083,7 @@ def scrape_elder_jobs_sheet() -> list[dict]:
 
 DAEJEON_BASE = "https://www.jobdaejeon.or.kr"
 DAEJEON_LIST = DAEJEON_BASE + "/public/html/Business.do"
-DAEJEON_PAGES = 72
+DAEJEON_PAGES = 100
 DAEJEON_GU = ['동구', '중구', '서구', '유성구', '대덕구']
 
 def scrape_daejeon(page: int) -> list[dict]:
@@ -1152,7 +1152,7 @@ def scrape_daejeon(page: int) -> list[dict]:
 # 합격자 발표·서류전형 결과 등 공고 아닌 항목은 필터로 제거
 
 BUSAN_API_URL   = "http://apis.data.go.kr/6260000/BusanJobOpnngInfoService/getJobOpnngInfo"
-BUSAN_API_PAGES = 5
+BUSAN_API_PAGES = 10
 BUSAN_SITE_URL  = "https://www.busan.go.kr/nbhuman/index"
 
 _BUSAN_EXCLUDE_TITLE = [
@@ -1226,7 +1226,7 @@ def scrape_busan(page: int) -> list[dict]:
 
 SARAMIN_BASE   = "https://www.saramin.co.kr"
 SARAMIN_SEARCH = SARAMIN_BASE + "/zf_user/search"
-SARAMIN_PAGES  = 5   # 키워드당 5페이지 × 40건 = 최대 400건
+SARAMIN_PAGES  = 13  # 키워드당 13페이지 × 40건 = 최대 1040건(2키워드 합산 ~1000건)
 
 _SARAMIN_KEYWORDS = ["시니어", "중장년"]
 
@@ -1541,7 +1541,7 @@ def run_crawler():
     # ── 2단계: 알바몬 ────────────────────────────────────────
     print("\n[2/11] 알바몬 스크래핑")
     before = len(all_jobs)
-    all_jobs.extend(_crawl_source("알바몬", scrape_albamon, pages=4, stop_if_less=1, crawl_log=crawl_log))
+    all_jobs.extend(_crawl_source("알바몬", scrape_albamon, pages=15, stop_if_less=1, crawl_log=crawl_log))
     source_counts["알바몬"] = len(all_jobs) - before
     _sleep_source()
 
@@ -1567,7 +1567,7 @@ def run_crawler():
     # ── 5단계: 서울시 일자리포털 ─────────────────────────────
     print("\n[5/11] 서울시 일자리포털(job.seoul.go.kr) 스크래핑")
     before = len(all_jobs)
-    all_jobs.extend(_crawl_source("서울일자리포털", scrape_seoul_jobs, pages=15, stop_if_less=1, crawl_log=crawl_log))
+    all_jobs.extend(_crawl_source("서울일자리포털", scrape_seoul_jobs, pages=30, stop_if_less=1, crawl_log=crawl_log))
     source_counts["서울일자리포털"] = len(all_jobs) - before
 
     # ── 6단계: 경기도 잡아바 ──────────────────────────────────
