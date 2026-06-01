@@ -659,8 +659,14 @@ def scrape_seoul_jobs(page: int) -> list[dict]:
         resp.encoding = "utf-8"
         soup = BeautifulSoup(resp.text, "html.parser")
 
+        rows = soup.select("div.boardlist table tbody tr")
+        if page == 1 and not rows:
+            # 파싱 실패 진단: 응답 앞 200자 출력해 원인 파악
+            preview = resp.text[:200].replace("\n", " ").strip()
+            print(f"\n  [서울일자리포털 빈응답] 상태={resp.status_code} 크기={len(resp.text)}자 앞200={preview}", flush=True)
+
         jobs = []
-        for row in soup.select("div.boardlist table tbody tr"):
+        for row in rows:
             try:
                 company_el = row.select_one("td.block")
                 a_tag      = row.select_one("td.title_box div.title a")
@@ -676,6 +682,8 @@ def scrape_seoul_jobs(page: int) -> list[dict]:
                 lis      = row.select("td.title_box ul.list_box li")
                 salary   = re.sub(r"^[가-힣\(\)\s]+:\s*", "", lis[0].get_text(strip=True)).strip() if len(lis) > 0 else ""
                 location = re.sub(r"^[가-힣\s]+:\s*", "",  lis[1].get_text(strip=True)).strip() if len(lis) > 1 else ""
+                # 우편번호 제거: (05798) 서울... → 서울...
+                location = re.sub(r"^\(\d+\)\s*", "", location)
 
                 hidden_tds = row.select("td.m_hidden")
                 deadline   = hidden_tds[-1].get_text(strip=True) if hidden_tds else ""
