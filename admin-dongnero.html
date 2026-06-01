@@ -294,6 +294,7 @@
       </table>
     </div>
     <div style="margin-top:10px;font-size:.8rem;color:#9CA3AF" id="jobRangeInfo"></div>
+    <div id="jobSentinel" style="height:1px;margin-top:4px;"></div>
   </div>
 
   <!-- 탭3: 필터링 제외 -->
@@ -569,8 +570,9 @@ const SUPABASE_KEY = 'sb_publishable_EULGblJ83IkmxLh9VMXnxQ_lcMgnmAh';
 const ADMIN_PW     = 'dongnero2024';
 
 let allJobs = [], allExcluded = [];
-let jobPage = 1;
-const JOB_PER_PAGE = 200;
+let currentJobList = [];   // 현재 필터링된 전체 목록
+let jobPage = 0;           // 로드된 페이지 수
+const JOB_PER_PAGE = 100;  // 한 번에 렌더링할 건수
 
 /* ── Whitelist (수동 해제) ── */
 const WL_KEY = 'dongnero_whitelist_v1';
@@ -857,6 +859,12 @@ function loadJobData() {
     });
     renderJobs();
     renderSourceMonitor(allJobs);
+
+    // 무한 스크롤: sentinel이 뷰포트에 들어오면 다음 페이지 로드
+    const sentinel = document.getElementById('jobSentinel');
+    new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) loadMoreJobs();
+    }, { rootMargin: '200px' }).observe(sentinel);
   }
   if (typeof EXCLUDED_DATA !== 'undefined' && EXCLUDED_DATA.updated_at) {
     allExcluded = EXCLUDED_DATA.jobs || [];
@@ -994,37 +1002,49 @@ function renderJobs() {
   const typ     = document.getElementById('jobType').value;
   const mfFilt  = document.getElementById('jobMfFilter').value;
   const cat2    = document.getElementById('jobCat2').value;
-  const filtered = mfLinks();
+  const mfFiltered = mfLinks();
 
-  let list = allJobs.filter(j => {
+  currentJobList = allJobs.filter(j => {
     if (src && j.source !== src) return false;
     if (typ && j.type !== typ) return false;
     if (cat2 && (j.category2 || '기타') !== cat2) return false;
     if (kw && !(j.title + j.company + j.location).toLowerCase().includes(kw)) return false;
-    const isMf = filtered.includes(j.apply_link);
+    const isMf = mfFiltered.includes(j.apply_link);
     if (mfFilt === 'filtered' && !isMf) return false;
     if (mfFilt === 'normal'   &&  isMf) return false;
     return true;
   });
 
+  jobPage = 0;
   document.getElementById('jobSelectAll').checked = false;
   updateMfToolbar();
-  document.getElementById('jobRangeInfo').textContent = `${list.length.toLocaleString()}건 표시`;
+  document.getElementById('jobBody').innerHTML = '';
 
-  if (!list.length) {
+  if (!currentJobList.length) {
     document.getElementById('jobBody').innerHTML = '<tr><td colspan="10" class="empty-msg">검색 결과가 없습니다.</td></tr>';
+    document.getElementById('jobRangeInfo').textContent = '0건';
     return;
   }
 
-  document.getElementById('jobBody').innerHTML = list.map((j, i) => {
-    const isMf = filtered.includes(j.apply_link);
+  loadMoreJobs();
+}
+
+function loadMoreJobs() {
+  const start = jobPage * JOB_PER_PAGE;
+  const slice = currentJobList.slice(start, start + JOB_PER_PAGE);
+  if (!slice.length) return;
+
+  const mfFiltered = mfLinks();
+  const rows = slice.map((j, i) => {
+    const globalIdx = start + i;
+    const isMf = mfFiltered.includes(j.apply_link);
     const rowCls = isMf ? ' class="mf-filtered"' : '';
     const statusBadge = isMf
       ? '<span class="badge badge-red">🚫 수동필터</span>'
       : '<span class="badge badge-green">✅ 정상</span>';
     return `<tr${rowCls}>
       <td><input type="checkbox" class="job-chk" data-link="${j.apply_link}" onchange="updateMfToolbar()"></td>
-      <td class="row-num">${i + 1}</td>
+      <td class="row-num">${globalIdx + 1}</td>
       <td class="title-cell">
         <div class="title-text">${j.title}</div>
         <div class="company-text">${j.company || '-'}</div>
@@ -1039,6 +1059,16 @@ function renderJobs() {
       <td>${j.apply_link ? `<a href="${j.apply_link}" target="_blank">보기↗</a>` : '-'}</td>
     </tr>`;
   }).join('');
+
+  document.getElementById('jobBody').insertAdjacentHTML('beforeend', rows);
+  jobPage++;
+
+  const shown = Math.min(jobPage * JOB_PER_PAGE, currentJobList.length);
+  const total = currentJobList.length;
+  document.getElementById('jobRangeInfo').textContent =
+    shown < total
+      ? `${total.toLocaleString()}건 중 ${shown.toLocaleString()}건 표시 — 스크롤하면 더 불러옵니다`
+      : `${total.toLocaleString()}건 전체 표시`;
 }
 
 function toggleJobSelectAll(cb) {
