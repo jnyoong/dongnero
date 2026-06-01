@@ -50,7 +50,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # ── 설정 ──────────────────────────────────────────────────────────────────────
 
-OUTPUT_FILE = Path(__file__).parent / "jobs.json"
+OUTPUT_FILE  = Path(__file__).parent / "jobs.json"
+BACKUP_FILE  = Path(__file__).parent / "jobs_backup.json"
 
 WORK24_AUTH_KEY = "YOUR_AUTH_KEY_HERE"
 
@@ -193,6 +194,20 @@ HEADERS = {
     "DNT": "1",
     "Referer": BASE_URL + "/wk/a/b/1200/retriveDtlEmpSrchList.do",
 }
+
+# ── 출처별 백업 (폴백용) ──────────────────────────────────────────────────────
+
+def _load_backup() -> dict:
+    """jobs_backup.json 로드. 없거나 파싱 실패 시 빈 dict 반환."""
+    if BACKUP_FILE.exists():
+        try:
+            return json.loads(BACKUP_FILE.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return {"sources": {}}
+
+def _save_backup(backup: dict) -> None:
+    BACKUP_FILE.write_text(json.dumps(backup, ensure_ascii=False, indent=2), encoding="utf-8")
 
 # 출처별 세션 (쿠키 유지·커넥션 재사용)
 _sessions: dict[str, requests.Session] = {}
@@ -1743,6 +1758,52 @@ def run_crawler():
             log["anomaly_reason"] = f"페이지 {log['pages_done']}/{log['pages_expected']} 조기 종료"
             print(f"  ⚠️  [{src}] 조기 종료: {log['anomaly_reason']}")
 
+    # ── 출처별 폴백: 이상 출처는 전일 백업으로 대체 ──────────────
+    backup = _load_backup()
+    backup_sources = backup.setdefault("sources", {})
+    fallback_applied: dict[str, dict] = {}
+
+    for src, cnt in list(source_counts.items()):
+        prev = _prev_for_alert.get(src, 0)
+        # 폴백 조건: 0건이거나, 전일 100건 이상 출처에서 50% 미만으로 감소
+        needs_fallback = (cnt == 0) or (prev > 100 and cnt < prev * 0.5)
+        if not needs_fallback:
+            continue
+        bk = backup_sources.get(src, {})
+        bk_jobs = bk.get("jobs", [])
+        if not bk_jobs:
+            continue
+        # filtered에서 해당 출처 제거 후 백업 공고로 대체
+        filtered = [j for j in filtered if j.get("source") != src]
+        filtered.extend(bk_jobs)
+        old_cnt = cnt
+        source_counts[src] = len(bk_jobs)
+        fallback_applied[src] = {
+            "today_count"  : old_cnt,
+            "backup_count" : len(bk_jobs),
+            "backup_date"  : bk.get("updated_at", "?"),
+        }
+        crawl_log.setdefault(src, {})["fallback"] = fallback_applied[src]
+        print(f"  🔄 [{src}] 폴백 적용: 금일 {old_cnt}건 → 백업 {len(bk_jobs)}건 ({bk.get('updated_at','?')})")
+
+    if fallback_applied:
+        filtered.sort(key=_sort_key)
+
+    # 정상 수집된 출처만 백업 갱신 (폴백 적용 출처는 건드리지 않음)
+    now_str = datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S KST")
+    for src, cnt in source_counts.items():
+        if src in fallback_applied:
+            continue
+        src_jobs = [j for j in filtered if j.get("source") == src]
+        # 0건 출처는 백업을 갱신하지 않음 (백업 보존)
+        if src_jobs:
+            backup_sources[src] = {
+                "updated_at": now_str,
+                "count"     : len(src_jobs),
+                "jobs"      : src_jobs,
+            }
+    _save_backup(backup)
+
     # ── 업종 분류 (category2) ─────────────────────────────────
     try:
         from classify_jobs import classify as _classify_cat
@@ -1807,14 +1868,13 @@ def run_crawler():
     )
 
     # ── 텔레그램 이상 알림 ────────────────────────────────────
-    anomalies = {src: log for src, log in crawl_log.items()
-                 if log.get("is_anomaly") or log.get("early_stop") or (log.get("errors"))}
     _send_telegram_summary(
         source_counts=source_counts,
         prev_source_counts=_prev_for_alert,
         crawl_log=crawl_log,
         total=len(filtered),
         updated_at=updated_at,
+        fallback_applied=fallback_applied,
     )
 
 
@@ -1822,7 +1882,8 @@ def run_crawler():
 
 def _send_telegram_summary(
     source_counts: dict, prev_source_counts: dict,
-    crawl_log: dict, total: int, updated_at: str
+    crawl_log: dict, total: int, updated_at: str,
+    fallback_applied: dict | None = None,
 ) -> None:
     token   = os.environ.get("TELEGRAM_BOT_TOKEN", "")
     chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
@@ -1882,6 +1943,15 @@ def _send_telegram_summary(
         lines += ["", "─────────────────", "⚠️ *이상 감지*"] + anomaly_lines
     else:
         lines += ["", "✅ 이상 없음"]
+
+    if fallback_applied:
+        fb_lines = ["", "─────────────────", "🔄 *폴백 적용*"]
+        for src, info in fallback_applied.items():
+            fb_lines.append(
+                f"🔄 *{src}*: 금일 {info['today_count']}건 → 백업 {info['backup_count']}건"
+                f" ({info['backup_date'][:10]})"
+            )
+        lines += fb_lines
 
     text = "\n".join(lines)
     try:
