@@ -812,20 +812,24 @@ def _fetch_jobaba_api_key_mode() -> list[dict]:
             )
             resp.raise_for_status()
             data = resp.json()
-            code = data.get("RESULT", {}).get("CODE", "")
+            # 응답 구조: {"GGJOBABARECRUSTM": [{"head": [...]}, {"row": [...]}]}
+            outer = next((v for v in data.values() if isinstance(v, list)), [])
+            if not outer:
+                break
+            head_items = outer[0].get("head", []) if outer else []
+            result_block = next((h.get("RESULT") for h in head_items if "RESULT" in h), {})
+            code = result_block.get("CODE", "")
             if code == "INFO-200":
-                # 데이터 없음 (공고 없거나 API 미갱신) — 정상 빈 응답
                 break
-            root = next((v for v in data.values() if isinstance(v, list)), [])
-            if not root:
-                break
-            total_count = int(data.get("list_total_count", len(root)))
-            total_pages = (total_count + 999) // 1000
-            for item in root:
-                title = (item.get("PBANC_CONT") or "").strip()
+            total_count_val = next((h.get("list_total_count") for h in head_items if "list_total_count" in h), None)
+            total_count = int(total_count_val) if total_count_val else 0
+            total_pages = max(1, (total_count + 999) // 1000)
+            row_list = outer[1].get("row", []) if len(outer) > 1 else []
+            for item in row_list:
+                title = (item.get("pbanc_cont") or "").strip()
                 if not title:
                     continue
-                emp_type_raw = (item.get("PBANC_FORM_DIV") or "").strip()
+                emp_type_raw = (item.get("pbanc_form_div") or "").strip()
                 if "시간제" in emp_type_raw or "단시간" in emp_type_raw:
                     emp_type = "시간제"
                 elif "정함이 없는" in emp_type_raw:
@@ -836,16 +840,16 @@ def _fetch_jobaba_api_key_mode() -> list[dict]:
                     emp_type = emp_type_raw
                 jobs.append({
                     "title"      : title,
-                    "company"    : (item.get("ENTRPRS_NM") or "").strip(),
-                    "location"   : (item.get("WORK_REGION_CONT") or "").strip(),
-                    "deadline"   : _normalize_date(item.get("RCPT_END_DE") or ""),
+                    "company"    : (item.get("entrprs_nm") or "").strip(),
+                    "location"   : (item.get("work_region_cont") or "").strip(),
+                    "deadline"   : _normalize_date(item.get("rcpt_end_de") or ""),
                     "type"       : emp_type,
-                    "salary"     : (item.get("SALARY_COND") or "").strip(),
-                    "description": (item.get("RECRUT_FIELD_NM") or "").strip(),
-                    "apply_link" : (item.get("URL") or "").strip(),
+                    "salary"     : (item.get("salary_cond") or "").strip(),
+                    "description": (item.get("recrut_field_nm") or "").strip(),
+                    "apply_link" : (item.get("url") or "").strip(),
                     "source"     : "잡아바",
                 })
-            print(f"  페이지 {page}/{total_pages} ... {len(root)}건", flush=True)
+            print(f"  페이지 {page}/{total_pages} ... {len(row_list)}건", flush=True)
             if page >= total_pages:
                 break
             page += 1
@@ -959,23 +963,28 @@ def scrape_elder_jobs_openapi() -> list[dict]:
             )
             resp.raise_for_status()
             data = resp.json()
-            code = data.get("RESULT", {}).get("CODE", "")
-            if code == "INFO-200":
-                break  # 데이터 없음 (연간 사업 비모집기간 등)
-            root = next((v for v in data.values() if isinstance(v, list)), [])
-            if not root:
+            # 응답 구조: {"Oldpsnslfjobbiz": [{"head": [...]}, {"row": [...]}]}
+            outer = next((v for v in data.values() if isinstance(v, list)), [])
+            if not outer:
                 break
-            total_count = int(data.get("list_total_count", len(root)))
-            total_pages = (total_count + 999) // 1000
-            for item in root:
-                if (item.get("STATE_DIV_NM") or "").strip() != "모집중":
+            head_items = outer[0].get("head", []) if outer else []
+            result_block = next((h.get("RESULT") for h in head_items if "RESULT" in h), {})
+            code = result_block.get("CODE", "")
+            if code == "INFO-200":
+                break
+            total_count_val = next((h.get("list_total_count") for h in head_items if "list_total_count" in h), None)
+            total_count = int(total_count_val) if total_count_val else 0
+            total_pages = max(1, (total_count + 999) // 1000)
+            row_list = outer[1].get("row", []) if len(outer) > 1 else []
+            for item in row_list:
+                if (item.get("state_div_nm") or "").strip() != "모집중":
                     continue
-                sigun  = (item.get("SIGUN_NM")      or "").strip()
-                inst   = (item.get("OPERT_INST_NM") or item.get("ENTRPS_NM") or "").strip()
-                job_tp = (item.get("JOB_TYPE")      or "").strip()
-                wage   = (item.get("WAGE_INFO")     or "").strip()
-                end_de = (item.get("END_DE")        or "").strip()
-                cnt    = item.get("RECRUT_PSNNUM", "")
+                sigun  = (item.get("sigun_nm")       or "").strip()
+                inst   = (item.get("opert_inst_nm")  or item.get("entrps_nm") or "").strip()
+                job_tp = (item.get("job_type")       or "").strip()
+                wage   = (item.get("wage_info")      or "").strip()
+                end_de = (item.get("end_de")         or "").strip()
+                cnt    = item.get("recrut_psnnum", "")
                 title   = f"어르신자립형일자리 [{sigun}]" if sigun else "어르신자립형일자리"
                 desc = f"모집인원 {cnt}명" if cnt else ""
                 if job_tp and job_tp.lower() != "all":
@@ -991,7 +1000,7 @@ def scrape_elder_jobs_openapi() -> list[dict]:
                     "apply_link" : ELDER_JOBS_LINK,
                     "source"     : "어르신일자리",
                 })
-            print(f"  페이지 {page}/{total_pages} ... {len(root)}건", flush=True)
+            print(f"  페이지 {page}/{total_pages} ... {len(row_list)}건", flush=True)
             if page >= total_pages:
                 break
             page += 1

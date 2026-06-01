@@ -2,6 +2,18 @@
 
 ---
 
+## [v1.16] 2026-06-01 — 잡아바·어르신일자리 API 파싱 구조 수정
+
+- `crawler.py`: `_fetch_jobaba_api_key_mode()` 파싱 수정
+  - 응답 구조 변경 대응: `{API명: [{head:[]},{row:[]}]}` 중첩 구조로 변경됨
+  - 필드명 전체 소문자로 변경 (`PBANC_CONT`→`pbanc_cont`, `ENTRPRS_NM`→`entrprs_nm` 등)
+  - total_count를 head 블록에서 올바르게 추출
+- `crawler.py`: `scrape_elder_jobs_openapi()` 동일 구조 수정
+  - 필드명 소문자 대응 (`SIGUN_NM`→`sigun_nm`, `STATE_DIV_NM`→`state_div_nm` 등)
+  - 2886건(잡아바), 2122건(어르신일자리) 정상 수집 확인
+
+---
+
 ## [v1.15] 2026-05-30 — 정보글 프로모카드 랜덤 균등 노출 수정
 
 - `jobs.html`: `posts_data.js` 로드 누락 수정 (기존엔 항상 fallback 1개만 노출)
