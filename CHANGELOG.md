@@ -2,6 +2,16 @@
 
 ---
 
+## [v1.21] 2026-06-19 — 정보글 신규 발행: 경비원 취업 가이드 + 알바 세금 신고
+
+- `posts_data.js`: 신규 글 2건 추가
+  - id: apartment-guard-2026 — "60대 경비원 취업, 신임교육부터 받아야 합니다 — 비용·기간·채용 현실 가이드"
+  - id: parttime-tax-2026 — "알바비에서 3.3% 떼였는데, 이거 세금 신고해야 하나요? — 시니어 종합소득세 완전정리"
+- `posts/apartment-guard-2026.html`, `posts/parttime-tax-2026.html`: 정적 페이지 생성
+- `sitemap.xml`: 17개 포스트 URL 업데이트
+
+---
+
 ## [v1.20] 2026-06-01 — 어드민 공고 탭 무한 스크롤 구현
 
 - `admin-dongnero.html`: 공고 탭 무한 스크롤 (Infinite Scroll) 적용

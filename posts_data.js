@@ -1639,5 +1639,222 @@ IT 회사, 스타트업, 물류센터까지 두루 도전했는데 번번이 탈
 내가 낸 돈이 결국 내 노후와 건강을 위한 돈이기도 하니까요.
 </p>
     `
+  },
+  {
+    id: 'apartment-guard-2026',
+    category: '자격증·교육',
+    categoryColor: '#0891B2',
+    title: '60대 경비원 취업, 신임교육부터 받아야 합니다 — 비용·기간·채용 현실 가이드',
+    summary: '아파트 경비원 채용공고를 보고 바로 지원했다가 신임교육이 없어서 떨어지셨나요? 24시간 신임교육 받는 법부터 격일제 근무, 월급까지 정리했습니다.',
+    date: '2026-06-19',
+    author: '동네로 운영팀',
+    tags: ['경비원', '신임교육', '아파트경비', '60대취업', '시니어알바'],
+    content: `
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+김영수 씨(63세)는 정년퇴직 후 동네 아파트 경비원 채용공고를 보고 반가운 마음에 바로 전화를 걸었어요.<br><br>
+"경비요? 신임교육 이수증 있으세요?"<br>
+"신임교육이요…? 그게 뭔가요?"<br><br>
+관리소장님 목소리가 살짝 곤란해졌습니다.<br>
+"그거 없으시면 저희가 채용을 못 해드려요. 교육 받고 다시 연락 주세요."<br><br>
+경비원은 그냥 자리만 지키면 되는 줄 알았는데, 알고 보니 법으로 정해진 교육을 먼저 받아야 했던 거예요. 미리 알았다면 헛걸음하지 않았을 텐데요.
+</p>
+
+<h3>경비원도 자격증이 필요한가요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+아파트·건물·공사장에서 일하는 경비원은 정확히는 <strong>"일반경비원"</strong>이에요. 경비업법에 따라 일을 시작하기 전에 반드시 <strong>신임교육 24시간</strong>을 이수해야 합니다.<br>
+자격증처럼 시험을 봐서 따는 게 아니라, 교육을 듣고 수료증을 받는 방식이라 부담이 크지 않아요.
+</p>
+
+<div style="background:#F0FDF4;border-left:4px solid #0891B2;padding:16px 20px;border-radius:8px;margin:20px 0;">
+  <strong>📋 일반경비원 신임교육 한눈에 보기</strong><br><br>
+  ⏰ <strong>교육시간</strong> — 이론 8시간 + 실습 8시간 + 현장실습 8시간 (총 24시간, 보통 3일)<br>
+  💰 <strong>비용</strong> — 교육기관마다 다르며 보통 8만~13만 원 선 (경비업체 채용 연계 시 무료인 곳도 있음)<br>
+  📍 <strong>교육기관</strong> — 경비협회, 민간 경비교육원 등 관할 경찰서에 등록된 기관<br>
+  📄 <strong>유효기간</strong> — 별도 갱신 없음 (단, 2년 이상 경비업무 미종사 시 재교육 필요)
+</div>
+
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+교육 신청은 "OO경비교육원", "OO경비협회" 등을 검색해서 가까운 곳에 전화로 일정을 물어보면 됩니다. 채용을 전제로 교육비를 지원해주는 경비업체도 있으니, 채용공고에 "신임교육 지원"이라고 적혀 있는지 먼저 확인해보세요.
+</p>
+
+<h3>근무는 어떤 방식인가요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+아파트 경비원은 대부분 <strong>격일제 24시간 근무</strong>예요. 하루 일하고 하루 쉬는 방식인데, 24시간 중 야간 휴게시간(보통 7~9시간)을 빼면 실제 근무시간은 15~17시간 정도입니다.
+</p>
+
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:20px;margin:20px 0;">
+  <strong>💰 근무 형태별 비교</strong><br><br>
+  <table style="width:100%;border-collapse:collapse;font-size:.95rem;">
+    <tr style="background:#E2E8F0;">
+      <th style="padding:10px;text-align:left;">형태</th>
+      <th style="padding:10px;text-align:left;">근무 패턴</th>
+      <th style="padding:10px;text-align:left;">월급 수준</th>
+    </tr>
+    <tr style="border-bottom:1px solid #E2E8F0;">
+      <td style="padding:10px;"><strong>격일제 24시간</strong></td>
+      <td style="padding:10px;">하루 근무, 하루 휴무</td>
+      <td style="padding:10px;">약 200만~230만 원</td>
+    </tr>
+    <tr style="border-bottom:1px solid #E2E8F0;">
+      <td style="padding:10px;"><strong>주야 교대</strong></td>
+      <td style="padding:10px;">12시간씩 2교대</td>
+      <td style="padding:10px;">약 190만~220만 원</td>
+    </tr>
+    <tr>
+      <td style="padding:10px;"><strong>고정 야간/주간</strong></td>
+      <td style="padding:10px;">하루 8~12시간 고정</td>
+      <td style="padding:10px;">약 150만~180만 원</td>
+    </tr>
+  </table>
+</div>
+
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+체력적으로는 격일제가 부담스러울 수 있지만, 쉬는 날이 절반이라 다른 일이나 휴식을 병행하기 좋다는 분들도 많아요. 본인 체력과 생활 패턴에 맞게 고르시면 됩니다.
+</p>
+
+<div class="post-tip">
+  💡 면접에서 "교대 가능 시간"과 "휴게시설 유무(경비실 내 침대·온수 등)"를 꼭 물어보세요. 같은 격일제라도 휴게 여건이 천차만별이라 실제 체감 난이도가 크게 달라집니다.
+</div>
+
+<h3>면접, 이렇게 준비하세요</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+경비원 면접은 까다롭지 않지만, 관리소장님들이 공통적으로 확인하는 부분이 있어요.
+</p>
+
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:20px;margin:20px 0;">
+  <strong>🗣️ 자주 묻는 질문 예시</strong><br><br>
+  Q. "신임교육 이수증 있으세요?" → "네, ○월에 수료했습니다" (없다면 "교육 일정 확인 중입니다, 채용되면 바로 이수하겠습니다")<br><br>
+  Q. "야간 근무, 체력적으로 괜찮으세요?" → 평소 건강 상태와 통원 약물 여부를 솔직하게 말씀하시는 게 좋습니다<br><br>
+  Q. "민원 처리는 어떻게 하실 건가요?" → "주민분들 말씀 끝까지 듣고, 규정에 따라 차분히 안내하겠습니다" 정도면 충분해요
+</div>
+
+<h3>채용공고는 어디서 찾나요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+아파트 경비원은 입주자대표회의나 위탁관리업체가 직접 채용하는 경우가 많아 일반 채용 사이트에 잘 안 올라오기도 해요. 아래 방법을 같이 활용하시면 좋습니다.
+</p>
+
+<div style="background:#F0FDF4;border-radius:10px;padding:20px;margin:20px 0;">
+  ✅ 동네로·고용24에서 "경비" 키워드로 검색<br>
+  ✅ 관심 있는 아파트 관리사무소에 직접 문의 (결원 발생 시 바로 채용)<br>
+  ✅ 관할 경비업체 영업소에 이력서 등록 (결원 발생 시 우선 연락)<br>
+  ✅ 신임교육 수료 후 교육기관에 채용 연계를 요청 (업체와 연계된 곳이 많음)
+</div>
+
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+신임교육 24시간, 며칠이면 끝나는 일이에요. 미리 받아두시면 채용공고가 떴을 때 바로 지원할 수 있으니, 관심 있으시다면 교육부터 알아보시는 걸 추천드립니다.
+</p>
+    `
+  },
+  {
+    id: 'parttime-tax-2026',
+    category: '급여·보험',
+    categoryColor: '#059669',
+    title: '알바비에서 3.3% 떼였는데, 이거 세금 신고해야 하나요? — 시니어 종합소득세 완전정리',
+    summary: '월급에서 3.3%가 빠져서 들어왔다면 4대보험 대상이 아닌 사업소득입니다. 5월 종합소득세 신고가 왜 필요한지, 환급은 얼마나 받는지 정리했습니다.',
+    date: '2026-06-19',
+    author: '동네로 운영팀',
+    tags: ['종합소득세', '3.3%원천징수', '알바세금', '환급', '시니어'],
+    content: `
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+박정희 씨(56세)는 식당 홀서빙 알바를 시작하고 첫 월급을 받았어요.<br>
+시급 12,000원에 한 달 80시간을 일했으니 96만 원을 기대했는데, 통장에는 928,320원이 들어왔습니다.<br><br>
+"왜 7만 원 가까이 빠졌지?"<br>
+사장님께 여쭤보니 "3.3% 원천징수 떼고 드린 거예요"라는 답이 돌아왔어요.<br><br>
+"그럼 이거 나중에 돌려받을 수도 있어요?"<br>
+"그건 5월에 세금 신고하셔야 알 수 있어요."<br><br>
+4대보험과는 다른 이야기라 더 헷갈리셨을 텐데요, 하나씩 풀어드릴게요.
+</p>
+
+<h3>3.3%가 정확히 뭔가요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+월급에서 <strong>소득세 3% + 지방소득세 0.3%</strong>를 미리 떼는 걸 "사업소득 원천징수"라고 해요. 4대보험이 적용되는 "근로소득"이 아니라, 프리랜서처럼 "사업소득"으로 처리됐다는 뜻입니다.
+</p>
+
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:20px;margin:20px 0;">
+  <strong>📋 근로소득 vs 사업소득(3.3%) 차이</strong><br><br>
+  <table style="width:100%;border-collapse:collapse;font-size:.95rem;">
+    <tr style="background:#E2E8F0;">
+      <th style="padding:10px;text-align:left;">구분</th>
+      <th style="padding:10px;text-align:left;">근로소득</th>
+      <th style="padding:10px;text-align:left;">사업소득(3.3%)</th>
+    </tr>
+    <tr style="border-bottom:1px solid #E2E8F0;">
+      <td style="padding:10px;"><strong>4대보험</strong></td>
+      <td style="padding:10px;color:#059669;">조건 충족 시 적용</td>
+      <td style="padding:10px;color:#DC2626;">미적용 (없음)</td>
+    </tr>
+    <tr style="border-bottom:1px solid #E2E8F0;">
+      <td style="padding:10px;"><strong>매월 공제</strong></td>
+      <td style="padding:10px;">4대보험료</td>
+      <td style="padding:10px;">3.3% (소득세+지방세)</td>
+    </tr>
+    <tr>
+      <td style="padding:10px;"><strong>연말 정리</strong></td>
+      <td style="padding:10px;">연말정산(회사가 처리)</td>
+      <td style="padding:10px;">종합소득세 신고(본인이 처리)</td>
+    </tr>
+  </table>
+</div>
+
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+소규모 식당, 카페, 학원 강사, 배달·청소 용역 등에서 4대보험 없이 3.3%만 떼는 방식을 많이 씁니다. 사업주가 편의상 이렇게 처리하는 경우가 많은데, 근로 형태에 따라 실제로는 근로소득으로 처리돼야 하는 경우도 있으니 부당하다고 느껴지면 고용센터에 문의해보셔도 됩니다.
+</p>
+
+<h3>그래서 세금 신고는 꼭 해야 하나요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+네, 3.3%로 공제된 사업소득이 있으면 다음 해 <strong>5월에 종합소득세 신고</strong>를 해야 해요. 안 하면 가산세가 붙을 수 있고, 반대로 신고를 하면 <strong>이미 낸 3.3%를 돌려받는 경우가 많습니다.</strong>
+</p>
+
+<div style="background:#F0FDF4;border-left:4px solid #059669;padding:16px 20px;border-radius:8px;margin:20px 0;">
+  <strong>왜 환급이 되나요?</strong><br><br>
+  매달 뗀 3.3%는 "일단 미리 걷어두는" 세금이에요.<br>
+  연간 총소득을 기준으로 실제 내야 할 세금을 다시 계산하면, 소득공제·세액공제를 반영해서 보통 미리 낸 금액보다 적게 나오는 경우가 많아요. 그 차이만큼 돌려받는 거예요.
+</div>
+
+<h3>실제로 얼마나 돌려받나요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+연간 알바 소득이 1,200만 원(월 100만 원)이라고 가정해볼게요.
+</p>
+
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:20px;margin:20px 0;">
+  <strong>💰 연소득 1,200만 원 예시</strong><br><br>
+  매달 공제된 3.3% 합계: 약 396,000원 (이미 낸 세금)<br>
+  기본공제 등을 반영한 실제 산출세액: 보통 이보다 적거나 0원에 가까운 경우가 많음<br>
+  <hr style="margin:10px 0;border-color:#E2E8F0;">
+  <strong>→ 차액만큼 5월 신고 후 환급 (다른 소득·공제 항목에 따라 금액은 달라짐)</strong>
+</div>
+
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+소득이 적을수록, 부양가족이나 카드 사용액 등 공제 항목이 있을수록 환급액이 커지는 경우가 많아요. 정확한 금액은 신고 시점에 홈택스가 자동으로 계산해줍니다.
+</p>
+
+<h3>신고는 어떻게 하나요?</h3>
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+컴퓨터가 익숙하지 않아도 어렵지 않아요. 매년 5월 한 달간 진행됩니다.
+</p>
+
+<div style="background:#F0FDF4;border-radius:10px;padding:20px;margin:20px 0;">
+  ✅ <strong>홈택스(hometax.go.kr)</strong> 접속 → "종합소득세 신고" → 안내에 따라 자동으로 불러온 소득 확인 후 제출<br>
+  ✅ 컴퓨터가 어려우면 <strong>국세청 손택스(모바일 앱)</strong>로도 가능<br>
+  ✅ 혼자 하기 어려우면 <strong>관할 세무서</strong> 방문 신고(무료 도움 받을 수 있음)<br>
+  ✅ 5월 중순 이후엔 일부 세무서·주민센터에서 "찾아가는 신고 도움" 행사도 진행
+</div>
+
+<div class="post-tip">
+  💡 신고를 안 해도 당장 큰일이 나진 않지만, 환급받을 돈을 그냥 두는 셈이에요. 5월에 문자나 안내가 오면 "세금 더 내라는 건가?" 걱정하지 마시고, 일단 홈택스에 들어가서 예상 환급액을 먼저 확인해보세요.
+</div>
+
+<h3>체크리스트</h3>
+<div style="background:#F0FDF4;border-radius:10px;padding:20px;margin:20px 0;">
+  ✅ 월급에서 3.3% 빠졌다면 사업소득 → 4대보험 대신 종합소득세 신고 대상<br>
+  ✅ 신고는 매년 5월, 홈택스 또는 손택스로 가능<br>
+  ✅ 소득이 적을수록 환급받는 경우가 많음<br>
+  ✅ 혼자 하기 어려우면 관할 세무서에서 무료로 도와줌
+</div>
+
+<p style="font-size:1.05rem;line-height:1.9;color:#374151;">
+"세금 신고"라는 말만 들어도 막막하셨다면, 5월에 홈택스부터 한 번 들어가 보세요. 생각보다 어렵지 않고, 의외의 환급금을 만나실 수도 있어요.
+</p>
+    `
   }
 ];
