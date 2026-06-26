@@ -268,6 +268,11 @@ def main():
         print(f"[notify] 주말({day_kr}요일, {kst_now.strftime('%Y-%m-%d')}) — 알림 발송 스킵 (평일만 발송)")
         return
 
+    # ── 저녁 6시 이후 발송 금지 ────────────────────────────
+    if kst_now.hour >= 18:
+        print(f"[notify] 저녁 6시 이후({kst_now.strftime('%H:%M')}) — 알림 발송 스킵")
+        return
+
     # 오늘 이미 발송 완료 여부 확인 (중복 발송 방지)
     if os.path.exists(NOTIFY_DATE_FILE):
         with open(NOTIFY_DATE_FILE, encoding='utf-8-sig') as f:
